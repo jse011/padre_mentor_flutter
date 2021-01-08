@@ -36,15 +36,18 @@ dependencies:
   floor: ^0.18.0
   http: ^0.12.2
   json_serializable: ^3.5.1
+  moor_flutter: ^3.1.0
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  integration_test:
-    sdk: flutter
+#  integration_test:
+#    sdk: flutter
   floor_generator: ^0.18.0
   build_runner: ^1.10.3
   sqlite_viewer: ^1.0.3
+  moor_generator: ^3.4.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

@@ -8,7 +8,7 @@ import 'package:padre_mentor/src/app/page/menu/invite_friend_screen.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/app/widgets/navigation_drawer/drawer_user_controller.dart';
 import 'package:padre_mentor/src/app/widgets/navigation_drawer/home_drawer.dart';
-import 'package:padre_mentor/src/data/repositories/floor_beta/data_usuario_configuracion_respository.dart';
+import 'package:padre_mentor/src/data/repositories/moor/data_usuario_configuracion_respository.dart';
 import 'package:padre_mentor/src/device/repositories/http/device_http_datos_repository.dart';
 import 'package:sqlite_viewer/sqlite_viewer.dart';
 
@@ -28,7 +28,6 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
   _HomePageState() : super(HomeController(DataUsuarioAndRepository(), DeviceHttpDatosRepositorio()));
 
   @override
-  // TODO: implement view
   Widget get view =>
       Container(
         color: AppTheme.nearlyWhite,
@@ -37,7 +36,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
           bottom: false,
           child: Scaffold(
             backgroundColor: AppTheme.nearlyWhite,
-            appBar: AppBar(
+            /*appBar: AppBar(
                 title: Text('DBDEBUG'),
                 actions: <Widget>[
                   new IconButton(
@@ -47,7 +46,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                       }
                   ),
                 ]
-            ),
+            ),*/
             body: ControlledWidgetBuilder<HomeController>(
               builder: (context, controller) {
                 changeIndex(controller.vistaActual);

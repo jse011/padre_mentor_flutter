@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:padre_mentor/bottom_navigation_view/bottom_bar_view.dart';
 import 'package:padre_mentor/model/tabIcon_data.dart';
 import 'package:padre_mentor/src/app/page/portal_alumno/portal_alumno_screen.dart';
+import 'package:padre_mentor/src/app/page/portal_alumno/portal_alumno_view.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 
 import '../my_diary/my_diary_screen.dart';
@@ -100,7 +101,7 @@ class _MyHomePage extends State<MyHomePage>
                 }
                 setState(() {
                   tabBody =
-                      PortalAlumnoScreen(animationController: animationController);
+                      PortalAlumnoView(animationController: animationController);
                 });
               });
             }

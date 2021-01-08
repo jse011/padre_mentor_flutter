@@ -23,7 +23,7 @@ class GetSessionUsuarioCase extends UseCase<GetSessionUsuarioCaseResponse, GetSe
       logger.finest('GetUserUseCase successful.');
       controller.close();
     } catch (e) {
-      logger.severe('GetUserUseCase unsuccessful.');
+      logger.severe('GetUserUseCase unsuccessful: ' + e.toString());
       // Trigger .onError
       controller.addError(e);
     }
