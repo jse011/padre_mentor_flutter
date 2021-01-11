@@ -14,6 +14,7 @@ class HomePresenter extends Presenter{
 
   @override
   void dispose() {
+    syncDatosInicioPadre.dispose();
     getUsuarioUseCase.dispose();
   }
 

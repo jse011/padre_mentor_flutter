@@ -34,22 +34,18 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
       ]);
       queryRelaciones.where(SQL.relaciones.personaVinculadaId.equals(personaData.personaId));
       var rowRelaciones = await queryRelaciones.get();
-      List<HijosUi> hijos = await Future.forEach(rowRelaciones, (hijo) async{
-
+      List<HijosUi> hijos = [];
+      await Future.forEach(rowRelaciones, (hijo) async{
         PersonaData personaData = hijo.readTable(SQL.persona);
         UsuarioData usuarioData = await (SQL.select(SQL.usuario)..where((tbl) => tbl.personaId.equals(personaData.personaId))).getSingle();
-        return HijosUi(usuarioId: usuarioData.usuarioId, personaId: personaData.personaId, nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}', foto: personaData.foto);
-
+        hijos.add(HijosUi(usuarioId: usuarioData.usuarioId, personaId: personaData.personaId, nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}', foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}'));
       });
-      SQL.close();
-
       UsuarioUi usuarioUi = UsuarioUi(id: personaData == null ? 0 : personaData.personaId ,
           nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}',
           foto: personaData.foto,
           hijos: hijos);
       return usuarioUi;
     }catch(e){
-      SQL.close();
       throw Exception(e);
     }
     //var resultRow = rows.single;
@@ -80,7 +76,6 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
    }catch(e){
      throw Exception(e);
    }
-    SQL.close();
   }
 
   /// Watches all entries in the given [category]. If the category is null, all

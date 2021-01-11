@@ -8,11 +8,18 @@ part 'app_database.g.dart';
 
 @UseMoor(tables: [Persona, Usuario, SessionUser, Relaciones])
 class AppDataBase extends _$AppDataBase{
-  AppDataBase() : super(FlutterQueryExecutor.inDatabaseFolder(
-      path: "db.sqlite", logStatements: true));
 
   @override
   int get schemaVersion => 1;
+
+  static final AppDataBase _singleton = AppDataBase._internal();
+
+  factory AppDataBase() {
+    return _singleton;
+  }
+
+  AppDataBase._internal(): super(FlutterQueryExecutor.inDatabaseFolder(
+      path: "db.sqlite", logStatements: true));
 
 }
 /*
