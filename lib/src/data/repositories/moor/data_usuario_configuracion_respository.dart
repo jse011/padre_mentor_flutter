@@ -44,6 +44,9 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
           nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}',
           foto: personaData.foto,
           hijos: hijos);
+
+
+
       return usuarioUi;
     }catch(e){
       throw Exception(e);

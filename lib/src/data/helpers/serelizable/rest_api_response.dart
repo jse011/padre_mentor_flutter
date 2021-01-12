@@ -88,3 +88,88 @@ class RelacionesSerial{
 
    Map<String, dynamic> toJson() => _$RelacionesSerialToJson(this);
 }
+
+@JsonSerializable()
+class AnioAcademicoAlumnoSerial{
+
+    int idAnioAcademico;
+    String nombre;
+    String fechaInicio;
+    String fechaFin;
+    String denominacion;
+    int georeferenciaId;
+    int organigramaId;
+    int estadoId;
+    int tipoId;
+    int personaId;
+    bool toogle;
+
+    AnioAcademicoAlumnoSerial(
+    {this.idAnioAcademico,
+       this.nombre,
+       this.fechaInicio,
+       this.fechaFin,
+       this.denominacion,
+       this.georeferenciaId,
+       this.organigramaId,
+       this.estadoId,
+       this.tipoId,
+       this.personaId,
+       this.toogle});
+
+    factory AnioAcademicoAlumnoSerial.fromJson(Map<String, dynamic> json) => _$AnioAcademicoAlumnoSerialFromJson(json);
+
+    Map<String, dynamic> toJson() => _$AnioAcademicoAlumnoSerialToJson(this);
+}
+
+@JsonSerializable()
+class CargaCursosSerial{
+
+    int cargaCursoId;
+    int planCursoId;
+    int empleadoId;
+    int cargaAcademicaId;
+    int complejo;
+    int evaluable;
+    int idempleado;
+    int idTipoHora;
+    String descripcion;
+    int fechaInicio;//Long
+    int fechafin;//Long
+    String modo;
+    int estado;
+    int anioAcademicoId;
+    int aulaId;
+    int grupoId;
+    int idPlanEstudio;
+    int idPlanEstudioVersion;
+    int CapacidadVacanteP;
+    int CapacidadVacanteD;
+
+
+    CargaCursosSerial(
+    {this.cargaCursoId,
+      this.planCursoId,
+      this.empleadoId,
+      this.cargaAcademicaId,
+      this.complejo,
+      this.evaluable,
+      this.idempleado,
+      this.idTipoHora,
+      this.descripcion,
+      this.fechaInicio,
+      this.fechafin,
+      this.modo,
+      this.estado,
+      this.anioAcademicoId,
+      this.aulaId,
+      this.grupoId,
+      this.idPlanEstudio,
+      this.idPlanEstudioVersion,
+      this.CapacidadVacanteP,
+      this.CapacidadVacanteD});
+
+  factory CargaCursosSerial.fromJson(Map<String, dynamic> json) => _$CargaCursosSerialFromJson(json);
+
+    Map<String, dynamic> toJson() => _$CargaCursosSerialToJson(this);
+}
