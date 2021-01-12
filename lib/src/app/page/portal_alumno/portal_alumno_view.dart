@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +7,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:padre_mentor/src/app/page/portal_alumno/portal_alumno_controller.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
+import 'package:padre_mentor/src/app/widgets/animation_view.dart';
 import 'package:padre_mentor/src/app/widgets/area_list_view.dart';
 import 'package:padre_mentor/src/app/widgets/hijos_view.dart';
+import 'package:padre_mentor/src/app/widgets/menu_alumno_list_view.dart';
+import 'package:padre_mentor/src/app/widgets/menu_item_view.dart';
+import 'package:padre_mentor/src/app/widgets/programa_educativo_view.dart';
 import 'package:padre_mentor/src/app/widgets/running_view.dart';
 import 'package:padre_mentor/src/app/widgets/title_view.dart';
 import 'package:padre_mentor/src/app/widgets/workout_view.dart';
@@ -32,6 +37,8 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
 
+  int _currentIndex;
+
   _PortalAlumnoState() :  super(PortalAlumnoController(DataUsuarioAndRepository())){
 
   }
@@ -42,7 +49,7 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
         CurvedAnimation(
             parent: widget.animationController,
             curve: Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
-    addAllListData();
+
     scrollController.addListener(() {
       if (scrollController.offset >= 24) {
         if (topBarOpacity != 1.0) {
@@ -64,6 +71,14 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
           });
         }
       }
+    });
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+// Here you can write your code
+      setState(() {
+        widget.animationController.forward();
+      });
+
     });
     super.initState();
   }
@@ -181,8 +196,358 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
     );
   }
 
+
+  int countView = 11;
   Widget getMainListViewUI() {
-    return ListView.builder(
+
+    return Container(
+        padding: EdgeInsets.only(
+          top: AppBar().preferredSize.height +
+              MediaQuery.of(context).padding.top +
+              24,
+          bottom: 62 + MediaQuery.of(context).padding.bottom,
+        ),
+      child: ControlledWidgetBuilder<PortalAlumnoController>(
+          builder: (context, controller) {
+            return  CustomScrollView(
+              controller: scrollController,
+              slivers: <Widget>[
+                SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        WorkoutView(
+                          animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                              parent: widget.animationController,
+                              curve:
+                              Interval((1 / countView) * 2, 1.0, curve: Curves.fastOutSlowIn))),
+                          animationController: widget.animationController,
+                        ),
+                        TitleView(
+                          titleTxt: 'Programa Educativo',
+                          subTxt: "Cambiar",
+                          animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                              parent: widget.animationController,
+                              curve:
+                              Interval((1 / countView) * 0, 1.0, curve: Curves.fastOutSlowIn))),
+                          animationController: widget.animationController,
+                        ),
+                        AnimationView(
+                          animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                              parent: widget.animationController,
+                              curve:
+                              Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                          animationController: widget.animationController,
+                          child: CarouselSlider(
+                              options: CarouselOptions(
+                                height: 120.0,
+                                autoPlay: false,
+                                autoPlayInterval: Duration(seconds: 3),
+                                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                                autoPlayCurve: Curves.fastOutSlowIn,
+                                pauseAutoPlayOnTouch: true,
+                                aspectRatio: 2.0,
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    _currentIndex = index;
+                                  });
+                                },
+                              ),
+                              items: <Widget>[
+                                Container(
+                                    height: MediaQuery.of(context).size.height*0.30,
+                                    width: MediaQuery.of(context).size.width,
+                                    margin: const EdgeInsets.only(left: 8, right: 8, top: 0, bottom: 16),
+                                    child:  Stack(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.only(top: 24, bottom: 0),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: AppTheme.white,
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(8.0),
+                                                    bottomLeft: Radius.circular(8.0),
+                                                    bottomRight: Radius.circular(8.0),
+                                                    topRight: Radius.circular(8.0)),
+                                                boxShadow: <BoxShadow>[
+                                                  BoxShadow(
+                                                      color: AppTheme.grey.withOpacity(0.4),
+                                                      offset: Offset(1.1, 1.1),
+                                                      blurRadius: 10.0),
+                                                ],
+                                              ),
+                                              child: Stack(
+                                                alignment: Alignment.topLeft,
+                                                children: <Widget>[
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                    BorderRadius.all(Radius.circular(8.0)),
+                                                    child: SizedBox(
+                                                      height: 74,
+                                                      child: AspectRatio(
+                                                        aspectRatio: 1.714,
+                                                        child: Image.asset(
+                                                            "assets/fitness_app/back.png"),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Row(
+                                                        children: <Widget>[
+                                                          Padding(
+                                                            padding: const EdgeInsets.only(
+                                                              left: 100,
+                                                              right: 16,
+                                                              top: 16,
+                                                            ),
+                                                            child: Text(
+                                                              "Educación Secundaria",
+                                                              textAlign: TextAlign.left,
+                                                              style: TextStyle(
+                                                                fontFamily:
+                                                                AppTheme.fontName,
+                                                                fontWeight: FontWeight.w500,
+                                                                fontSize: 14,
+                                                                letterSpacing: 0.0,
+                                                                color:
+                                                                AppTheme.nearlyDarkBlue,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(
+                                                          left: 100,
+                                                          bottom: 12,
+                                                          top: 4,
+                                                          right: 16,
+                                                        ),
+                                                        child: Text(
+                                                          "Año 2020\nJose Arias Orezano",
+                                                          textAlign: TextAlign.left,
+                                                          style: TextStyle(
+                                                            fontFamily: AppTheme.fontName,
+                                                            fontWeight: FontWeight.w500,
+                                                            fontSize: 10,
+                                                            letterSpacing: 0.0,
+                                                            color: AppTheme.grey
+                                                                .withOpacity(0.5),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 100,
+                                            height: 100,
+                                            child: Image.asset("assets/fitness_app/runner.png"),
+                                          )
+                                        ]
+                                    )
+                                ),
+                                Container(
+                                    height: MediaQuery.of(context).size.height*0.30,
+                                    width: MediaQuery.of(context).size.width,
+                                    margin: const EdgeInsets.only(left: 8, right: 8, top: 0, bottom: 16),
+                                    child:  Stack(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.only(top: 24, bottom: 0),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: AppTheme.white,
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(8.0),
+                                                    bottomLeft: Radius.circular(8.0),
+                                                    bottomRight: Radius.circular(8.0),
+                                                    topRight: Radius.circular(8.0)),
+                                                boxShadow: <BoxShadow>[
+                                                  BoxShadow(
+                                                      color: AppTheme.grey.withOpacity(0.4),
+                                                      offset: Offset(1.1, 1.1),
+                                                      blurRadius: 10.0),
+                                                ],
+                                              ),
+                                              child: Stack(
+                                                alignment: Alignment.topLeft,
+                                                children: <Widget>[
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                    BorderRadius.all(Radius.circular(8.0)),
+                                                    child: SizedBox(
+                                                      height: 74,
+                                                      child: AspectRatio(
+                                                        aspectRatio: 1.714,
+                                                        child: Image.asset(
+                                                            "assets/fitness_app/back.png"),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Row(
+                                                        children: <Widget>[
+                                                          Padding(
+                                                            padding: const EdgeInsets.only(
+                                                              left: 100,
+                                                              right: 16,
+                                                              top: 16,
+                                                            ),
+                                                            child: Text(
+                                                              "Educación Secundaria",
+                                                              textAlign: TextAlign.left,
+                                                              style: TextStyle(
+                                                                fontFamily:
+                                                                AppTheme.fontName,
+                                                                fontWeight: FontWeight.w500,
+                                                                fontSize: 14,
+                                                                letterSpacing: 0.0,
+                                                                color:
+                                                                AppTheme.nearlyDarkBlue,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(
+                                                          left: 100,
+                                                          bottom: 12,
+                                                          top: 4,
+                                                          right: 16,
+                                                        ),
+                                                        child: Text(
+                                                          "Año 2020\nJose Arias Orezano",
+                                                          textAlign: TextAlign.left,
+                                                          style: TextStyle(
+                                                            fontFamily: AppTheme.fontName,
+                                                            fontWeight: FontWeight.w500,
+                                                            fontSize: 10,
+                                                            letterSpacing: 0.0,
+                                                            color: AppTheme.grey
+                                                                .withOpacity(0.5),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 100,
+                                            height: 100,
+                                            child: Image.asset("assets/fitness_app/runner.png"),
+                                          )
+                                        ]
+                                    )
+                                )
+                              ]
+                          ),
+                        )
+
+                      ],
+                    )
+                ),
+                SliverGrid(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 24.0,
+                      crossAxisSpacing: 24.0,
+                      childAspectRatio: 1.0,
+                    ),
+                    delegate: SliverChildListDelegate(
+                        [
+                          MenuItemView(
+                            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                parent: widget.animationController,
+                                curve:
+                                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                            animationController: widget.animationController,
+                            titulo: "Tareas",
+                            imagepath: "assets/fitness_app/area1.png",
+                          ),
+                          MenuItemView(
+                            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                parent: widget.animationController,
+                                curve:
+                                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                            animationController: widget.animationController,
+                            titulo: "Evaluación",
+                            imagepath: "assets/fitness_app/area2.png",
+                          ),
+                          MenuItemView(
+                            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                parent: widget.animationController,
+                                curve:
+                                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                            animationController: widget.animationController,
+                            titulo: "Asistencia",
+                            imagepath: "assets/fitness_app/area3.png",
+                          ),
+                          MenuItemView(
+                            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                parent: widget.animationController,
+                                curve:
+                                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                            animationController: widget.animationController,
+                            titulo: "Comportamiento",
+                            imagepath: "assets/fitness_app/area1.png",
+                          ),
+                          MenuItemView(
+                            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                parent: widget.animationController,
+                                curve:
+                                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                            animationController: widget.animationController,
+                            titulo: "Horario",
+                            imagepath: "assets/fitness_app/area2.png",
+                          ),
+                          MenuItemView(
+                            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                parent: widget.animationController,
+                                curve:
+                                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                            animationController: widget.animationController,
+                            titulo: "Cursos",
+                            imagepath: "assets/fitness_app/area3.png",
+                          ),
+                          MenuItemView(
+                            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                parent: widget.animationController,
+                                curve:
+                                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                            animationController: widget.animationController,
+                            titulo: "Boleta de Nota",
+                            imagepath: "assets/fitness_app/area1.png",
+                          ),
+                          MenuItemView(
+                            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                parent: widget.animationController,
+                                curve:
+                                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                            animationController: widget.animationController,
+                            titulo: "Pago en línea",
+                            imagepath: "assets/fitness_app/area2.png",
+                          )
+
+                        ]
+                    )
+                )
+              ],
+            );
+          })
+      );
+    /*ListView.builder(
       controller: scrollController,
       padding: EdgeInsets.only(
         top: AppBar().preferredSize.height +
@@ -196,75 +561,25 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
         widget.animationController.forward();
         return listViews[index];
       },
+    );*/
+  }
+}
+
+class BodyWidget extends StatelessWidget {
+  final Color color;
+
+  BodyWidget(this.color);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100.0,
+      color: color,
+      alignment: Alignment.center,
+
     );
   }
-
-  void addAllListData() {
-    const int count = 6;
-    listViews.add(
-      HijosView(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController,
-            curve:
-            Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController,
-      ),
-    );
-
-    listViews.add(
-      WorkoutView(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController,
-            curve:
-            Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController,
-      ),
-    );
-
-    listViews.add(
-      TitleView(
-        titleTxt: 'Programas',
-        subTxt: null,
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController,
-            curve:
-            Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController,
-      ),
-    );
-
-    listViews.add(
-      RunningView(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController,
-            curve:
-            Interval((1 / count) * 3, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController,
-      ),
-    );
-
-    listViews.add(
-      TitleView(
-        titleTxt: 'Area of focus',
-        subTxt: 'more',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController,
-            curve:
-            Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController,
-      ),
-    );
-
-    listViews.add(
-      AreaListView(
-        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-                parent: widget.animationController,
-                curve: Interval((1 / count) * 5, 1.0,
-                    curve: Curves.fastOutSlowIn))),
-        mainScreenAnimationController: widget.animationController,
-      ),
-    );
-  }
-
+}
+enum ItemMenu{
+  TAREA, EVALAUCION, ASISTENCIA, COMPORTAMIENTO, HORARIO, CURSOS, BOLETA, ESTADO_CUENTA
 }
