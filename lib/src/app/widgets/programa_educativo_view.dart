@@ -23,7 +23,7 @@ class ProgramaEducativoView extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(
-                      left: 24, right: 24, top: 0, bottom: 0),
+                      left: 16, right: 16, top: 0, bottom: 0),
                   child: Stack(
                     children: <Widget>[
                       Padding(

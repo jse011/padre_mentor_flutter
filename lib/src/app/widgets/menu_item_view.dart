@@ -22,6 +22,7 @@ class MenuItemView extends StatelessWidget {
             transform: new Matrix4.translationValues(
                 0.0, 30 * (1.0 - animation.value), 0.0),
             child: Container(
+              margin: const EdgeInsets.only(top: 0, left: 16, right: 16, bottom: 0),
               decoration: BoxDecoration(
                 color: AppTheme.white,
                 borderRadius: const BorderRadius.only(
