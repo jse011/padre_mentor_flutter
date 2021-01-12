@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:padre_mentor/bottom_navigation_view/bottom_bar_view.dart';
 import 'package:padre_mentor/model/tabIcon_data.dart';
+import 'package:padre_mentor/src/app/page/contactos/contactos_view.dart';
 import 'package:padre_mentor/src/app/page/portal_alumno/portal_alumno_screen.dart';
 import 'package:padre_mentor/src/app/page/portal_alumno/portal_alumno_view.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
@@ -18,7 +19,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePage extends State<MyHomePage>
     with TickerProviderStateMixin {
   AnimationController animationController;
-
   List<TabIconData> tabIconsList = TabIconData.tabIconsList;
 
   Widget tabBody = Container(
@@ -84,7 +84,7 @@ class _MyHomePage extends State<MyHomePage>
           tabIconsList: tabIconsList,
           addClick: () {},
           changeIndex: (int index) {
-            if (index == 0 || index == 2) {
+            if (index == 0) {
               animationController.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;
@@ -103,6 +103,10 @@ class _MyHomePage extends State<MyHomePage>
                   tabBody =
                       PortalAlumnoView(animationController: animationController);
                 });
+              });
+            }else if(index == 2){
+              setState(() {
+                  tabBody = ContactosView(animationController: animationController,);
               });
             }
           },

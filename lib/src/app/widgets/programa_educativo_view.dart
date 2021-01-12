@@ -1,33 +1,33 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/app_theme.dart';
 
 class ProgramaEducativoView extends StatelessWidget {
-  final AnimationController animationController;
-  final Animation animation;
 
-  const ProgramaEducativoView({Key key, this.animationController, this.animation})
+
+  const ProgramaEducativoView({Key key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: animationController,
-      builder: (BuildContext context, Widget child) {
-        return FadeTransition(
-          opacity: animation,
-          child: new Transform(
-            transform: new Matrix4.translationValues(
-                0.0, 30 * (1.0 - animation.value), 0.0),
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 16, right: 16, top: 0, bottom: 0),
-                  child: Stack(
+    return Container(
+        height: MediaQuery.of(context).size.height*0.30,
+        width: MediaQuery.of(context).size.width,
+        margin: const EdgeInsets.only(left: 8, right: 8, top: 0, bottom: 16),
+        child:
+        Stack(
+            alignment: Alignment.center,
+            overflow: Overflow.visible,
+            children: [
+              Positioned(
+                top: -10.0,
+                left: 0.0,
+                right: 0.0,
+                child:  Stack(
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(top: 16, bottom: 16),
+                        padding: const EdgeInsets.only(top: 24, bottom: 0),
                         child: Container(
                           decoration: BoxDecoration(
                             color: AppTheme.white,
@@ -48,7 +48,7 @@ class ProgramaEducativoView extends StatelessWidget {
                             children: <Widget>[
                               ClipRRect(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
+                                BorderRadius.all(Radius.circular(8.0)),
                                 child: SizedBox(
                                   height: 74,
                                   child: AspectRatio(
@@ -74,12 +74,12 @@ class ProgramaEducativoView extends StatelessWidget {
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
                                             fontFamily:
-                                                AppTheme.fontName,
+                                            AppTheme.fontName,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 14,
                                             letterSpacing: 0.0,
                                             color:
-                                                AppTheme.nearlyDarkBlue,
+                                            AppTheme.nearlyDarkBlue,
                                           ),
                                         ),
                                       ),
@@ -93,7 +93,7 @@ class ProgramaEducativoView extends StatelessWidget {
                                       right: 16,
                                     ),
                                     child: Text(
-                                      "Jose Arias Orezano\n Año 2020",
+                                      "Año 2020\nJose Arias Orezano",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         fontFamily: AppTheme.fontName,
@@ -111,23 +111,43 @@ class ProgramaEducativoView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Positioned(
-                        top: -16,
-                        left: 0,
-                        child: SizedBox(
-                          width: 110,
-                          height: 110,
-                          child: Image.asset("assets/fitness_app/runner.png"),
+                      Container(
+                        height: 80,
+                        width: 70,
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+                            child: CachedNetworkImage(
+                                height: 60,
+                                width: 60,
+                                placeholder: (context, url) => CircularProgressIndicator(),
+                                imageUrl:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQafW4xEyCctVR93QOaGoE-b9jdXAgEJAJbDg&usqp=CAU',
+                                imageBuilder: (context, imageProvider) => Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(50)),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                        ),
+                                        boxShadow: <BoxShadow>[
+                                          BoxShadow(color: AppTheme.grey.withOpacity(0.6), offset: const Offset(1.0, 4.0), blurRadius: 8),
+                                        ]
+                                    )
+                                )
+                            ),
+                          ),
                         ),
                       )
-                    ],
-                  ),
+                      /*SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: Image.asset("assets/fitness_app/runner.png"),
+                      )*/
+                    ]
                 ),
-              ],
-            ),
-          ),
-        );
-      },
+              )
+            ]
+        )
     );
   }
 }

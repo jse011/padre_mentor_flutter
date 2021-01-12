@@ -27,6 +27,7 @@ class PortalAlumnoView extends View{
   @override
   _PortalAlumnoState createState() =>
       _PortalAlumnoState();
+
 }
 
 class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoController> {
@@ -176,6 +177,9 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                                               image: imageProvider,
                                               fit: BoxFit.cover,
                                             ),
+                                              boxShadow: <BoxShadow>[
+                                                BoxShadow(color: AppTheme.grey.withOpacity(0.4), offset: const Offset(2.0, 2.0), blurRadius: 6),
+                                              ]
                                           )
                                       )
                                   );
@@ -249,240 +253,13 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                                 onPageChanged: (index, reason) {
                                   setState(() {
                                     _currentIndex = index;
-                                    widget.animationController.reset();
-                                    Future.delayed(const Duration(milliseconds: 500), () {
-// Here you can write your code
-                                      setState(() {
-                                        widget.animationController.forward();
-                                      });
 
-                                    });
                                   });
                                 },
                               ),
                               items: <Widget>[
-                                Container(
-                                    height: MediaQuery.of(context).size.height*0.30,
-                                    width: MediaQuery.of(context).size.width,
-                                    margin: const EdgeInsets.only(left: 8, right: 8, top: 0, bottom: 16),
-                                    child:
-                                    Stack(
-                                        alignment: Alignment.center,
-                                        overflow: Overflow.visible,
-                                        children: [
-                                          Positioned(
-                                            top: -10.0,
-                                            left: 0.0,
-                                            right: 0.0,
-                                            child:  Stack(
-                                                children: <Widget>[
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(top: 24, bottom: 0),
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                        color: AppTheme.white,
-                                                        borderRadius: BorderRadius.only(
-                                                            topLeft: Radius.circular(8.0),
-                                                            bottomLeft: Radius.circular(8.0),
-                                                            bottomRight: Radius.circular(8.0),
-                                                            topRight: Radius.circular(8.0)),
-                                                        boxShadow: <BoxShadow>[
-                                                          BoxShadow(
-                                                              color: AppTheme.grey.withOpacity(0.4),
-                                                              offset: Offset(1.1, 1.1),
-                                                              blurRadius: 10.0),
-                                                        ],
-                                                      ),
-                                                      child: Stack(
-                                                        alignment: Alignment.topLeft,
-                                                        children: <Widget>[
-                                                          ClipRRect(
-                                                            borderRadius:
-                                                            BorderRadius.all(Radius.circular(8.0)),
-                                                            child: SizedBox(
-                                                              height: 74,
-                                                              child: AspectRatio(
-                                                                aspectRatio: 1.714,
-                                                                child: Image.asset(
-                                                                    "assets/fitness_app/back.png"),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: <Widget>[
-                                                              Row(
-                                                                children: <Widget>[
-                                                                  Padding(
-                                                                    padding: const EdgeInsets.only(
-                                                                      left: 100,
-                                                                      right: 16,
-                                                                      top: 16,
-                                                                    ),
-                                                                    child: Text(
-                                                                      "Educación Secundaria",
-                                                                      textAlign: TextAlign.left,
-                                                                      style: TextStyle(
-                                                                        fontFamily:
-                                                                        AppTheme.fontName,
-                                                                        fontWeight: FontWeight.w500,
-                                                                        fontSize: 14,
-                                                                        letterSpacing: 0.0,
-                                                                        color:
-                                                                        AppTheme.nearlyDarkBlue,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Padding(
-                                                                padding: const EdgeInsets.only(
-                                                                  left: 100,
-                                                                  bottom: 12,
-                                                                  top: 4,
-                                                                  right: 16,
-                                                                ),
-                                                                child: Text(
-                                                                  "Año 2020\nJose Arias Orezano",
-                                                                  textAlign: TextAlign.left,
-                                                                  style: TextStyle(
-                                                                    fontFamily: AppTheme.fontName,
-                                                                    fontWeight: FontWeight.w500,
-                                                                    fontSize: 10,
-                                                                    letterSpacing: 0.0,
-                                                                    color: AppTheme.grey
-                                                                        .withOpacity(0.5),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 100,
-                                                    height: 100,
-                                                    child: Image.asset("assets/fitness_app/runner.png"),
-                                                  )
-                                                ]
-                                            ),
-                                          )
-                                        ]
-                                    )
-                                ),
-                                Container(
-                                    height: MediaQuery.of(context).size.height*0.30,
-                                    width: MediaQuery.of(context).size.width,
-                                    margin: const EdgeInsets.only(left: 8, right: 8, top: 0, bottom: 16),
-                                    child:
-                                    Stack(
-                                        alignment: Alignment.center,
-                                        overflow: Overflow.visible,
-                                        children: [
-                                          Positioned(
-                                              top: -10.0,
-                                              left: 0.0,
-                                              right: 0.0,
-                                              child:  Stack(
-                                                  children: <Widget>[
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(top: 24, bottom: 0),
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                          color: AppTheme.white,
-                                                          borderRadius: BorderRadius.only(
-                                                              topLeft: Radius.circular(8.0),
-                                                              bottomLeft: Radius.circular(8.0),
-                                                              bottomRight: Radius.circular(8.0),
-                                                              topRight: Radius.circular(8.0)),
-                                                          boxShadow: <BoxShadow>[
-                                                            BoxShadow(
-                                                                color: AppTheme.grey.withOpacity(0.4),
-                                                                offset: Offset(1.1, 1.1),
-                                                                blurRadius: 10.0),
-                                                          ],
-                                                        ),
-                                                        child: Stack(
-                                                          alignment: Alignment.topLeft,
-                                                          children: <Widget>[
-                                                            ClipRRect(
-                                                              borderRadius:
-                                                              BorderRadius.all(Radius.circular(8.0)),
-                                                              child: SizedBox(
-                                                                height: 74,
-                                                                child: AspectRatio(
-                                                                  aspectRatio: 1.714,
-                                                                  child: Image.asset(
-                                                                      "assets/fitness_app/back.png"),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Column(
-                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                              children: <Widget>[
-                                                                Row(
-                                                                  children: <Widget>[
-                                                                    Padding(
-                                                                      padding: const EdgeInsets.only(
-                                                                        left: 100,
-                                                                        right: 16,
-                                                                        top: 16,
-                                                                      ),
-                                                                      child: Text(
-                                                                        "Educación Secundaria",
-                                                                        textAlign: TextAlign.left,
-                                                                        style: TextStyle(
-                                                                          fontFamily:
-                                                                          AppTheme.fontName,
-                                                                          fontWeight: FontWeight.w500,
-                                                                          fontSize: 14,
-                                                                          letterSpacing: 0.0,
-                                                                          color:
-                                                                          AppTheme.nearlyDarkBlue,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                                Padding(
-                                                                  padding: const EdgeInsets.only(
-                                                                    left: 100,
-                                                                    bottom: 12,
-                                                                    top: 4,
-                                                                    right: 16,
-                                                                  ),
-                                                                  child: Text(
-                                                                    "Año 2020\nJose Arias Orezano",
-                                                                    textAlign: TextAlign.left,
-                                                                    style: TextStyle(
-                                                                      fontFamily: AppTheme.fontName,
-                                                                      fontWeight: FontWeight.w500,
-                                                                      fontSize: 10,
-                                                                      letterSpacing: 0.0,
-                                                                      color: AppTheme.grey
-                                                                          .withOpacity(0.5),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 100,
-                                                      height: 100,
-                                                      child: Image.asset("assets/fitness_app/runner.png"),
-                                                    )
-                                                  ]
-                                              ),
-                                          )
-                                        ]
-                                    )
-                                )
+                                ProgramaEducativoView(),
+                                ProgramaEducativoView()
                               ]
                           ),
                         )
@@ -612,6 +389,4 @@ class BodyWidget extends StatelessWidget {
     );
   }
 }
-enum ItemMenu{
-  TAREA, EVALAUCION, ASISTENCIA, COMPORTAMIENTO, HORARIO, CURSOS, BOLETA, ESTADO_CUENTA
-}
+
