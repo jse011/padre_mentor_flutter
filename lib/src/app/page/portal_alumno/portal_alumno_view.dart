@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:padre_mentor/src/app/page/boleta_notas/boleta_notas_router.dart';
 import 'package:padre_mentor/src/app/page/portal_alumno/portal_alumno_controller.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/app/widgets/animation_view.dart';
@@ -200,7 +201,7 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
     );
   }
 
-
+  List<int> list = [1,2,3,4,5];
   int countView = 11;
   Widget getMainListViewUI() {
 
@@ -251,16 +252,11 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                                 pauseAutoPlayOnTouch: true,
                                 aspectRatio: 2.0,
                                 onPageChanged: (index, reason) {
-                                  setState(() {
-                                    _currentIndex = index;
-
-                                  });
+                                  _currentIndex = index;
+                                  controller.onSelectedProgramaSelected(controller.programaEducativoList[index]);
                                 },
                               ),
-                              items: <Widget>[
-                                ProgramaEducativoView(),
-                                ProgramaEducativoView()
-                              ]
+                              items:controller.programaEducativoList.map((item) => ProgramaEducativoView(titulo: item.nombrePrograma, subTitulo: "Año "+item.nombreAnioAcademico+"\n"+item.nombreHijo, foto: item.fotoHijo,)).toList(),
                           ),
                         )
 
@@ -284,6 +280,9 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                             animationController: widget.animationController,
                             titulo: "Tareas",
                             imagepath: "assets/fitness_app/area1.png",
+                              onTap: () {
+                                Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas());
+                              },
                           ),
                           MenuItemView(
                             animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
@@ -293,6 +292,9 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                             animationController: widget.animationController,
                             titulo: "Evaluación",
                             imagepath: "assets/fitness_app/area2.png",
+                            onTap: () {
+                              Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas());
+                            },
                           ),
                           MenuItemView(
                             animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
@@ -302,6 +304,9 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                             animationController: widget.animationController,
                             titulo: "Asistencia",
                             imagepath: "assets/fitness_app/area3.png",
+                            onTap: () {
+                              Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas());
+                            },
                           ),
                           MenuItemView(
                             animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
@@ -311,6 +316,9 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                             animationController: widget.animationController,
                             titulo: "Comportamiento",
                             imagepath: "assets/fitness_app/area1.png",
+                            onTap: () {
+                              Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas());
+                            },
                           ),
                           MenuItemView(
                             animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
@@ -320,6 +328,9 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                             animationController: widget.animationController,
                             titulo: "Horario",
                             imagepath: "assets/fitness_app/area2.png",
+                            onTap: () {
+                              Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas());
+                            },
                           ),
                           MenuItemView(
                             animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
@@ -329,6 +340,9 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                             animationController: widget.animationController,
                             titulo: "Cursos",
                             imagepath: "assets/fitness_app/area3.png",
+                            onTap: () {
+                              Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas());
+                            },
                           ),
                           MenuItemView(
                             animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
@@ -338,6 +352,9 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                             animationController: widget.animationController,
                             titulo: "Boleta de Nota",
                             imagepath: "assets/fitness_app/area1.png",
+                            onTap: () {
+                              Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas());
+                            },
                           ),
                           MenuItemView(
                             animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
@@ -347,6 +364,9 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                             animationController: widget.animationController,
                             titulo: "Pago en línea",
                             imagepath: "assets/fitness_app/area2.png",
+                            onTap: () {
+                              Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas());
+                            },
                           )
 
                         ]

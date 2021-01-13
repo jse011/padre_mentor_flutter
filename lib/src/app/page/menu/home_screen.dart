@@ -105,9 +105,15 @@ class _MyHomePage extends State<MyHomePage>
                 });
               });
             }else if(index == 2){
-              setState(() {
+              animationController.reverse().then<dynamic>((data) {
+                if (!mounted) {
+                  return;
+                }
+                setState(() {
                   tabBody = ContactosView(animationController: animationController,);
+                });
               });
+
             }
           },
         ),

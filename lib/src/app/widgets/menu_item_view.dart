@@ -7,8 +7,8 @@ class MenuItemView extends StatelessWidget {
   final String imagepath;
   final AnimationController animationController;
   final Animation animation;
-
-  const MenuItemView({Key key, this.animationController, this.animation, this.titulo, this.imagepath})
+  final Function onTap;
+  const MenuItemView({Key key, this.animationController, this.animation, this.titulo, this.imagepath, this.onTap})
       : super(key: key);
 
   @override
@@ -45,7 +45,10 @@ class MenuItemView extends StatelessWidget {
                   hoverColor: Colors.transparent,
                   borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                   splashColor: AppTheme.nearlyDarkBlue.withOpacity(0.2),
-                  onTap: () {},
+                  onTap: () {
+                    if(onTap!=null)
+                      onTap();
+                  },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[

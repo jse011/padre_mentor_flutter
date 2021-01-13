@@ -102,7 +102,6 @@ class AnioAcademicoAlumnoSerial{
     int estadoId;
     int tipoId;
     int personaId;
-    bool toogle;
 
     AnioAcademicoAlumnoSerial(
     {this.idAnioAcademico,
@@ -114,8 +113,7 @@ class AnioAcademicoAlumnoSerial{
        this.organigramaId,
        this.estadoId,
        this.tipoId,
-       this.personaId,
-       this.toogle});
+       this.personaId});
 
     factory AnioAcademicoAlumnoSerial.fromJson(Map<String, dynamic> json) => _$AnioAcademicoAlumnoSerialFromJson(json);
 
@@ -172,4 +170,136 @@ class CargaCursosSerial{
   factory CargaCursosSerial.fromJson(Map<String, dynamic> json) => _$CargaCursosSerialFromJson(json);
 
     Map<String, dynamic> toJson() => _$CargaCursosSerialToJson(this);
+}
+
+@JsonSerializable()
+class ContratoSerial{
+  
+   int idContrato;
+   int personaId;//Alum_Id
+   int idAnioAcademico;
+   int nroHno;
+   int nivelAcaId;
+   int seccionId;
+   int periodoId;
+   int vigente;
+   int estadoId;
+   int apoderadoId;
+
+
+   ContratoSerial(
+   {  this.idContrato,
+      this.personaId,
+      this.idAnioAcademico,
+      this.nroHno,
+      this.nivelAcaId,
+      this.seccionId,
+      this.periodoId,
+      this.vigente,
+      this.estadoId,
+      this.apoderadoId});
+
+  factory ContratoSerial.fromJson(Map<String, dynamic> json) => _$ContratoSerialFromJson(json);
+
+   Map<String, dynamic> toJson() => _$ContratoSerialToJson(this);
+}
+
+@JsonSerializable()
+class DetalleContratoAcadSerial{
+
+   int idContratoDetAcad;
+   int idContrato;
+   int cargaCursoId;
+   int cargaAcademicaId;
+   String notaPromedio;
+   String escala;
+    int anioAcademicoId;
+    int idNivelAcademico;
+    int cursoId;
+    int grupoId;
+    int aulaId;
+
+   DetalleContratoAcadSerial(
+    {this.idContratoDetAcad,
+      this.idContrato,
+      this.cargaCursoId,
+      this.cargaAcademicaId,
+      this.notaPromedio,
+      this.escala,
+      this.anioAcademicoId,
+      this.idNivelAcademico,
+      this.cursoId,
+      this.grupoId,
+      this.aulaId});
+
+   factory DetalleContratoAcadSerial.fromJson(Map<String, dynamic> json) => _$DetalleContratoAcadSerialFromJson(json);
+
+   Map<String, dynamic> toJson() => _$DetalleContratoAcadSerialToJson(this);
+
+}
+
+@JsonSerializable()
+class PlanCursosSerial {
+  
+   int planCursoId;
+   int cursoId;
+   int periodoId;
+   int planEstudiosId;
+
+   PlanCursosSerial(
+   {this.planCursoId, this.cursoId, this.periodoId, this.planEstudiosId});
+
+   factory PlanCursosSerial.fromJson(Map<String, dynamic> json) => _$PlanCursosSerialFromJson(json);
+
+   Map<String, dynamic> toJson() => _$PlanCursosSerialToJson(this);
+}
+
+@JsonSerializable()
+class ProgramasEducativoSerial {
+
+   int programaEduId;
+   String nombre;
+   String nroCiclos;
+   int nivelAcadId;
+   int tipoEvaluacionId;
+   int estadoId;
+   int entidadId;
+   int tipoInformeSiagieId;
+   int tipoProgramaId;
+   int tipoMatriculaId;
+
+   ProgramasEducativoSerial(
+    {this.programaEduId,
+      this.nombre,
+      this.nroCiclos,
+      this.nivelAcadId,
+      this.tipoEvaluacionId,
+      this.estadoId,
+      this.entidadId,
+      this.tipoInformeSiagieId,
+      this.tipoProgramaId,
+      this.tipoMatriculaId});
+
+   factory ProgramasEducativoSerial.fromJson(Map<String, dynamic> json) => _$ProgramasEducativoSerialFromJson(json);
+
+   Map<String, dynamic> toJson() => _$ProgramasEducativoSerialToJson(this);
+}
+
+@JsonSerializable()
+class PlanEstudiosSerial {
+ 
+   int planEstudiosId;
+   int programaEduId;
+   String nombrePlan;
+   String alias;
+   int estadoId;
+   String nroResolucion;
+   String fechaResolucion;
+
+   PlanEstudiosSerial({this.planEstudiosId, this.programaEduId, this.nombrePlan,
+      this.alias, this.estadoId, this.nroResolucion, this.fechaResolucion});
+
+   factory PlanEstudiosSerial.fromJson(Map<String, dynamic> json) => _$PlanEstudiosSerialFromJson(json);
+
+   Map<String, dynamic> toJson() => _$PlanEstudiosSerialToJson(this);
 }

@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import '../utils/app_theme.dart';
 
 class ProgramaEducativoView extends StatelessWidget {
+  final String titulo;
+  final String subTitulo;
+  final String foto;
 
-
-  const ProgramaEducativoView({Key key})
+  const ProgramaEducativoView({Key key, this.titulo, this.subTitulo, this.foto})
       : super(key: key);
 
   @override
@@ -70,7 +72,7 @@ class ProgramaEducativoView extends StatelessWidget {
                                           top: 16,
                                         ),
                                         child: Text(
-                                          "Educación Secundaria",
+                                          titulo,
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
                                             fontFamily:
@@ -93,7 +95,7 @@ class ProgramaEducativoView extends StatelessWidget {
                                       right: 16,
                                     ),
                                     child: Text(
-                                      "Año 2020\nJose Arias Orezano",
+                                      subTitulo,
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         fontFamily: AppTheme.fontName,
@@ -121,7 +123,7 @@ class ProgramaEducativoView extends StatelessWidget {
                                 height: 60,
                                 width: 60,
                                 placeholder: (context, url) => CircularProgressIndicator(),
-                                imageUrl:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQafW4xEyCctVR93QOaGoE-b9jdXAgEJAJbDg&usqp=CAU',
+                                imageUrl: foto,
                                 imageBuilder: (context, imageProvider) => Container(
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.all(Radius.circular(50)),

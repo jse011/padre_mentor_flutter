@@ -1750,6 +1750,4373 @@ class $RelacionesTable extends Relaciones
   }
 }
 
+class AnioAcademicoAlumnoData extends DataClass
+    implements Insertable<AnioAcademicoAlumnoData> {
+  final int idAnioAcademico;
+  final String nombre;
+  final String fechaInicio;
+  final String fechaFin;
+  final String denominacion;
+  final int georeferenciaId;
+  final int organigramaId;
+  final int estadoId;
+  final int tipoId;
+  final int personaId;
+  final bool toogle;
+  AnioAcademicoAlumnoData(
+      {@required this.idAnioAcademico,
+      this.nombre,
+      this.fechaInicio,
+      this.fechaFin,
+      this.denominacion,
+      this.georeferenciaId,
+      this.organigramaId,
+      this.estadoId,
+      this.tipoId,
+      this.personaId,
+      this.toogle});
+  factory AnioAcademicoAlumnoData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    final boolType = db.typeSystem.forDartType<bool>();
+    return AnioAcademicoAlumnoData(
+      idAnioAcademico: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}id_anio_academico']),
+      nombre:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}nombre']),
+      fechaInicio: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}fecha_inicio']),
+      fechaFin: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}fecha_fin']),
+      denominacion: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}denominacion']),
+      georeferenciaId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}georeferencia_id']),
+      organigramaId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}organigrama_id']),
+      estadoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}estado_id']),
+      tipoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}tipo_id']),
+      personaId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}persona_id']),
+      toogle:
+          boolType.mapFromDatabaseResponse(data['${effectivePrefix}toogle']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || idAnioAcademico != null) {
+      map['id_anio_academico'] = Variable<int>(idAnioAcademico);
+    }
+    if (!nullToAbsent || nombre != null) {
+      map['nombre'] = Variable<String>(nombre);
+    }
+    if (!nullToAbsent || fechaInicio != null) {
+      map['fecha_inicio'] = Variable<String>(fechaInicio);
+    }
+    if (!nullToAbsent || fechaFin != null) {
+      map['fecha_fin'] = Variable<String>(fechaFin);
+    }
+    if (!nullToAbsent || denominacion != null) {
+      map['denominacion'] = Variable<String>(denominacion);
+    }
+    if (!nullToAbsent || georeferenciaId != null) {
+      map['georeferencia_id'] = Variable<int>(georeferenciaId);
+    }
+    if (!nullToAbsent || organigramaId != null) {
+      map['organigrama_id'] = Variable<int>(organigramaId);
+    }
+    if (!nullToAbsent || estadoId != null) {
+      map['estado_id'] = Variable<int>(estadoId);
+    }
+    if (!nullToAbsent || tipoId != null) {
+      map['tipo_id'] = Variable<int>(tipoId);
+    }
+    if (!nullToAbsent || personaId != null) {
+      map['persona_id'] = Variable<int>(personaId);
+    }
+    if (!nullToAbsent || toogle != null) {
+      map['toogle'] = Variable<bool>(toogle);
+    }
+    return map;
+  }
+
+  AnioAcademicoAlumnoCompanion toCompanion(bool nullToAbsent) {
+    return AnioAcademicoAlumnoCompanion(
+      idAnioAcademico: idAnioAcademico == null && nullToAbsent
+          ? const Value.absent()
+          : Value(idAnioAcademico),
+      nombre:
+          nombre == null && nullToAbsent ? const Value.absent() : Value(nombre),
+      fechaInicio: fechaInicio == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fechaInicio),
+      fechaFin: fechaFin == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fechaFin),
+      denominacion: denominacion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(denominacion),
+      georeferenciaId: georeferenciaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(georeferenciaId),
+      organigramaId: organigramaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(organigramaId),
+      estadoId: estadoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadoId),
+      tipoId:
+          tipoId == null && nullToAbsent ? const Value.absent() : Value(tipoId),
+      personaId: personaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(personaId),
+      toogle:
+          toogle == null && nullToAbsent ? const Value.absent() : Value(toogle),
+    );
+  }
+
+  factory AnioAcademicoAlumnoData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return AnioAcademicoAlumnoData(
+      idAnioAcademico: serializer.fromJson<int>(json['idAnioAcademico']),
+      nombre: serializer.fromJson<String>(json['nombre']),
+      fechaInicio: serializer.fromJson<String>(json['fechaInicio']),
+      fechaFin: serializer.fromJson<String>(json['fechaFin']),
+      denominacion: serializer.fromJson<String>(json['denominacion']),
+      georeferenciaId: serializer.fromJson<int>(json['georeferenciaId']),
+      organigramaId: serializer.fromJson<int>(json['organigramaId']),
+      estadoId: serializer.fromJson<int>(json['estadoId']),
+      tipoId: serializer.fromJson<int>(json['tipoId']),
+      personaId: serializer.fromJson<int>(json['personaId']),
+      toogle: serializer.fromJson<bool>(json['toogle']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'idAnioAcademico': serializer.toJson<int>(idAnioAcademico),
+      'nombre': serializer.toJson<String>(nombre),
+      'fechaInicio': serializer.toJson<String>(fechaInicio),
+      'fechaFin': serializer.toJson<String>(fechaFin),
+      'denominacion': serializer.toJson<String>(denominacion),
+      'georeferenciaId': serializer.toJson<int>(georeferenciaId),
+      'organigramaId': serializer.toJson<int>(organigramaId),
+      'estadoId': serializer.toJson<int>(estadoId),
+      'tipoId': serializer.toJson<int>(tipoId),
+      'personaId': serializer.toJson<int>(personaId),
+      'toogle': serializer.toJson<bool>(toogle),
+    };
+  }
+
+  AnioAcademicoAlumnoData copyWith(
+          {int idAnioAcademico,
+          String nombre,
+          String fechaInicio,
+          String fechaFin,
+          String denominacion,
+          int georeferenciaId,
+          int organigramaId,
+          int estadoId,
+          int tipoId,
+          int personaId,
+          bool toogle}) =>
+      AnioAcademicoAlumnoData(
+        idAnioAcademico: idAnioAcademico ?? this.idAnioAcademico,
+        nombre: nombre ?? this.nombre,
+        fechaInicio: fechaInicio ?? this.fechaInicio,
+        fechaFin: fechaFin ?? this.fechaFin,
+        denominacion: denominacion ?? this.denominacion,
+        georeferenciaId: georeferenciaId ?? this.georeferenciaId,
+        organigramaId: organigramaId ?? this.organigramaId,
+        estadoId: estadoId ?? this.estadoId,
+        tipoId: tipoId ?? this.tipoId,
+        personaId: personaId ?? this.personaId,
+        toogle: toogle ?? this.toogle,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('AnioAcademicoAlumnoData(')
+          ..write('idAnioAcademico: $idAnioAcademico, ')
+          ..write('nombre: $nombre, ')
+          ..write('fechaInicio: $fechaInicio, ')
+          ..write('fechaFin: $fechaFin, ')
+          ..write('denominacion: $denominacion, ')
+          ..write('georeferenciaId: $georeferenciaId, ')
+          ..write('organigramaId: $organigramaId, ')
+          ..write('estadoId: $estadoId, ')
+          ..write('tipoId: $tipoId, ')
+          ..write('personaId: $personaId, ')
+          ..write('toogle: $toogle')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      idAnioAcademico.hashCode,
+      $mrjc(
+          nombre.hashCode,
+          $mrjc(
+              fechaInicio.hashCode,
+              $mrjc(
+                  fechaFin.hashCode,
+                  $mrjc(
+                      denominacion.hashCode,
+                      $mrjc(
+                          georeferenciaId.hashCode,
+                          $mrjc(
+                              organigramaId.hashCode,
+                              $mrjc(
+                                  estadoId.hashCode,
+                                  $mrjc(
+                                      tipoId.hashCode,
+                                      $mrjc(personaId.hashCode,
+                                          toogle.hashCode)))))))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is AnioAcademicoAlumnoData &&
+          other.idAnioAcademico == this.idAnioAcademico &&
+          other.nombre == this.nombre &&
+          other.fechaInicio == this.fechaInicio &&
+          other.fechaFin == this.fechaFin &&
+          other.denominacion == this.denominacion &&
+          other.georeferenciaId == this.georeferenciaId &&
+          other.organigramaId == this.organigramaId &&
+          other.estadoId == this.estadoId &&
+          other.tipoId == this.tipoId &&
+          other.personaId == this.personaId &&
+          other.toogle == this.toogle);
+}
+
+class AnioAcademicoAlumnoCompanion
+    extends UpdateCompanion<AnioAcademicoAlumnoData> {
+  final Value<int> idAnioAcademico;
+  final Value<String> nombre;
+  final Value<String> fechaInicio;
+  final Value<String> fechaFin;
+  final Value<String> denominacion;
+  final Value<int> georeferenciaId;
+  final Value<int> organigramaId;
+  final Value<int> estadoId;
+  final Value<int> tipoId;
+  final Value<int> personaId;
+  final Value<bool> toogle;
+  const AnioAcademicoAlumnoCompanion({
+    this.idAnioAcademico = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.fechaInicio = const Value.absent(),
+    this.fechaFin = const Value.absent(),
+    this.denominacion = const Value.absent(),
+    this.georeferenciaId = const Value.absent(),
+    this.organigramaId = const Value.absent(),
+    this.estadoId = const Value.absent(),
+    this.tipoId = const Value.absent(),
+    this.personaId = const Value.absent(),
+    this.toogle = const Value.absent(),
+  });
+  AnioAcademicoAlumnoCompanion.insert({
+    @required int idAnioAcademico,
+    this.nombre = const Value.absent(),
+    this.fechaInicio = const Value.absent(),
+    this.fechaFin = const Value.absent(),
+    this.denominacion = const Value.absent(),
+    this.georeferenciaId = const Value.absent(),
+    this.organigramaId = const Value.absent(),
+    this.estadoId = const Value.absent(),
+    this.tipoId = const Value.absent(),
+    this.personaId = const Value.absent(),
+    this.toogle = const Value.absent(),
+  }) : idAnioAcademico = Value(idAnioAcademico);
+  static Insertable<AnioAcademicoAlumnoData> custom({
+    Expression<int> idAnioAcademico,
+    Expression<String> nombre,
+    Expression<String> fechaInicio,
+    Expression<String> fechaFin,
+    Expression<String> denominacion,
+    Expression<int> georeferenciaId,
+    Expression<int> organigramaId,
+    Expression<int> estadoId,
+    Expression<int> tipoId,
+    Expression<int> personaId,
+    Expression<bool> toogle,
+  }) {
+    return RawValuesInsertable({
+      if (idAnioAcademico != null) 'id_anio_academico': idAnioAcademico,
+      if (nombre != null) 'nombre': nombre,
+      if (fechaInicio != null) 'fecha_inicio': fechaInicio,
+      if (fechaFin != null) 'fecha_fin': fechaFin,
+      if (denominacion != null) 'denominacion': denominacion,
+      if (georeferenciaId != null) 'georeferencia_id': georeferenciaId,
+      if (organigramaId != null) 'organigrama_id': organigramaId,
+      if (estadoId != null) 'estado_id': estadoId,
+      if (tipoId != null) 'tipo_id': tipoId,
+      if (personaId != null) 'persona_id': personaId,
+      if (toogle != null) 'toogle': toogle,
+    });
+  }
+
+  AnioAcademicoAlumnoCompanion copyWith(
+      {Value<int> idAnioAcademico,
+      Value<String> nombre,
+      Value<String> fechaInicio,
+      Value<String> fechaFin,
+      Value<String> denominacion,
+      Value<int> georeferenciaId,
+      Value<int> organigramaId,
+      Value<int> estadoId,
+      Value<int> tipoId,
+      Value<int> personaId,
+      Value<bool> toogle}) {
+    return AnioAcademicoAlumnoCompanion(
+      idAnioAcademico: idAnioAcademico ?? this.idAnioAcademico,
+      nombre: nombre ?? this.nombre,
+      fechaInicio: fechaInicio ?? this.fechaInicio,
+      fechaFin: fechaFin ?? this.fechaFin,
+      denominacion: denominacion ?? this.denominacion,
+      georeferenciaId: georeferenciaId ?? this.georeferenciaId,
+      organigramaId: organigramaId ?? this.organigramaId,
+      estadoId: estadoId ?? this.estadoId,
+      tipoId: tipoId ?? this.tipoId,
+      personaId: personaId ?? this.personaId,
+      toogle: toogle ?? this.toogle,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (idAnioAcademico.present) {
+      map['id_anio_academico'] = Variable<int>(idAnioAcademico.value);
+    }
+    if (nombre.present) {
+      map['nombre'] = Variable<String>(nombre.value);
+    }
+    if (fechaInicio.present) {
+      map['fecha_inicio'] = Variable<String>(fechaInicio.value);
+    }
+    if (fechaFin.present) {
+      map['fecha_fin'] = Variable<String>(fechaFin.value);
+    }
+    if (denominacion.present) {
+      map['denominacion'] = Variable<String>(denominacion.value);
+    }
+    if (georeferenciaId.present) {
+      map['georeferencia_id'] = Variable<int>(georeferenciaId.value);
+    }
+    if (organigramaId.present) {
+      map['organigrama_id'] = Variable<int>(organigramaId.value);
+    }
+    if (estadoId.present) {
+      map['estado_id'] = Variable<int>(estadoId.value);
+    }
+    if (tipoId.present) {
+      map['tipo_id'] = Variable<int>(tipoId.value);
+    }
+    if (personaId.present) {
+      map['persona_id'] = Variable<int>(personaId.value);
+    }
+    if (toogle.present) {
+      map['toogle'] = Variable<bool>(toogle.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AnioAcademicoAlumnoCompanion(')
+          ..write('idAnioAcademico: $idAnioAcademico, ')
+          ..write('nombre: $nombre, ')
+          ..write('fechaInicio: $fechaInicio, ')
+          ..write('fechaFin: $fechaFin, ')
+          ..write('denominacion: $denominacion, ')
+          ..write('georeferenciaId: $georeferenciaId, ')
+          ..write('organigramaId: $organigramaId, ')
+          ..write('estadoId: $estadoId, ')
+          ..write('tipoId: $tipoId, ')
+          ..write('personaId: $personaId, ')
+          ..write('toogle: $toogle')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $AnioAcademicoAlumnoTable extends AnioAcademicoAlumno
+    with TableInfo<$AnioAcademicoAlumnoTable, AnioAcademicoAlumnoData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $AnioAcademicoAlumnoTable(this._db, [this._alias]);
+  final VerificationMeta _idAnioAcademicoMeta =
+      const VerificationMeta('idAnioAcademico');
+  GeneratedIntColumn _idAnioAcademico;
+  @override
+  GeneratedIntColumn get idAnioAcademico =>
+      _idAnioAcademico ??= _constructIdAnioAcademico();
+  GeneratedIntColumn _constructIdAnioAcademico() {
+    return GeneratedIntColumn(
+      'id_anio_academico',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _nombreMeta = const VerificationMeta('nombre');
+  GeneratedTextColumn _nombre;
+  @override
+  GeneratedTextColumn get nombre => _nombre ??= _constructNombre();
+  GeneratedTextColumn _constructNombre() {
+    return GeneratedTextColumn(
+      'nombre',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _fechaInicioMeta =
+      const VerificationMeta('fechaInicio');
+  GeneratedTextColumn _fechaInicio;
+  @override
+  GeneratedTextColumn get fechaInicio =>
+      _fechaInicio ??= _constructFechaInicio();
+  GeneratedTextColumn _constructFechaInicio() {
+    return GeneratedTextColumn(
+      'fecha_inicio',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _fechaFinMeta = const VerificationMeta('fechaFin');
+  GeneratedTextColumn _fechaFin;
+  @override
+  GeneratedTextColumn get fechaFin => _fechaFin ??= _constructFechaFin();
+  GeneratedTextColumn _constructFechaFin() {
+    return GeneratedTextColumn(
+      'fecha_fin',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _denominacionMeta =
+      const VerificationMeta('denominacion');
+  GeneratedTextColumn _denominacion;
+  @override
+  GeneratedTextColumn get denominacion =>
+      _denominacion ??= _constructDenominacion();
+  GeneratedTextColumn _constructDenominacion() {
+    return GeneratedTextColumn(
+      'denominacion',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _georeferenciaIdMeta =
+      const VerificationMeta('georeferenciaId');
+  GeneratedIntColumn _georeferenciaId;
+  @override
+  GeneratedIntColumn get georeferenciaId =>
+      _georeferenciaId ??= _constructGeoreferenciaId();
+  GeneratedIntColumn _constructGeoreferenciaId() {
+    return GeneratedIntColumn(
+      'georeferencia_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _organigramaIdMeta =
+      const VerificationMeta('organigramaId');
+  GeneratedIntColumn _organigramaId;
+  @override
+  GeneratedIntColumn get organigramaId =>
+      _organigramaId ??= _constructOrganigramaId();
+  GeneratedIntColumn _constructOrganigramaId() {
+    return GeneratedIntColumn(
+      'organigrama_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoIdMeta = const VerificationMeta('estadoId');
+  GeneratedIntColumn _estadoId;
+  @override
+  GeneratedIntColumn get estadoId => _estadoId ??= _constructEstadoId();
+  GeneratedIntColumn _constructEstadoId() {
+    return GeneratedIntColumn(
+      'estado_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoIdMeta = const VerificationMeta('tipoId');
+  GeneratedIntColumn _tipoId;
+  @override
+  GeneratedIntColumn get tipoId => _tipoId ??= _constructTipoId();
+  GeneratedIntColumn _constructTipoId() {
+    return GeneratedIntColumn(
+      'tipo_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _personaIdMeta = const VerificationMeta('personaId');
+  GeneratedIntColumn _personaId;
+  @override
+  GeneratedIntColumn get personaId => _personaId ??= _constructPersonaId();
+  GeneratedIntColumn _constructPersonaId() {
+    return GeneratedIntColumn(
+      'persona_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _toogleMeta = const VerificationMeta('toogle');
+  GeneratedBoolColumn _toogle;
+  @override
+  GeneratedBoolColumn get toogle => _toogle ??= _constructToogle();
+  GeneratedBoolColumn _constructToogle() {
+    return GeneratedBoolColumn(
+      'toogle',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        idAnioAcademico,
+        nombre,
+        fechaInicio,
+        fechaFin,
+        denominacion,
+        georeferenciaId,
+        organigramaId,
+        estadoId,
+        tipoId,
+        personaId,
+        toogle
+      ];
+  @override
+  $AnioAcademicoAlumnoTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'anio_academico_alumno';
+  @override
+  final String actualTableName = 'anio_academico_alumno';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<AnioAcademicoAlumnoData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id_anio_academico')) {
+      context.handle(
+          _idAnioAcademicoMeta,
+          idAnioAcademico.isAcceptableOrUnknown(
+              data['id_anio_academico'], _idAnioAcademicoMeta));
+    } else if (isInserting) {
+      context.missing(_idAnioAcademicoMeta);
+    }
+    if (data.containsKey('nombre')) {
+      context.handle(_nombreMeta,
+          nombre.isAcceptableOrUnknown(data['nombre'], _nombreMeta));
+    }
+    if (data.containsKey('fecha_inicio')) {
+      context.handle(
+          _fechaInicioMeta,
+          fechaInicio.isAcceptableOrUnknown(
+              data['fecha_inicio'], _fechaInicioMeta));
+    }
+    if (data.containsKey('fecha_fin')) {
+      context.handle(_fechaFinMeta,
+          fechaFin.isAcceptableOrUnknown(data['fecha_fin'], _fechaFinMeta));
+    }
+    if (data.containsKey('denominacion')) {
+      context.handle(
+          _denominacionMeta,
+          denominacion.isAcceptableOrUnknown(
+              data['denominacion'], _denominacionMeta));
+    }
+    if (data.containsKey('georeferencia_id')) {
+      context.handle(
+          _georeferenciaIdMeta,
+          georeferenciaId.isAcceptableOrUnknown(
+              data['georeferencia_id'], _georeferenciaIdMeta));
+    }
+    if (data.containsKey('organigrama_id')) {
+      context.handle(
+          _organigramaIdMeta,
+          organigramaId.isAcceptableOrUnknown(
+              data['organigrama_id'], _organigramaIdMeta));
+    }
+    if (data.containsKey('estado_id')) {
+      context.handle(_estadoIdMeta,
+          estadoId.isAcceptableOrUnknown(data['estado_id'], _estadoIdMeta));
+    }
+    if (data.containsKey('tipo_id')) {
+      context.handle(_tipoIdMeta,
+          tipoId.isAcceptableOrUnknown(data['tipo_id'], _tipoIdMeta));
+    }
+    if (data.containsKey('persona_id')) {
+      context.handle(_personaIdMeta,
+          personaId.isAcceptableOrUnknown(data['persona_id'], _personaIdMeta));
+    }
+    if (data.containsKey('toogle')) {
+      context.handle(_toogleMeta,
+          toogle.isAcceptableOrUnknown(data['toogle'], _toogleMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {idAnioAcademico, personaId};
+  @override
+  AnioAcademicoAlumnoData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return AnioAcademicoAlumnoData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $AnioAcademicoAlumnoTable createAlias(String alias) {
+    return $AnioAcademicoAlumnoTable(_db, alias);
+  }
+}
+
+class ProgramasEducativoData extends DataClass
+    implements Insertable<ProgramasEducativoData> {
+  final int programaEduId;
+  final String nombre;
+  final String nroCiclos;
+  final int nivelAcadId;
+  final int tipoEvaluacionId;
+  final int estadoId;
+  final int entidadId;
+  final int tipoInformeSiagieId;
+  final bool toogle;
+  final int tipoProgramaId;
+  final int tipoMatriculaId;
+  ProgramasEducativoData(
+      {@required this.programaEduId,
+      this.nombre,
+      this.nroCiclos,
+      this.nivelAcadId,
+      this.tipoEvaluacionId,
+      this.estadoId,
+      this.entidadId,
+      this.tipoInformeSiagieId,
+      this.toogle,
+      this.tipoProgramaId,
+      this.tipoMatriculaId});
+  factory ProgramasEducativoData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    final boolType = db.typeSystem.forDartType<bool>();
+    return ProgramasEducativoData(
+      programaEduId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}programa_edu_id']),
+      nombre:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}nombre']),
+      nroCiclos: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}nro_ciclos']),
+      nivelAcadId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}nivel_acad_id']),
+      tipoEvaluacionId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}tipo_evaluacion_id']),
+      estadoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}estado_id']),
+      entidadId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}entidad_id']),
+      tipoInformeSiagieId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}tipo_informe_siagie_id']),
+      toogle:
+          boolType.mapFromDatabaseResponse(data['${effectivePrefix}toogle']),
+      tipoProgramaId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}tipo_programa_id']),
+      tipoMatriculaId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}tipo_matricula_id']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || programaEduId != null) {
+      map['programa_edu_id'] = Variable<int>(programaEduId);
+    }
+    if (!nullToAbsent || nombre != null) {
+      map['nombre'] = Variable<String>(nombre);
+    }
+    if (!nullToAbsent || nroCiclos != null) {
+      map['nro_ciclos'] = Variable<String>(nroCiclos);
+    }
+    if (!nullToAbsent || nivelAcadId != null) {
+      map['nivel_acad_id'] = Variable<int>(nivelAcadId);
+    }
+    if (!nullToAbsent || tipoEvaluacionId != null) {
+      map['tipo_evaluacion_id'] = Variable<int>(tipoEvaluacionId);
+    }
+    if (!nullToAbsent || estadoId != null) {
+      map['estado_id'] = Variable<int>(estadoId);
+    }
+    if (!nullToAbsent || entidadId != null) {
+      map['entidad_id'] = Variable<int>(entidadId);
+    }
+    if (!nullToAbsent || tipoInformeSiagieId != null) {
+      map['tipo_informe_siagie_id'] = Variable<int>(tipoInformeSiagieId);
+    }
+    if (!nullToAbsent || toogle != null) {
+      map['toogle'] = Variable<bool>(toogle);
+    }
+    if (!nullToAbsent || tipoProgramaId != null) {
+      map['tipo_programa_id'] = Variable<int>(tipoProgramaId);
+    }
+    if (!nullToAbsent || tipoMatriculaId != null) {
+      map['tipo_matricula_id'] = Variable<int>(tipoMatriculaId);
+    }
+    return map;
+  }
+
+  ProgramasEducativoCompanion toCompanion(bool nullToAbsent) {
+    return ProgramasEducativoCompanion(
+      programaEduId: programaEduId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(programaEduId),
+      nombre:
+          nombre == null && nullToAbsent ? const Value.absent() : Value(nombre),
+      nroCiclos: nroCiclos == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nroCiclos),
+      nivelAcadId: nivelAcadId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nivelAcadId),
+      tipoEvaluacionId: tipoEvaluacionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tipoEvaluacionId),
+      estadoId: estadoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadoId),
+      entidadId: entidadId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(entidadId),
+      tipoInformeSiagieId: tipoInformeSiagieId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tipoInformeSiagieId),
+      toogle:
+          toogle == null && nullToAbsent ? const Value.absent() : Value(toogle),
+      tipoProgramaId: tipoProgramaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tipoProgramaId),
+      tipoMatriculaId: tipoMatriculaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tipoMatriculaId),
+    );
+  }
+
+  factory ProgramasEducativoData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return ProgramasEducativoData(
+      programaEduId: serializer.fromJson<int>(json['programaEduId']),
+      nombre: serializer.fromJson<String>(json['nombre']),
+      nroCiclos: serializer.fromJson<String>(json['nroCiclos']),
+      nivelAcadId: serializer.fromJson<int>(json['nivelAcadId']),
+      tipoEvaluacionId: serializer.fromJson<int>(json['tipoEvaluacionId']),
+      estadoId: serializer.fromJson<int>(json['estadoId']),
+      entidadId: serializer.fromJson<int>(json['entidadId']),
+      tipoInformeSiagieId:
+          serializer.fromJson<int>(json['tipoInformeSiagieId']),
+      toogle: serializer.fromJson<bool>(json['toogle']),
+      tipoProgramaId: serializer.fromJson<int>(json['tipoProgramaId']),
+      tipoMatriculaId: serializer.fromJson<int>(json['tipoMatriculaId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'programaEduId': serializer.toJson<int>(programaEduId),
+      'nombre': serializer.toJson<String>(nombre),
+      'nroCiclos': serializer.toJson<String>(nroCiclos),
+      'nivelAcadId': serializer.toJson<int>(nivelAcadId),
+      'tipoEvaluacionId': serializer.toJson<int>(tipoEvaluacionId),
+      'estadoId': serializer.toJson<int>(estadoId),
+      'entidadId': serializer.toJson<int>(entidadId),
+      'tipoInformeSiagieId': serializer.toJson<int>(tipoInformeSiagieId),
+      'toogle': serializer.toJson<bool>(toogle),
+      'tipoProgramaId': serializer.toJson<int>(tipoProgramaId),
+      'tipoMatriculaId': serializer.toJson<int>(tipoMatriculaId),
+    };
+  }
+
+  ProgramasEducativoData copyWith(
+          {int programaEduId,
+          String nombre,
+          String nroCiclos,
+          int nivelAcadId,
+          int tipoEvaluacionId,
+          int estadoId,
+          int entidadId,
+          int tipoInformeSiagieId,
+          bool toogle,
+          int tipoProgramaId,
+          int tipoMatriculaId}) =>
+      ProgramasEducativoData(
+        programaEduId: programaEduId ?? this.programaEduId,
+        nombre: nombre ?? this.nombre,
+        nroCiclos: nroCiclos ?? this.nroCiclos,
+        nivelAcadId: nivelAcadId ?? this.nivelAcadId,
+        tipoEvaluacionId: tipoEvaluacionId ?? this.tipoEvaluacionId,
+        estadoId: estadoId ?? this.estadoId,
+        entidadId: entidadId ?? this.entidadId,
+        tipoInformeSiagieId: tipoInformeSiagieId ?? this.tipoInformeSiagieId,
+        toogle: toogle ?? this.toogle,
+        tipoProgramaId: tipoProgramaId ?? this.tipoProgramaId,
+        tipoMatriculaId: tipoMatriculaId ?? this.tipoMatriculaId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('ProgramasEducativoData(')
+          ..write('programaEduId: $programaEduId, ')
+          ..write('nombre: $nombre, ')
+          ..write('nroCiclos: $nroCiclos, ')
+          ..write('nivelAcadId: $nivelAcadId, ')
+          ..write('tipoEvaluacionId: $tipoEvaluacionId, ')
+          ..write('estadoId: $estadoId, ')
+          ..write('entidadId: $entidadId, ')
+          ..write('tipoInformeSiagieId: $tipoInformeSiagieId, ')
+          ..write('toogle: $toogle, ')
+          ..write('tipoProgramaId: $tipoProgramaId, ')
+          ..write('tipoMatriculaId: $tipoMatriculaId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      programaEduId.hashCode,
+      $mrjc(
+          nombre.hashCode,
+          $mrjc(
+              nroCiclos.hashCode,
+              $mrjc(
+                  nivelAcadId.hashCode,
+                  $mrjc(
+                      tipoEvaluacionId.hashCode,
+                      $mrjc(
+                          estadoId.hashCode,
+                          $mrjc(
+                              entidadId.hashCode,
+                              $mrjc(
+                                  tipoInformeSiagieId.hashCode,
+                                  $mrjc(
+                                      toogle.hashCode,
+                                      $mrjc(tipoProgramaId.hashCode,
+                                          tipoMatriculaId.hashCode)))))))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is ProgramasEducativoData &&
+          other.programaEduId == this.programaEduId &&
+          other.nombre == this.nombre &&
+          other.nroCiclos == this.nroCiclos &&
+          other.nivelAcadId == this.nivelAcadId &&
+          other.tipoEvaluacionId == this.tipoEvaluacionId &&
+          other.estadoId == this.estadoId &&
+          other.entidadId == this.entidadId &&
+          other.tipoInformeSiagieId == this.tipoInformeSiagieId &&
+          other.toogle == this.toogle &&
+          other.tipoProgramaId == this.tipoProgramaId &&
+          other.tipoMatriculaId == this.tipoMatriculaId);
+}
+
+class ProgramasEducativoCompanion
+    extends UpdateCompanion<ProgramasEducativoData> {
+  final Value<int> programaEduId;
+  final Value<String> nombre;
+  final Value<String> nroCiclos;
+  final Value<int> nivelAcadId;
+  final Value<int> tipoEvaluacionId;
+  final Value<int> estadoId;
+  final Value<int> entidadId;
+  final Value<int> tipoInformeSiagieId;
+  final Value<bool> toogle;
+  final Value<int> tipoProgramaId;
+  final Value<int> tipoMatriculaId;
+  const ProgramasEducativoCompanion({
+    this.programaEduId = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.nroCiclos = const Value.absent(),
+    this.nivelAcadId = const Value.absent(),
+    this.tipoEvaluacionId = const Value.absent(),
+    this.estadoId = const Value.absent(),
+    this.entidadId = const Value.absent(),
+    this.tipoInformeSiagieId = const Value.absent(),
+    this.toogle = const Value.absent(),
+    this.tipoProgramaId = const Value.absent(),
+    this.tipoMatriculaId = const Value.absent(),
+  });
+  ProgramasEducativoCompanion.insert({
+    this.programaEduId = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.nroCiclos = const Value.absent(),
+    this.nivelAcadId = const Value.absent(),
+    this.tipoEvaluacionId = const Value.absent(),
+    this.estadoId = const Value.absent(),
+    this.entidadId = const Value.absent(),
+    this.tipoInformeSiagieId = const Value.absent(),
+    this.toogle = const Value.absent(),
+    this.tipoProgramaId = const Value.absent(),
+    this.tipoMatriculaId = const Value.absent(),
+  });
+  static Insertable<ProgramasEducativoData> custom({
+    Expression<int> programaEduId,
+    Expression<String> nombre,
+    Expression<String> nroCiclos,
+    Expression<int> nivelAcadId,
+    Expression<int> tipoEvaluacionId,
+    Expression<int> estadoId,
+    Expression<int> entidadId,
+    Expression<int> tipoInformeSiagieId,
+    Expression<bool> toogle,
+    Expression<int> tipoProgramaId,
+    Expression<int> tipoMatriculaId,
+  }) {
+    return RawValuesInsertable({
+      if (programaEduId != null) 'programa_edu_id': programaEduId,
+      if (nombre != null) 'nombre': nombre,
+      if (nroCiclos != null) 'nro_ciclos': nroCiclos,
+      if (nivelAcadId != null) 'nivel_acad_id': nivelAcadId,
+      if (tipoEvaluacionId != null) 'tipo_evaluacion_id': tipoEvaluacionId,
+      if (estadoId != null) 'estado_id': estadoId,
+      if (entidadId != null) 'entidad_id': entidadId,
+      if (tipoInformeSiagieId != null)
+        'tipo_informe_siagie_id': tipoInformeSiagieId,
+      if (toogle != null) 'toogle': toogle,
+      if (tipoProgramaId != null) 'tipo_programa_id': tipoProgramaId,
+      if (tipoMatriculaId != null) 'tipo_matricula_id': tipoMatriculaId,
+    });
+  }
+
+  ProgramasEducativoCompanion copyWith(
+      {Value<int> programaEduId,
+      Value<String> nombre,
+      Value<String> nroCiclos,
+      Value<int> nivelAcadId,
+      Value<int> tipoEvaluacionId,
+      Value<int> estadoId,
+      Value<int> entidadId,
+      Value<int> tipoInformeSiagieId,
+      Value<bool> toogle,
+      Value<int> tipoProgramaId,
+      Value<int> tipoMatriculaId}) {
+    return ProgramasEducativoCompanion(
+      programaEduId: programaEduId ?? this.programaEduId,
+      nombre: nombre ?? this.nombre,
+      nroCiclos: nroCiclos ?? this.nroCiclos,
+      nivelAcadId: nivelAcadId ?? this.nivelAcadId,
+      tipoEvaluacionId: tipoEvaluacionId ?? this.tipoEvaluacionId,
+      estadoId: estadoId ?? this.estadoId,
+      entidadId: entidadId ?? this.entidadId,
+      tipoInformeSiagieId: tipoInformeSiagieId ?? this.tipoInformeSiagieId,
+      toogle: toogle ?? this.toogle,
+      tipoProgramaId: tipoProgramaId ?? this.tipoProgramaId,
+      tipoMatriculaId: tipoMatriculaId ?? this.tipoMatriculaId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (programaEduId.present) {
+      map['programa_edu_id'] = Variable<int>(programaEduId.value);
+    }
+    if (nombre.present) {
+      map['nombre'] = Variable<String>(nombre.value);
+    }
+    if (nroCiclos.present) {
+      map['nro_ciclos'] = Variable<String>(nroCiclos.value);
+    }
+    if (nivelAcadId.present) {
+      map['nivel_acad_id'] = Variable<int>(nivelAcadId.value);
+    }
+    if (tipoEvaluacionId.present) {
+      map['tipo_evaluacion_id'] = Variable<int>(tipoEvaluacionId.value);
+    }
+    if (estadoId.present) {
+      map['estado_id'] = Variable<int>(estadoId.value);
+    }
+    if (entidadId.present) {
+      map['entidad_id'] = Variable<int>(entidadId.value);
+    }
+    if (tipoInformeSiagieId.present) {
+      map['tipo_informe_siagie_id'] = Variable<int>(tipoInformeSiagieId.value);
+    }
+    if (toogle.present) {
+      map['toogle'] = Variable<bool>(toogle.value);
+    }
+    if (tipoProgramaId.present) {
+      map['tipo_programa_id'] = Variable<int>(tipoProgramaId.value);
+    }
+    if (tipoMatriculaId.present) {
+      map['tipo_matricula_id'] = Variable<int>(tipoMatriculaId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProgramasEducativoCompanion(')
+          ..write('programaEduId: $programaEduId, ')
+          ..write('nombre: $nombre, ')
+          ..write('nroCiclos: $nroCiclos, ')
+          ..write('nivelAcadId: $nivelAcadId, ')
+          ..write('tipoEvaluacionId: $tipoEvaluacionId, ')
+          ..write('estadoId: $estadoId, ')
+          ..write('entidadId: $entidadId, ')
+          ..write('tipoInformeSiagieId: $tipoInformeSiagieId, ')
+          ..write('toogle: $toogle, ')
+          ..write('tipoProgramaId: $tipoProgramaId, ')
+          ..write('tipoMatriculaId: $tipoMatriculaId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ProgramasEducativoTable extends ProgramasEducativo
+    with TableInfo<$ProgramasEducativoTable, ProgramasEducativoData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $ProgramasEducativoTable(this._db, [this._alias]);
+  final VerificationMeta _programaEduIdMeta =
+      const VerificationMeta('programaEduId');
+  GeneratedIntColumn _programaEduId;
+  @override
+  GeneratedIntColumn get programaEduId =>
+      _programaEduId ??= _constructProgramaEduId();
+  GeneratedIntColumn _constructProgramaEduId() {
+    return GeneratedIntColumn(
+      'programa_edu_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _nombreMeta = const VerificationMeta('nombre');
+  GeneratedTextColumn _nombre;
+  @override
+  GeneratedTextColumn get nombre => _nombre ??= _constructNombre();
+  GeneratedTextColumn _constructNombre() {
+    return GeneratedTextColumn(
+      'nombre',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _nroCiclosMeta = const VerificationMeta('nroCiclos');
+  GeneratedTextColumn _nroCiclos;
+  @override
+  GeneratedTextColumn get nroCiclos => _nroCiclos ??= _constructNroCiclos();
+  GeneratedTextColumn _constructNroCiclos() {
+    return GeneratedTextColumn(
+      'nro_ciclos',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _nivelAcadIdMeta =
+      const VerificationMeta('nivelAcadId');
+  GeneratedIntColumn _nivelAcadId;
+  @override
+  GeneratedIntColumn get nivelAcadId =>
+      _nivelAcadId ??= _constructNivelAcadId();
+  GeneratedIntColumn _constructNivelAcadId() {
+    return GeneratedIntColumn(
+      'nivel_acad_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoEvaluacionIdMeta =
+      const VerificationMeta('tipoEvaluacionId');
+  GeneratedIntColumn _tipoEvaluacionId;
+  @override
+  GeneratedIntColumn get tipoEvaluacionId =>
+      _tipoEvaluacionId ??= _constructTipoEvaluacionId();
+  GeneratedIntColumn _constructTipoEvaluacionId() {
+    return GeneratedIntColumn(
+      'tipo_evaluacion_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoIdMeta = const VerificationMeta('estadoId');
+  GeneratedIntColumn _estadoId;
+  @override
+  GeneratedIntColumn get estadoId => _estadoId ??= _constructEstadoId();
+  GeneratedIntColumn _constructEstadoId() {
+    return GeneratedIntColumn(
+      'estado_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _entidadIdMeta = const VerificationMeta('entidadId');
+  GeneratedIntColumn _entidadId;
+  @override
+  GeneratedIntColumn get entidadId => _entidadId ??= _constructEntidadId();
+  GeneratedIntColumn _constructEntidadId() {
+    return GeneratedIntColumn(
+      'entidad_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoInformeSiagieIdMeta =
+      const VerificationMeta('tipoInformeSiagieId');
+  GeneratedIntColumn _tipoInformeSiagieId;
+  @override
+  GeneratedIntColumn get tipoInformeSiagieId =>
+      _tipoInformeSiagieId ??= _constructTipoInformeSiagieId();
+  GeneratedIntColumn _constructTipoInformeSiagieId() {
+    return GeneratedIntColumn(
+      'tipo_informe_siagie_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _toogleMeta = const VerificationMeta('toogle');
+  GeneratedBoolColumn _toogle;
+  @override
+  GeneratedBoolColumn get toogle => _toogle ??= _constructToogle();
+  GeneratedBoolColumn _constructToogle() {
+    return GeneratedBoolColumn(
+      'toogle',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoProgramaIdMeta =
+      const VerificationMeta('tipoProgramaId');
+  GeneratedIntColumn _tipoProgramaId;
+  @override
+  GeneratedIntColumn get tipoProgramaId =>
+      _tipoProgramaId ??= _constructTipoProgramaId();
+  GeneratedIntColumn _constructTipoProgramaId() {
+    return GeneratedIntColumn(
+      'tipo_programa_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoMatriculaIdMeta =
+      const VerificationMeta('tipoMatriculaId');
+  GeneratedIntColumn _tipoMatriculaId;
+  @override
+  GeneratedIntColumn get tipoMatriculaId =>
+      _tipoMatriculaId ??= _constructTipoMatriculaId();
+  GeneratedIntColumn _constructTipoMatriculaId() {
+    return GeneratedIntColumn(
+      'tipo_matricula_id',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        programaEduId,
+        nombre,
+        nroCiclos,
+        nivelAcadId,
+        tipoEvaluacionId,
+        estadoId,
+        entidadId,
+        tipoInformeSiagieId,
+        toogle,
+        tipoProgramaId,
+        tipoMatriculaId
+      ];
+  @override
+  $ProgramasEducativoTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'programas_educativo';
+  @override
+  final String actualTableName = 'programas_educativo';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<ProgramasEducativoData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('programa_edu_id')) {
+      context.handle(
+          _programaEduIdMeta,
+          programaEduId.isAcceptableOrUnknown(
+              data['programa_edu_id'], _programaEduIdMeta));
+    }
+    if (data.containsKey('nombre')) {
+      context.handle(_nombreMeta,
+          nombre.isAcceptableOrUnknown(data['nombre'], _nombreMeta));
+    }
+    if (data.containsKey('nro_ciclos')) {
+      context.handle(_nroCiclosMeta,
+          nroCiclos.isAcceptableOrUnknown(data['nro_ciclos'], _nroCiclosMeta));
+    }
+    if (data.containsKey('nivel_acad_id')) {
+      context.handle(
+          _nivelAcadIdMeta,
+          nivelAcadId.isAcceptableOrUnknown(
+              data['nivel_acad_id'], _nivelAcadIdMeta));
+    }
+    if (data.containsKey('tipo_evaluacion_id')) {
+      context.handle(
+          _tipoEvaluacionIdMeta,
+          tipoEvaluacionId.isAcceptableOrUnknown(
+              data['tipo_evaluacion_id'], _tipoEvaluacionIdMeta));
+    }
+    if (data.containsKey('estado_id')) {
+      context.handle(_estadoIdMeta,
+          estadoId.isAcceptableOrUnknown(data['estado_id'], _estadoIdMeta));
+    }
+    if (data.containsKey('entidad_id')) {
+      context.handle(_entidadIdMeta,
+          entidadId.isAcceptableOrUnknown(data['entidad_id'], _entidadIdMeta));
+    }
+    if (data.containsKey('tipo_informe_siagie_id')) {
+      context.handle(
+          _tipoInformeSiagieIdMeta,
+          tipoInformeSiagieId.isAcceptableOrUnknown(
+              data['tipo_informe_siagie_id'], _tipoInformeSiagieIdMeta));
+    }
+    if (data.containsKey('toogle')) {
+      context.handle(_toogleMeta,
+          toogle.isAcceptableOrUnknown(data['toogle'], _toogleMeta));
+    }
+    if (data.containsKey('tipo_programa_id')) {
+      context.handle(
+          _tipoProgramaIdMeta,
+          tipoProgramaId.isAcceptableOrUnknown(
+              data['tipo_programa_id'], _tipoProgramaIdMeta));
+    }
+    if (data.containsKey('tipo_matricula_id')) {
+      context.handle(
+          _tipoMatriculaIdMeta,
+          tipoMatriculaId.isAcceptableOrUnknown(
+              data['tipo_matricula_id'], _tipoMatriculaIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {programaEduId};
+  @override
+  ProgramasEducativoData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return ProgramasEducativoData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $ProgramasEducativoTable createAlias(String alias) {
+    return $ProgramasEducativoTable(_db, alias);
+  }
+}
+
+class PlanEstudioData extends DataClass implements Insertable<PlanEstudioData> {
+  final int planEstudiosId;
+  final int programaEduId;
+  final String nombrePlan;
+  final String aliasPlan;
+  final int estadoId;
+  final String nroResolucion;
+  final String fechaResolucion;
+  PlanEstudioData(
+      {@required this.planEstudiosId,
+      this.programaEduId,
+      this.nombrePlan,
+      this.aliasPlan,
+      this.estadoId,
+      this.nroResolucion,
+      this.fechaResolucion});
+  factory PlanEstudioData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return PlanEstudioData(
+      planEstudiosId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}plan_estudios_id']),
+      programaEduId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}programa_edu_id']),
+      nombrePlan: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}nombre_plan']),
+      aliasPlan: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}alias_plan']),
+      estadoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}estado_id']),
+      nroResolucion: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}nro_resolucion']),
+      fechaResolucion: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}fecha_resolucion']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || planEstudiosId != null) {
+      map['plan_estudios_id'] = Variable<int>(planEstudiosId);
+    }
+    if (!nullToAbsent || programaEduId != null) {
+      map['programa_edu_id'] = Variable<int>(programaEduId);
+    }
+    if (!nullToAbsent || nombrePlan != null) {
+      map['nombre_plan'] = Variable<String>(nombrePlan);
+    }
+    if (!nullToAbsent || aliasPlan != null) {
+      map['alias_plan'] = Variable<String>(aliasPlan);
+    }
+    if (!nullToAbsent || estadoId != null) {
+      map['estado_id'] = Variable<int>(estadoId);
+    }
+    if (!nullToAbsent || nroResolucion != null) {
+      map['nro_resolucion'] = Variable<String>(nroResolucion);
+    }
+    if (!nullToAbsent || fechaResolucion != null) {
+      map['fecha_resolucion'] = Variable<String>(fechaResolucion);
+    }
+    return map;
+  }
+
+  PlanEstudioCompanion toCompanion(bool nullToAbsent) {
+    return PlanEstudioCompanion(
+      planEstudiosId: planEstudiosId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(planEstudiosId),
+      programaEduId: programaEduId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(programaEduId),
+      nombrePlan: nombrePlan == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nombrePlan),
+      aliasPlan: aliasPlan == null && nullToAbsent
+          ? const Value.absent()
+          : Value(aliasPlan),
+      estadoId: estadoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadoId),
+      nroResolucion: nroResolucion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nroResolucion),
+      fechaResolucion: fechaResolucion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fechaResolucion),
+    );
+  }
+
+  factory PlanEstudioData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return PlanEstudioData(
+      planEstudiosId: serializer.fromJson<int>(json['planEstudiosId']),
+      programaEduId: serializer.fromJson<int>(json['programaEduId']),
+      nombrePlan: serializer.fromJson<String>(json['nombrePlan']),
+      aliasPlan: serializer.fromJson<String>(json['aliasPlan']),
+      estadoId: serializer.fromJson<int>(json['estadoId']),
+      nroResolucion: serializer.fromJson<String>(json['nroResolucion']),
+      fechaResolucion: serializer.fromJson<String>(json['fechaResolucion']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'planEstudiosId': serializer.toJson<int>(planEstudiosId),
+      'programaEduId': serializer.toJson<int>(programaEduId),
+      'nombrePlan': serializer.toJson<String>(nombrePlan),
+      'aliasPlan': serializer.toJson<String>(aliasPlan),
+      'estadoId': serializer.toJson<int>(estadoId),
+      'nroResolucion': serializer.toJson<String>(nroResolucion),
+      'fechaResolucion': serializer.toJson<String>(fechaResolucion),
+    };
+  }
+
+  PlanEstudioData copyWith(
+          {int planEstudiosId,
+          int programaEduId,
+          String nombrePlan,
+          String aliasPlan,
+          int estadoId,
+          String nroResolucion,
+          String fechaResolucion}) =>
+      PlanEstudioData(
+        planEstudiosId: planEstudiosId ?? this.planEstudiosId,
+        programaEduId: programaEduId ?? this.programaEduId,
+        nombrePlan: nombrePlan ?? this.nombrePlan,
+        aliasPlan: aliasPlan ?? this.aliasPlan,
+        estadoId: estadoId ?? this.estadoId,
+        nroResolucion: nroResolucion ?? this.nroResolucion,
+        fechaResolucion: fechaResolucion ?? this.fechaResolucion,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('PlanEstudioData(')
+          ..write('planEstudiosId: $planEstudiosId, ')
+          ..write('programaEduId: $programaEduId, ')
+          ..write('nombrePlan: $nombrePlan, ')
+          ..write('aliasPlan: $aliasPlan, ')
+          ..write('estadoId: $estadoId, ')
+          ..write('nroResolucion: $nroResolucion, ')
+          ..write('fechaResolucion: $fechaResolucion')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      planEstudiosId.hashCode,
+      $mrjc(
+          programaEduId.hashCode,
+          $mrjc(
+              nombrePlan.hashCode,
+              $mrjc(
+                  aliasPlan.hashCode,
+                  $mrjc(
+                      estadoId.hashCode,
+                      $mrjc(nroResolucion.hashCode,
+                          fechaResolucion.hashCode)))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is PlanEstudioData &&
+          other.planEstudiosId == this.planEstudiosId &&
+          other.programaEduId == this.programaEduId &&
+          other.nombrePlan == this.nombrePlan &&
+          other.aliasPlan == this.aliasPlan &&
+          other.estadoId == this.estadoId &&
+          other.nroResolucion == this.nroResolucion &&
+          other.fechaResolucion == this.fechaResolucion);
+}
+
+class PlanEstudioCompanion extends UpdateCompanion<PlanEstudioData> {
+  final Value<int> planEstudiosId;
+  final Value<int> programaEduId;
+  final Value<String> nombrePlan;
+  final Value<String> aliasPlan;
+  final Value<int> estadoId;
+  final Value<String> nroResolucion;
+  final Value<String> fechaResolucion;
+  const PlanEstudioCompanion({
+    this.planEstudiosId = const Value.absent(),
+    this.programaEduId = const Value.absent(),
+    this.nombrePlan = const Value.absent(),
+    this.aliasPlan = const Value.absent(),
+    this.estadoId = const Value.absent(),
+    this.nroResolucion = const Value.absent(),
+    this.fechaResolucion = const Value.absent(),
+  });
+  PlanEstudioCompanion.insert({
+    this.planEstudiosId = const Value.absent(),
+    this.programaEduId = const Value.absent(),
+    this.nombrePlan = const Value.absent(),
+    this.aliasPlan = const Value.absent(),
+    this.estadoId = const Value.absent(),
+    this.nroResolucion = const Value.absent(),
+    this.fechaResolucion = const Value.absent(),
+  });
+  static Insertable<PlanEstudioData> custom({
+    Expression<int> planEstudiosId,
+    Expression<int> programaEduId,
+    Expression<String> nombrePlan,
+    Expression<String> aliasPlan,
+    Expression<int> estadoId,
+    Expression<String> nroResolucion,
+    Expression<String> fechaResolucion,
+  }) {
+    return RawValuesInsertable({
+      if (planEstudiosId != null) 'plan_estudios_id': planEstudiosId,
+      if (programaEduId != null) 'programa_edu_id': programaEduId,
+      if (nombrePlan != null) 'nombre_plan': nombrePlan,
+      if (aliasPlan != null) 'alias_plan': aliasPlan,
+      if (estadoId != null) 'estado_id': estadoId,
+      if (nroResolucion != null) 'nro_resolucion': nroResolucion,
+      if (fechaResolucion != null) 'fecha_resolucion': fechaResolucion,
+    });
+  }
+
+  PlanEstudioCompanion copyWith(
+      {Value<int> planEstudiosId,
+      Value<int> programaEduId,
+      Value<String> nombrePlan,
+      Value<String> aliasPlan,
+      Value<int> estadoId,
+      Value<String> nroResolucion,
+      Value<String> fechaResolucion}) {
+    return PlanEstudioCompanion(
+      planEstudiosId: planEstudiosId ?? this.planEstudiosId,
+      programaEduId: programaEduId ?? this.programaEduId,
+      nombrePlan: nombrePlan ?? this.nombrePlan,
+      aliasPlan: aliasPlan ?? this.aliasPlan,
+      estadoId: estadoId ?? this.estadoId,
+      nroResolucion: nroResolucion ?? this.nroResolucion,
+      fechaResolucion: fechaResolucion ?? this.fechaResolucion,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (planEstudiosId.present) {
+      map['plan_estudios_id'] = Variable<int>(planEstudiosId.value);
+    }
+    if (programaEduId.present) {
+      map['programa_edu_id'] = Variable<int>(programaEduId.value);
+    }
+    if (nombrePlan.present) {
+      map['nombre_plan'] = Variable<String>(nombrePlan.value);
+    }
+    if (aliasPlan.present) {
+      map['alias_plan'] = Variable<String>(aliasPlan.value);
+    }
+    if (estadoId.present) {
+      map['estado_id'] = Variable<int>(estadoId.value);
+    }
+    if (nroResolucion.present) {
+      map['nro_resolucion'] = Variable<String>(nroResolucion.value);
+    }
+    if (fechaResolucion.present) {
+      map['fecha_resolucion'] = Variable<String>(fechaResolucion.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PlanEstudioCompanion(')
+          ..write('planEstudiosId: $planEstudiosId, ')
+          ..write('programaEduId: $programaEduId, ')
+          ..write('nombrePlan: $nombrePlan, ')
+          ..write('aliasPlan: $aliasPlan, ')
+          ..write('estadoId: $estadoId, ')
+          ..write('nroResolucion: $nroResolucion, ')
+          ..write('fechaResolucion: $fechaResolucion')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PlanEstudioTable extends PlanEstudio
+    with TableInfo<$PlanEstudioTable, PlanEstudioData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $PlanEstudioTable(this._db, [this._alias]);
+  final VerificationMeta _planEstudiosIdMeta =
+      const VerificationMeta('planEstudiosId');
+  GeneratedIntColumn _planEstudiosId;
+  @override
+  GeneratedIntColumn get planEstudiosId =>
+      _planEstudiosId ??= _constructPlanEstudiosId();
+  GeneratedIntColumn _constructPlanEstudiosId() {
+    return GeneratedIntColumn(
+      'plan_estudios_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _programaEduIdMeta =
+      const VerificationMeta('programaEduId');
+  GeneratedIntColumn _programaEduId;
+  @override
+  GeneratedIntColumn get programaEduId =>
+      _programaEduId ??= _constructProgramaEduId();
+  GeneratedIntColumn _constructProgramaEduId() {
+    return GeneratedIntColumn(
+      'programa_edu_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _nombrePlanMeta = const VerificationMeta('nombrePlan');
+  GeneratedTextColumn _nombrePlan;
+  @override
+  GeneratedTextColumn get nombrePlan => _nombrePlan ??= _constructNombrePlan();
+  GeneratedTextColumn _constructNombrePlan() {
+    return GeneratedTextColumn(
+      'nombre_plan',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _aliasPlanMeta = const VerificationMeta('aliasPlan');
+  GeneratedTextColumn _aliasPlan;
+  @override
+  GeneratedTextColumn get aliasPlan => _aliasPlan ??= _constructAliasPlan();
+  GeneratedTextColumn _constructAliasPlan() {
+    return GeneratedTextColumn(
+      'alias_plan',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoIdMeta = const VerificationMeta('estadoId');
+  GeneratedIntColumn _estadoId;
+  @override
+  GeneratedIntColumn get estadoId => _estadoId ??= _constructEstadoId();
+  GeneratedIntColumn _constructEstadoId() {
+    return GeneratedIntColumn(
+      'estado_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _nroResolucionMeta =
+      const VerificationMeta('nroResolucion');
+  GeneratedTextColumn _nroResolucion;
+  @override
+  GeneratedTextColumn get nroResolucion =>
+      _nroResolucion ??= _constructNroResolucion();
+  GeneratedTextColumn _constructNroResolucion() {
+    return GeneratedTextColumn(
+      'nro_resolucion',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _fechaResolucionMeta =
+      const VerificationMeta('fechaResolucion');
+  GeneratedTextColumn _fechaResolucion;
+  @override
+  GeneratedTextColumn get fechaResolucion =>
+      _fechaResolucion ??= _constructFechaResolucion();
+  GeneratedTextColumn _constructFechaResolucion() {
+    return GeneratedTextColumn(
+      'fecha_resolucion',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        planEstudiosId,
+        programaEduId,
+        nombrePlan,
+        aliasPlan,
+        estadoId,
+        nroResolucion,
+        fechaResolucion
+      ];
+  @override
+  $PlanEstudioTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'plan_estudio';
+  @override
+  final String actualTableName = 'plan_estudio';
+  @override
+  VerificationContext validateIntegrity(Insertable<PlanEstudioData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('plan_estudios_id')) {
+      context.handle(
+          _planEstudiosIdMeta,
+          planEstudiosId.isAcceptableOrUnknown(
+              data['plan_estudios_id'], _planEstudiosIdMeta));
+    }
+    if (data.containsKey('programa_edu_id')) {
+      context.handle(
+          _programaEduIdMeta,
+          programaEduId.isAcceptableOrUnknown(
+              data['programa_edu_id'], _programaEduIdMeta));
+    }
+    if (data.containsKey('nombre_plan')) {
+      context.handle(
+          _nombrePlanMeta,
+          nombrePlan.isAcceptableOrUnknown(
+              data['nombre_plan'], _nombrePlanMeta));
+    }
+    if (data.containsKey('alias_plan')) {
+      context.handle(_aliasPlanMeta,
+          aliasPlan.isAcceptableOrUnknown(data['alias_plan'], _aliasPlanMeta));
+    }
+    if (data.containsKey('estado_id')) {
+      context.handle(_estadoIdMeta,
+          estadoId.isAcceptableOrUnknown(data['estado_id'], _estadoIdMeta));
+    }
+    if (data.containsKey('nro_resolucion')) {
+      context.handle(
+          _nroResolucionMeta,
+          nroResolucion.isAcceptableOrUnknown(
+              data['nro_resolucion'], _nroResolucionMeta));
+    }
+    if (data.containsKey('fecha_resolucion')) {
+      context.handle(
+          _fechaResolucionMeta,
+          fechaResolucion.isAcceptableOrUnknown(
+              data['fecha_resolucion'], _fechaResolucionMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {planEstudiosId};
+  @override
+  PlanEstudioData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return PlanEstudioData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $PlanEstudioTable createAlias(String alias) {
+    return $PlanEstudioTable(_db, alias);
+  }
+}
+
+class PlanCurso extends DataClass implements Insertable<PlanCurso> {
+  final int planCursoId;
+  final int cursoId;
+  final int periodoId;
+  final int planEstudiosId;
+  PlanCurso(
+      {@required this.planCursoId,
+      this.cursoId,
+      this.periodoId,
+      this.planEstudiosId});
+  factory PlanCurso.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    return PlanCurso(
+      planCursoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}plan_curso_id']),
+      cursoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}curso_id']),
+      periodoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}periodo_id']),
+      planEstudiosId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}plan_estudios_id']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || planCursoId != null) {
+      map['plan_curso_id'] = Variable<int>(planCursoId);
+    }
+    if (!nullToAbsent || cursoId != null) {
+      map['curso_id'] = Variable<int>(cursoId);
+    }
+    if (!nullToAbsent || periodoId != null) {
+      map['periodo_id'] = Variable<int>(periodoId);
+    }
+    if (!nullToAbsent || planEstudiosId != null) {
+      map['plan_estudios_id'] = Variable<int>(planEstudiosId);
+    }
+    return map;
+  }
+
+  PlanCursosCompanion toCompanion(bool nullToAbsent) {
+    return PlanCursosCompanion(
+      planCursoId: planCursoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(planCursoId),
+      cursoId: cursoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cursoId),
+      periodoId: periodoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(periodoId),
+      planEstudiosId: planEstudiosId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(planEstudiosId),
+    );
+  }
+
+  factory PlanCurso.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return PlanCurso(
+      planCursoId: serializer.fromJson<int>(json['planCursoId']),
+      cursoId: serializer.fromJson<int>(json['cursoId']),
+      periodoId: serializer.fromJson<int>(json['periodoId']),
+      planEstudiosId: serializer.fromJson<int>(json['planEstudiosId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'planCursoId': serializer.toJson<int>(planCursoId),
+      'cursoId': serializer.toJson<int>(cursoId),
+      'periodoId': serializer.toJson<int>(periodoId),
+      'planEstudiosId': serializer.toJson<int>(planEstudiosId),
+    };
+  }
+
+  PlanCurso copyWith(
+          {int planCursoId, int cursoId, int periodoId, int planEstudiosId}) =>
+      PlanCurso(
+        planCursoId: planCursoId ?? this.planCursoId,
+        cursoId: cursoId ?? this.cursoId,
+        periodoId: periodoId ?? this.periodoId,
+        planEstudiosId: planEstudiosId ?? this.planEstudiosId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('PlanCurso(')
+          ..write('planCursoId: $planCursoId, ')
+          ..write('cursoId: $cursoId, ')
+          ..write('periodoId: $periodoId, ')
+          ..write('planEstudiosId: $planEstudiosId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      planCursoId.hashCode,
+      $mrjc(cursoId.hashCode,
+          $mrjc(periodoId.hashCode, planEstudiosId.hashCode))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is PlanCurso &&
+          other.planCursoId == this.planCursoId &&
+          other.cursoId == this.cursoId &&
+          other.periodoId == this.periodoId &&
+          other.planEstudiosId == this.planEstudiosId);
+}
+
+class PlanCursosCompanion extends UpdateCompanion<PlanCurso> {
+  final Value<int> planCursoId;
+  final Value<int> cursoId;
+  final Value<int> periodoId;
+  final Value<int> planEstudiosId;
+  const PlanCursosCompanion({
+    this.planCursoId = const Value.absent(),
+    this.cursoId = const Value.absent(),
+    this.periodoId = const Value.absent(),
+    this.planEstudiosId = const Value.absent(),
+  });
+  PlanCursosCompanion.insert({
+    this.planCursoId = const Value.absent(),
+    this.cursoId = const Value.absent(),
+    this.periodoId = const Value.absent(),
+    this.planEstudiosId = const Value.absent(),
+  });
+  static Insertable<PlanCurso> custom({
+    Expression<int> planCursoId,
+    Expression<int> cursoId,
+    Expression<int> periodoId,
+    Expression<int> planEstudiosId,
+  }) {
+    return RawValuesInsertable({
+      if (planCursoId != null) 'plan_curso_id': planCursoId,
+      if (cursoId != null) 'curso_id': cursoId,
+      if (periodoId != null) 'periodo_id': periodoId,
+      if (planEstudiosId != null) 'plan_estudios_id': planEstudiosId,
+    });
+  }
+
+  PlanCursosCompanion copyWith(
+      {Value<int> planCursoId,
+      Value<int> cursoId,
+      Value<int> periodoId,
+      Value<int> planEstudiosId}) {
+    return PlanCursosCompanion(
+      planCursoId: planCursoId ?? this.planCursoId,
+      cursoId: cursoId ?? this.cursoId,
+      periodoId: periodoId ?? this.periodoId,
+      planEstudiosId: planEstudiosId ?? this.planEstudiosId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (planCursoId.present) {
+      map['plan_curso_id'] = Variable<int>(planCursoId.value);
+    }
+    if (cursoId.present) {
+      map['curso_id'] = Variable<int>(cursoId.value);
+    }
+    if (periodoId.present) {
+      map['periodo_id'] = Variable<int>(periodoId.value);
+    }
+    if (planEstudiosId.present) {
+      map['plan_estudios_id'] = Variable<int>(planEstudiosId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PlanCursosCompanion(')
+          ..write('planCursoId: $planCursoId, ')
+          ..write('cursoId: $cursoId, ')
+          ..write('periodoId: $periodoId, ')
+          ..write('planEstudiosId: $planEstudiosId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PlanCursosTable extends PlanCursos
+    with TableInfo<$PlanCursosTable, PlanCurso> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $PlanCursosTable(this._db, [this._alias]);
+  final VerificationMeta _planCursoIdMeta =
+      const VerificationMeta('planCursoId');
+  GeneratedIntColumn _planCursoId;
+  @override
+  GeneratedIntColumn get planCursoId =>
+      _planCursoId ??= _constructPlanCursoId();
+  GeneratedIntColumn _constructPlanCursoId() {
+    return GeneratedIntColumn(
+      'plan_curso_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _cursoIdMeta = const VerificationMeta('cursoId');
+  GeneratedIntColumn _cursoId;
+  @override
+  GeneratedIntColumn get cursoId => _cursoId ??= _constructCursoId();
+  GeneratedIntColumn _constructCursoId() {
+    return GeneratedIntColumn(
+      'curso_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _periodoIdMeta = const VerificationMeta('periodoId');
+  GeneratedIntColumn _periodoId;
+  @override
+  GeneratedIntColumn get periodoId => _periodoId ??= _constructPeriodoId();
+  GeneratedIntColumn _constructPeriodoId() {
+    return GeneratedIntColumn(
+      'periodo_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _planEstudiosIdMeta =
+      const VerificationMeta('planEstudiosId');
+  GeneratedIntColumn _planEstudiosId;
+  @override
+  GeneratedIntColumn get planEstudiosId =>
+      _planEstudiosId ??= _constructPlanEstudiosId();
+  GeneratedIntColumn _constructPlanEstudiosId() {
+    return GeneratedIntColumn(
+      'plan_estudios_id',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns =>
+      [planCursoId, cursoId, periodoId, planEstudiosId];
+  @override
+  $PlanCursosTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'plan_cursos';
+  @override
+  final String actualTableName = 'plan_cursos';
+  @override
+  VerificationContext validateIntegrity(Insertable<PlanCurso> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('plan_curso_id')) {
+      context.handle(
+          _planCursoIdMeta,
+          planCursoId.isAcceptableOrUnknown(
+              data['plan_curso_id'], _planCursoIdMeta));
+    }
+    if (data.containsKey('curso_id')) {
+      context.handle(_cursoIdMeta,
+          cursoId.isAcceptableOrUnknown(data['curso_id'], _cursoIdMeta));
+    }
+    if (data.containsKey('periodo_id')) {
+      context.handle(_periodoIdMeta,
+          periodoId.isAcceptableOrUnknown(data['periodo_id'], _periodoIdMeta));
+    }
+    if (data.containsKey('plan_estudios_id')) {
+      context.handle(
+          _planEstudiosIdMeta,
+          planEstudiosId.isAcceptableOrUnknown(
+              data['plan_estudios_id'], _planEstudiosIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {planCursoId};
+  @override
+  PlanCurso map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return PlanCurso.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $PlanCursosTable createAlias(String alias) {
+    return $PlanCursosTable(_db, alias);
+  }
+}
+
+class CargaCursoData extends DataClass implements Insertable<CargaCursoData> {
+  final int cargaCursoId;
+  final int planCursoId;
+  final int empleadoId;
+  final int cargaAcademicaId;
+  final int complejo;
+  final int evaluable;
+  final int idempleado;
+  final int idTipoHora;
+  final String descripcion;
+  final DateTime fechaInicio;
+  final DateTime fechafin;
+  final String modo;
+  final int estado;
+  final int anioAcademicoId;
+  final int aulaId;
+  final int grupoId;
+  final int idPlanEstudio;
+  final int idPlanEstudioVersion;
+  final int CapacidadVacanteP;
+  final int CapacidadVacanteD;
+  CargaCursoData(
+      {@required this.cargaCursoId,
+      this.planCursoId,
+      this.empleadoId,
+      this.cargaAcademicaId,
+      this.complejo,
+      this.evaluable,
+      this.idempleado,
+      this.idTipoHora,
+      this.descripcion,
+      this.fechaInicio,
+      this.fechafin,
+      this.modo,
+      this.estado,
+      this.anioAcademicoId,
+      this.aulaId,
+      this.grupoId,
+      this.idPlanEstudio,
+      this.idPlanEstudioVersion,
+      this.CapacidadVacanteP,
+      this.CapacidadVacanteD});
+  factory CargaCursoData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    final dateTimeType = db.typeSystem.forDartType<DateTime>();
+    return CargaCursoData(
+      cargaCursoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}carga_curso_id']),
+      planCursoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}plan_curso_id']),
+      empleadoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}empleado_id']),
+      cargaAcademicaId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}carga_academica_id']),
+      complejo:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}complejo']),
+      evaluable:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}evaluable']),
+      idempleado:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}idempleado']),
+      idTipoHora: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}id_tipo_hora']),
+      descripcion: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}descripcion']),
+      fechaInicio: dateTimeType
+          .mapFromDatabaseResponse(data['${effectivePrefix}fecha_inicio']),
+      fechafin: dateTimeType
+          .mapFromDatabaseResponse(data['${effectivePrefix}fechafin']),
+      modo: stringType.mapFromDatabaseResponse(data['${effectivePrefix}modo']),
+      estado: intType.mapFromDatabaseResponse(data['${effectivePrefix}estado']),
+      anioAcademicoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}anio_academico_id']),
+      aulaId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}aula_id']),
+      grupoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}grupo_id']),
+      idPlanEstudio: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}id_plan_estudio']),
+      idPlanEstudioVersion: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}id_plan_estudio_version']),
+      CapacidadVacanteP: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}capacidad_vacante_p']),
+      CapacidadVacanteD: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}capacidad_vacante_d']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || cargaCursoId != null) {
+      map['carga_curso_id'] = Variable<int>(cargaCursoId);
+    }
+    if (!nullToAbsent || planCursoId != null) {
+      map['plan_curso_id'] = Variable<int>(planCursoId);
+    }
+    if (!nullToAbsent || empleadoId != null) {
+      map['empleado_id'] = Variable<int>(empleadoId);
+    }
+    if (!nullToAbsent || cargaAcademicaId != null) {
+      map['carga_academica_id'] = Variable<int>(cargaAcademicaId);
+    }
+    if (!nullToAbsent || complejo != null) {
+      map['complejo'] = Variable<int>(complejo);
+    }
+    if (!nullToAbsent || evaluable != null) {
+      map['evaluable'] = Variable<int>(evaluable);
+    }
+    if (!nullToAbsent || idempleado != null) {
+      map['idempleado'] = Variable<int>(idempleado);
+    }
+    if (!nullToAbsent || idTipoHora != null) {
+      map['id_tipo_hora'] = Variable<int>(idTipoHora);
+    }
+    if (!nullToAbsent || descripcion != null) {
+      map['descripcion'] = Variable<String>(descripcion);
+    }
+    if (!nullToAbsent || fechaInicio != null) {
+      map['fecha_inicio'] = Variable<DateTime>(fechaInicio);
+    }
+    if (!nullToAbsent || fechafin != null) {
+      map['fechafin'] = Variable<DateTime>(fechafin);
+    }
+    if (!nullToAbsent || modo != null) {
+      map['modo'] = Variable<String>(modo);
+    }
+    if (!nullToAbsent || estado != null) {
+      map['estado'] = Variable<int>(estado);
+    }
+    if (!nullToAbsent || anioAcademicoId != null) {
+      map['anio_academico_id'] = Variable<int>(anioAcademicoId);
+    }
+    if (!nullToAbsent || aulaId != null) {
+      map['aula_id'] = Variable<int>(aulaId);
+    }
+    if (!nullToAbsent || grupoId != null) {
+      map['grupo_id'] = Variable<int>(grupoId);
+    }
+    if (!nullToAbsent || idPlanEstudio != null) {
+      map['id_plan_estudio'] = Variable<int>(idPlanEstudio);
+    }
+    if (!nullToAbsent || idPlanEstudioVersion != null) {
+      map['id_plan_estudio_version'] = Variable<int>(idPlanEstudioVersion);
+    }
+    if (!nullToAbsent || CapacidadVacanteP != null) {
+      map['capacidad_vacante_p'] = Variable<int>(CapacidadVacanteP);
+    }
+    if (!nullToAbsent || CapacidadVacanteD != null) {
+      map['capacidad_vacante_d'] = Variable<int>(CapacidadVacanteD);
+    }
+    return map;
+  }
+
+  CargaCursoCompanion toCompanion(bool nullToAbsent) {
+    return CargaCursoCompanion(
+      cargaCursoId: cargaCursoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cargaCursoId),
+      planCursoId: planCursoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(planCursoId),
+      empleadoId: empleadoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(empleadoId),
+      cargaAcademicaId: cargaAcademicaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cargaAcademicaId),
+      complejo: complejo == null && nullToAbsent
+          ? const Value.absent()
+          : Value(complejo),
+      evaluable: evaluable == null && nullToAbsent
+          ? const Value.absent()
+          : Value(evaluable),
+      idempleado: idempleado == null && nullToAbsent
+          ? const Value.absent()
+          : Value(idempleado),
+      idTipoHora: idTipoHora == null && nullToAbsent
+          ? const Value.absent()
+          : Value(idTipoHora),
+      descripcion: descripcion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(descripcion),
+      fechaInicio: fechaInicio == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fechaInicio),
+      fechafin: fechafin == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fechafin),
+      modo: modo == null && nullToAbsent ? const Value.absent() : Value(modo),
+      estado:
+          estado == null && nullToAbsent ? const Value.absent() : Value(estado),
+      anioAcademicoId: anioAcademicoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(anioAcademicoId),
+      aulaId:
+          aulaId == null && nullToAbsent ? const Value.absent() : Value(aulaId),
+      grupoId: grupoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(grupoId),
+      idPlanEstudio: idPlanEstudio == null && nullToAbsent
+          ? const Value.absent()
+          : Value(idPlanEstudio),
+      idPlanEstudioVersion: idPlanEstudioVersion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(idPlanEstudioVersion),
+      CapacidadVacanteP: CapacidadVacanteP == null && nullToAbsent
+          ? const Value.absent()
+          : Value(CapacidadVacanteP),
+      CapacidadVacanteD: CapacidadVacanteD == null && nullToAbsent
+          ? const Value.absent()
+          : Value(CapacidadVacanteD),
+    );
+  }
+
+  factory CargaCursoData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return CargaCursoData(
+      cargaCursoId: serializer.fromJson<int>(json['cargaCursoId']),
+      planCursoId: serializer.fromJson<int>(json['planCursoId']),
+      empleadoId: serializer.fromJson<int>(json['empleadoId']),
+      cargaAcademicaId: serializer.fromJson<int>(json['cargaAcademicaId']),
+      complejo: serializer.fromJson<int>(json['complejo']),
+      evaluable: serializer.fromJson<int>(json['evaluable']),
+      idempleado: serializer.fromJson<int>(json['idempleado']),
+      idTipoHora: serializer.fromJson<int>(json['idTipoHora']),
+      descripcion: serializer.fromJson<String>(json['descripcion']),
+      fechaInicio: serializer.fromJson<DateTime>(json['fechaInicio']),
+      fechafin: serializer.fromJson<DateTime>(json['fechafin']),
+      modo: serializer.fromJson<String>(json['modo']),
+      estado: serializer.fromJson<int>(json['estado']),
+      anioAcademicoId: serializer.fromJson<int>(json['anioAcademicoId']),
+      aulaId: serializer.fromJson<int>(json['aulaId']),
+      grupoId: serializer.fromJson<int>(json['grupoId']),
+      idPlanEstudio: serializer.fromJson<int>(json['idPlanEstudio']),
+      idPlanEstudioVersion:
+          serializer.fromJson<int>(json['idPlanEstudioVersion']),
+      CapacidadVacanteP: serializer.fromJson<int>(json['CapacidadVacanteP']),
+      CapacidadVacanteD: serializer.fromJson<int>(json['CapacidadVacanteD']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'cargaCursoId': serializer.toJson<int>(cargaCursoId),
+      'planCursoId': serializer.toJson<int>(planCursoId),
+      'empleadoId': serializer.toJson<int>(empleadoId),
+      'cargaAcademicaId': serializer.toJson<int>(cargaAcademicaId),
+      'complejo': serializer.toJson<int>(complejo),
+      'evaluable': serializer.toJson<int>(evaluable),
+      'idempleado': serializer.toJson<int>(idempleado),
+      'idTipoHora': serializer.toJson<int>(idTipoHora),
+      'descripcion': serializer.toJson<String>(descripcion),
+      'fechaInicio': serializer.toJson<DateTime>(fechaInicio),
+      'fechafin': serializer.toJson<DateTime>(fechafin),
+      'modo': serializer.toJson<String>(modo),
+      'estado': serializer.toJson<int>(estado),
+      'anioAcademicoId': serializer.toJson<int>(anioAcademicoId),
+      'aulaId': serializer.toJson<int>(aulaId),
+      'grupoId': serializer.toJson<int>(grupoId),
+      'idPlanEstudio': serializer.toJson<int>(idPlanEstudio),
+      'idPlanEstudioVersion': serializer.toJson<int>(idPlanEstudioVersion),
+      'CapacidadVacanteP': serializer.toJson<int>(CapacidadVacanteP),
+      'CapacidadVacanteD': serializer.toJson<int>(CapacidadVacanteD),
+    };
+  }
+
+  CargaCursoData copyWith(
+          {int cargaCursoId,
+          int planCursoId,
+          int empleadoId,
+          int cargaAcademicaId,
+          int complejo,
+          int evaluable,
+          int idempleado,
+          int idTipoHora,
+          String descripcion,
+          DateTime fechaInicio,
+          DateTime fechafin,
+          String modo,
+          int estado,
+          int anioAcademicoId,
+          int aulaId,
+          int grupoId,
+          int idPlanEstudio,
+          int idPlanEstudioVersion,
+          int CapacidadVacanteP,
+          int CapacidadVacanteD}) =>
+      CargaCursoData(
+        cargaCursoId: cargaCursoId ?? this.cargaCursoId,
+        planCursoId: planCursoId ?? this.planCursoId,
+        empleadoId: empleadoId ?? this.empleadoId,
+        cargaAcademicaId: cargaAcademicaId ?? this.cargaAcademicaId,
+        complejo: complejo ?? this.complejo,
+        evaluable: evaluable ?? this.evaluable,
+        idempleado: idempleado ?? this.idempleado,
+        idTipoHora: idTipoHora ?? this.idTipoHora,
+        descripcion: descripcion ?? this.descripcion,
+        fechaInicio: fechaInicio ?? this.fechaInicio,
+        fechafin: fechafin ?? this.fechafin,
+        modo: modo ?? this.modo,
+        estado: estado ?? this.estado,
+        anioAcademicoId: anioAcademicoId ?? this.anioAcademicoId,
+        aulaId: aulaId ?? this.aulaId,
+        grupoId: grupoId ?? this.grupoId,
+        idPlanEstudio: idPlanEstudio ?? this.idPlanEstudio,
+        idPlanEstudioVersion: idPlanEstudioVersion ?? this.idPlanEstudioVersion,
+        CapacidadVacanteP: CapacidadVacanteP ?? this.CapacidadVacanteP,
+        CapacidadVacanteD: CapacidadVacanteD ?? this.CapacidadVacanteD,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('CargaCursoData(')
+          ..write('cargaCursoId: $cargaCursoId, ')
+          ..write('planCursoId: $planCursoId, ')
+          ..write('empleadoId: $empleadoId, ')
+          ..write('cargaAcademicaId: $cargaAcademicaId, ')
+          ..write('complejo: $complejo, ')
+          ..write('evaluable: $evaluable, ')
+          ..write('idempleado: $idempleado, ')
+          ..write('idTipoHora: $idTipoHora, ')
+          ..write('descripcion: $descripcion, ')
+          ..write('fechaInicio: $fechaInicio, ')
+          ..write('fechafin: $fechafin, ')
+          ..write('modo: $modo, ')
+          ..write('estado: $estado, ')
+          ..write('anioAcademicoId: $anioAcademicoId, ')
+          ..write('aulaId: $aulaId, ')
+          ..write('grupoId: $grupoId, ')
+          ..write('idPlanEstudio: $idPlanEstudio, ')
+          ..write('idPlanEstudioVersion: $idPlanEstudioVersion, ')
+          ..write('CapacidadVacanteP: $CapacidadVacanteP, ')
+          ..write('CapacidadVacanteD: $CapacidadVacanteD')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      cargaCursoId.hashCode,
+      $mrjc(
+          planCursoId.hashCode,
+          $mrjc(
+              empleadoId.hashCode,
+              $mrjc(
+                  cargaAcademicaId.hashCode,
+                  $mrjc(
+                      complejo.hashCode,
+                      $mrjc(
+                          evaluable.hashCode,
+                          $mrjc(
+                              idempleado.hashCode,
+                              $mrjc(
+                                  idTipoHora.hashCode,
+                                  $mrjc(
+                                      descripcion.hashCode,
+                                      $mrjc(
+                                          fechaInicio.hashCode,
+                                          $mrjc(
+                                              fechafin.hashCode,
+                                              $mrjc(
+                                                  modo.hashCode,
+                                                  $mrjc(
+                                                      estado.hashCode,
+                                                      $mrjc(
+                                                          anioAcademicoId
+                                                              .hashCode,
+                                                          $mrjc(
+                                                              aulaId.hashCode,
+                                                              $mrjc(
+                                                                  grupoId
+                                                                      .hashCode,
+                                                                  $mrjc(
+                                                                      idPlanEstudio
+                                                                          .hashCode,
+                                                                      $mrjc(
+                                                                          idPlanEstudioVersion
+                                                                              .hashCode,
+                                                                          $mrjc(
+                                                                              CapacidadVacanteP.hashCode,
+                                                                              CapacidadVacanteD.hashCode))))))))))))))))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is CargaCursoData &&
+          other.cargaCursoId == this.cargaCursoId &&
+          other.planCursoId == this.planCursoId &&
+          other.empleadoId == this.empleadoId &&
+          other.cargaAcademicaId == this.cargaAcademicaId &&
+          other.complejo == this.complejo &&
+          other.evaluable == this.evaluable &&
+          other.idempleado == this.idempleado &&
+          other.idTipoHora == this.idTipoHora &&
+          other.descripcion == this.descripcion &&
+          other.fechaInicio == this.fechaInicio &&
+          other.fechafin == this.fechafin &&
+          other.modo == this.modo &&
+          other.estado == this.estado &&
+          other.anioAcademicoId == this.anioAcademicoId &&
+          other.aulaId == this.aulaId &&
+          other.grupoId == this.grupoId &&
+          other.idPlanEstudio == this.idPlanEstudio &&
+          other.idPlanEstudioVersion == this.idPlanEstudioVersion &&
+          other.CapacidadVacanteP == this.CapacidadVacanteP &&
+          other.CapacidadVacanteD == this.CapacidadVacanteD);
+}
+
+class CargaCursoCompanion extends UpdateCompanion<CargaCursoData> {
+  final Value<int> cargaCursoId;
+  final Value<int> planCursoId;
+  final Value<int> empleadoId;
+  final Value<int> cargaAcademicaId;
+  final Value<int> complejo;
+  final Value<int> evaluable;
+  final Value<int> idempleado;
+  final Value<int> idTipoHora;
+  final Value<String> descripcion;
+  final Value<DateTime> fechaInicio;
+  final Value<DateTime> fechafin;
+  final Value<String> modo;
+  final Value<int> estado;
+  final Value<int> anioAcademicoId;
+  final Value<int> aulaId;
+  final Value<int> grupoId;
+  final Value<int> idPlanEstudio;
+  final Value<int> idPlanEstudioVersion;
+  final Value<int> CapacidadVacanteP;
+  final Value<int> CapacidadVacanteD;
+  const CargaCursoCompanion({
+    this.cargaCursoId = const Value.absent(),
+    this.planCursoId = const Value.absent(),
+    this.empleadoId = const Value.absent(),
+    this.cargaAcademicaId = const Value.absent(),
+    this.complejo = const Value.absent(),
+    this.evaluable = const Value.absent(),
+    this.idempleado = const Value.absent(),
+    this.idTipoHora = const Value.absent(),
+    this.descripcion = const Value.absent(),
+    this.fechaInicio = const Value.absent(),
+    this.fechafin = const Value.absent(),
+    this.modo = const Value.absent(),
+    this.estado = const Value.absent(),
+    this.anioAcademicoId = const Value.absent(),
+    this.aulaId = const Value.absent(),
+    this.grupoId = const Value.absent(),
+    this.idPlanEstudio = const Value.absent(),
+    this.idPlanEstudioVersion = const Value.absent(),
+    this.CapacidadVacanteP = const Value.absent(),
+    this.CapacidadVacanteD = const Value.absent(),
+  });
+  CargaCursoCompanion.insert({
+    this.cargaCursoId = const Value.absent(),
+    this.planCursoId = const Value.absent(),
+    this.empleadoId = const Value.absent(),
+    this.cargaAcademicaId = const Value.absent(),
+    this.complejo = const Value.absent(),
+    this.evaluable = const Value.absent(),
+    this.idempleado = const Value.absent(),
+    this.idTipoHora = const Value.absent(),
+    this.descripcion = const Value.absent(),
+    this.fechaInicio = const Value.absent(),
+    this.fechafin = const Value.absent(),
+    this.modo = const Value.absent(),
+    this.estado = const Value.absent(),
+    this.anioAcademicoId = const Value.absent(),
+    this.aulaId = const Value.absent(),
+    this.grupoId = const Value.absent(),
+    this.idPlanEstudio = const Value.absent(),
+    this.idPlanEstudioVersion = const Value.absent(),
+    this.CapacidadVacanteP = const Value.absent(),
+    this.CapacidadVacanteD = const Value.absent(),
+  });
+  static Insertable<CargaCursoData> custom({
+    Expression<int> cargaCursoId,
+    Expression<int> planCursoId,
+    Expression<int> empleadoId,
+    Expression<int> cargaAcademicaId,
+    Expression<int> complejo,
+    Expression<int> evaluable,
+    Expression<int> idempleado,
+    Expression<int> idTipoHora,
+    Expression<String> descripcion,
+    Expression<DateTime> fechaInicio,
+    Expression<DateTime> fechafin,
+    Expression<String> modo,
+    Expression<int> estado,
+    Expression<int> anioAcademicoId,
+    Expression<int> aulaId,
+    Expression<int> grupoId,
+    Expression<int> idPlanEstudio,
+    Expression<int> idPlanEstudioVersion,
+    Expression<int> CapacidadVacanteP,
+    Expression<int> CapacidadVacanteD,
+  }) {
+    return RawValuesInsertable({
+      if (cargaCursoId != null) 'carga_curso_id': cargaCursoId,
+      if (planCursoId != null) 'plan_curso_id': planCursoId,
+      if (empleadoId != null) 'empleado_id': empleadoId,
+      if (cargaAcademicaId != null) 'carga_academica_id': cargaAcademicaId,
+      if (complejo != null) 'complejo': complejo,
+      if (evaluable != null) 'evaluable': evaluable,
+      if (idempleado != null) 'idempleado': idempleado,
+      if (idTipoHora != null) 'id_tipo_hora': idTipoHora,
+      if (descripcion != null) 'descripcion': descripcion,
+      if (fechaInicio != null) 'fecha_inicio': fechaInicio,
+      if (fechafin != null) 'fechafin': fechafin,
+      if (modo != null) 'modo': modo,
+      if (estado != null) 'estado': estado,
+      if (anioAcademicoId != null) 'anio_academico_id': anioAcademicoId,
+      if (aulaId != null) 'aula_id': aulaId,
+      if (grupoId != null) 'grupo_id': grupoId,
+      if (idPlanEstudio != null) 'id_plan_estudio': idPlanEstudio,
+      if (idPlanEstudioVersion != null)
+        'id_plan_estudio_version': idPlanEstudioVersion,
+      if (CapacidadVacanteP != null) 'capacidad_vacante_p': CapacidadVacanteP,
+      if (CapacidadVacanteD != null) 'capacidad_vacante_d': CapacidadVacanteD,
+    });
+  }
+
+  CargaCursoCompanion copyWith(
+      {Value<int> cargaCursoId,
+      Value<int> planCursoId,
+      Value<int> empleadoId,
+      Value<int> cargaAcademicaId,
+      Value<int> complejo,
+      Value<int> evaluable,
+      Value<int> idempleado,
+      Value<int> idTipoHora,
+      Value<String> descripcion,
+      Value<DateTime> fechaInicio,
+      Value<DateTime> fechafin,
+      Value<String> modo,
+      Value<int> estado,
+      Value<int> anioAcademicoId,
+      Value<int> aulaId,
+      Value<int> grupoId,
+      Value<int> idPlanEstudio,
+      Value<int> idPlanEstudioVersion,
+      Value<int> CapacidadVacanteP,
+      Value<int> CapacidadVacanteD}) {
+    return CargaCursoCompanion(
+      cargaCursoId: cargaCursoId ?? this.cargaCursoId,
+      planCursoId: planCursoId ?? this.planCursoId,
+      empleadoId: empleadoId ?? this.empleadoId,
+      cargaAcademicaId: cargaAcademicaId ?? this.cargaAcademicaId,
+      complejo: complejo ?? this.complejo,
+      evaluable: evaluable ?? this.evaluable,
+      idempleado: idempleado ?? this.idempleado,
+      idTipoHora: idTipoHora ?? this.idTipoHora,
+      descripcion: descripcion ?? this.descripcion,
+      fechaInicio: fechaInicio ?? this.fechaInicio,
+      fechafin: fechafin ?? this.fechafin,
+      modo: modo ?? this.modo,
+      estado: estado ?? this.estado,
+      anioAcademicoId: anioAcademicoId ?? this.anioAcademicoId,
+      aulaId: aulaId ?? this.aulaId,
+      grupoId: grupoId ?? this.grupoId,
+      idPlanEstudio: idPlanEstudio ?? this.idPlanEstudio,
+      idPlanEstudioVersion: idPlanEstudioVersion ?? this.idPlanEstudioVersion,
+      CapacidadVacanteP: CapacidadVacanteP ?? this.CapacidadVacanteP,
+      CapacidadVacanteD: CapacidadVacanteD ?? this.CapacidadVacanteD,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (cargaCursoId.present) {
+      map['carga_curso_id'] = Variable<int>(cargaCursoId.value);
+    }
+    if (planCursoId.present) {
+      map['plan_curso_id'] = Variable<int>(planCursoId.value);
+    }
+    if (empleadoId.present) {
+      map['empleado_id'] = Variable<int>(empleadoId.value);
+    }
+    if (cargaAcademicaId.present) {
+      map['carga_academica_id'] = Variable<int>(cargaAcademicaId.value);
+    }
+    if (complejo.present) {
+      map['complejo'] = Variable<int>(complejo.value);
+    }
+    if (evaluable.present) {
+      map['evaluable'] = Variable<int>(evaluable.value);
+    }
+    if (idempleado.present) {
+      map['idempleado'] = Variable<int>(idempleado.value);
+    }
+    if (idTipoHora.present) {
+      map['id_tipo_hora'] = Variable<int>(idTipoHora.value);
+    }
+    if (descripcion.present) {
+      map['descripcion'] = Variable<String>(descripcion.value);
+    }
+    if (fechaInicio.present) {
+      map['fecha_inicio'] = Variable<DateTime>(fechaInicio.value);
+    }
+    if (fechafin.present) {
+      map['fechafin'] = Variable<DateTime>(fechafin.value);
+    }
+    if (modo.present) {
+      map['modo'] = Variable<String>(modo.value);
+    }
+    if (estado.present) {
+      map['estado'] = Variable<int>(estado.value);
+    }
+    if (anioAcademicoId.present) {
+      map['anio_academico_id'] = Variable<int>(anioAcademicoId.value);
+    }
+    if (aulaId.present) {
+      map['aula_id'] = Variable<int>(aulaId.value);
+    }
+    if (grupoId.present) {
+      map['grupo_id'] = Variable<int>(grupoId.value);
+    }
+    if (idPlanEstudio.present) {
+      map['id_plan_estudio'] = Variable<int>(idPlanEstudio.value);
+    }
+    if (idPlanEstudioVersion.present) {
+      map['id_plan_estudio_version'] =
+          Variable<int>(idPlanEstudioVersion.value);
+    }
+    if (CapacidadVacanteP.present) {
+      map['capacidad_vacante_p'] = Variable<int>(CapacidadVacanteP.value);
+    }
+    if (CapacidadVacanteD.present) {
+      map['capacidad_vacante_d'] = Variable<int>(CapacidadVacanteD.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CargaCursoCompanion(')
+          ..write('cargaCursoId: $cargaCursoId, ')
+          ..write('planCursoId: $planCursoId, ')
+          ..write('empleadoId: $empleadoId, ')
+          ..write('cargaAcademicaId: $cargaAcademicaId, ')
+          ..write('complejo: $complejo, ')
+          ..write('evaluable: $evaluable, ')
+          ..write('idempleado: $idempleado, ')
+          ..write('idTipoHora: $idTipoHora, ')
+          ..write('descripcion: $descripcion, ')
+          ..write('fechaInicio: $fechaInicio, ')
+          ..write('fechafin: $fechafin, ')
+          ..write('modo: $modo, ')
+          ..write('estado: $estado, ')
+          ..write('anioAcademicoId: $anioAcademicoId, ')
+          ..write('aulaId: $aulaId, ')
+          ..write('grupoId: $grupoId, ')
+          ..write('idPlanEstudio: $idPlanEstudio, ')
+          ..write('idPlanEstudioVersion: $idPlanEstudioVersion, ')
+          ..write('CapacidadVacanteP: $CapacidadVacanteP, ')
+          ..write('CapacidadVacanteD: $CapacidadVacanteD')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CargaCursoTable extends CargaCurso
+    with TableInfo<$CargaCursoTable, CargaCursoData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $CargaCursoTable(this._db, [this._alias]);
+  final VerificationMeta _cargaCursoIdMeta =
+      const VerificationMeta('cargaCursoId');
+  GeneratedIntColumn _cargaCursoId;
+  @override
+  GeneratedIntColumn get cargaCursoId =>
+      _cargaCursoId ??= _constructCargaCursoId();
+  GeneratedIntColumn _constructCargaCursoId() {
+    return GeneratedIntColumn(
+      'carga_curso_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _planCursoIdMeta =
+      const VerificationMeta('planCursoId');
+  GeneratedIntColumn _planCursoId;
+  @override
+  GeneratedIntColumn get planCursoId =>
+      _planCursoId ??= _constructPlanCursoId();
+  GeneratedIntColumn _constructPlanCursoId() {
+    return GeneratedIntColumn(
+      'plan_curso_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _empleadoIdMeta = const VerificationMeta('empleadoId');
+  GeneratedIntColumn _empleadoId;
+  @override
+  GeneratedIntColumn get empleadoId => _empleadoId ??= _constructEmpleadoId();
+  GeneratedIntColumn _constructEmpleadoId() {
+    return GeneratedIntColumn(
+      'empleado_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _cargaAcademicaIdMeta =
+      const VerificationMeta('cargaAcademicaId');
+  GeneratedIntColumn _cargaAcademicaId;
+  @override
+  GeneratedIntColumn get cargaAcademicaId =>
+      _cargaAcademicaId ??= _constructCargaAcademicaId();
+  GeneratedIntColumn _constructCargaAcademicaId() {
+    return GeneratedIntColumn(
+      'carga_academica_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _complejoMeta = const VerificationMeta('complejo');
+  GeneratedIntColumn _complejo;
+  @override
+  GeneratedIntColumn get complejo => _complejo ??= _constructComplejo();
+  GeneratedIntColumn _constructComplejo() {
+    return GeneratedIntColumn(
+      'complejo',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _evaluableMeta = const VerificationMeta('evaluable');
+  GeneratedIntColumn _evaluable;
+  @override
+  GeneratedIntColumn get evaluable => _evaluable ??= _constructEvaluable();
+  GeneratedIntColumn _constructEvaluable() {
+    return GeneratedIntColumn(
+      'evaluable',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _idempleadoMeta = const VerificationMeta('idempleado');
+  GeneratedIntColumn _idempleado;
+  @override
+  GeneratedIntColumn get idempleado => _idempleado ??= _constructIdempleado();
+  GeneratedIntColumn _constructIdempleado() {
+    return GeneratedIntColumn(
+      'idempleado',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _idTipoHoraMeta = const VerificationMeta('idTipoHora');
+  GeneratedIntColumn _idTipoHora;
+  @override
+  GeneratedIntColumn get idTipoHora => _idTipoHora ??= _constructIdTipoHora();
+  GeneratedIntColumn _constructIdTipoHora() {
+    return GeneratedIntColumn(
+      'id_tipo_hora',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _descripcionMeta =
+      const VerificationMeta('descripcion');
+  GeneratedTextColumn _descripcion;
+  @override
+  GeneratedTextColumn get descripcion =>
+      _descripcion ??= _constructDescripcion();
+  GeneratedTextColumn _constructDescripcion() {
+    return GeneratedTextColumn(
+      'descripcion',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _fechaInicioMeta =
+      const VerificationMeta('fechaInicio');
+  GeneratedDateTimeColumn _fechaInicio;
+  @override
+  GeneratedDateTimeColumn get fechaInicio =>
+      _fechaInicio ??= _constructFechaInicio();
+  GeneratedDateTimeColumn _constructFechaInicio() {
+    return GeneratedDateTimeColumn(
+      'fecha_inicio',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _fechafinMeta = const VerificationMeta('fechafin');
+  GeneratedDateTimeColumn _fechafin;
+  @override
+  GeneratedDateTimeColumn get fechafin => _fechafin ??= _constructFechafin();
+  GeneratedDateTimeColumn _constructFechafin() {
+    return GeneratedDateTimeColumn(
+      'fechafin',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _modoMeta = const VerificationMeta('modo');
+  GeneratedTextColumn _modo;
+  @override
+  GeneratedTextColumn get modo => _modo ??= _constructModo();
+  GeneratedTextColumn _constructModo() {
+    return GeneratedTextColumn(
+      'modo',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoMeta = const VerificationMeta('estado');
+  GeneratedIntColumn _estado;
+  @override
+  GeneratedIntColumn get estado => _estado ??= _constructEstado();
+  GeneratedIntColumn _constructEstado() {
+    return GeneratedIntColumn(
+      'estado',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _anioAcademicoIdMeta =
+      const VerificationMeta('anioAcademicoId');
+  GeneratedIntColumn _anioAcademicoId;
+  @override
+  GeneratedIntColumn get anioAcademicoId =>
+      _anioAcademicoId ??= _constructAnioAcademicoId();
+  GeneratedIntColumn _constructAnioAcademicoId() {
+    return GeneratedIntColumn(
+      'anio_academico_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _aulaIdMeta = const VerificationMeta('aulaId');
+  GeneratedIntColumn _aulaId;
+  @override
+  GeneratedIntColumn get aulaId => _aulaId ??= _constructAulaId();
+  GeneratedIntColumn _constructAulaId() {
+    return GeneratedIntColumn(
+      'aula_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _grupoIdMeta = const VerificationMeta('grupoId');
+  GeneratedIntColumn _grupoId;
+  @override
+  GeneratedIntColumn get grupoId => _grupoId ??= _constructGrupoId();
+  GeneratedIntColumn _constructGrupoId() {
+    return GeneratedIntColumn(
+      'grupo_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _idPlanEstudioMeta =
+      const VerificationMeta('idPlanEstudio');
+  GeneratedIntColumn _idPlanEstudio;
+  @override
+  GeneratedIntColumn get idPlanEstudio =>
+      _idPlanEstudio ??= _constructIdPlanEstudio();
+  GeneratedIntColumn _constructIdPlanEstudio() {
+    return GeneratedIntColumn(
+      'id_plan_estudio',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _idPlanEstudioVersionMeta =
+      const VerificationMeta('idPlanEstudioVersion');
+  GeneratedIntColumn _idPlanEstudioVersion;
+  @override
+  GeneratedIntColumn get idPlanEstudioVersion =>
+      _idPlanEstudioVersion ??= _constructIdPlanEstudioVersion();
+  GeneratedIntColumn _constructIdPlanEstudioVersion() {
+    return GeneratedIntColumn(
+      'id_plan_estudio_version',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _CapacidadVacantePMeta =
+      const VerificationMeta('CapacidadVacanteP');
+  GeneratedIntColumn _CapacidadVacanteP;
+  @override
+  GeneratedIntColumn get CapacidadVacanteP =>
+      _CapacidadVacanteP ??= _constructCapacidadVacanteP();
+  GeneratedIntColumn _constructCapacidadVacanteP() {
+    return GeneratedIntColumn(
+      'capacidad_vacante_p',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _CapacidadVacanteDMeta =
+      const VerificationMeta('CapacidadVacanteD');
+  GeneratedIntColumn _CapacidadVacanteD;
+  @override
+  GeneratedIntColumn get CapacidadVacanteD =>
+      _CapacidadVacanteD ??= _constructCapacidadVacanteD();
+  GeneratedIntColumn _constructCapacidadVacanteD() {
+    return GeneratedIntColumn(
+      'capacidad_vacante_d',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        cargaCursoId,
+        planCursoId,
+        empleadoId,
+        cargaAcademicaId,
+        complejo,
+        evaluable,
+        idempleado,
+        idTipoHora,
+        descripcion,
+        fechaInicio,
+        fechafin,
+        modo,
+        estado,
+        anioAcademicoId,
+        aulaId,
+        grupoId,
+        idPlanEstudio,
+        idPlanEstudioVersion,
+        CapacidadVacanteP,
+        CapacidadVacanteD
+      ];
+  @override
+  $CargaCursoTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'carga_curso';
+  @override
+  final String actualTableName = 'carga_curso';
+  @override
+  VerificationContext validateIntegrity(Insertable<CargaCursoData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('carga_curso_id')) {
+      context.handle(
+          _cargaCursoIdMeta,
+          cargaCursoId.isAcceptableOrUnknown(
+              data['carga_curso_id'], _cargaCursoIdMeta));
+    }
+    if (data.containsKey('plan_curso_id')) {
+      context.handle(
+          _planCursoIdMeta,
+          planCursoId.isAcceptableOrUnknown(
+              data['plan_curso_id'], _planCursoIdMeta));
+    }
+    if (data.containsKey('empleado_id')) {
+      context.handle(
+          _empleadoIdMeta,
+          empleadoId.isAcceptableOrUnknown(
+              data['empleado_id'], _empleadoIdMeta));
+    }
+    if (data.containsKey('carga_academica_id')) {
+      context.handle(
+          _cargaAcademicaIdMeta,
+          cargaAcademicaId.isAcceptableOrUnknown(
+              data['carga_academica_id'], _cargaAcademicaIdMeta));
+    }
+    if (data.containsKey('complejo')) {
+      context.handle(_complejoMeta,
+          complejo.isAcceptableOrUnknown(data['complejo'], _complejoMeta));
+    }
+    if (data.containsKey('evaluable')) {
+      context.handle(_evaluableMeta,
+          evaluable.isAcceptableOrUnknown(data['evaluable'], _evaluableMeta));
+    }
+    if (data.containsKey('idempleado')) {
+      context.handle(
+          _idempleadoMeta,
+          idempleado.isAcceptableOrUnknown(
+              data['idempleado'], _idempleadoMeta));
+    }
+    if (data.containsKey('id_tipo_hora')) {
+      context.handle(
+          _idTipoHoraMeta,
+          idTipoHora.isAcceptableOrUnknown(
+              data['id_tipo_hora'], _idTipoHoraMeta));
+    }
+    if (data.containsKey('descripcion')) {
+      context.handle(
+          _descripcionMeta,
+          descripcion.isAcceptableOrUnknown(
+              data['descripcion'], _descripcionMeta));
+    }
+    if (data.containsKey('fecha_inicio')) {
+      context.handle(
+          _fechaInicioMeta,
+          fechaInicio.isAcceptableOrUnknown(
+              data['fecha_inicio'], _fechaInicioMeta));
+    }
+    if (data.containsKey('fechafin')) {
+      context.handle(_fechafinMeta,
+          fechafin.isAcceptableOrUnknown(data['fechafin'], _fechafinMeta));
+    }
+    if (data.containsKey('modo')) {
+      context.handle(
+          _modoMeta, modo.isAcceptableOrUnknown(data['modo'], _modoMeta));
+    }
+    if (data.containsKey('estado')) {
+      context.handle(_estadoMeta,
+          estado.isAcceptableOrUnknown(data['estado'], _estadoMeta));
+    }
+    if (data.containsKey('anio_academico_id')) {
+      context.handle(
+          _anioAcademicoIdMeta,
+          anioAcademicoId.isAcceptableOrUnknown(
+              data['anio_academico_id'], _anioAcademicoIdMeta));
+    }
+    if (data.containsKey('aula_id')) {
+      context.handle(_aulaIdMeta,
+          aulaId.isAcceptableOrUnknown(data['aula_id'], _aulaIdMeta));
+    }
+    if (data.containsKey('grupo_id')) {
+      context.handle(_grupoIdMeta,
+          grupoId.isAcceptableOrUnknown(data['grupo_id'], _grupoIdMeta));
+    }
+    if (data.containsKey('id_plan_estudio')) {
+      context.handle(
+          _idPlanEstudioMeta,
+          idPlanEstudio.isAcceptableOrUnknown(
+              data['id_plan_estudio'], _idPlanEstudioMeta));
+    }
+    if (data.containsKey('id_plan_estudio_version')) {
+      context.handle(
+          _idPlanEstudioVersionMeta,
+          idPlanEstudioVersion.isAcceptableOrUnknown(
+              data['id_plan_estudio_version'], _idPlanEstudioVersionMeta));
+    }
+    if (data.containsKey('capacidad_vacante_p')) {
+      context.handle(
+          _CapacidadVacantePMeta,
+          CapacidadVacanteP.isAcceptableOrUnknown(
+              data['capacidad_vacante_p'], _CapacidadVacantePMeta));
+    }
+    if (data.containsKey('capacidad_vacante_d')) {
+      context.handle(
+          _CapacidadVacanteDMeta,
+          CapacidadVacanteD.isAcceptableOrUnknown(
+              data['capacidad_vacante_d'], _CapacidadVacanteDMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {cargaCursoId};
+  @override
+  CargaCursoData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return CargaCursoData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $CargaCursoTable createAlias(String alias) {
+    return $CargaCursoTable(_db, alias);
+  }
+}
+
+class DetalleContratoAcadData extends DataClass
+    implements Insertable<DetalleContratoAcadData> {
+  final int idContratoDetAcad;
+  final int idContrato;
+  final int cargaCursoId;
+  final int cargaAcademicaId;
+  final String notaPromedio;
+  final String escala;
+  final int anioAcademicoId;
+  final int idNivelAcademico;
+  final int cursoId;
+  final int grupoId;
+  final int aulaId;
+  DetalleContratoAcadData(
+      {@required this.idContratoDetAcad,
+      this.idContrato,
+      this.cargaCursoId,
+      this.cargaAcademicaId,
+      this.notaPromedio,
+      this.escala,
+      this.anioAcademicoId,
+      this.idNivelAcademico,
+      this.cursoId,
+      this.grupoId,
+      this.aulaId});
+  factory DetalleContratoAcadData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return DetalleContratoAcadData(
+      idContratoDetAcad: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}id_contrato_det_acad']),
+      idContrato: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}id_contrato']),
+      cargaCursoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}carga_curso_id']),
+      cargaAcademicaId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}carga_academica_id']),
+      notaPromedio: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}nota_promedio']),
+      escala:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}escala']),
+      anioAcademicoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}anio_academico_id']),
+      idNivelAcademico: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}id_nivel_academico']),
+      cursoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}curso_id']),
+      grupoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}grupo_id']),
+      aulaId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}aula_id']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || idContratoDetAcad != null) {
+      map['id_contrato_det_acad'] = Variable<int>(idContratoDetAcad);
+    }
+    if (!nullToAbsent || idContrato != null) {
+      map['id_contrato'] = Variable<int>(idContrato);
+    }
+    if (!nullToAbsent || cargaCursoId != null) {
+      map['carga_curso_id'] = Variable<int>(cargaCursoId);
+    }
+    if (!nullToAbsent || cargaAcademicaId != null) {
+      map['carga_academica_id'] = Variable<int>(cargaAcademicaId);
+    }
+    if (!nullToAbsent || notaPromedio != null) {
+      map['nota_promedio'] = Variable<String>(notaPromedio);
+    }
+    if (!nullToAbsent || escala != null) {
+      map['escala'] = Variable<String>(escala);
+    }
+    if (!nullToAbsent || anioAcademicoId != null) {
+      map['anio_academico_id'] = Variable<int>(anioAcademicoId);
+    }
+    if (!nullToAbsent || idNivelAcademico != null) {
+      map['id_nivel_academico'] = Variable<int>(idNivelAcademico);
+    }
+    if (!nullToAbsent || cursoId != null) {
+      map['curso_id'] = Variable<int>(cursoId);
+    }
+    if (!nullToAbsent || grupoId != null) {
+      map['grupo_id'] = Variable<int>(grupoId);
+    }
+    if (!nullToAbsent || aulaId != null) {
+      map['aula_id'] = Variable<int>(aulaId);
+    }
+    return map;
+  }
+
+  DetalleContratoAcadCompanion toCompanion(bool nullToAbsent) {
+    return DetalleContratoAcadCompanion(
+      idContratoDetAcad: idContratoDetAcad == null && nullToAbsent
+          ? const Value.absent()
+          : Value(idContratoDetAcad),
+      idContrato: idContrato == null && nullToAbsent
+          ? const Value.absent()
+          : Value(idContrato),
+      cargaCursoId: cargaCursoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cargaCursoId),
+      cargaAcademicaId: cargaAcademicaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cargaAcademicaId),
+      notaPromedio: notaPromedio == null && nullToAbsent
+          ? const Value.absent()
+          : Value(notaPromedio),
+      escala:
+          escala == null && nullToAbsent ? const Value.absent() : Value(escala),
+      anioAcademicoId: anioAcademicoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(anioAcademicoId),
+      idNivelAcademico: idNivelAcademico == null && nullToAbsent
+          ? const Value.absent()
+          : Value(idNivelAcademico),
+      cursoId: cursoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cursoId),
+      grupoId: grupoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(grupoId),
+      aulaId:
+          aulaId == null && nullToAbsent ? const Value.absent() : Value(aulaId),
+    );
+  }
+
+  factory DetalleContratoAcadData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return DetalleContratoAcadData(
+      idContratoDetAcad: serializer.fromJson<int>(json['idContratoDetAcad']),
+      idContrato: serializer.fromJson<int>(json['idContrato']),
+      cargaCursoId: serializer.fromJson<int>(json['cargaCursoId']),
+      cargaAcademicaId: serializer.fromJson<int>(json['cargaAcademicaId']),
+      notaPromedio: serializer.fromJson<String>(json['notaPromedio']),
+      escala: serializer.fromJson<String>(json['escala']),
+      anioAcademicoId: serializer.fromJson<int>(json['anioAcademicoId']),
+      idNivelAcademico: serializer.fromJson<int>(json['idNivelAcademico']),
+      cursoId: serializer.fromJson<int>(json['cursoId']),
+      grupoId: serializer.fromJson<int>(json['grupoId']),
+      aulaId: serializer.fromJson<int>(json['aulaId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'idContratoDetAcad': serializer.toJson<int>(idContratoDetAcad),
+      'idContrato': serializer.toJson<int>(idContrato),
+      'cargaCursoId': serializer.toJson<int>(cargaCursoId),
+      'cargaAcademicaId': serializer.toJson<int>(cargaAcademicaId),
+      'notaPromedio': serializer.toJson<String>(notaPromedio),
+      'escala': serializer.toJson<String>(escala),
+      'anioAcademicoId': serializer.toJson<int>(anioAcademicoId),
+      'idNivelAcademico': serializer.toJson<int>(idNivelAcademico),
+      'cursoId': serializer.toJson<int>(cursoId),
+      'grupoId': serializer.toJson<int>(grupoId),
+      'aulaId': serializer.toJson<int>(aulaId),
+    };
+  }
+
+  DetalleContratoAcadData copyWith(
+          {int idContratoDetAcad,
+          int idContrato,
+          int cargaCursoId,
+          int cargaAcademicaId,
+          String notaPromedio,
+          String escala,
+          int anioAcademicoId,
+          int idNivelAcademico,
+          int cursoId,
+          int grupoId,
+          int aulaId}) =>
+      DetalleContratoAcadData(
+        idContratoDetAcad: idContratoDetAcad ?? this.idContratoDetAcad,
+        idContrato: idContrato ?? this.idContrato,
+        cargaCursoId: cargaCursoId ?? this.cargaCursoId,
+        cargaAcademicaId: cargaAcademicaId ?? this.cargaAcademicaId,
+        notaPromedio: notaPromedio ?? this.notaPromedio,
+        escala: escala ?? this.escala,
+        anioAcademicoId: anioAcademicoId ?? this.anioAcademicoId,
+        idNivelAcademico: idNivelAcademico ?? this.idNivelAcademico,
+        cursoId: cursoId ?? this.cursoId,
+        grupoId: grupoId ?? this.grupoId,
+        aulaId: aulaId ?? this.aulaId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('DetalleContratoAcadData(')
+          ..write('idContratoDetAcad: $idContratoDetAcad, ')
+          ..write('idContrato: $idContrato, ')
+          ..write('cargaCursoId: $cargaCursoId, ')
+          ..write('cargaAcademicaId: $cargaAcademicaId, ')
+          ..write('notaPromedio: $notaPromedio, ')
+          ..write('escala: $escala, ')
+          ..write('anioAcademicoId: $anioAcademicoId, ')
+          ..write('idNivelAcademico: $idNivelAcademico, ')
+          ..write('cursoId: $cursoId, ')
+          ..write('grupoId: $grupoId, ')
+          ..write('aulaId: $aulaId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      idContratoDetAcad.hashCode,
+      $mrjc(
+          idContrato.hashCode,
+          $mrjc(
+              cargaCursoId.hashCode,
+              $mrjc(
+                  cargaAcademicaId.hashCode,
+                  $mrjc(
+                      notaPromedio.hashCode,
+                      $mrjc(
+                          escala.hashCode,
+                          $mrjc(
+                              anioAcademicoId.hashCode,
+                              $mrjc(
+                                  idNivelAcademico.hashCode,
+                                  $mrjc(
+                                      cursoId.hashCode,
+                                      $mrjc(grupoId.hashCode,
+                                          aulaId.hashCode)))))))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is DetalleContratoAcadData &&
+          other.idContratoDetAcad == this.idContratoDetAcad &&
+          other.idContrato == this.idContrato &&
+          other.cargaCursoId == this.cargaCursoId &&
+          other.cargaAcademicaId == this.cargaAcademicaId &&
+          other.notaPromedio == this.notaPromedio &&
+          other.escala == this.escala &&
+          other.anioAcademicoId == this.anioAcademicoId &&
+          other.idNivelAcademico == this.idNivelAcademico &&
+          other.cursoId == this.cursoId &&
+          other.grupoId == this.grupoId &&
+          other.aulaId == this.aulaId);
+}
+
+class DetalleContratoAcadCompanion
+    extends UpdateCompanion<DetalleContratoAcadData> {
+  final Value<int> idContratoDetAcad;
+  final Value<int> idContrato;
+  final Value<int> cargaCursoId;
+  final Value<int> cargaAcademicaId;
+  final Value<String> notaPromedio;
+  final Value<String> escala;
+  final Value<int> anioAcademicoId;
+  final Value<int> idNivelAcademico;
+  final Value<int> cursoId;
+  final Value<int> grupoId;
+  final Value<int> aulaId;
+  const DetalleContratoAcadCompanion({
+    this.idContratoDetAcad = const Value.absent(),
+    this.idContrato = const Value.absent(),
+    this.cargaCursoId = const Value.absent(),
+    this.cargaAcademicaId = const Value.absent(),
+    this.notaPromedio = const Value.absent(),
+    this.escala = const Value.absent(),
+    this.anioAcademicoId = const Value.absent(),
+    this.idNivelAcademico = const Value.absent(),
+    this.cursoId = const Value.absent(),
+    this.grupoId = const Value.absent(),
+    this.aulaId = const Value.absent(),
+  });
+  DetalleContratoAcadCompanion.insert({
+    this.idContratoDetAcad = const Value.absent(),
+    this.idContrato = const Value.absent(),
+    this.cargaCursoId = const Value.absent(),
+    this.cargaAcademicaId = const Value.absent(),
+    this.notaPromedio = const Value.absent(),
+    this.escala = const Value.absent(),
+    this.anioAcademicoId = const Value.absent(),
+    this.idNivelAcademico = const Value.absent(),
+    this.cursoId = const Value.absent(),
+    this.grupoId = const Value.absent(),
+    this.aulaId = const Value.absent(),
+  });
+  static Insertable<DetalleContratoAcadData> custom({
+    Expression<int> idContratoDetAcad,
+    Expression<int> idContrato,
+    Expression<int> cargaCursoId,
+    Expression<int> cargaAcademicaId,
+    Expression<String> notaPromedio,
+    Expression<String> escala,
+    Expression<int> anioAcademicoId,
+    Expression<int> idNivelAcademico,
+    Expression<int> cursoId,
+    Expression<int> grupoId,
+    Expression<int> aulaId,
+  }) {
+    return RawValuesInsertable({
+      if (idContratoDetAcad != null) 'id_contrato_det_acad': idContratoDetAcad,
+      if (idContrato != null) 'id_contrato': idContrato,
+      if (cargaCursoId != null) 'carga_curso_id': cargaCursoId,
+      if (cargaAcademicaId != null) 'carga_academica_id': cargaAcademicaId,
+      if (notaPromedio != null) 'nota_promedio': notaPromedio,
+      if (escala != null) 'escala': escala,
+      if (anioAcademicoId != null) 'anio_academico_id': anioAcademicoId,
+      if (idNivelAcademico != null) 'id_nivel_academico': idNivelAcademico,
+      if (cursoId != null) 'curso_id': cursoId,
+      if (grupoId != null) 'grupo_id': grupoId,
+      if (aulaId != null) 'aula_id': aulaId,
+    });
+  }
+
+  DetalleContratoAcadCompanion copyWith(
+      {Value<int> idContratoDetAcad,
+      Value<int> idContrato,
+      Value<int> cargaCursoId,
+      Value<int> cargaAcademicaId,
+      Value<String> notaPromedio,
+      Value<String> escala,
+      Value<int> anioAcademicoId,
+      Value<int> idNivelAcademico,
+      Value<int> cursoId,
+      Value<int> grupoId,
+      Value<int> aulaId}) {
+    return DetalleContratoAcadCompanion(
+      idContratoDetAcad: idContratoDetAcad ?? this.idContratoDetAcad,
+      idContrato: idContrato ?? this.idContrato,
+      cargaCursoId: cargaCursoId ?? this.cargaCursoId,
+      cargaAcademicaId: cargaAcademicaId ?? this.cargaAcademicaId,
+      notaPromedio: notaPromedio ?? this.notaPromedio,
+      escala: escala ?? this.escala,
+      anioAcademicoId: anioAcademicoId ?? this.anioAcademicoId,
+      idNivelAcademico: idNivelAcademico ?? this.idNivelAcademico,
+      cursoId: cursoId ?? this.cursoId,
+      grupoId: grupoId ?? this.grupoId,
+      aulaId: aulaId ?? this.aulaId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (idContratoDetAcad.present) {
+      map['id_contrato_det_acad'] = Variable<int>(idContratoDetAcad.value);
+    }
+    if (idContrato.present) {
+      map['id_contrato'] = Variable<int>(idContrato.value);
+    }
+    if (cargaCursoId.present) {
+      map['carga_curso_id'] = Variable<int>(cargaCursoId.value);
+    }
+    if (cargaAcademicaId.present) {
+      map['carga_academica_id'] = Variable<int>(cargaAcademicaId.value);
+    }
+    if (notaPromedio.present) {
+      map['nota_promedio'] = Variable<String>(notaPromedio.value);
+    }
+    if (escala.present) {
+      map['escala'] = Variable<String>(escala.value);
+    }
+    if (anioAcademicoId.present) {
+      map['anio_academico_id'] = Variable<int>(anioAcademicoId.value);
+    }
+    if (idNivelAcademico.present) {
+      map['id_nivel_academico'] = Variable<int>(idNivelAcademico.value);
+    }
+    if (cursoId.present) {
+      map['curso_id'] = Variable<int>(cursoId.value);
+    }
+    if (grupoId.present) {
+      map['grupo_id'] = Variable<int>(grupoId.value);
+    }
+    if (aulaId.present) {
+      map['aula_id'] = Variable<int>(aulaId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DetalleContratoAcadCompanion(')
+          ..write('idContratoDetAcad: $idContratoDetAcad, ')
+          ..write('idContrato: $idContrato, ')
+          ..write('cargaCursoId: $cargaCursoId, ')
+          ..write('cargaAcademicaId: $cargaAcademicaId, ')
+          ..write('notaPromedio: $notaPromedio, ')
+          ..write('escala: $escala, ')
+          ..write('anioAcademicoId: $anioAcademicoId, ')
+          ..write('idNivelAcademico: $idNivelAcademico, ')
+          ..write('cursoId: $cursoId, ')
+          ..write('grupoId: $grupoId, ')
+          ..write('aulaId: $aulaId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $DetalleContratoAcadTable extends DetalleContratoAcad
+    with TableInfo<$DetalleContratoAcadTable, DetalleContratoAcadData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $DetalleContratoAcadTable(this._db, [this._alias]);
+  final VerificationMeta _idContratoDetAcadMeta =
+      const VerificationMeta('idContratoDetAcad');
+  GeneratedIntColumn _idContratoDetAcad;
+  @override
+  GeneratedIntColumn get idContratoDetAcad =>
+      _idContratoDetAcad ??= _constructIdContratoDetAcad();
+  GeneratedIntColumn _constructIdContratoDetAcad() {
+    return GeneratedIntColumn(
+      'id_contrato_det_acad',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _idContratoMeta = const VerificationMeta('idContrato');
+  GeneratedIntColumn _idContrato;
+  @override
+  GeneratedIntColumn get idContrato => _idContrato ??= _constructIdContrato();
+  GeneratedIntColumn _constructIdContrato() {
+    return GeneratedIntColumn(
+      'id_contrato',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _cargaCursoIdMeta =
+      const VerificationMeta('cargaCursoId');
+  GeneratedIntColumn _cargaCursoId;
+  @override
+  GeneratedIntColumn get cargaCursoId =>
+      _cargaCursoId ??= _constructCargaCursoId();
+  GeneratedIntColumn _constructCargaCursoId() {
+    return GeneratedIntColumn(
+      'carga_curso_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _cargaAcademicaIdMeta =
+      const VerificationMeta('cargaAcademicaId');
+  GeneratedIntColumn _cargaAcademicaId;
+  @override
+  GeneratedIntColumn get cargaAcademicaId =>
+      _cargaAcademicaId ??= _constructCargaAcademicaId();
+  GeneratedIntColumn _constructCargaAcademicaId() {
+    return GeneratedIntColumn(
+      'carga_academica_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _notaPromedioMeta =
+      const VerificationMeta('notaPromedio');
+  GeneratedTextColumn _notaPromedio;
+  @override
+  GeneratedTextColumn get notaPromedio =>
+      _notaPromedio ??= _constructNotaPromedio();
+  GeneratedTextColumn _constructNotaPromedio() {
+    return GeneratedTextColumn(
+      'nota_promedio',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _escalaMeta = const VerificationMeta('escala');
+  GeneratedTextColumn _escala;
+  @override
+  GeneratedTextColumn get escala => _escala ??= _constructEscala();
+  GeneratedTextColumn _constructEscala() {
+    return GeneratedTextColumn(
+      'escala',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _anioAcademicoIdMeta =
+      const VerificationMeta('anioAcademicoId');
+  GeneratedIntColumn _anioAcademicoId;
+  @override
+  GeneratedIntColumn get anioAcademicoId =>
+      _anioAcademicoId ??= _constructAnioAcademicoId();
+  GeneratedIntColumn _constructAnioAcademicoId() {
+    return GeneratedIntColumn(
+      'anio_academico_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _idNivelAcademicoMeta =
+      const VerificationMeta('idNivelAcademico');
+  GeneratedIntColumn _idNivelAcademico;
+  @override
+  GeneratedIntColumn get idNivelAcademico =>
+      _idNivelAcademico ??= _constructIdNivelAcademico();
+  GeneratedIntColumn _constructIdNivelAcademico() {
+    return GeneratedIntColumn(
+      'id_nivel_academico',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _cursoIdMeta = const VerificationMeta('cursoId');
+  GeneratedIntColumn _cursoId;
+  @override
+  GeneratedIntColumn get cursoId => _cursoId ??= _constructCursoId();
+  GeneratedIntColumn _constructCursoId() {
+    return GeneratedIntColumn(
+      'curso_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _grupoIdMeta = const VerificationMeta('grupoId');
+  GeneratedIntColumn _grupoId;
+  @override
+  GeneratedIntColumn get grupoId => _grupoId ??= _constructGrupoId();
+  GeneratedIntColumn _constructGrupoId() {
+    return GeneratedIntColumn(
+      'grupo_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _aulaIdMeta = const VerificationMeta('aulaId');
+  GeneratedIntColumn _aulaId;
+  @override
+  GeneratedIntColumn get aulaId => _aulaId ??= _constructAulaId();
+  GeneratedIntColumn _constructAulaId() {
+    return GeneratedIntColumn(
+      'aula_id',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        idContratoDetAcad,
+        idContrato,
+        cargaCursoId,
+        cargaAcademicaId,
+        notaPromedio,
+        escala,
+        anioAcademicoId,
+        idNivelAcademico,
+        cursoId,
+        grupoId,
+        aulaId
+      ];
+  @override
+  $DetalleContratoAcadTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'detalle_contrato_acad';
+  @override
+  final String actualTableName = 'detalle_contrato_acad';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<DetalleContratoAcadData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id_contrato_det_acad')) {
+      context.handle(
+          _idContratoDetAcadMeta,
+          idContratoDetAcad.isAcceptableOrUnknown(
+              data['id_contrato_det_acad'], _idContratoDetAcadMeta));
+    }
+    if (data.containsKey('id_contrato')) {
+      context.handle(
+          _idContratoMeta,
+          idContrato.isAcceptableOrUnknown(
+              data['id_contrato'], _idContratoMeta));
+    }
+    if (data.containsKey('carga_curso_id')) {
+      context.handle(
+          _cargaCursoIdMeta,
+          cargaCursoId.isAcceptableOrUnknown(
+              data['carga_curso_id'], _cargaCursoIdMeta));
+    }
+    if (data.containsKey('carga_academica_id')) {
+      context.handle(
+          _cargaAcademicaIdMeta,
+          cargaAcademicaId.isAcceptableOrUnknown(
+              data['carga_academica_id'], _cargaAcademicaIdMeta));
+    }
+    if (data.containsKey('nota_promedio')) {
+      context.handle(
+          _notaPromedioMeta,
+          notaPromedio.isAcceptableOrUnknown(
+              data['nota_promedio'], _notaPromedioMeta));
+    }
+    if (data.containsKey('escala')) {
+      context.handle(_escalaMeta,
+          escala.isAcceptableOrUnknown(data['escala'], _escalaMeta));
+    }
+    if (data.containsKey('anio_academico_id')) {
+      context.handle(
+          _anioAcademicoIdMeta,
+          anioAcademicoId.isAcceptableOrUnknown(
+              data['anio_academico_id'], _anioAcademicoIdMeta));
+    }
+    if (data.containsKey('id_nivel_academico')) {
+      context.handle(
+          _idNivelAcademicoMeta,
+          idNivelAcademico.isAcceptableOrUnknown(
+              data['id_nivel_academico'], _idNivelAcademicoMeta));
+    }
+    if (data.containsKey('curso_id')) {
+      context.handle(_cursoIdMeta,
+          cursoId.isAcceptableOrUnknown(data['curso_id'], _cursoIdMeta));
+    }
+    if (data.containsKey('grupo_id')) {
+      context.handle(_grupoIdMeta,
+          grupoId.isAcceptableOrUnknown(data['grupo_id'], _grupoIdMeta));
+    }
+    if (data.containsKey('aula_id')) {
+      context.handle(_aulaIdMeta,
+          aulaId.isAcceptableOrUnknown(data['aula_id'], _aulaIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {idContratoDetAcad};
+  @override
+  DetalleContratoAcadData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return DetalleContratoAcadData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $DetalleContratoAcadTable createAlias(String alias) {
+    return $DetalleContratoAcadTable(_db, alias);
+  }
+}
+
+class ContratoData extends DataClass implements Insertable<ContratoData> {
+  final int idContrato;
+  final int personaId;
+  final int idAnioAcademico;
+  final int nroHno;
+  final int nivelAcaId;
+  final int seccionId;
+  final int periodoId;
+  final int vigente;
+  final int estadoId;
+  final int apoderadoId;
+  ContratoData(
+      {@required this.idContrato,
+      this.personaId,
+      this.idAnioAcademico,
+      this.nroHno,
+      this.nivelAcaId,
+      this.seccionId,
+      this.periodoId,
+      this.vigente,
+      this.estadoId,
+      this.apoderadoId});
+  factory ContratoData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    return ContratoData(
+      idContrato: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}id_contrato']),
+      personaId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}persona_id']),
+      idAnioAcademico: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}id_anio_academico']),
+      nroHno:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}nro_hno']),
+      nivelAcaId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}nivel_aca_id']),
+      seccionId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}seccion_id']),
+      periodoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}periodo_id']),
+      vigente:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}vigente']),
+      estadoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}estado_id']),
+      apoderadoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}apoderado_id']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || idContrato != null) {
+      map['id_contrato'] = Variable<int>(idContrato);
+    }
+    if (!nullToAbsent || personaId != null) {
+      map['persona_id'] = Variable<int>(personaId);
+    }
+    if (!nullToAbsent || idAnioAcademico != null) {
+      map['id_anio_academico'] = Variable<int>(idAnioAcademico);
+    }
+    if (!nullToAbsent || nroHno != null) {
+      map['nro_hno'] = Variable<int>(nroHno);
+    }
+    if (!nullToAbsent || nivelAcaId != null) {
+      map['nivel_aca_id'] = Variable<int>(nivelAcaId);
+    }
+    if (!nullToAbsent || seccionId != null) {
+      map['seccion_id'] = Variable<int>(seccionId);
+    }
+    if (!nullToAbsent || periodoId != null) {
+      map['periodo_id'] = Variable<int>(periodoId);
+    }
+    if (!nullToAbsent || vigente != null) {
+      map['vigente'] = Variable<int>(vigente);
+    }
+    if (!nullToAbsent || estadoId != null) {
+      map['estado_id'] = Variable<int>(estadoId);
+    }
+    if (!nullToAbsent || apoderadoId != null) {
+      map['apoderado_id'] = Variable<int>(apoderadoId);
+    }
+    return map;
+  }
+
+  ContratoCompanion toCompanion(bool nullToAbsent) {
+    return ContratoCompanion(
+      idContrato: idContrato == null && nullToAbsent
+          ? const Value.absent()
+          : Value(idContrato),
+      personaId: personaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(personaId),
+      idAnioAcademico: idAnioAcademico == null && nullToAbsent
+          ? const Value.absent()
+          : Value(idAnioAcademico),
+      nroHno:
+          nroHno == null && nullToAbsent ? const Value.absent() : Value(nroHno),
+      nivelAcaId: nivelAcaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nivelAcaId),
+      seccionId: seccionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(seccionId),
+      periodoId: periodoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(periodoId),
+      vigente: vigente == null && nullToAbsent
+          ? const Value.absent()
+          : Value(vigente),
+      estadoId: estadoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadoId),
+      apoderadoId: apoderadoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(apoderadoId),
+    );
+  }
+
+  factory ContratoData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return ContratoData(
+      idContrato: serializer.fromJson<int>(json['idContrato']),
+      personaId: serializer.fromJson<int>(json['personaId']),
+      idAnioAcademico: serializer.fromJson<int>(json['idAnioAcademico']),
+      nroHno: serializer.fromJson<int>(json['nroHno']),
+      nivelAcaId: serializer.fromJson<int>(json['nivelAcaId']),
+      seccionId: serializer.fromJson<int>(json['seccionId']),
+      periodoId: serializer.fromJson<int>(json['periodoId']),
+      vigente: serializer.fromJson<int>(json['vigente']),
+      estadoId: serializer.fromJson<int>(json['estadoId']),
+      apoderadoId: serializer.fromJson<int>(json['apoderadoId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'idContrato': serializer.toJson<int>(idContrato),
+      'personaId': serializer.toJson<int>(personaId),
+      'idAnioAcademico': serializer.toJson<int>(idAnioAcademico),
+      'nroHno': serializer.toJson<int>(nroHno),
+      'nivelAcaId': serializer.toJson<int>(nivelAcaId),
+      'seccionId': serializer.toJson<int>(seccionId),
+      'periodoId': serializer.toJson<int>(periodoId),
+      'vigente': serializer.toJson<int>(vigente),
+      'estadoId': serializer.toJson<int>(estadoId),
+      'apoderadoId': serializer.toJson<int>(apoderadoId),
+    };
+  }
+
+  ContratoData copyWith(
+          {int idContrato,
+          int personaId,
+          int idAnioAcademico,
+          int nroHno,
+          int nivelAcaId,
+          int seccionId,
+          int periodoId,
+          int vigente,
+          int estadoId,
+          int apoderadoId}) =>
+      ContratoData(
+        idContrato: idContrato ?? this.idContrato,
+        personaId: personaId ?? this.personaId,
+        idAnioAcademico: idAnioAcademico ?? this.idAnioAcademico,
+        nroHno: nroHno ?? this.nroHno,
+        nivelAcaId: nivelAcaId ?? this.nivelAcaId,
+        seccionId: seccionId ?? this.seccionId,
+        periodoId: periodoId ?? this.periodoId,
+        vigente: vigente ?? this.vigente,
+        estadoId: estadoId ?? this.estadoId,
+        apoderadoId: apoderadoId ?? this.apoderadoId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('ContratoData(')
+          ..write('idContrato: $idContrato, ')
+          ..write('personaId: $personaId, ')
+          ..write('idAnioAcademico: $idAnioAcademico, ')
+          ..write('nroHno: $nroHno, ')
+          ..write('nivelAcaId: $nivelAcaId, ')
+          ..write('seccionId: $seccionId, ')
+          ..write('periodoId: $periodoId, ')
+          ..write('vigente: $vigente, ')
+          ..write('estadoId: $estadoId, ')
+          ..write('apoderadoId: $apoderadoId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      idContrato.hashCode,
+      $mrjc(
+          personaId.hashCode,
+          $mrjc(
+              idAnioAcademico.hashCode,
+              $mrjc(
+                  nroHno.hashCode,
+                  $mrjc(
+                      nivelAcaId.hashCode,
+                      $mrjc(
+                          seccionId.hashCode,
+                          $mrjc(
+                              periodoId.hashCode,
+                              $mrjc(
+                                  vigente.hashCode,
+                                  $mrjc(estadoId.hashCode,
+                                      apoderadoId.hashCode))))))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is ContratoData &&
+          other.idContrato == this.idContrato &&
+          other.personaId == this.personaId &&
+          other.idAnioAcademico == this.idAnioAcademico &&
+          other.nroHno == this.nroHno &&
+          other.nivelAcaId == this.nivelAcaId &&
+          other.seccionId == this.seccionId &&
+          other.periodoId == this.periodoId &&
+          other.vigente == this.vigente &&
+          other.estadoId == this.estadoId &&
+          other.apoderadoId == this.apoderadoId);
+}
+
+class ContratoCompanion extends UpdateCompanion<ContratoData> {
+  final Value<int> idContrato;
+  final Value<int> personaId;
+  final Value<int> idAnioAcademico;
+  final Value<int> nroHno;
+  final Value<int> nivelAcaId;
+  final Value<int> seccionId;
+  final Value<int> periodoId;
+  final Value<int> vigente;
+  final Value<int> estadoId;
+  final Value<int> apoderadoId;
+  const ContratoCompanion({
+    this.idContrato = const Value.absent(),
+    this.personaId = const Value.absent(),
+    this.idAnioAcademico = const Value.absent(),
+    this.nroHno = const Value.absent(),
+    this.nivelAcaId = const Value.absent(),
+    this.seccionId = const Value.absent(),
+    this.periodoId = const Value.absent(),
+    this.vigente = const Value.absent(),
+    this.estadoId = const Value.absent(),
+    this.apoderadoId = const Value.absent(),
+  });
+  ContratoCompanion.insert({
+    this.idContrato = const Value.absent(),
+    this.personaId = const Value.absent(),
+    this.idAnioAcademico = const Value.absent(),
+    this.nroHno = const Value.absent(),
+    this.nivelAcaId = const Value.absent(),
+    this.seccionId = const Value.absent(),
+    this.periodoId = const Value.absent(),
+    this.vigente = const Value.absent(),
+    this.estadoId = const Value.absent(),
+    this.apoderadoId = const Value.absent(),
+  });
+  static Insertable<ContratoData> custom({
+    Expression<int> idContrato,
+    Expression<int> personaId,
+    Expression<int> idAnioAcademico,
+    Expression<int> nroHno,
+    Expression<int> nivelAcaId,
+    Expression<int> seccionId,
+    Expression<int> periodoId,
+    Expression<int> vigente,
+    Expression<int> estadoId,
+    Expression<int> apoderadoId,
+  }) {
+    return RawValuesInsertable({
+      if (idContrato != null) 'id_contrato': idContrato,
+      if (personaId != null) 'persona_id': personaId,
+      if (idAnioAcademico != null) 'id_anio_academico': idAnioAcademico,
+      if (nroHno != null) 'nro_hno': nroHno,
+      if (nivelAcaId != null) 'nivel_aca_id': nivelAcaId,
+      if (seccionId != null) 'seccion_id': seccionId,
+      if (periodoId != null) 'periodo_id': periodoId,
+      if (vigente != null) 'vigente': vigente,
+      if (estadoId != null) 'estado_id': estadoId,
+      if (apoderadoId != null) 'apoderado_id': apoderadoId,
+    });
+  }
+
+  ContratoCompanion copyWith(
+      {Value<int> idContrato,
+      Value<int> personaId,
+      Value<int> idAnioAcademico,
+      Value<int> nroHno,
+      Value<int> nivelAcaId,
+      Value<int> seccionId,
+      Value<int> periodoId,
+      Value<int> vigente,
+      Value<int> estadoId,
+      Value<int> apoderadoId}) {
+    return ContratoCompanion(
+      idContrato: idContrato ?? this.idContrato,
+      personaId: personaId ?? this.personaId,
+      idAnioAcademico: idAnioAcademico ?? this.idAnioAcademico,
+      nroHno: nroHno ?? this.nroHno,
+      nivelAcaId: nivelAcaId ?? this.nivelAcaId,
+      seccionId: seccionId ?? this.seccionId,
+      periodoId: periodoId ?? this.periodoId,
+      vigente: vigente ?? this.vigente,
+      estadoId: estadoId ?? this.estadoId,
+      apoderadoId: apoderadoId ?? this.apoderadoId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (idContrato.present) {
+      map['id_contrato'] = Variable<int>(idContrato.value);
+    }
+    if (personaId.present) {
+      map['persona_id'] = Variable<int>(personaId.value);
+    }
+    if (idAnioAcademico.present) {
+      map['id_anio_academico'] = Variable<int>(idAnioAcademico.value);
+    }
+    if (nroHno.present) {
+      map['nro_hno'] = Variable<int>(nroHno.value);
+    }
+    if (nivelAcaId.present) {
+      map['nivel_aca_id'] = Variable<int>(nivelAcaId.value);
+    }
+    if (seccionId.present) {
+      map['seccion_id'] = Variable<int>(seccionId.value);
+    }
+    if (periodoId.present) {
+      map['periodo_id'] = Variable<int>(periodoId.value);
+    }
+    if (vigente.present) {
+      map['vigente'] = Variable<int>(vigente.value);
+    }
+    if (estadoId.present) {
+      map['estado_id'] = Variable<int>(estadoId.value);
+    }
+    if (apoderadoId.present) {
+      map['apoderado_id'] = Variable<int>(apoderadoId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ContratoCompanion(')
+          ..write('idContrato: $idContrato, ')
+          ..write('personaId: $personaId, ')
+          ..write('idAnioAcademico: $idAnioAcademico, ')
+          ..write('nroHno: $nroHno, ')
+          ..write('nivelAcaId: $nivelAcaId, ')
+          ..write('seccionId: $seccionId, ')
+          ..write('periodoId: $periodoId, ')
+          ..write('vigente: $vigente, ')
+          ..write('estadoId: $estadoId, ')
+          ..write('apoderadoId: $apoderadoId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ContratoTable extends Contrato
+    with TableInfo<$ContratoTable, ContratoData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $ContratoTable(this._db, [this._alias]);
+  final VerificationMeta _idContratoMeta = const VerificationMeta('idContrato');
+  GeneratedIntColumn _idContrato;
+  @override
+  GeneratedIntColumn get idContrato => _idContrato ??= _constructIdContrato();
+  GeneratedIntColumn _constructIdContrato() {
+    return GeneratedIntColumn(
+      'id_contrato',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _personaIdMeta = const VerificationMeta('personaId');
+  GeneratedIntColumn _personaId;
+  @override
+  GeneratedIntColumn get personaId => _personaId ??= _constructPersonaId();
+  GeneratedIntColumn _constructPersonaId() {
+    return GeneratedIntColumn(
+      'persona_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _idAnioAcademicoMeta =
+      const VerificationMeta('idAnioAcademico');
+  GeneratedIntColumn _idAnioAcademico;
+  @override
+  GeneratedIntColumn get idAnioAcademico =>
+      _idAnioAcademico ??= _constructIdAnioAcademico();
+  GeneratedIntColumn _constructIdAnioAcademico() {
+    return GeneratedIntColumn(
+      'id_anio_academico',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _nroHnoMeta = const VerificationMeta('nroHno');
+  GeneratedIntColumn _nroHno;
+  @override
+  GeneratedIntColumn get nroHno => _nroHno ??= _constructNroHno();
+  GeneratedIntColumn _constructNroHno() {
+    return GeneratedIntColumn(
+      'nro_hno',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _nivelAcaIdMeta = const VerificationMeta('nivelAcaId');
+  GeneratedIntColumn _nivelAcaId;
+  @override
+  GeneratedIntColumn get nivelAcaId => _nivelAcaId ??= _constructNivelAcaId();
+  GeneratedIntColumn _constructNivelAcaId() {
+    return GeneratedIntColumn(
+      'nivel_aca_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _seccionIdMeta = const VerificationMeta('seccionId');
+  GeneratedIntColumn _seccionId;
+  @override
+  GeneratedIntColumn get seccionId => _seccionId ??= _constructSeccionId();
+  GeneratedIntColumn _constructSeccionId() {
+    return GeneratedIntColumn(
+      'seccion_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _periodoIdMeta = const VerificationMeta('periodoId');
+  GeneratedIntColumn _periodoId;
+  @override
+  GeneratedIntColumn get periodoId => _periodoId ??= _constructPeriodoId();
+  GeneratedIntColumn _constructPeriodoId() {
+    return GeneratedIntColumn(
+      'periodo_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _vigenteMeta = const VerificationMeta('vigente');
+  GeneratedIntColumn _vigente;
+  @override
+  GeneratedIntColumn get vigente => _vigente ??= _constructVigente();
+  GeneratedIntColumn _constructVigente() {
+    return GeneratedIntColumn(
+      'vigente',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoIdMeta = const VerificationMeta('estadoId');
+  GeneratedIntColumn _estadoId;
+  @override
+  GeneratedIntColumn get estadoId => _estadoId ??= _constructEstadoId();
+  GeneratedIntColumn _constructEstadoId() {
+    return GeneratedIntColumn(
+      'estado_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _apoderadoIdMeta =
+      const VerificationMeta('apoderadoId');
+  GeneratedIntColumn _apoderadoId;
+  @override
+  GeneratedIntColumn get apoderadoId =>
+      _apoderadoId ??= _constructApoderadoId();
+  GeneratedIntColumn _constructApoderadoId() {
+    return GeneratedIntColumn(
+      'apoderado_id',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        idContrato,
+        personaId,
+        idAnioAcademico,
+        nroHno,
+        nivelAcaId,
+        seccionId,
+        periodoId,
+        vigente,
+        estadoId,
+        apoderadoId
+      ];
+  @override
+  $ContratoTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'contrato';
+  @override
+  final String actualTableName = 'contrato';
+  @override
+  VerificationContext validateIntegrity(Insertable<ContratoData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id_contrato')) {
+      context.handle(
+          _idContratoMeta,
+          idContrato.isAcceptableOrUnknown(
+              data['id_contrato'], _idContratoMeta));
+    }
+    if (data.containsKey('persona_id')) {
+      context.handle(_personaIdMeta,
+          personaId.isAcceptableOrUnknown(data['persona_id'], _personaIdMeta));
+    }
+    if (data.containsKey('id_anio_academico')) {
+      context.handle(
+          _idAnioAcademicoMeta,
+          idAnioAcademico.isAcceptableOrUnknown(
+              data['id_anio_academico'], _idAnioAcademicoMeta));
+    }
+    if (data.containsKey('nro_hno')) {
+      context.handle(_nroHnoMeta,
+          nroHno.isAcceptableOrUnknown(data['nro_hno'], _nroHnoMeta));
+    }
+    if (data.containsKey('nivel_aca_id')) {
+      context.handle(
+          _nivelAcaIdMeta,
+          nivelAcaId.isAcceptableOrUnknown(
+              data['nivel_aca_id'], _nivelAcaIdMeta));
+    }
+    if (data.containsKey('seccion_id')) {
+      context.handle(_seccionIdMeta,
+          seccionId.isAcceptableOrUnknown(data['seccion_id'], _seccionIdMeta));
+    }
+    if (data.containsKey('periodo_id')) {
+      context.handle(_periodoIdMeta,
+          periodoId.isAcceptableOrUnknown(data['periodo_id'], _periodoIdMeta));
+    }
+    if (data.containsKey('vigente')) {
+      context.handle(_vigenteMeta,
+          vigente.isAcceptableOrUnknown(data['vigente'], _vigenteMeta));
+    }
+    if (data.containsKey('estado_id')) {
+      context.handle(_estadoIdMeta,
+          estadoId.isAcceptableOrUnknown(data['estado_id'], _estadoIdMeta));
+    }
+    if (data.containsKey('apoderado_id')) {
+      context.handle(
+          _apoderadoIdMeta,
+          apoderadoId.isAcceptableOrUnknown(
+              data['apoderado_id'], _apoderadoIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {idContrato};
+  @override
+  ContratoData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return ContratoData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $ContratoTable createAlias(String alias) {
+    return $ContratoTable(_db, alias);
+  }
+}
+
 abstract class _$AppDataBase extends GeneratedDatabase {
   _$AppDataBase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $PersonaTable _persona;
@@ -1760,9 +6127,37 @@ abstract class _$AppDataBase extends GeneratedDatabase {
   $SessionUserTable get sessionUser => _sessionUser ??= $SessionUserTable(this);
   $RelacionesTable _relaciones;
   $RelacionesTable get relaciones => _relaciones ??= $RelacionesTable(this);
+  $AnioAcademicoAlumnoTable _anioAcademicoAlumno;
+  $AnioAcademicoAlumnoTable get anioAcademicoAlumno =>
+      _anioAcademicoAlumno ??= $AnioAcademicoAlumnoTable(this);
+  $ProgramasEducativoTable _programasEducativo;
+  $ProgramasEducativoTable get programasEducativo =>
+      _programasEducativo ??= $ProgramasEducativoTable(this);
+  $PlanEstudioTable _planEstudio;
+  $PlanEstudioTable get planEstudio => _planEstudio ??= $PlanEstudioTable(this);
+  $PlanCursosTable _planCursos;
+  $PlanCursosTable get planCursos => _planCursos ??= $PlanCursosTable(this);
+  $CargaCursoTable _cargaCurso;
+  $CargaCursoTable get cargaCurso => _cargaCurso ??= $CargaCursoTable(this);
+  $DetalleContratoAcadTable _detalleContratoAcad;
+  $DetalleContratoAcadTable get detalleContratoAcad =>
+      _detalleContratoAcad ??= $DetalleContratoAcadTable(this);
+  $ContratoTable _contrato;
+  $ContratoTable get contrato => _contrato ??= $ContratoTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [persona, usuario, sessionUser, relaciones];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+        persona,
+        usuario,
+        sessionUser,
+        relaciones,
+        anioAcademicoAlumno,
+        programasEducativo,
+        planEstudio,
+        planCursos,
+        cargaCurso,
+        detalleContratoAcad,
+        contrato
+      ];
 }
