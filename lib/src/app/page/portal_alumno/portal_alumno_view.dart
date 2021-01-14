@@ -281,7 +281,10 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                             titulo: "Tareas",
                             imagepath: "assets/fitness_app/area1.png",
                               onTap: () {
-                                Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas());
+                                var programaEducativo = controller.programaEducativoSelected;
+                                if(programaEducativo!=null){
+                                    Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId)); 
+                                }
                               },
                           ),
                           MenuItemView(
@@ -293,7 +296,10 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                             titulo: "Evaluación",
                             imagepath: "assets/fitness_app/area2.png",
                             onTap: () {
-                              Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas());
+                              var programaEducativo = controller.programaEducativoSelected;
+                                if(programaEducativo!=null){
+                                    Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId)); 
+                                }
                             },
                           ),
                           MenuItemView(
@@ -305,7 +311,10 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                             titulo: "Asistencia",
                             imagepath: "assets/fitness_app/area3.png",
                             onTap: () {
-                              Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas());
+                              var programaEducativo = controller.programaEducativoSelected;
+                                if(programaEducativo!=null){
+                                    Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId)); 
+                                }
                             },
                           ),
                           MenuItemView(
@@ -317,7 +326,10 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                             titulo: "Comportamiento",
                             imagepath: "assets/fitness_app/area1.png",
                             onTap: () {
-                              Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas());
+                              var programaEducativo = controller.programaEducativoSelected;
+                                if(programaEducativo!=null){
+                                    Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId)); 
+                                }
                             },
                           ),
                           MenuItemView(
@@ -329,7 +341,10 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                             titulo: "Horario",
                             imagepath: "assets/fitness_app/area2.png",
                             onTap: () {
-                              Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas());
+                              var programaEducativo = controller.programaEducativoSelected;
+                                if(programaEducativo!=null){
+                                    Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId)); 
+                                }
                             },
                           ),
                           MenuItemView(
@@ -341,7 +356,10 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                             titulo: "Cursos",
                             imagepath: "assets/fitness_app/area3.png",
                             onTap: () {
-                              Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas());
+                              var programaEducativo = controller.programaEducativoSelected;
+                                if(programaEducativo!=null){
+                                    Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId)); 
+                                }
                             },
                           ),
                           MenuItemView(
@@ -353,7 +371,10 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                             titulo: "Boleta de Nota",
                             imagepath: "assets/fitness_app/area1.png",
                             onTap: () {
-                              Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas());
+                              var programaEducativo = controller.programaEducativoSelected;
+                                if(programaEducativo!=null){
+                                    Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId)); 
+                                }
                             },
                           ),
                           MenuItemView(
@@ -365,7 +386,10 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                             titulo: "Pago en línea",
                             imagepath: "assets/fitness_app/area2.png",
                             onTap: () {
-                              Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas());
+                              var programaEducativo = controller.programaEducativoSelected;
+                                if(programaEducativo!=null){
+                                    Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId)); 
+                                }
                             },
                           )
 

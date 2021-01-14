@@ -3,9 +3,9 @@ import 'package:padre_mentor/src/app/page/boleta_notas/boleta_notas_view.dart';
 
 class BoletaNotasRouter{
 
-  static Route createRouteBoletaNotas() {
+  static Route createRouteBoletaNotas({@required programaAcademicoId, @required  alumnoId, @required anioAcademico}) {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => BoletasNotasView(),
+      pageBuilder: (context, animation, secondaryAnimation) => BoletasNotasView(alumnoId: alumnoId, programaAcademicoId: programaAcademicoId, anioAcademicoId: anioAcademico,),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         var begin = Offset(0.0, 1.0);
         var end = Offset.zero;

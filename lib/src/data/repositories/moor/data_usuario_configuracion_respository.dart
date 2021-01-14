@@ -99,7 +99,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
   }
 
   @override
-  void saveDatosGlobales(Map<String, dynamic> datosInicioPadre) async{
+  Future<void> saveDatosGlobales(Map<String, dynamic> datosInicioPadre) async{
    AppDataBase SQL = AppDataBase();
    try{
      await SQL.batch((batch) async {
@@ -146,6 +146,26 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
 
        if(datosInicioPadre.containsKey("programasEducativos")){
          batch.insertAll(SQL.programasEducativo, SerializableConvert.converListSerializeProgramasEducativo(datosInicioPadre["programasEducativos"]), mode: InsertMode.insertOrReplace);
+       }
+
+       if(datosInicioPadre.containsKey("calendarioPeriodos")){
+         batch.insertAll(SQL.calendarioPeriodo, SerializableConvert.converListSerializeCalendarioPeriodo(datosInicioPadre["calendarioPeriodos"]), mode: InsertMode.insertOrReplace);
+       }
+
+       if(datosInicioPadre.containsKey("calendarioAcademicos")){
+         batch.insertAll(SQL.calendarioAcademico, SerializableConvert.converListSerializeCalendarioAcademico(datosInicioPadre["calendarioAcademicos"]), mode: InsertMode.insertOrReplace);
+       }
+
+       if(datosInicioPadre.containsKey("tipos")){
+         batch.insertAll(SQL.tipos, SerializableConvert.converListSerializeTipos(datosInicioPadre["tipos"]), mode: InsertMode.insertOrReplace);
+       }
+
+       if(datosInicioPadre.containsKey("obtener_parametros_disenio")){
+         batch.insertAll(SQL.parametrosDisenio, SerializableConvert.converListSerializeParametrosDisenio(datosInicioPadre["obtener_parametros_disenio"]), mode: InsertMode.insertOrReplace);
+       }
+
+       if(datosInicioPadre.containsKey("silaboEvento")){
+         batch.insertAll(SQL.silaboEvento, SerializableConvert.converListSerializeSilaboEvento(datosInicioPadre["silaboEvento"]), mode: InsertMode.insertOrReplace);
        }
 
      });

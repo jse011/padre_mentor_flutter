@@ -24,6 +24,7 @@ class AppTheme{
   static const Color dismissibleBackground = Color(0xFF364A54);
   static const Color spacer = Color(0xFFF2F2F2);
   static  Color colorAccent = HexColor("#5983f0");
+  static const Color colorCard = Color(0xFFFAFAFA);
 
   static const String fontName = 'Roboto';
 

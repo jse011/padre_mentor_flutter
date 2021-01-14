@@ -21,14 +21,23 @@ class PortalAlumnoController extends Controller{
   @override
   void initListeners() {
     presenter.getSesionUsuarioOnNext = (UsuarioUi user) {
-      if(user.hijos.isEmpty){
 
-      }else{
-        _hijoSelected = user.hijos.first;
+      _programaEducativoList = user.programaEducativoUiList;
+      if(!programaEducativoList.isEmpty){
+        _programaEducativoSelected = programaEducativoList.first;
+      }
+      if(!user.hijos.isEmpty){
+        if(_programaEducativoSelected != null){
+            for(var item in user.hijos){
+                if(item.personaId == _programaEducativoSelected.hijoId){
+                  _hijoSelected = item;
+                }
+            }
+        }
+        if(_hijoSelected==null) _hijoSelected = user.hijos.first;
       }
 
       _hijoList = user.hijos;
-      _programaEducativoList = user.programaEducativoUiList;
 
       refreshUI(); // Refreshes the UI manually
     };

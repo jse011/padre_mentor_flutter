@@ -299,3 +299,208 @@ Map<String, dynamic> _$PlanEstudiosSerialToJson(PlanEstudiosSerial instance) =>
       'nroResolucion': instance.nroResolucion,
       'fechaResolucion': instance.fechaResolucion,
     };
+
+CalendarioPeriodoSerial _$CalendarioPeriodoSerialFromJson(
+    Map<String, dynamic> json) {
+  return CalendarioPeriodoSerial(
+    calendarioPeriodoId: json['calendarioPeriodoId'] as int,
+    fechaInicio: json['fechaInicio'] as int,
+    fechaFin: json['fechaFin'] as int,
+    calendarioAcademicoId: json['calendarioAcademicoId'] as int,
+    tipoId: json['tipoId'] as int,
+    estadoId: json['estadoId'] as int,
+    diazPlazo: json['diazPlazo'] as int,
+  );
+}
+
+Map<String, dynamic> _$CalendarioPeriodoSerialToJson(
+        CalendarioPeriodoSerial instance) =>
+    <String, dynamic>{
+      'calendarioPeriodoId': instance.calendarioPeriodoId,
+      'fechaInicio': instance.fechaInicio,
+      'fechaFin': instance.fechaFin,
+      'calendarioAcademicoId': instance.calendarioAcademicoId,
+      'tipoId': instance.tipoId,
+      'estadoId': instance.estadoId,
+      'diazPlazo': instance.diazPlazo,
+    };
+
+CalendarioAcademicoSerial _$CalendarioAcademicoSerialFromJson(
+    Map<String, dynamic> json) {
+  return CalendarioAcademicoSerial(
+    calendarioAcademicoId: json['calendarioAcademicoId'] as int,
+    programaEduId: json['programaEduId'] as int,
+    idAnioAcademico: json['idAnioAcademico'] as int,
+    estadoId: json['estadoId'] as int,
+  );
+}
+
+Map<String, dynamic> _$CalendarioAcademicoSerialToJson(
+        CalendarioAcademicoSerial instance) =>
+    <String, dynamic>{
+      'calendarioAcademicoId': instance.calendarioAcademicoId,
+      'programaEduId': instance.programaEduId,
+      'idAnioAcademico': instance.idAnioAcademico,
+      'estadoId': instance.estadoId,
+    };
+
+TiposSerial _$TiposSerialFromJson(Map<String, dynamic> json) {
+  return TiposSerial(
+    tipoId: json['tipoId'] as int,
+    objeto: json['objeto'] as String,
+    concepto: json['concepto'] as String,
+    nombre: json['nombre'] as String,
+    codigo: json['codigo'] as String,
+    parentId: json['parentId'] as int,
+  );
+}
+
+Map<String, dynamic> _$TiposSerialToJson(TiposSerial instance) =>
+    <String, dynamic>{
+      'tipoId': instance.tipoId,
+      'objeto': instance.objeto,
+      'concepto': instance.concepto,
+      'nombre': instance.nombre,
+      'codigo': instance.codigo,
+      'parentId': instance.parentId,
+    };
+
+AreasBoletaSerial _$AreasBoletaSerialFromJson(Map<String, dynamic> json) {
+  return AreasBoletaSerial(
+    rubroEvalResultadoId: json['rubroEvalResultadoId'] as int,
+    nombre: json['nombre'] as String,
+    tipoConceptoId: json['tipoConceptoId'] as int,
+    totalHt: json['totalHt'] as int,
+    silaboEventoId: json['silaboEventoId'] as int,
+    competencia: json['competencia'] as String,
+    tipoId: json['tipoId'] as int,
+    tipoFormulaId: json['tipoFormulaId'] as int,
+    competenciaId: json['competenciaId'] as int,
+    tipoCompetenciaId: json['tipoCompetenciaId'] as int,
+    calendarioPeriodoId: json['calendarioPeriodoId'] as int,
+    anioAcademicoId: json['anioAcademicoId'] as int,
+    programaEducativoId: json['programaEducativoId'] as int,
+    periodoId: json['periodoId'] as int,
+    seccionId: json['seccionId'] as int,
+  );
+}
+
+Map<String, dynamic> _$AreasBoletaSerialToJson(AreasBoletaSerial instance) =>
+    <String, dynamic>{
+      'rubroEvalResultadoId': instance.rubroEvalResultadoId,
+      'nombre': instance.nombre,
+      'tipoConceptoId': instance.tipoConceptoId,
+      'totalHt': instance.totalHt,
+      'silaboEventoId': instance.silaboEventoId,
+      'competencia': instance.competencia,
+      'tipoId': instance.tipoId,
+      'tipoFormulaId': instance.tipoFormulaId,
+      'competenciaId': instance.competenciaId,
+      'tipoCompetenciaId': instance.tipoCompetenciaId,
+      'calendarioPeriodoId': instance.calendarioPeriodoId,
+      'anioAcademicoId': instance.anioAcademicoId,
+      'programaEducativoId': instance.programaEducativoId,
+      'periodoId': instance.periodoId,
+      'seccionId': instance.seccionId,
+    };
+
+NotasCalendarioBoletaSerial _$NotasCalendarioBoletaSerialFromJson(
+    Map<String, dynamic> json) {
+  return NotasCalendarioBoletaSerial(
+    evaluacionResultadoId: json['evaluacionResultadoId'] as int,
+    rubroEvalResultadoId: json['rubroEvalResultadoId'] as int,
+    alumnoId: json['alumnoId'] as int,
+    silaboEventoId: json['silaboEventoId'] as int,
+    nota: json['nota'] as String,
+    peso: (json['peso'] as num)?.toDouble(),
+    valorTipoNotaId: json['valorTipoNotaId'] as String,
+    tituloNota: json['tituloNota'] as String,
+    tipoNotaId: json['tipoNotaId'] as int,
+    calendarioPeriodoId: json['calendarioPeriodoId'] as int,
+    color: json['color'] as String,
+  );
+}
+
+Map<String, dynamic> _$NotasCalendarioBoletaSerialToJson(
+        NotasCalendarioBoletaSerial instance) =>
+    <String, dynamic>{
+      'evaluacionResultadoId': instance.evaluacionResultadoId,
+      'rubroEvalResultadoId': instance.rubroEvalResultadoId,
+      'alumnoId': instance.alumnoId,
+      'silaboEventoId': instance.silaboEventoId,
+      'nota': instance.nota,
+      'peso': instance.peso,
+      'valorTipoNotaId': instance.valorTipoNotaId,
+      'tituloNota': instance.tituloNota,
+      'tipoNotaId': instance.tipoNotaId,
+      'calendarioPeriodoId': instance.calendarioPeriodoId,
+      'color': instance.color,
+    };
+
+ParametrosDisenioSerial _$ParametrosDisenioSerialFromJson(
+    Map<String, dynamic> json) {
+  return ParametrosDisenioSerial(
+    parametroDisenioId: json['parametroDisenioId'] as int,
+    objeto: json['objeto'] as String,
+    concepto: json['concepto'] as String,
+    nombre: json['nombre'] as String,
+    path: json['path'] as String,
+    color1: json['color1'] as String,
+    color2: json['color2'] as String,
+    color3: json['color3'] as String,
+    estado: json['estado'] as bool,
+  );
+}
+
+Map<String, dynamic> _$ParametrosDisenioSerialToJson(
+        ParametrosDisenioSerial instance) =>
+    <String, dynamic>{
+      'parametroDisenioId': instance.parametroDisenioId,
+      'objeto': instance.objeto,
+      'concepto': instance.concepto,
+      'nombre': instance.nombre,
+      'path': instance.path,
+      'color1': instance.color1,
+      'color2': instance.color2,
+      'color3': instance.color3,
+      'estado': instance.estado,
+    };
+
+SilaboEventoSerial _$SilaboEventoSerialFromJson(Map<String, dynamic> json) {
+  return SilaboEventoSerial(
+    silaboEventoId: json['silaboEventoId'] as int,
+    titulo: json['titulo'] as String,
+    descripcionGeneral: json['descripcionGeneral'] as String,
+    planCursoId: json['planCursoId'] as int,
+    entidadId: json['entidadId'] as int,
+    docenteId: json['docenteId'] as int,
+    seccionId: json['seccionId'] as int,
+    fechaInicio: json['fechaInicio'] as String,
+    fechaFin: json['fechaFin'] as String,
+    estadoId: json['estadoId'] as int,
+    anioAcademicoId: json['anioAcademicoId'] as int,
+    georeferenciaId: json['georeferenciaId'] as int,
+    silaboBaseId: json['silaboBaseId'] as int,
+    cargaCursoId: json['cargaCursoId'] as int,
+    parametroDisenioId: json['parametroDisenioId'] as int,
+  );
+}
+
+Map<String, dynamic> _$SilaboEventoSerialToJson(SilaboEventoSerial instance) =>
+    <String, dynamic>{
+      'silaboEventoId': instance.silaboEventoId,
+      'titulo': instance.titulo,
+      'descripcionGeneral': instance.descripcionGeneral,
+      'planCursoId': instance.planCursoId,
+      'entidadId': instance.entidadId,
+      'docenteId': instance.docenteId,
+      'seccionId': instance.seccionId,
+      'fechaInicio': instance.fechaInicio,
+      'fechaFin': instance.fechaFin,
+      'estadoId': instance.estadoId,
+      'anioAcademicoId': instance.anioAcademicoId,
+      'georeferenciaId': instance.georeferenciaId,
+      'silaboBaseId': instance.silaboBaseId,
+      'cargaCursoId': instance.cargaCursoId,
+      'parametroDisenioId': instance.parametroDisenioId,
+    };

@@ -31,7 +31,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
   }
 
   @override
-  void saveDatosGlobales(Map<String, dynamic> datosInicioPadre) async{
+  Future<void> saveDatosGlobales(Map<String, dynamic> datosInicioPadre) async{
     // create migration
     final database = await AppDatabase.getBD();
 

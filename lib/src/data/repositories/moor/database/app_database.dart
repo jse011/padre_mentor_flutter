@@ -1,19 +1,27 @@
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/anio_academico_alumno.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/areas_boleta.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/calendario_acalendario.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/calendario_periodo.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/carga_cursos.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/contrato.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/detalle_contrato_acad.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/notas_calendario_boleta.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/parametros_disenio.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/persona.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/plan_cursos.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/plan_estudios.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/programas_educativo.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/relaciones.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/session_user.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/silabo_evento.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/tipos.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/usuario.dart';
 
 part 'app_database.g.dart';
 
-@UseMoor(tables: [Persona, Usuario, SessionUser, Relaciones, AnioAcademicoAlumno, ProgramasEducativo, PlanEstudio, PlanCursos, CargaCurso, DetalleContratoAcad, Contrato, ])
+@UseMoor(tables: [Persona, Usuario, SessionUser, Relaciones, AnioAcademicoAlumno, ProgramasEducativo, PlanEstudio, PlanCursos, CargaCurso, DetalleContratoAcad, Contrato, CalendarioAcademico, CalendarioPeriodo, Tipos,
+                  AreasBoleta, NotasCalendarioBoleta, ParametrosDisenio, SilaboEvento])
 class AppDataBase extends _$AppDataBase{
 
   @override

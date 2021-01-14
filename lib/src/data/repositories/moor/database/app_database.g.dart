@@ -6117,6 +6117,4041 @@ class $ContratoTable extends Contrato
   }
 }
 
+class CalendarioAcademicoData extends DataClass
+    implements Insertable<CalendarioAcademicoData> {
+  final int calendarioAcademicoId;
+  final int programaEduId;
+  final int idAnioAcademico;
+  final int estadoId;
+  CalendarioAcademicoData(
+      {@required this.calendarioAcademicoId,
+      this.programaEduId,
+      this.idAnioAcademico,
+      this.estadoId});
+  factory CalendarioAcademicoData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    return CalendarioAcademicoData(
+      calendarioAcademicoId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}calendario_academico_id']),
+      programaEduId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}programa_edu_id']),
+      idAnioAcademico: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}id_anio_academico']),
+      estadoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}estado_id']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || calendarioAcademicoId != null) {
+      map['calendario_academico_id'] = Variable<int>(calendarioAcademicoId);
+    }
+    if (!nullToAbsent || programaEduId != null) {
+      map['programa_edu_id'] = Variable<int>(programaEduId);
+    }
+    if (!nullToAbsent || idAnioAcademico != null) {
+      map['id_anio_academico'] = Variable<int>(idAnioAcademico);
+    }
+    if (!nullToAbsent || estadoId != null) {
+      map['estado_id'] = Variable<int>(estadoId);
+    }
+    return map;
+  }
+
+  CalendarioAcademicoCompanion toCompanion(bool nullToAbsent) {
+    return CalendarioAcademicoCompanion(
+      calendarioAcademicoId: calendarioAcademicoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(calendarioAcademicoId),
+      programaEduId: programaEduId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(programaEduId),
+      idAnioAcademico: idAnioAcademico == null && nullToAbsent
+          ? const Value.absent()
+          : Value(idAnioAcademico),
+      estadoId: estadoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadoId),
+    );
+  }
+
+  factory CalendarioAcademicoData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return CalendarioAcademicoData(
+      calendarioAcademicoId:
+          serializer.fromJson<int>(json['calendarioAcademicoId']),
+      programaEduId: serializer.fromJson<int>(json['programaEduId']),
+      idAnioAcademico: serializer.fromJson<int>(json['idAnioAcademico']),
+      estadoId: serializer.fromJson<int>(json['estadoId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'calendarioAcademicoId': serializer.toJson<int>(calendarioAcademicoId),
+      'programaEduId': serializer.toJson<int>(programaEduId),
+      'idAnioAcademico': serializer.toJson<int>(idAnioAcademico),
+      'estadoId': serializer.toJson<int>(estadoId),
+    };
+  }
+
+  CalendarioAcademicoData copyWith(
+          {int calendarioAcademicoId,
+          int programaEduId,
+          int idAnioAcademico,
+          int estadoId}) =>
+      CalendarioAcademicoData(
+        calendarioAcademicoId:
+            calendarioAcademicoId ?? this.calendarioAcademicoId,
+        programaEduId: programaEduId ?? this.programaEduId,
+        idAnioAcademico: idAnioAcademico ?? this.idAnioAcademico,
+        estadoId: estadoId ?? this.estadoId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('CalendarioAcademicoData(')
+          ..write('calendarioAcademicoId: $calendarioAcademicoId, ')
+          ..write('programaEduId: $programaEduId, ')
+          ..write('idAnioAcademico: $idAnioAcademico, ')
+          ..write('estadoId: $estadoId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      calendarioAcademicoId.hashCode,
+      $mrjc(programaEduId.hashCode,
+          $mrjc(idAnioAcademico.hashCode, estadoId.hashCode))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is CalendarioAcademicoData &&
+          other.calendarioAcademicoId == this.calendarioAcademicoId &&
+          other.programaEduId == this.programaEduId &&
+          other.idAnioAcademico == this.idAnioAcademico &&
+          other.estadoId == this.estadoId);
+}
+
+class CalendarioAcademicoCompanion
+    extends UpdateCompanion<CalendarioAcademicoData> {
+  final Value<int> calendarioAcademicoId;
+  final Value<int> programaEduId;
+  final Value<int> idAnioAcademico;
+  final Value<int> estadoId;
+  const CalendarioAcademicoCompanion({
+    this.calendarioAcademicoId = const Value.absent(),
+    this.programaEduId = const Value.absent(),
+    this.idAnioAcademico = const Value.absent(),
+    this.estadoId = const Value.absent(),
+  });
+  CalendarioAcademicoCompanion.insert({
+    this.calendarioAcademicoId = const Value.absent(),
+    this.programaEduId = const Value.absent(),
+    this.idAnioAcademico = const Value.absent(),
+    this.estadoId = const Value.absent(),
+  });
+  static Insertable<CalendarioAcademicoData> custom({
+    Expression<int> calendarioAcademicoId,
+    Expression<int> programaEduId,
+    Expression<int> idAnioAcademico,
+    Expression<int> estadoId,
+  }) {
+    return RawValuesInsertable({
+      if (calendarioAcademicoId != null)
+        'calendario_academico_id': calendarioAcademicoId,
+      if (programaEduId != null) 'programa_edu_id': programaEduId,
+      if (idAnioAcademico != null) 'id_anio_academico': idAnioAcademico,
+      if (estadoId != null) 'estado_id': estadoId,
+    });
+  }
+
+  CalendarioAcademicoCompanion copyWith(
+      {Value<int> calendarioAcademicoId,
+      Value<int> programaEduId,
+      Value<int> idAnioAcademico,
+      Value<int> estadoId}) {
+    return CalendarioAcademicoCompanion(
+      calendarioAcademicoId:
+          calendarioAcademicoId ?? this.calendarioAcademicoId,
+      programaEduId: programaEduId ?? this.programaEduId,
+      idAnioAcademico: idAnioAcademico ?? this.idAnioAcademico,
+      estadoId: estadoId ?? this.estadoId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (calendarioAcademicoId.present) {
+      map['calendario_academico_id'] =
+          Variable<int>(calendarioAcademicoId.value);
+    }
+    if (programaEduId.present) {
+      map['programa_edu_id'] = Variable<int>(programaEduId.value);
+    }
+    if (idAnioAcademico.present) {
+      map['id_anio_academico'] = Variable<int>(idAnioAcademico.value);
+    }
+    if (estadoId.present) {
+      map['estado_id'] = Variable<int>(estadoId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CalendarioAcademicoCompanion(')
+          ..write('calendarioAcademicoId: $calendarioAcademicoId, ')
+          ..write('programaEduId: $programaEduId, ')
+          ..write('idAnioAcademico: $idAnioAcademico, ')
+          ..write('estadoId: $estadoId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CalendarioAcademicoTable extends CalendarioAcademico
+    with TableInfo<$CalendarioAcademicoTable, CalendarioAcademicoData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $CalendarioAcademicoTable(this._db, [this._alias]);
+  final VerificationMeta _calendarioAcademicoIdMeta =
+      const VerificationMeta('calendarioAcademicoId');
+  GeneratedIntColumn _calendarioAcademicoId;
+  @override
+  GeneratedIntColumn get calendarioAcademicoId =>
+      _calendarioAcademicoId ??= _constructCalendarioAcademicoId();
+  GeneratedIntColumn _constructCalendarioAcademicoId() {
+    return GeneratedIntColumn(
+      'calendario_academico_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _programaEduIdMeta =
+      const VerificationMeta('programaEduId');
+  GeneratedIntColumn _programaEduId;
+  @override
+  GeneratedIntColumn get programaEduId =>
+      _programaEduId ??= _constructProgramaEduId();
+  GeneratedIntColumn _constructProgramaEduId() {
+    return GeneratedIntColumn(
+      'programa_edu_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _idAnioAcademicoMeta =
+      const VerificationMeta('idAnioAcademico');
+  GeneratedIntColumn _idAnioAcademico;
+  @override
+  GeneratedIntColumn get idAnioAcademico =>
+      _idAnioAcademico ??= _constructIdAnioAcademico();
+  GeneratedIntColumn _constructIdAnioAcademico() {
+    return GeneratedIntColumn(
+      'id_anio_academico',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoIdMeta = const VerificationMeta('estadoId');
+  GeneratedIntColumn _estadoId;
+  @override
+  GeneratedIntColumn get estadoId => _estadoId ??= _constructEstadoId();
+  GeneratedIntColumn _constructEstadoId() {
+    return GeneratedIntColumn(
+      'estado_id',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns =>
+      [calendarioAcademicoId, programaEduId, idAnioAcademico, estadoId];
+  @override
+  $CalendarioAcademicoTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'calendario_academico';
+  @override
+  final String actualTableName = 'calendario_academico';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<CalendarioAcademicoData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('calendario_academico_id')) {
+      context.handle(
+          _calendarioAcademicoIdMeta,
+          calendarioAcademicoId.isAcceptableOrUnknown(
+              data['calendario_academico_id'], _calendarioAcademicoIdMeta));
+    }
+    if (data.containsKey('programa_edu_id')) {
+      context.handle(
+          _programaEduIdMeta,
+          programaEduId.isAcceptableOrUnknown(
+              data['programa_edu_id'], _programaEduIdMeta));
+    }
+    if (data.containsKey('id_anio_academico')) {
+      context.handle(
+          _idAnioAcademicoMeta,
+          idAnioAcademico.isAcceptableOrUnknown(
+              data['id_anio_academico'], _idAnioAcademicoMeta));
+    }
+    if (data.containsKey('estado_id')) {
+      context.handle(_estadoIdMeta,
+          estadoId.isAcceptableOrUnknown(data['estado_id'], _estadoIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {calendarioAcademicoId};
+  @override
+  CalendarioAcademicoData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return CalendarioAcademicoData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $CalendarioAcademicoTable createAlias(String alias) {
+    return $CalendarioAcademicoTable(_db, alias);
+  }
+}
+
+class CalendarioPeriodoData extends DataClass
+    implements Insertable<CalendarioPeriodoData> {
+  final int calendarioPeriodoId;
+  final DateTime fechaInicio;
+  final DateTime fechaFin;
+  final int calendarioAcademicoId;
+  final int tipoId;
+  final int estadoId;
+  final int diazPlazo;
+  CalendarioPeriodoData(
+      {@required this.calendarioPeriodoId,
+      this.fechaInicio,
+      this.fechaFin,
+      this.calendarioAcademicoId,
+      this.tipoId,
+      this.estadoId,
+      this.diazPlazo});
+  factory CalendarioPeriodoData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final dateTimeType = db.typeSystem.forDartType<DateTime>();
+    return CalendarioPeriodoData(
+      calendarioPeriodoId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}calendario_periodo_id']),
+      fechaInicio: dateTimeType
+          .mapFromDatabaseResponse(data['${effectivePrefix}fecha_inicio']),
+      fechaFin: dateTimeType
+          .mapFromDatabaseResponse(data['${effectivePrefix}fecha_fin']),
+      calendarioAcademicoId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}calendario_academico_id']),
+      tipoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}tipo_id']),
+      estadoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}estado_id']),
+      diazPlazo:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}diaz_plazo']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || calendarioPeriodoId != null) {
+      map['calendario_periodo_id'] = Variable<int>(calendarioPeriodoId);
+    }
+    if (!nullToAbsent || fechaInicio != null) {
+      map['fecha_inicio'] = Variable<DateTime>(fechaInicio);
+    }
+    if (!nullToAbsent || fechaFin != null) {
+      map['fecha_fin'] = Variable<DateTime>(fechaFin);
+    }
+    if (!nullToAbsent || calendarioAcademicoId != null) {
+      map['calendario_academico_id'] = Variable<int>(calendarioAcademicoId);
+    }
+    if (!nullToAbsent || tipoId != null) {
+      map['tipo_id'] = Variable<int>(tipoId);
+    }
+    if (!nullToAbsent || estadoId != null) {
+      map['estado_id'] = Variable<int>(estadoId);
+    }
+    if (!nullToAbsent || diazPlazo != null) {
+      map['diaz_plazo'] = Variable<int>(diazPlazo);
+    }
+    return map;
+  }
+
+  CalendarioPeriodoCompanion toCompanion(bool nullToAbsent) {
+    return CalendarioPeriodoCompanion(
+      calendarioPeriodoId: calendarioPeriodoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(calendarioPeriodoId),
+      fechaInicio: fechaInicio == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fechaInicio),
+      fechaFin: fechaFin == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fechaFin),
+      calendarioAcademicoId: calendarioAcademicoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(calendarioAcademicoId),
+      tipoId:
+          tipoId == null && nullToAbsent ? const Value.absent() : Value(tipoId),
+      estadoId: estadoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadoId),
+      diazPlazo: diazPlazo == null && nullToAbsent
+          ? const Value.absent()
+          : Value(diazPlazo),
+    );
+  }
+
+  factory CalendarioPeriodoData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return CalendarioPeriodoData(
+      calendarioPeriodoId:
+          serializer.fromJson<int>(json['calendarioPeriodoId']),
+      fechaInicio: serializer.fromJson<DateTime>(json['fechaInicio']),
+      fechaFin: serializer.fromJson<DateTime>(json['fechaFin']),
+      calendarioAcademicoId:
+          serializer.fromJson<int>(json['calendarioAcademicoId']),
+      tipoId: serializer.fromJson<int>(json['tipoId']),
+      estadoId: serializer.fromJson<int>(json['estadoId']),
+      diazPlazo: serializer.fromJson<int>(json['diazPlazo']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'calendarioPeriodoId': serializer.toJson<int>(calendarioPeriodoId),
+      'fechaInicio': serializer.toJson<DateTime>(fechaInicio),
+      'fechaFin': serializer.toJson<DateTime>(fechaFin),
+      'calendarioAcademicoId': serializer.toJson<int>(calendarioAcademicoId),
+      'tipoId': serializer.toJson<int>(tipoId),
+      'estadoId': serializer.toJson<int>(estadoId),
+      'diazPlazo': serializer.toJson<int>(diazPlazo),
+    };
+  }
+
+  CalendarioPeriodoData copyWith(
+          {int calendarioPeriodoId,
+          DateTime fechaInicio,
+          DateTime fechaFin,
+          int calendarioAcademicoId,
+          int tipoId,
+          int estadoId,
+          int diazPlazo}) =>
+      CalendarioPeriodoData(
+        calendarioPeriodoId: calendarioPeriodoId ?? this.calendarioPeriodoId,
+        fechaInicio: fechaInicio ?? this.fechaInicio,
+        fechaFin: fechaFin ?? this.fechaFin,
+        calendarioAcademicoId:
+            calendarioAcademicoId ?? this.calendarioAcademicoId,
+        tipoId: tipoId ?? this.tipoId,
+        estadoId: estadoId ?? this.estadoId,
+        diazPlazo: diazPlazo ?? this.diazPlazo,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('CalendarioPeriodoData(')
+          ..write('calendarioPeriodoId: $calendarioPeriodoId, ')
+          ..write('fechaInicio: $fechaInicio, ')
+          ..write('fechaFin: $fechaFin, ')
+          ..write('calendarioAcademicoId: $calendarioAcademicoId, ')
+          ..write('tipoId: $tipoId, ')
+          ..write('estadoId: $estadoId, ')
+          ..write('diazPlazo: $diazPlazo')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      calendarioPeriodoId.hashCode,
+      $mrjc(
+          fechaInicio.hashCode,
+          $mrjc(
+              fechaFin.hashCode,
+              $mrjc(
+                  calendarioAcademicoId.hashCode,
+                  $mrjc(tipoId.hashCode,
+                      $mrjc(estadoId.hashCode, diazPlazo.hashCode)))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is CalendarioPeriodoData &&
+          other.calendarioPeriodoId == this.calendarioPeriodoId &&
+          other.fechaInicio == this.fechaInicio &&
+          other.fechaFin == this.fechaFin &&
+          other.calendarioAcademicoId == this.calendarioAcademicoId &&
+          other.tipoId == this.tipoId &&
+          other.estadoId == this.estadoId &&
+          other.diazPlazo == this.diazPlazo);
+}
+
+class CalendarioPeriodoCompanion
+    extends UpdateCompanion<CalendarioPeriodoData> {
+  final Value<int> calendarioPeriodoId;
+  final Value<DateTime> fechaInicio;
+  final Value<DateTime> fechaFin;
+  final Value<int> calendarioAcademicoId;
+  final Value<int> tipoId;
+  final Value<int> estadoId;
+  final Value<int> diazPlazo;
+  const CalendarioPeriodoCompanion({
+    this.calendarioPeriodoId = const Value.absent(),
+    this.fechaInicio = const Value.absent(),
+    this.fechaFin = const Value.absent(),
+    this.calendarioAcademicoId = const Value.absent(),
+    this.tipoId = const Value.absent(),
+    this.estadoId = const Value.absent(),
+    this.diazPlazo = const Value.absent(),
+  });
+  CalendarioPeriodoCompanion.insert({
+    this.calendarioPeriodoId = const Value.absent(),
+    this.fechaInicio = const Value.absent(),
+    this.fechaFin = const Value.absent(),
+    this.calendarioAcademicoId = const Value.absent(),
+    this.tipoId = const Value.absent(),
+    this.estadoId = const Value.absent(),
+    this.diazPlazo = const Value.absent(),
+  });
+  static Insertable<CalendarioPeriodoData> custom({
+    Expression<int> calendarioPeriodoId,
+    Expression<DateTime> fechaInicio,
+    Expression<DateTime> fechaFin,
+    Expression<int> calendarioAcademicoId,
+    Expression<int> tipoId,
+    Expression<int> estadoId,
+    Expression<int> diazPlazo,
+  }) {
+    return RawValuesInsertable({
+      if (calendarioPeriodoId != null)
+        'calendario_periodo_id': calendarioPeriodoId,
+      if (fechaInicio != null) 'fecha_inicio': fechaInicio,
+      if (fechaFin != null) 'fecha_fin': fechaFin,
+      if (calendarioAcademicoId != null)
+        'calendario_academico_id': calendarioAcademicoId,
+      if (tipoId != null) 'tipo_id': tipoId,
+      if (estadoId != null) 'estado_id': estadoId,
+      if (diazPlazo != null) 'diaz_plazo': diazPlazo,
+    });
+  }
+
+  CalendarioPeriodoCompanion copyWith(
+      {Value<int> calendarioPeriodoId,
+      Value<DateTime> fechaInicio,
+      Value<DateTime> fechaFin,
+      Value<int> calendarioAcademicoId,
+      Value<int> tipoId,
+      Value<int> estadoId,
+      Value<int> diazPlazo}) {
+    return CalendarioPeriodoCompanion(
+      calendarioPeriodoId: calendarioPeriodoId ?? this.calendarioPeriodoId,
+      fechaInicio: fechaInicio ?? this.fechaInicio,
+      fechaFin: fechaFin ?? this.fechaFin,
+      calendarioAcademicoId:
+          calendarioAcademicoId ?? this.calendarioAcademicoId,
+      tipoId: tipoId ?? this.tipoId,
+      estadoId: estadoId ?? this.estadoId,
+      diazPlazo: diazPlazo ?? this.diazPlazo,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (calendarioPeriodoId.present) {
+      map['calendario_periodo_id'] = Variable<int>(calendarioPeriodoId.value);
+    }
+    if (fechaInicio.present) {
+      map['fecha_inicio'] = Variable<DateTime>(fechaInicio.value);
+    }
+    if (fechaFin.present) {
+      map['fecha_fin'] = Variable<DateTime>(fechaFin.value);
+    }
+    if (calendarioAcademicoId.present) {
+      map['calendario_academico_id'] =
+          Variable<int>(calendarioAcademicoId.value);
+    }
+    if (tipoId.present) {
+      map['tipo_id'] = Variable<int>(tipoId.value);
+    }
+    if (estadoId.present) {
+      map['estado_id'] = Variable<int>(estadoId.value);
+    }
+    if (diazPlazo.present) {
+      map['diaz_plazo'] = Variable<int>(diazPlazo.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CalendarioPeriodoCompanion(')
+          ..write('calendarioPeriodoId: $calendarioPeriodoId, ')
+          ..write('fechaInicio: $fechaInicio, ')
+          ..write('fechaFin: $fechaFin, ')
+          ..write('calendarioAcademicoId: $calendarioAcademicoId, ')
+          ..write('tipoId: $tipoId, ')
+          ..write('estadoId: $estadoId, ')
+          ..write('diazPlazo: $diazPlazo')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CalendarioPeriodoTable extends CalendarioPeriodo
+    with TableInfo<$CalendarioPeriodoTable, CalendarioPeriodoData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $CalendarioPeriodoTable(this._db, [this._alias]);
+  final VerificationMeta _calendarioPeriodoIdMeta =
+      const VerificationMeta('calendarioPeriodoId');
+  GeneratedIntColumn _calendarioPeriodoId;
+  @override
+  GeneratedIntColumn get calendarioPeriodoId =>
+      _calendarioPeriodoId ??= _constructCalendarioPeriodoId();
+  GeneratedIntColumn _constructCalendarioPeriodoId() {
+    return GeneratedIntColumn(
+      'calendario_periodo_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _fechaInicioMeta =
+      const VerificationMeta('fechaInicio');
+  GeneratedDateTimeColumn _fechaInicio;
+  @override
+  GeneratedDateTimeColumn get fechaInicio =>
+      _fechaInicio ??= _constructFechaInicio();
+  GeneratedDateTimeColumn _constructFechaInicio() {
+    return GeneratedDateTimeColumn(
+      'fecha_inicio',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _fechaFinMeta = const VerificationMeta('fechaFin');
+  GeneratedDateTimeColumn _fechaFin;
+  @override
+  GeneratedDateTimeColumn get fechaFin => _fechaFin ??= _constructFechaFin();
+  GeneratedDateTimeColumn _constructFechaFin() {
+    return GeneratedDateTimeColumn(
+      'fecha_fin',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _calendarioAcademicoIdMeta =
+      const VerificationMeta('calendarioAcademicoId');
+  GeneratedIntColumn _calendarioAcademicoId;
+  @override
+  GeneratedIntColumn get calendarioAcademicoId =>
+      _calendarioAcademicoId ??= _constructCalendarioAcademicoId();
+  GeneratedIntColumn _constructCalendarioAcademicoId() {
+    return GeneratedIntColumn(
+      'calendario_academico_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoIdMeta = const VerificationMeta('tipoId');
+  GeneratedIntColumn _tipoId;
+  @override
+  GeneratedIntColumn get tipoId => _tipoId ??= _constructTipoId();
+  GeneratedIntColumn _constructTipoId() {
+    return GeneratedIntColumn(
+      'tipo_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoIdMeta = const VerificationMeta('estadoId');
+  GeneratedIntColumn _estadoId;
+  @override
+  GeneratedIntColumn get estadoId => _estadoId ??= _constructEstadoId();
+  GeneratedIntColumn _constructEstadoId() {
+    return GeneratedIntColumn(
+      'estado_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _diazPlazoMeta = const VerificationMeta('diazPlazo');
+  GeneratedIntColumn _diazPlazo;
+  @override
+  GeneratedIntColumn get diazPlazo => _diazPlazo ??= _constructDiazPlazo();
+  GeneratedIntColumn _constructDiazPlazo() {
+    return GeneratedIntColumn(
+      'diaz_plazo',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        calendarioPeriodoId,
+        fechaInicio,
+        fechaFin,
+        calendarioAcademicoId,
+        tipoId,
+        estadoId,
+        diazPlazo
+      ];
+  @override
+  $CalendarioPeriodoTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'calendario_periodo';
+  @override
+  final String actualTableName = 'calendario_periodo';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<CalendarioPeriodoData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('calendario_periodo_id')) {
+      context.handle(
+          _calendarioPeriodoIdMeta,
+          calendarioPeriodoId.isAcceptableOrUnknown(
+              data['calendario_periodo_id'], _calendarioPeriodoIdMeta));
+    }
+    if (data.containsKey('fecha_inicio')) {
+      context.handle(
+          _fechaInicioMeta,
+          fechaInicio.isAcceptableOrUnknown(
+              data['fecha_inicio'], _fechaInicioMeta));
+    }
+    if (data.containsKey('fecha_fin')) {
+      context.handle(_fechaFinMeta,
+          fechaFin.isAcceptableOrUnknown(data['fecha_fin'], _fechaFinMeta));
+    }
+    if (data.containsKey('calendario_academico_id')) {
+      context.handle(
+          _calendarioAcademicoIdMeta,
+          calendarioAcademicoId.isAcceptableOrUnknown(
+              data['calendario_academico_id'], _calendarioAcademicoIdMeta));
+    }
+    if (data.containsKey('tipo_id')) {
+      context.handle(_tipoIdMeta,
+          tipoId.isAcceptableOrUnknown(data['tipo_id'], _tipoIdMeta));
+    }
+    if (data.containsKey('estado_id')) {
+      context.handle(_estadoIdMeta,
+          estadoId.isAcceptableOrUnknown(data['estado_id'], _estadoIdMeta));
+    }
+    if (data.containsKey('diaz_plazo')) {
+      context.handle(_diazPlazoMeta,
+          diazPlazo.isAcceptableOrUnknown(data['diaz_plazo'], _diazPlazoMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {calendarioPeriodoId};
+  @override
+  CalendarioPeriodoData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return CalendarioPeriodoData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $CalendarioPeriodoTable createAlias(String alias) {
+    return $CalendarioPeriodoTable(_db, alias);
+  }
+}
+
+class Tipo extends DataClass implements Insertable<Tipo> {
+  final int tipoId;
+  final String objeto;
+  final String concepto;
+  final String nombre;
+  final String codigo;
+  final int parentId;
+  Tipo(
+      {@required this.tipoId,
+      this.objeto,
+      this.concepto,
+      this.nombre,
+      this.codigo,
+      this.parentId});
+  factory Tipo.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return Tipo(
+      tipoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}tipo_id']),
+      objeto:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}objeto']),
+      concepto: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}concepto']),
+      nombre:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}nombre']),
+      codigo:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}codigo']),
+      parentId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}parent_id']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || tipoId != null) {
+      map['tipo_id'] = Variable<int>(tipoId);
+    }
+    if (!nullToAbsent || objeto != null) {
+      map['objeto'] = Variable<String>(objeto);
+    }
+    if (!nullToAbsent || concepto != null) {
+      map['concepto'] = Variable<String>(concepto);
+    }
+    if (!nullToAbsent || nombre != null) {
+      map['nombre'] = Variable<String>(nombre);
+    }
+    if (!nullToAbsent || codigo != null) {
+      map['codigo'] = Variable<String>(codigo);
+    }
+    if (!nullToAbsent || parentId != null) {
+      map['parent_id'] = Variable<int>(parentId);
+    }
+    return map;
+  }
+
+  TiposCompanion toCompanion(bool nullToAbsent) {
+    return TiposCompanion(
+      tipoId:
+          tipoId == null && nullToAbsent ? const Value.absent() : Value(tipoId),
+      objeto:
+          objeto == null && nullToAbsent ? const Value.absent() : Value(objeto),
+      concepto: concepto == null && nullToAbsent
+          ? const Value.absent()
+          : Value(concepto),
+      nombre:
+          nombre == null && nullToAbsent ? const Value.absent() : Value(nombre),
+      codigo:
+          codigo == null && nullToAbsent ? const Value.absent() : Value(codigo),
+      parentId: parentId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parentId),
+    );
+  }
+
+  factory Tipo.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return Tipo(
+      tipoId: serializer.fromJson<int>(json['tipoId']),
+      objeto: serializer.fromJson<String>(json['objeto']),
+      concepto: serializer.fromJson<String>(json['concepto']),
+      nombre: serializer.fromJson<String>(json['nombre']),
+      codigo: serializer.fromJson<String>(json['codigo']),
+      parentId: serializer.fromJson<int>(json['parentId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'tipoId': serializer.toJson<int>(tipoId),
+      'objeto': serializer.toJson<String>(objeto),
+      'concepto': serializer.toJson<String>(concepto),
+      'nombre': serializer.toJson<String>(nombre),
+      'codigo': serializer.toJson<String>(codigo),
+      'parentId': serializer.toJson<int>(parentId),
+    };
+  }
+
+  Tipo copyWith(
+          {int tipoId,
+          String objeto,
+          String concepto,
+          String nombre,
+          String codigo,
+          int parentId}) =>
+      Tipo(
+        tipoId: tipoId ?? this.tipoId,
+        objeto: objeto ?? this.objeto,
+        concepto: concepto ?? this.concepto,
+        nombre: nombre ?? this.nombre,
+        codigo: codigo ?? this.codigo,
+        parentId: parentId ?? this.parentId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Tipo(')
+          ..write('tipoId: $tipoId, ')
+          ..write('objeto: $objeto, ')
+          ..write('concepto: $concepto, ')
+          ..write('nombre: $nombre, ')
+          ..write('codigo: $codigo, ')
+          ..write('parentId: $parentId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      tipoId.hashCode,
+      $mrjc(
+          objeto.hashCode,
+          $mrjc(
+              concepto.hashCode,
+              $mrjc(nombre.hashCode,
+                  $mrjc(codigo.hashCode, parentId.hashCode))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is Tipo &&
+          other.tipoId == this.tipoId &&
+          other.objeto == this.objeto &&
+          other.concepto == this.concepto &&
+          other.nombre == this.nombre &&
+          other.codigo == this.codigo &&
+          other.parentId == this.parentId);
+}
+
+class TiposCompanion extends UpdateCompanion<Tipo> {
+  final Value<int> tipoId;
+  final Value<String> objeto;
+  final Value<String> concepto;
+  final Value<String> nombre;
+  final Value<String> codigo;
+  final Value<int> parentId;
+  const TiposCompanion({
+    this.tipoId = const Value.absent(),
+    this.objeto = const Value.absent(),
+    this.concepto = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.codigo = const Value.absent(),
+    this.parentId = const Value.absent(),
+  });
+  TiposCompanion.insert({
+    this.tipoId = const Value.absent(),
+    this.objeto = const Value.absent(),
+    this.concepto = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.codigo = const Value.absent(),
+    this.parentId = const Value.absent(),
+  });
+  static Insertable<Tipo> custom({
+    Expression<int> tipoId,
+    Expression<String> objeto,
+    Expression<String> concepto,
+    Expression<String> nombre,
+    Expression<String> codigo,
+    Expression<int> parentId,
+  }) {
+    return RawValuesInsertable({
+      if (tipoId != null) 'tipo_id': tipoId,
+      if (objeto != null) 'objeto': objeto,
+      if (concepto != null) 'concepto': concepto,
+      if (nombre != null) 'nombre': nombre,
+      if (codigo != null) 'codigo': codigo,
+      if (parentId != null) 'parent_id': parentId,
+    });
+  }
+
+  TiposCompanion copyWith(
+      {Value<int> tipoId,
+      Value<String> objeto,
+      Value<String> concepto,
+      Value<String> nombre,
+      Value<String> codigo,
+      Value<int> parentId}) {
+    return TiposCompanion(
+      tipoId: tipoId ?? this.tipoId,
+      objeto: objeto ?? this.objeto,
+      concepto: concepto ?? this.concepto,
+      nombre: nombre ?? this.nombre,
+      codigo: codigo ?? this.codigo,
+      parentId: parentId ?? this.parentId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (tipoId.present) {
+      map['tipo_id'] = Variable<int>(tipoId.value);
+    }
+    if (objeto.present) {
+      map['objeto'] = Variable<String>(objeto.value);
+    }
+    if (concepto.present) {
+      map['concepto'] = Variable<String>(concepto.value);
+    }
+    if (nombre.present) {
+      map['nombre'] = Variable<String>(nombre.value);
+    }
+    if (codigo.present) {
+      map['codigo'] = Variable<String>(codigo.value);
+    }
+    if (parentId.present) {
+      map['parent_id'] = Variable<int>(parentId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TiposCompanion(')
+          ..write('tipoId: $tipoId, ')
+          ..write('objeto: $objeto, ')
+          ..write('concepto: $concepto, ')
+          ..write('nombre: $nombre, ')
+          ..write('codigo: $codigo, ')
+          ..write('parentId: $parentId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TiposTable extends Tipos with TableInfo<$TiposTable, Tipo> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $TiposTable(this._db, [this._alias]);
+  final VerificationMeta _tipoIdMeta = const VerificationMeta('tipoId');
+  GeneratedIntColumn _tipoId;
+  @override
+  GeneratedIntColumn get tipoId => _tipoId ??= _constructTipoId();
+  GeneratedIntColumn _constructTipoId() {
+    return GeneratedIntColumn(
+      'tipo_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _objetoMeta = const VerificationMeta('objeto');
+  GeneratedTextColumn _objeto;
+  @override
+  GeneratedTextColumn get objeto => _objeto ??= _constructObjeto();
+  GeneratedTextColumn _constructObjeto() {
+    return GeneratedTextColumn(
+      'objeto',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _conceptoMeta = const VerificationMeta('concepto');
+  GeneratedTextColumn _concepto;
+  @override
+  GeneratedTextColumn get concepto => _concepto ??= _constructConcepto();
+  GeneratedTextColumn _constructConcepto() {
+    return GeneratedTextColumn(
+      'concepto',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _nombreMeta = const VerificationMeta('nombre');
+  GeneratedTextColumn _nombre;
+  @override
+  GeneratedTextColumn get nombre => _nombre ??= _constructNombre();
+  GeneratedTextColumn _constructNombre() {
+    return GeneratedTextColumn(
+      'nombre',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _codigoMeta = const VerificationMeta('codigo');
+  GeneratedTextColumn _codigo;
+  @override
+  GeneratedTextColumn get codigo => _codigo ??= _constructCodigo();
+  GeneratedTextColumn _constructCodigo() {
+    return GeneratedTextColumn(
+      'codigo',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _parentIdMeta = const VerificationMeta('parentId');
+  GeneratedIntColumn _parentId;
+  @override
+  GeneratedIntColumn get parentId => _parentId ??= _constructParentId();
+  GeneratedIntColumn _constructParentId() {
+    return GeneratedIntColumn(
+      'parent_id',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns =>
+      [tipoId, objeto, concepto, nombre, codigo, parentId];
+  @override
+  $TiposTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'tipos';
+  @override
+  final String actualTableName = 'tipos';
+  @override
+  VerificationContext validateIntegrity(Insertable<Tipo> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('tipo_id')) {
+      context.handle(_tipoIdMeta,
+          tipoId.isAcceptableOrUnknown(data['tipo_id'], _tipoIdMeta));
+    }
+    if (data.containsKey('objeto')) {
+      context.handle(_objetoMeta,
+          objeto.isAcceptableOrUnknown(data['objeto'], _objetoMeta));
+    }
+    if (data.containsKey('concepto')) {
+      context.handle(_conceptoMeta,
+          concepto.isAcceptableOrUnknown(data['concepto'], _conceptoMeta));
+    }
+    if (data.containsKey('nombre')) {
+      context.handle(_nombreMeta,
+          nombre.isAcceptableOrUnknown(data['nombre'], _nombreMeta));
+    }
+    if (data.containsKey('codigo')) {
+      context.handle(_codigoMeta,
+          codigo.isAcceptableOrUnknown(data['codigo'], _codigoMeta));
+    }
+    if (data.containsKey('parent_id')) {
+      context.handle(_parentIdMeta,
+          parentId.isAcceptableOrUnknown(data['parent_id'], _parentIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {tipoId};
+  @override
+  Tipo map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return Tipo.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $TiposTable createAlias(String alias) {
+    return $TiposTable(_db, alias);
+  }
+}
+
+class AreasBoletaData extends DataClass implements Insertable<AreasBoletaData> {
+  final int rubroEvalResultadoId;
+  final String nombre;
+  final int tipoConceptoId;
+  final int totalHt;
+  final int silaboEventoId;
+  final String competencia;
+  final int tipoNotaId;
+  final int tipoFormulaId;
+  final int competenciaId;
+  final int tipoCompetenciaId;
+  final int calendarioPeriodoId;
+  final int anioAcademicoId;
+  final int programaEducativoId;
+  final int periodoId;
+  final int seccionId;
+  AreasBoletaData(
+      {@required this.rubroEvalResultadoId,
+      this.nombre,
+      this.tipoConceptoId,
+      this.totalHt,
+      this.silaboEventoId,
+      this.competencia,
+      this.tipoNotaId,
+      this.tipoFormulaId,
+      this.competenciaId,
+      this.tipoCompetenciaId,
+      this.calendarioPeriodoId,
+      this.anioAcademicoId,
+      this.programaEducativoId,
+      this.periodoId,
+      this.seccionId});
+  factory AreasBoletaData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return AreasBoletaData(
+      rubroEvalResultadoId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}rubro_eval_resultado_id']),
+      nombre:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}nombre']),
+      tipoConceptoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}tipo_concepto_id']),
+      totalHt:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}total_ht']),
+      silaboEventoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}silabo_evento_id']),
+      competencia: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}competencia']),
+      tipoNotaId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}tipo_nota_id']),
+      tipoFormulaId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}tipo_formula_id']),
+      competenciaId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}competencia_id']),
+      tipoCompetenciaId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}tipo_competencia_id']),
+      calendarioPeriodoId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}calendario_periodo_id']),
+      anioAcademicoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}anio_academico_id']),
+      programaEducativoId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}programa_educativo_id']),
+      periodoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}periodo_id']),
+      seccionId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}seccion_id']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || rubroEvalResultadoId != null) {
+      map['rubro_eval_resultado_id'] = Variable<int>(rubroEvalResultadoId);
+    }
+    if (!nullToAbsent || nombre != null) {
+      map['nombre'] = Variable<String>(nombre);
+    }
+    if (!nullToAbsent || tipoConceptoId != null) {
+      map['tipo_concepto_id'] = Variable<int>(tipoConceptoId);
+    }
+    if (!nullToAbsent || totalHt != null) {
+      map['total_ht'] = Variable<int>(totalHt);
+    }
+    if (!nullToAbsent || silaboEventoId != null) {
+      map['silabo_evento_id'] = Variable<int>(silaboEventoId);
+    }
+    if (!nullToAbsent || competencia != null) {
+      map['competencia'] = Variable<String>(competencia);
+    }
+    if (!nullToAbsent || tipoNotaId != null) {
+      map['tipo_nota_id'] = Variable<int>(tipoNotaId);
+    }
+    if (!nullToAbsent || tipoFormulaId != null) {
+      map['tipo_formula_id'] = Variable<int>(tipoFormulaId);
+    }
+    if (!nullToAbsent || competenciaId != null) {
+      map['competencia_id'] = Variable<int>(competenciaId);
+    }
+    if (!nullToAbsent || tipoCompetenciaId != null) {
+      map['tipo_competencia_id'] = Variable<int>(tipoCompetenciaId);
+    }
+    if (!nullToAbsent || calendarioPeriodoId != null) {
+      map['calendario_periodo_id'] = Variable<int>(calendarioPeriodoId);
+    }
+    if (!nullToAbsent || anioAcademicoId != null) {
+      map['anio_academico_id'] = Variable<int>(anioAcademicoId);
+    }
+    if (!nullToAbsent || programaEducativoId != null) {
+      map['programa_educativo_id'] = Variable<int>(programaEducativoId);
+    }
+    if (!nullToAbsent || periodoId != null) {
+      map['periodo_id'] = Variable<int>(periodoId);
+    }
+    if (!nullToAbsent || seccionId != null) {
+      map['seccion_id'] = Variable<int>(seccionId);
+    }
+    return map;
+  }
+
+  AreasBoletaCompanion toCompanion(bool nullToAbsent) {
+    return AreasBoletaCompanion(
+      rubroEvalResultadoId: rubroEvalResultadoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(rubroEvalResultadoId),
+      nombre:
+          nombre == null && nullToAbsent ? const Value.absent() : Value(nombre),
+      tipoConceptoId: tipoConceptoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tipoConceptoId),
+      totalHt: totalHt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(totalHt),
+      silaboEventoId: silaboEventoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(silaboEventoId),
+      competencia: competencia == null && nullToAbsent
+          ? const Value.absent()
+          : Value(competencia),
+      tipoNotaId: tipoNotaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tipoNotaId),
+      tipoFormulaId: tipoFormulaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tipoFormulaId),
+      competenciaId: competenciaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(competenciaId),
+      tipoCompetenciaId: tipoCompetenciaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tipoCompetenciaId),
+      calendarioPeriodoId: calendarioPeriodoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(calendarioPeriodoId),
+      anioAcademicoId: anioAcademicoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(anioAcademicoId),
+      programaEducativoId: programaEducativoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(programaEducativoId),
+      periodoId: periodoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(periodoId),
+      seccionId: seccionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(seccionId),
+    );
+  }
+
+  factory AreasBoletaData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return AreasBoletaData(
+      rubroEvalResultadoId:
+          serializer.fromJson<int>(json['rubroEvalResultadoId']),
+      nombre: serializer.fromJson<String>(json['nombre']),
+      tipoConceptoId: serializer.fromJson<int>(json['tipoConceptoId']),
+      totalHt: serializer.fromJson<int>(json['totalHt']),
+      silaboEventoId: serializer.fromJson<int>(json['silaboEventoId']),
+      competencia: serializer.fromJson<String>(json['competencia']),
+      tipoNotaId: serializer.fromJson<int>(json['tipoNotaId']),
+      tipoFormulaId: serializer.fromJson<int>(json['tipoFormulaId']),
+      competenciaId: serializer.fromJson<int>(json['competenciaId']),
+      tipoCompetenciaId: serializer.fromJson<int>(json['tipoCompetenciaId']),
+      calendarioPeriodoId:
+          serializer.fromJson<int>(json['calendarioPeriodoId']),
+      anioAcademicoId: serializer.fromJson<int>(json['anioAcademicoId']),
+      programaEducativoId:
+          serializer.fromJson<int>(json['programaEducativoId']),
+      periodoId: serializer.fromJson<int>(json['periodoId']),
+      seccionId: serializer.fromJson<int>(json['seccionId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'rubroEvalResultadoId': serializer.toJson<int>(rubroEvalResultadoId),
+      'nombre': serializer.toJson<String>(nombre),
+      'tipoConceptoId': serializer.toJson<int>(tipoConceptoId),
+      'totalHt': serializer.toJson<int>(totalHt),
+      'silaboEventoId': serializer.toJson<int>(silaboEventoId),
+      'competencia': serializer.toJson<String>(competencia),
+      'tipoNotaId': serializer.toJson<int>(tipoNotaId),
+      'tipoFormulaId': serializer.toJson<int>(tipoFormulaId),
+      'competenciaId': serializer.toJson<int>(competenciaId),
+      'tipoCompetenciaId': serializer.toJson<int>(tipoCompetenciaId),
+      'calendarioPeriodoId': serializer.toJson<int>(calendarioPeriodoId),
+      'anioAcademicoId': serializer.toJson<int>(anioAcademicoId),
+      'programaEducativoId': serializer.toJson<int>(programaEducativoId),
+      'periodoId': serializer.toJson<int>(periodoId),
+      'seccionId': serializer.toJson<int>(seccionId),
+    };
+  }
+
+  AreasBoletaData copyWith(
+          {int rubroEvalResultadoId,
+          String nombre,
+          int tipoConceptoId,
+          int totalHt,
+          int silaboEventoId,
+          String competencia,
+          int tipoNotaId,
+          int tipoFormulaId,
+          int competenciaId,
+          int tipoCompetenciaId,
+          int calendarioPeriodoId,
+          int anioAcademicoId,
+          int programaEducativoId,
+          int periodoId,
+          int seccionId}) =>
+      AreasBoletaData(
+        rubroEvalResultadoId: rubroEvalResultadoId ?? this.rubroEvalResultadoId,
+        nombre: nombre ?? this.nombre,
+        tipoConceptoId: tipoConceptoId ?? this.tipoConceptoId,
+        totalHt: totalHt ?? this.totalHt,
+        silaboEventoId: silaboEventoId ?? this.silaboEventoId,
+        competencia: competencia ?? this.competencia,
+        tipoNotaId: tipoNotaId ?? this.tipoNotaId,
+        tipoFormulaId: tipoFormulaId ?? this.tipoFormulaId,
+        competenciaId: competenciaId ?? this.competenciaId,
+        tipoCompetenciaId: tipoCompetenciaId ?? this.tipoCompetenciaId,
+        calendarioPeriodoId: calendarioPeriodoId ?? this.calendarioPeriodoId,
+        anioAcademicoId: anioAcademicoId ?? this.anioAcademicoId,
+        programaEducativoId: programaEducativoId ?? this.programaEducativoId,
+        periodoId: periodoId ?? this.periodoId,
+        seccionId: seccionId ?? this.seccionId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('AreasBoletaData(')
+          ..write('rubroEvalResultadoId: $rubroEvalResultadoId, ')
+          ..write('nombre: $nombre, ')
+          ..write('tipoConceptoId: $tipoConceptoId, ')
+          ..write('totalHt: $totalHt, ')
+          ..write('silaboEventoId: $silaboEventoId, ')
+          ..write('competencia: $competencia, ')
+          ..write('tipoNotaId: $tipoNotaId, ')
+          ..write('tipoFormulaId: $tipoFormulaId, ')
+          ..write('competenciaId: $competenciaId, ')
+          ..write('tipoCompetenciaId: $tipoCompetenciaId, ')
+          ..write('calendarioPeriodoId: $calendarioPeriodoId, ')
+          ..write('anioAcademicoId: $anioAcademicoId, ')
+          ..write('programaEducativoId: $programaEducativoId, ')
+          ..write('periodoId: $periodoId, ')
+          ..write('seccionId: $seccionId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      rubroEvalResultadoId.hashCode,
+      $mrjc(
+          nombre.hashCode,
+          $mrjc(
+              tipoConceptoId.hashCode,
+              $mrjc(
+                  totalHt.hashCode,
+                  $mrjc(
+                      silaboEventoId.hashCode,
+                      $mrjc(
+                          competencia.hashCode,
+                          $mrjc(
+                              tipoNotaId.hashCode,
+                              $mrjc(
+                                  tipoFormulaId.hashCode,
+                                  $mrjc(
+                                      competenciaId.hashCode,
+                                      $mrjc(
+                                          tipoCompetenciaId.hashCode,
+                                          $mrjc(
+                                              calendarioPeriodoId.hashCode,
+                                              $mrjc(
+                                                  anioAcademicoId.hashCode,
+                                                  $mrjc(
+                                                      programaEducativoId
+                                                          .hashCode,
+                                                      $mrjc(
+                                                          periodoId.hashCode,
+                                                          seccionId
+                                                              .hashCode)))))))))))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is AreasBoletaData &&
+          other.rubroEvalResultadoId == this.rubroEvalResultadoId &&
+          other.nombre == this.nombre &&
+          other.tipoConceptoId == this.tipoConceptoId &&
+          other.totalHt == this.totalHt &&
+          other.silaboEventoId == this.silaboEventoId &&
+          other.competencia == this.competencia &&
+          other.tipoNotaId == this.tipoNotaId &&
+          other.tipoFormulaId == this.tipoFormulaId &&
+          other.competenciaId == this.competenciaId &&
+          other.tipoCompetenciaId == this.tipoCompetenciaId &&
+          other.calendarioPeriodoId == this.calendarioPeriodoId &&
+          other.anioAcademicoId == this.anioAcademicoId &&
+          other.programaEducativoId == this.programaEducativoId &&
+          other.periodoId == this.periodoId &&
+          other.seccionId == this.seccionId);
+}
+
+class AreasBoletaCompanion extends UpdateCompanion<AreasBoletaData> {
+  final Value<int> rubroEvalResultadoId;
+  final Value<String> nombre;
+  final Value<int> tipoConceptoId;
+  final Value<int> totalHt;
+  final Value<int> silaboEventoId;
+  final Value<String> competencia;
+  final Value<int> tipoNotaId;
+  final Value<int> tipoFormulaId;
+  final Value<int> competenciaId;
+  final Value<int> tipoCompetenciaId;
+  final Value<int> calendarioPeriodoId;
+  final Value<int> anioAcademicoId;
+  final Value<int> programaEducativoId;
+  final Value<int> periodoId;
+  final Value<int> seccionId;
+  const AreasBoletaCompanion({
+    this.rubroEvalResultadoId = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.tipoConceptoId = const Value.absent(),
+    this.totalHt = const Value.absent(),
+    this.silaboEventoId = const Value.absent(),
+    this.competencia = const Value.absent(),
+    this.tipoNotaId = const Value.absent(),
+    this.tipoFormulaId = const Value.absent(),
+    this.competenciaId = const Value.absent(),
+    this.tipoCompetenciaId = const Value.absent(),
+    this.calendarioPeriodoId = const Value.absent(),
+    this.anioAcademicoId = const Value.absent(),
+    this.programaEducativoId = const Value.absent(),
+    this.periodoId = const Value.absent(),
+    this.seccionId = const Value.absent(),
+  });
+  AreasBoletaCompanion.insert({
+    this.rubroEvalResultadoId = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.tipoConceptoId = const Value.absent(),
+    this.totalHt = const Value.absent(),
+    this.silaboEventoId = const Value.absent(),
+    this.competencia = const Value.absent(),
+    this.tipoNotaId = const Value.absent(),
+    this.tipoFormulaId = const Value.absent(),
+    this.competenciaId = const Value.absent(),
+    this.tipoCompetenciaId = const Value.absent(),
+    this.calendarioPeriodoId = const Value.absent(),
+    this.anioAcademicoId = const Value.absent(),
+    this.programaEducativoId = const Value.absent(),
+    this.periodoId = const Value.absent(),
+    this.seccionId = const Value.absent(),
+  });
+  static Insertable<AreasBoletaData> custom({
+    Expression<int> rubroEvalResultadoId,
+    Expression<String> nombre,
+    Expression<int> tipoConceptoId,
+    Expression<int> totalHt,
+    Expression<int> silaboEventoId,
+    Expression<String> competencia,
+    Expression<int> tipoNotaId,
+    Expression<int> tipoFormulaId,
+    Expression<int> competenciaId,
+    Expression<int> tipoCompetenciaId,
+    Expression<int> calendarioPeriodoId,
+    Expression<int> anioAcademicoId,
+    Expression<int> programaEducativoId,
+    Expression<int> periodoId,
+    Expression<int> seccionId,
+  }) {
+    return RawValuesInsertable({
+      if (rubroEvalResultadoId != null)
+        'rubro_eval_resultado_id': rubroEvalResultadoId,
+      if (nombre != null) 'nombre': nombre,
+      if (tipoConceptoId != null) 'tipo_concepto_id': tipoConceptoId,
+      if (totalHt != null) 'total_ht': totalHt,
+      if (silaboEventoId != null) 'silabo_evento_id': silaboEventoId,
+      if (competencia != null) 'competencia': competencia,
+      if (tipoNotaId != null) 'tipo_nota_id': tipoNotaId,
+      if (tipoFormulaId != null) 'tipo_formula_id': tipoFormulaId,
+      if (competenciaId != null) 'competencia_id': competenciaId,
+      if (tipoCompetenciaId != null) 'tipo_competencia_id': tipoCompetenciaId,
+      if (calendarioPeriodoId != null)
+        'calendario_periodo_id': calendarioPeriodoId,
+      if (anioAcademicoId != null) 'anio_academico_id': anioAcademicoId,
+      if (programaEducativoId != null)
+        'programa_educativo_id': programaEducativoId,
+      if (periodoId != null) 'periodo_id': periodoId,
+      if (seccionId != null) 'seccion_id': seccionId,
+    });
+  }
+
+  AreasBoletaCompanion copyWith(
+      {Value<int> rubroEvalResultadoId,
+      Value<String> nombre,
+      Value<int> tipoConceptoId,
+      Value<int> totalHt,
+      Value<int> silaboEventoId,
+      Value<String> competencia,
+      Value<int> tipoNotaId,
+      Value<int> tipoFormulaId,
+      Value<int> competenciaId,
+      Value<int> tipoCompetenciaId,
+      Value<int> calendarioPeriodoId,
+      Value<int> anioAcademicoId,
+      Value<int> programaEducativoId,
+      Value<int> periodoId,
+      Value<int> seccionId}) {
+    return AreasBoletaCompanion(
+      rubroEvalResultadoId: rubroEvalResultadoId ?? this.rubroEvalResultadoId,
+      nombre: nombre ?? this.nombre,
+      tipoConceptoId: tipoConceptoId ?? this.tipoConceptoId,
+      totalHt: totalHt ?? this.totalHt,
+      silaboEventoId: silaboEventoId ?? this.silaboEventoId,
+      competencia: competencia ?? this.competencia,
+      tipoNotaId: tipoNotaId ?? this.tipoNotaId,
+      tipoFormulaId: tipoFormulaId ?? this.tipoFormulaId,
+      competenciaId: competenciaId ?? this.competenciaId,
+      tipoCompetenciaId: tipoCompetenciaId ?? this.tipoCompetenciaId,
+      calendarioPeriodoId: calendarioPeriodoId ?? this.calendarioPeriodoId,
+      anioAcademicoId: anioAcademicoId ?? this.anioAcademicoId,
+      programaEducativoId: programaEducativoId ?? this.programaEducativoId,
+      periodoId: periodoId ?? this.periodoId,
+      seccionId: seccionId ?? this.seccionId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (rubroEvalResultadoId.present) {
+      map['rubro_eval_resultado_id'] =
+          Variable<int>(rubroEvalResultadoId.value);
+    }
+    if (nombre.present) {
+      map['nombre'] = Variable<String>(nombre.value);
+    }
+    if (tipoConceptoId.present) {
+      map['tipo_concepto_id'] = Variable<int>(tipoConceptoId.value);
+    }
+    if (totalHt.present) {
+      map['total_ht'] = Variable<int>(totalHt.value);
+    }
+    if (silaboEventoId.present) {
+      map['silabo_evento_id'] = Variable<int>(silaboEventoId.value);
+    }
+    if (competencia.present) {
+      map['competencia'] = Variable<String>(competencia.value);
+    }
+    if (tipoNotaId.present) {
+      map['tipo_nota_id'] = Variable<int>(tipoNotaId.value);
+    }
+    if (tipoFormulaId.present) {
+      map['tipo_formula_id'] = Variable<int>(tipoFormulaId.value);
+    }
+    if (competenciaId.present) {
+      map['competencia_id'] = Variable<int>(competenciaId.value);
+    }
+    if (tipoCompetenciaId.present) {
+      map['tipo_competencia_id'] = Variable<int>(tipoCompetenciaId.value);
+    }
+    if (calendarioPeriodoId.present) {
+      map['calendario_periodo_id'] = Variable<int>(calendarioPeriodoId.value);
+    }
+    if (anioAcademicoId.present) {
+      map['anio_academico_id'] = Variable<int>(anioAcademicoId.value);
+    }
+    if (programaEducativoId.present) {
+      map['programa_educativo_id'] = Variable<int>(programaEducativoId.value);
+    }
+    if (periodoId.present) {
+      map['periodo_id'] = Variable<int>(periodoId.value);
+    }
+    if (seccionId.present) {
+      map['seccion_id'] = Variable<int>(seccionId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AreasBoletaCompanion(')
+          ..write('rubroEvalResultadoId: $rubroEvalResultadoId, ')
+          ..write('nombre: $nombre, ')
+          ..write('tipoConceptoId: $tipoConceptoId, ')
+          ..write('totalHt: $totalHt, ')
+          ..write('silaboEventoId: $silaboEventoId, ')
+          ..write('competencia: $competencia, ')
+          ..write('tipoNotaId: $tipoNotaId, ')
+          ..write('tipoFormulaId: $tipoFormulaId, ')
+          ..write('competenciaId: $competenciaId, ')
+          ..write('tipoCompetenciaId: $tipoCompetenciaId, ')
+          ..write('calendarioPeriodoId: $calendarioPeriodoId, ')
+          ..write('anioAcademicoId: $anioAcademicoId, ')
+          ..write('programaEducativoId: $programaEducativoId, ')
+          ..write('periodoId: $periodoId, ')
+          ..write('seccionId: $seccionId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $AreasBoletaTable extends AreasBoleta
+    with TableInfo<$AreasBoletaTable, AreasBoletaData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $AreasBoletaTable(this._db, [this._alias]);
+  final VerificationMeta _rubroEvalResultadoIdMeta =
+      const VerificationMeta('rubroEvalResultadoId');
+  GeneratedIntColumn _rubroEvalResultadoId;
+  @override
+  GeneratedIntColumn get rubroEvalResultadoId =>
+      _rubroEvalResultadoId ??= _constructRubroEvalResultadoId();
+  GeneratedIntColumn _constructRubroEvalResultadoId() {
+    return GeneratedIntColumn(
+      'rubro_eval_resultado_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _nombreMeta = const VerificationMeta('nombre');
+  GeneratedTextColumn _nombre;
+  @override
+  GeneratedTextColumn get nombre => _nombre ??= _constructNombre();
+  GeneratedTextColumn _constructNombre() {
+    return GeneratedTextColumn(
+      'nombre',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoConceptoIdMeta =
+      const VerificationMeta('tipoConceptoId');
+  GeneratedIntColumn _tipoConceptoId;
+  @override
+  GeneratedIntColumn get tipoConceptoId =>
+      _tipoConceptoId ??= _constructTipoConceptoId();
+  GeneratedIntColumn _constructTipoConceptoId() {
+    return GeneratedIntColumn(
+      'tipo_concepto_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _totalHtMeta = const VerificationMeta('totalHt');
+  GeneratedIntColumn _totalHt;
+  @override
+  GeneratedIntColumn get totalHt => _totalHt ??= _constructTotalHt();
+  GeneratedIntColumn _constructTotalHt() {
+    return GeneratedIntColumn(
+      'total_ht',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _silaboEventoIdMeta =
+      const VerificationMeta('silaboEventoId');
+  GeneratedIntColumn _silaboEventoId;
+  @override
+  GeneratedIntColumn get silaboEventoId =>
+      _silaboEventoId ??= _constructSilaboEventoId();
+  GeneratedIntColumn _constructSilaboEventoId() {
+    return GeneratedIntColumn(
+      'silabo_evento_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _competenciaMeta =
+      const VerificationMeta('competencia');
+  GeneratedTextColumn _competencia;
+  @override
+  GeneratedTextColumn get competencia =>
+      _competencia ??= _constructCompetencia();
+  GeneratedTextColumn _constructCompetencia() {
+    return GeneratedTextColumn(
+      'competencia',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoNotaIdMeta = const VerificationMeta('tipoNotaId');
+  GeneratedIntColumn _tipoNotaId;
+  @override
+  GeneratedIntColumn get tipoNotaId => _tipoNotaId ??= _constructTipoNotaId();
+  GeneratedIntColumn _constructTipoNotaId() {
+    return GeneratedIntColumn(
+      'tipo_nota_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoFormulaIdMeta =
+      const VerificationMeta('tipoFormulaId');
+  GeneratedIntColumn _tipoFormulaId;
+  @override
+  GeneratedIntColumn get tipoFormulaId =>
+      _tipoFormulaId ??= _constructTipoFormulaId();
+  GeneratedIntColumn _constructTipoFormulaId() {
+    return GeneratedIntColumn(
+      'tipo_formula_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _competenciaIdMeta =
+      const VerificationMeta('competenciaId');
+  GeneratedIntColumn _competenciaId;
+  @override
+  GeneratedIntColumn get competenciaId =>
+      _competenciaId ??= _constructCompetenciaId();
+  GeneratedIntColumn _constructCompetenciaId() {
+    return GeneratedIntColumn(
+      'competencia_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoCompetenciaIdMeta =
+      const VerificationMeta('tipoCompetenciaId');
+  GeneratedIntColumn _tipoCompetenciaId;
+  @override
+  GeneratedIntColumn get tipoCompetenciaId =>
+      _tipoCompetenciaId ??= _constructTipoCompetenciaId();
+  GeneratedIntColumn _constructTipoCompetenciaId() {
+    return GeneratedIntColumn(
+      'tipo_competencia_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _calendarioPeriodoIdMeta =
+      const VerificationMeta('calendarioPeriodoId');
+  GeneratedIntColumn _calendarioPeriodoId;
+  @override
+  GeneratedIntColumn get calendarioPeriodoId =>
+      _calendarioPeriodoId ??= _constructCalendarioPeriodoId();
+  GeneratedIntColumn _constructCalendarioPeriodoId() {
+    return GeneratedIntColumn(
+      'calendario_periodo_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _anioAcademicoIdMeta =
+      const VerificationMeta('anioAcademicoId');
+  GeneratedIntColumn _anioAcademicoId;
+  @override
+  GeneratedIntColumn get anioAcademicoId =>
+      _anioAcademicoId ??= _constructAnioAcademicoId();
+  GeneratedIntColumn _constructAnioAcademicoId() {
+    return GeneratedIntColumn(
+      'anio_academico_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _programaEducativoIdMeta =
+      const VerificationMeta('programaEducativoId');
+  GeneratedIntColumn _programaEducativoId;
+  @override
+  GeneratedIntColumn get programaEducativoId =>
+      _programaEducativoId ??= _constructProgramaEducativoId();
+  GeneratedIntColumn _constructProgramaEducativoId() {
+    return GeneratedIntColumn(
+      'programa_educativo_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _periodoIdMeta = const VerificationMeta('periodoId');
+  GeneratedIntColumn _periodoId;
+  @override
+  GeneratedIntColumn get periodoId => _periodoId ??= _constructPeriodoId();
+  GeneratedIntColumn _constructPeriodoId() {
+    return GeneratedIntColumn(
+      'periodo_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _seccionIdMeta = const VerificationMeta('seccionId');
+  GeneratedIntColumn _seccionId;
+  @override
+  GeneratedIntColumn get seccionId => _seccionId ??= _constructSeccionId();
+  GeneratedIntColumn _constructSeccionId() {
+    return GeneratedIntColumn(
+      'seccion_id',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        rubroEvalResultadoId,
+        nombre,
+        tipoConceptoId,
+        totalHt,
+        silaboEventoId,
+        competencia,
+        tipoNotaId,
+        tipoFormulaId,
+        competenciaId,
+        tipoCompetenciaId,
+        calendarioPeriodoId,
+        anioAcademicoId,
+        programaEducativoId,
+        periodoId,
+        seccionId
+      ];
+  @override
+  $AreasBoletaTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'areas_boleta';
+  @override
+  final String actualTableName = 'areas_boleta';
+  @override
+  VerificationContext validateIntegrity(Insertable<AreasBoletaData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('rubro_eval_resultado_id')) {
+      context.handle(
+          _rubroEvalResultadoIdMeta,
+          rubroEvalResultadoId.isAcceptableOrUnknown(
+              data['rubro_eval_resultado_id'], _rubroEvalResultadoIdMeta));
+    }
+    if (data.containsKey('nombre')) {
+      context.handle(_nombreMeta,
+          nombre.isAcceptableOrUnknown(data['nombre'], _nombreMeta));
+    }
+    if (data.containsKey('tipo_concepto_id')) {
+      context.handle(
+          _tipoConceptoIdMeta,
+          tipoConceptoId.isAcceptableOrUnknown(
+              data['tipo_concepto_id'], _tipoConceptoIdMeta));
+    }
+    if (data.containsKey('total_ht')) {
+      context.handle(_totalHtMeta,
+          totalHt.isAcceptableOrUnknown(data['total_ht'], _totalHtMeta));
+    }
+    if (data.containsKey('silabo_evento_id')) {
+      context.handle(
+          _silaboEventoIdMeta,
+          silaboEventoId.isAcceptableOrUnknown(
+              data['silabo_evento_id'], _silaboEventoIdMeta));
+    }
+    if (data.containsKey('competencia')) {
+      context.handle(
+          _competenciaMeta,
+          competencia.isAcceptableOrUnknown(
+              data['competencia'], _competenciaMeta));
+    }
+    if (data.containsKey('tipo_nota_id')) {
+      context.handle(
+          _tipoNotaIdMeta,
+          tipoNotaId.isAcceptableOrUnknown(
+              data['tipo_nota_id'], _tipoNotaIdMeta));
+    }
+    if (data.containsKey('tipo_formula_id')) {
+      context.handle(
+          _tipoFormulaIdMeta,
+          tipoFormulaId.isAcceptableOrUnknown(
+              data['tipo_formula_id'], _tipoFormulaIdMeta));
+    }
+    if (data.containsKey('competencia_id')) {
+      context.handle(
+          _competenciaIdMeta,
+          competenciaId.isAcceptableOrUnknown(
+              data['competencia_id'], _competenciaIdMeta));
+    }
+    if (data.containsKey('tipo_competencia_id')) {
+      context.handle(
+          _tipoCompetenciaIdMeta,
+          tipoCompetenciaId.isAcceptableOrUnknown(
+              data['tipo_competencia_id'], _tipoCompetenciaIdMeta));
+    }
+    if (data.containsKey('calendario_periodo_id')) {
+      context.handle(
+          _calendarioPeriodoIdMeta,
+          calendarioPeriodoId.isAcceptableOrUnknown(
+              data['calendario_periodo_id'], _calendarioPeriodoIdMeta));
+    }
+    if (data.containsKey('anio_academico_id')) {
+      context.handle(
+          _anioAcademicoIdMeta,
+          anioAcademicoId.isAcceptableOrUnknown(
+              data['anio_academico_id'], _anioAcademicoIdMeta));
+    }
+    if (data.containsKey('programa_educativo_id')) {
+      context.handle(
+          _programaEducativoIdMeta,
+          programaEducativoId.isAcceptableOrUnknown(
+              data['programa_educativo_id'], _programaEducativoIdMeta));
+    }
+    if (data.containsKey('periodo_id')) {
+      context.handle(_periodoIdMeta,
+          periodoId.isAcceptableOrUnknown(data['periodo_id'], _periodoIdMeta));
+    }
+    if (data.containsKey('seccion_id')) {
+      context.handle(_seccionIdMeta,
+          seccionId.isAcceptableOrUnknown(data['seccion_id'], _seccionIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {rubroEvalResultadoId};
+  @override
+  AreasBoletaData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return AreasBoletaData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $AreasBoletaTable createAlias(String alias) {
+    return $AreasBoletaTable(_db, alias);
+  }
+}
+
+class NotasCalendarioBoletaData extends DataClass
+    implements Insertable<NotasCalendarioBoletaData> {
+  final int evaluacionResultadoId;
+  final int rubroEvalResultadoId;
+  final int alumnoId;
+  final int silaboEventoId;
+  final String nota;
+  final double peso;
+  final String valorTipoNotaId;
+  final String tituloNota;
+  final int tipoNotaId;
+  final int calendarioPeriodoId;
+  final String color;
+  NotasCalendarioBoletaData(
+      {@required this.evaluacionResultadoId,
+      this.rubroEvalResultadoId,
+      this.alumnoId,
+      this.silaboEventoId,
+      this.nota,
+      this.peso,
+      this.valorTipoNotaId,
+      this.tituloNota,
+      this.tipoNotaId,
+      this.calendarioPeriodoId,
+      this.color});
+  factory NotasCalendarioBoletaData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    final doubleType = db.typeSystem.forDartType<double>();
+    return NotasCalendarioBoletaData(
+      evaluacionResultadoId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}evaluacion_resultado_id']),
+      rubroEvalResultadoId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}rubro_eval_resultado_id']),
+      alumnoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}alumno_id']),
+      silaboEventoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}silabo_evento_id']),
+      nota: stringType.mapFromDatabaseResponse(data['${effectivePrefix}nota']),
+      peso: doubleType.mapFromDatabaseResponse(data['${effectivePrefix}peso']),
+      valorTipoNotaId: stringType.mapFromDatabaseResponse(
+          data['${effectivePrefix}valor_tipo_nota_id']),
+      tituloNota: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}titulo_nota']),
+      tipoNotaId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}tipo_nota_id']),
+      calendarioPeriodoId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}calendario_periodo_id']),
+      color:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}color']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || evaluacionResultadoId != null) {
+      map['evaluacion_resultado_id'] = Variable<int>(evaluacionResultadoId);
+    }
+    if (!nullToAbsent || rubroEvalResultadoId != null) {
+      map['rubro_eval_resultado_id'] = Variable<int>(rubroEvalResultadoId);
+    }
+    if (!nullToAbsent || alumnoId != null) {
+      map['alumno_id'] = Variable<int>(alumnoId);
+    }
+    if (!nullToAbsent || silaboEventoId != null) {
+      map['silabo_evento_id'] = Variable<int>(silaboEventoId);
+    }
+    if (!nullToAbsent || nota != null) {
+      map['nota'] = Variable<String>(nota);
+    }
+    if (!nullToAbsent || peso != null) {
+      map['peso'] = Variable<double>(peso);
+    }
+    if (!nullToAbsent || valorTipoNotaId != null) {
+      map['valor_tipo_nota_id'] = Variable<String>(valorTipoNotaId);
+    }
+    if (!nullToAbsent || tituloNota != null) {
+      map['titulo_nota'] = Variable<String>(tituloNota);
+    }
+    if (!nullToAbsent || tipoNotaId != null) {
+      map['tipo_nota_id'] = Variable<int>(tipoNotaId);
+    }
+    if (!nullToAbsent || calendarioPeriodoId != null) {
+      map['calendario_periodo_id'] = Variable<int>(calendarioPeriodoId);
+    }
+    if (!nullToAbsent || color != null) {
+      map['color'] = Variable<String>(color);
+    }
+    return map;
+  }
+
+  NotasCalendarioBoletaCompanion toCompanion(bool nullToAbsent) {
+    return NotasCalendarioBoletaCompanion(
+      evaluacionResultadoId: evaluacionResultadoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(evaluacionResultadoId),
+      rubroEvalResultadoId: rubroEvalResultadoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(rubroEvalResultadoId),
+      alumnoId: alumnoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(alumnoId),
+      silaboEventoId: silaboEventoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(silaboEventoId),
+      nota: nota == null && nullToAbsent ? const Value.absent() : Value(nota),
+      peso: peso == null && nullToAbsent ? const Value.absent() : Value(peso),
+      valorTipoNotaId: valorTipoNotaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(valorTipoNotaId),
+      tituloNota: tituloNota == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tituloNota),
+      tipoNotaId: tipoNotaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tipoNotaId),
+      calendarioPeriodoId: calendarioPeriodoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(calendarioPeriodoId),
+      color:
+          color == null && nullToAbsent ? const Value.absent() : Value(color),
+    );
+  }
+
+  factory NotasCalendarioBoletaData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return NotasCalendarioBoletaData(
+      evaluacionResultadoId:
+          serializer.fromJson<int>(json['evaluacionResultadoId']),
+      rubroEvalResultadoId:
+          serializer.fromJson<int>(json['rubroEvalResultadoId']),
+      alumnoId: serializer.fromJson<int>(json['alumnoId']),
+      silaboEventoId: serializer.fromJson<int>(json['silaboEventoId']),
+      nota: serializer.fromJson<String>(json['nota']),
+      peso: serializer.fromJson<double>(json['peso']),
+      valorTipoNotaId: serializer.fromJson<String>(json['valorTipoNotaId']),
+      tituloNota: serializer.fromJson<String>(json['tituloNota']),
+      tipoNotaId: serializer.fromJson<int>(json['tipoNotaId']),
+      calendarioPeriodoId:
+          serializer.fromJson<int>(json['calendarioPeriodoId']),
+      color: serializer.fromJson<String>(json['color']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'evaluacionResultadoId': serializer.toJson<int>(evaluacionResultadoId),
+      'rubroEvalResultadoId': serializer.toJson<int>(rubroEvalResultadoId),
+      'alumnoId': serializer.toJson<int>(alumnoId),
+      'silaboEventoId': serializer.toJson<int>(silaboEventoId),
+      'nota': serializer.toJson<String>(nota),
+      'peso': serializer.toJson<double>(peso),
+      'valorTipoNotaId': serializer.toJson<String>(valorTipoNotaId),
+      'tituloNota': serializer.toJson<String>(tituloNota),
+      'tipoNotaId': serializer.toJson<int>(tipoNotaId),
+      'calendarioPeriodoId': serializer.toJson<int>(calendarioPeriodoId),
+      'color': serializer.toJson<String>(color),
+    };
+  }
+
+  NotasCalendarioBoletaData copyWith(
+          {int evaluacionResultadoId,
+          int rubroEvalResultadoId,
+          int alumnoId,
+          int silaboEventoId,
+          String nota,
+          double peso,
+          String valorTipoNotaId,
+          String tituloNota,
+          int tipoNotaId,
+          int calendarioPeriodoId,
+          String color}) =>
+      NotasCalendarioBoletaData(
+        evaluacionResultadoId:
+            evaluacionResultadoId ?? this.evaluacionResultadoId,
+        rubroEvalResultadoId: rubroEvalResultadoId ?? this.rubroEvalResultadoId,
+        alumnoId: alumnoId ?? this.alumnoId,
+        silaboEventoId: silaboEventoId ?? this.silaboEventoId,
+        nota: nota ?? this.nota,
+        peso: peso ?? this.peso,
+        valorTipoNotaId: valorTipoNotaId ?? this.valorTipoNotaId,
+        tituloNota: tituloNota ?? this.tituloNota,
+        tipoNotaId: tipoNotaId ?? this.tipoNotaId,
+        calendarioPeriodoId: calendarioPeriodoId ?? this.calendarioPeriodoId,
+        color: color ?? this.color,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('NotasCalendarioBoletaData(')
+          ..write('evaluacionResultadoId: $evaluacionResultadoId, ')
+          ..write('rubroEvalResultadoId: $rubroEvalResultadoId, ')
+          ..write('alumnoId: $alumnoId, ')
+          ..write('silaboEventoId: $silaboEventoId, ')
+          ..write('nota: $nota, ')
+          ..write('peso: $peso, ')
+          ..write('valorTipoNotaId: $valorTipoNotaId, ')
+          ..write('tituloNota: $tituloNota, ')
+          ..write('tipoNotaId: $tipoNotaId, ')
+          ..write('calendarioPeriodoId: $calendarioPeriodoId, ')
+          ..write('color: $color')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      evaluacionResultadoId.hashCode,
+      $mrjc(
+          rubroEvalResultadoId.hashCode,
+          $mrjc(
+              alumnoId.hashCode,
+              $mrjc(
+                  silaboEventoId.hashCode,
+                  $mrjc(
+                      nota.hashCode,
+                      $mrjc(
+                          peso.hashCode,
+                          $mrjc(
+                              valorTipoNotaId.hashCode,
+                              $mrjc(
+                                  tituloNota.hashCode,
+                                  $mrjc(
+                                      tipoNotaId.hashCode,
+                                      $mrjc(calendarioPeriodoId.hashCode,
+                                          color.hashCode)))))))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is NotasCalendarioBoletaData &&
+          other.evaluacionResultadoId == this.evaluacionResultadoId &&
+          other.rubroEvalResultadoId == this.rubroEvalResultadoId &&
+          other.alumnoId == this.alumnoId &&
+          other.silaboEventoId == this.silaboEventoId &&
+          other.nota == this.nota &&
+          other.peso == this.peso &&
+          other.valorTipoNotaId == this.valorTipoNotaId &&
+          other.tituloNota == this.tituloNota &&
+          other.tipoNotaId == this.tipoNotaId &&
+          other.calendarioPeriodoId == this.calendarioPeriodoId &&
+          other.color == this.color);
+}
+
+class NotasCalendarioBoletaCompanion
+    extends UpdateCompanion<NotasCalendarioBoletaData> {
+  final Value<int> evaluacionResultadoId;
+  final Value<int> rubroEvalResultadoId;
+  final Value<int> alumnoId;
+  final Value<int> silaboEventoId;
+  final Value<String> nota;
+  final Value<double> peso;
+  final Value<String> valorTipoNotaId;
+  final Value<String> tituloNota;
+  final Value<int> tipoNotaId;
+  final Value<int> calendarioPeriodoId;
+  final Value<String> color;
+  const NotasCalendarioBoletaCompanion({
+    this.evaluacionResultadoId = const Value.absent(),
+    this.rubroEvalResultadoId = const Value.absent(),
+    this.alumnoId = const Value.absent(),
+    this.silaboEventoId = const Value.absent(),
+    this.nota = const Value.absent(),
+    this.peso = const Value.absent(),
+    this.valorTipoNotaId = const Value.absent(),
+    this.tituloNota = const Value.absent(),
+    this.tipoNotaId = const Value.absent(),
+    this.calendarioPeriodoId = const Value.absent(),
+    this.color = const Value.absent(),
+  });
+  NotasCalendarioBoletaCompanion.insert({
+    this.evaluacionResultadoId = const Value.absent(),
+    this.rubroEvalResultadoId = const Value.absent(),
+    this.alumnoId = const Value.absent(),
+    this.silaboEventoId = const Value.absent(),
+    this.nota = const Value.absent(),
+    this.peso = const Value.absent(),
+    this.valorTipoNotaId = const Value.absent(),
+    this.tituloNota = const Value.absent(),
+    this.tipoNotaId = const Value.absent(),
+    this.calendarioPeriodoId = const Value.absent(),
+    this.color = const Value.absent(),
+  });
+  static Insertable<NotasCalendarioBoletaData> custom({
+    Expression<int> evaluacionResultadoId,
+    Expression<int> rubroEvalResultadoId,
+    Expression<int> alumnoId,
+    Expression<int> silaboEventoId,
+    Expression<String> nota,
+    Expression<double> peso,
+    Expression<String> valorTipoNotaId,
+    Expression<String> tituloNota,
+    Expression<int> tipoNotaId,
+    Expression<int> calendarioPeriodoId,
+    Expression<String> color,
+  }) {
+    return RawValuesInsertable({
+      if (evaluacionResultadoId != null)
+        'evaluacion_resultado_id': evaluacionResultadoId,
+      if (rubroEvalResultadoId != null)
+        'rubro_eval_resultado_id': rubroEvalResultadoId,
+      if (alumnoId != null) 'alumno_id': alumnoId,
+      if (silaboEventoId != null) 'silabo_evento_id': silaboEventoId,
+      if (nota != null) 'nota': nota,
+      if (peso != null) 'peso': peso,
+      if (valorTipoNotaId != null) 'valor_tipo_nota_id': valorTipoNotaId,
+      if (tituloNota != null) 'titulo_nota': tituloNota,
+      if (tipoNotaId != null) 'tipo_nota_id': tipoNotaId,
+      if (calendarioPeriodoId != null)
+        'calendario_periodo_id': calendarioPeriodoId,
+      if (color != null) 'color': color,
+    });
+  }
+
+  NotasCalendarioBoletaCompanion copyWith(
+      {Value<int> evaluacionResultadoId,
+      Value<int> rubroEvalResultadoId,
+      Value<int> alumnoId,
+      Value<int> silaboEventoId,
+      Value<String> nota,
+      Value<double> peso,
+      Value<String> valorTipoNotaId,
+      Value<String> tituloNota,
+      Value<int> tipoNotaId,
+      Value<int> calendarioPeriodoId,
+      Value<String> color}) {
+    return NotasCalendarioBoletaCompanion(
+      evaluacionResultadoId:
+          evaluacionResultadoId ?? this.evaluacionResultadoId,
+      rubroEvalResultadoId: rubroEvalResultadoId ?? this.rubroEvalResultadoId,
+      alumnoId: alumnoId ?? this.alumnoId,
+      silaboEventoId: silaboEventoId ?? this.silaboEventoId,
+      nota: nota ?? this.nota,
+      peso: peso ?? this.peso,
+      valorTipoNotaId: valorTipoNotaId ?? this.valorTipoNotaId,
+      tituloNota: tituloNota ?? this.tituloNota,
+      tipoNotaId: tipoNotaId ?? this.tipoNotaId,
+      calendarioPeriodoId: calendarioPeriodoId ?? this.calendarioPeriodoId,
+      color: color ?? this.color,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (evaluacionResultadoId.present) {
+      map['evaluacion_resultado_id'] =
+          Variable<int>(evaluacionResultadoId.value);
+    }
+    if (rubroEvalResultadoId.present) {
+      map['rubro_eval_resultado_id'] =
+          Variable<int>(rubroEvalResultadoId.value);
+    }
+    if (alumnoId.present) {
+      map['alumno_id'] = Variable<int>(alumnoId.value);
+    }
+    if (silaboEventoId.present) {
+      map['silabo_evento_id'] = Variable<int>(silaboEventoId.value);
+    }
+    if (nota.present) {
+      map['nota'] = Variable<String>(nota.value);
+    }
+    if (peso.present) {
+      map['peso'] = Variable<double>(peso.value);
+    }
+    if (valorTipoNotaId.present) {
+      map['valor_tipo_nota_id'] = Variable<String>(valorTipoNotaId.value);
+    }
+    if (tituloNota.present) {
+      map['titulo_nota'] = Variable<String>(tituloNota.value);
+    }
+    if (tipoNotaId.present) {
+      map['tipo_nota_id'] = Variable<int>(tipoNotaId.value);
+    }
+    if (calendarioPeriodoId.present) {
+      map['calendario_periodo_id'] = Variable<int>(calendarioPeriodoId.value);
+    }
+    if (color.present) {
+      map['color'] = Variable<String>(color.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NotasCalendarioBoletaCompanion(')
+          ..write('evaluacionResultadoId: $evaluacionResultadoId, ')
+          ..write('rubroEvalResultadoId: $rubroEvalResultadoId, ')
+          ..write('alumnoId: $alumnoId, ')
+          ..write('silaboEventoId: $silaboEventoId, ')
+          ..write('nota: $nota, ')
+          ..write('peso: $peso, ')
+          ..write('valorTipoNotaId: $valorTipoNotaId, ')
+          ..write('tituloNota: $tituloNota, ')
+          ..write('tipoNotaId: $tipoNotaId, ')
+          ..write('calendarioPeriodoId: $calendarioPeriodoId, ')
+          ..write('color: $color')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $NotasCalendarioBoletaTable extends NotasCalendarioBoleta
+    with TableInfo<$NotasCalendarioBoletaTable, NotasCalendarioBoletaData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $NotasCalendarioBoletaTable(this._db, [this._alias]);
+  final VerificationMeta _evaluacionResultadoIdMeta =
+      const VerificationMeta('evaluacionResultadoId');
+  GeneratedIntColumn _evaluacionResultadoId;
+  @override
+  GeneratedIntColumn get evaluacionResultadoId =>
+      _evaluacionResultadoId ??= _constructEvaluacionResultadoId();
+  GeneratedIntColumn _constructEvaluacionResultadoId() {
+    return GeneratedIntColumn(
+      'evaluacion_resultado_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _rubroEvalResultadoIdMeta =
+      const VerificationMeta('rubroEvalResultadoId');
+  GeneratedIntColumn _rubroEvalResultadoId;
+  @override
+  GeneratedIntColumn get rubroEvalResultadoId =>
+      _rubroEvalResultadoId ??= _constructRubroEvalResultadoId();
+  GeneratedIntColumn _constructRubroEvalResultadoId() {
+    return GeneratedIntColumn(
+      'rubro_eval_resultado_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _alumnoIdMeta = const VerificationMeta('alumnoId');
+  GeneratedIntColumn _alumnoId;
+  @override
+  GeneratedIntColumn get alumnoId => _alumnoId ??= _constructAlumnoId();
+  GeneratedIntColumn _constructAlumnoId() {
+    return GeneratedIntColumn(
+      'alumno_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _silaboEventoIdMeta =
+      const VerificationMeta('silaboEventoId');
+  GeneratedIntColumn _silaboEventoId;
+  @override
+  GeneratedIntColumn get silaboEventoId =>
+      _silaboEventoId ??= _constructSilaboEventoId();
+  GeneratedIntColumn _constructSilaboEventoId() {
+    return GeneratedIntColumn(
+      'silabo_evento_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _notaMeta = const VerificationMeta('nota');
+  GeneratedTextColumn _nota;
+  @override
+  GeneratedTextColumn get nota => _nota ??= _constructNota();
+  GeneratedTextColumn _constructNota() {
+    return GeneratedTextColumn(
+      'nota',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _pesoMeta = const VerificationMeta('peso');
+  GeneratedRealColumn _peso;
+  @override
+  GeneratedRealColumn get peso => _peso ??= _constructPeso();
+  GeneratedRealColumn _constructPeso() {
+    return GeneratedRealColumn(
+      'peso',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _valorTipoNotaIdMeta =
+      const VerificationMeta('valorTipoNotaId');
+  GeneratedTextColumn _valorTipoNotaId;
+  @override
+  GeneratedTextColumn get valorTipoNotaId =>
+      _valorTipoNotaId ??= _constructValorTipoNotaId();
+  GeneratedTextColumn _constructValorTipoNotaId() {
+    return GeneratedTextColumn(
+      'valor_tipo_nota_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tituloNotaMeta = const VerificationMeta('tituloNota');
+  GeneratedTextColumn _tituloNota;
+  @override
+  GeneratedTextColumn get tituloNota => _tituloNota ??= _constructTituloNota();
+  GeneratedTextColumn _constructTituloNota() {
+    return GeneratedTextColumn(
+      'titulo_nota',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoNotaIdMeta = const VerificationMeta('tipoNotaId');
+  GeneratedIntColumn _tipoNotaId;
+  @override
+  GeneratedIntColumn get tipoNotaId => _tipoNotaId ??= _constructTipoNotaId();
+  GeneratedIntColumn _constructTipoNotaId() {
+    return GeneratedIntColumn(
+      'tipo_nota_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _calendarioPeriodoIdMeta =
+      const VerificationMeta('calendarioPeriodoId');
+  GeneratedIntColumn _calendarioPeriodoId;
+  @override
+  GeneratedIntColumn get calendarioPeriodoId =>
+      _calendarioPeriodoId ??= _constructCalendarioPeriodoId();
+  GeneratedIntColumn _constructCalendarioPeriodoId() {
+    return GeneratedIntColumn(
+      'calendario_periodo_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _colorMeta = const VerificationMeta('color');
+  GeneratedTextColumn _color;
+  @override
+  GeneratedTextColumn get color => _color ??= _constructColor();
+  GeneratedTextColumn _constructColor() {
+    return GeneratedTextColumn(
+      'color',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        evaluacionResultadoId,
+        rubroEvalResultadoId,
+        alumnoId,
+        silaboEventoId,
+        nota,
+        peso,
+        valorTipoNotaId,
+        tituloNota,
+        tipoNotaId,
+        calendarioPeriodoId,
+        color
+      ];
+  @override
+  $NotasCalendarioBoletaTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'notas_calendario_boleta';
+  @override
+  final String actualTableName = 'notas_calendario_boleta';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<NotasCalendarioBoletaData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('evaluacion_resultado_id')) {
+      context.handle(
+          _evaluacionResultadoIdMeta,
+          evaluacionResultadoId.isAcceptableOrUnknown(
+              data['evaluacion_resultado_id'], _evaluacionResultadoIdMeta));
+    }
+    if (data.containsKey('rubro_eval_resultado_id')) {
+      context.handle(
+          _rubroEvalResultadoIdMeta,
+          rubroEvalResultadoId.isAcceptableOrUnknown(
+              data['rubro_eval_resultado_id'], _rubroEvalResultadoIdMeta));
+    }
+    if (data.containsKey('alumno_id')) {
+      context.handle(_alumnoIdMeta,
+          alumnoId.isAcceptableOrUnknown(data['alumno_id'], _alumnoIdMeta));
+    }
+    if (data.containsKey('silabo_evento_id')) {
+      context.handle(
+          _silaboEventoIdMeta,
+          silaboEventoId.isAcceptableOrUnknown(
+              data['silabo_evento_id'], _silaboEventoIdMeta));
+    }
+    if (data.containsKey('nota')) {
+      context.handle(
+          _notaMeta, nota.isAcceptableOrUnknown(data['nota'], _notaMeta));
+    }
+    if (data.containsKey('peso')) {
+      context.handle(
+          _pesoMeta, peso.isAcceptableOrUnknown(data['peso'], _pesoMeta));
+    }
+    if (data.containsKey('valor_tipo_nota_id')) {
+      context.handle(
+          _valorTipoNotaIdMeta,
+          valorTipoNotaId.isAcceptableOrUnknown(
+              data['valor_tipo_nota_id'], _valorTipoNotaIdMeta));
+    }
+    if (data.containsKey('titulo_nota')) {
+      context.handle(
+          _tituloNotaMeta,
+          tituloNota.isAcceptableOrUnknown(
+              data['titulo_nota'], _tituloNotaMeta));
+    }
+    if (data.containsKey('tipo_nota_id')) {
+      context.handle(
+          _tipoNotaIdMeta,
+          tipoNotaId.isAcceptableOrUnknown(
+              data['tipo_nota_id'], _tipoNotaIdMeta));
+    }
+    if (data.containsKey('calendario_periodo_id')) {
+      context.handle(
+          _calendarioPeriodoIdMeta,
+          calendarioPeriodoId.isAcceptableOrUnknown(
+              data['calendario_periodo_id'], _calendarioPeriodoIdMeta));
+    }
+    if (data.containsKey('color')) {
+      context.handle(
+          _colorMeta, color.isAcceptableOrUnknown(data['color'], _colorMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {evaluacionResultadoId};
+  @override
+  NotasCalendarioBoletaData map(Map<String, dynamic> data,
+      {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return NotasCalendarioBoletaData.fromData(data, _db,
+        prefix: effectivePrefix);
+  }
+
+  @override
+  $NotasCalendarioBoletaTable createAlias(String alias) {
+    return $NotasCalendarioBoletaTable(_db, alias);
+  }
+}
+
+class ParametrosDisenioData extends DataClass
+    implements Insertable<ParametrosDisenioData> {
+  final int parametroDisenioId;
+  final String objeto;
+  final String concepto;
+  final String nombre;
+  final String path;
+  final String color1;
+  final String color2;
+  final String color3;
+  final bool estado;
+  ParametrosDisenioData(
+      {@required this.parametroDisenioId,
+      this.objeto,
+      this.concepto,
+      this.nombre,
+      this.path,
+      this.color1,
+      this.color2,
+      this.color3,
+      this.estado});
+  factory ParametrosDisenioData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    final boolType = db.typeSystem.forDartType<bool>();
+    return ParametrosDisenioData(
+      parametroDisenioId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}parametro_disenio_id']),
+      objeto:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}objeto']),
+      concepto: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}concepto']),
+      nombre:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}nombre']),
+      path: stringType.mapFromDatabaseResponse(data['${effectivePrefix}path']),
+      color1:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}color1']),
+      color2:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}color2']),
+      color3:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}color3']),
+      estado:
+          boolType.mapFromDatabaseResponse(data['${effectivePrefix}estado']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || parametroDisenioId != null) {
+      map['parametro_disenio_id'] = Variable<int>(parametroDisenioId);
+    }
+    if (!nullToAbsent || objeto != null) {
+      map['objeto'] = Variable<String>(objeto);
+    }
+    if (!nullToAbsent || concepto != null) {
+      map['concepto'] = Variable<String>(concepto);
+    }
+    if (!nullToAbsent || nombre != null) {
+      map['nombre'] = Variable<String>(nombre);
+    }
+    if (!nullToAbsent || path != null) {
+      map['path'] = Variable<String>(path);
+    }
+    if (!nullToAbsent || color1 != null) {
+      map['color1'] = Variable<String>(color1);
+    }
+    if (!nullToAbsent || color2 != null) {
+      map['color2'] = Variable<String>(color2);
+    }
+    if (!nullToAbsent || color3 != null) {
+      map['color3'] = Variable<String>(color3);
+    }
+    if (!nullToAbsent || estado != null) {
+      map['estado'] = Variable<bool>(estado);
+    }
+    return map;
+  }
+
+  ParametrosDisenioCompanion toCompanion(bool nullToAbsent) {
+    return ParametrosDisenioCompanion(
+      parametroDisenioId: parametroDisenioId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parametroDisenioId),
+      objeto:
+          objeto == null && nullToAbsent ? const Value.absent() : Value(objeto),
+      concepto: concepto == null && nullToAbsent
+          ? const Value.absent()
+          : Value(concepto),
+      nombre:
+          nombre == null && nullToAbsent ? const Value.absent() : Value(nombre),
+      path: path == null && nullToAbsent ? const Value.absent() : Value(path),
+      color1:
+          color1 == null && nullToAbsent ? const Value.absent() : Value(color1),
+      color2:
+          color2 == null && nullToAbsent ? const Value.absent() : Value(color2),
+      color3:
+          color3 == null && nullToAbsent ? const Value.absent() : Value(color3),
+      estado:
+          estado == null && nullToAbsent ? const Value.absent() : Value(estado),
+    );
+  }
+
+  factory ParametrosDisenioData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return ParametrosDisenioData(
+      parametroDisenioId: serializer.fromJson<int>(json['parametroDisenioId']),
+      objeto: serializer.fromJson<String>(json['objeto']),
+      concepto: serializer.fromJson<String>(json['concepto']),
+      nombre: serializer.fromJson<String>(json['nombre']),
+      path: serializer.fromJson<String>(json['path']),
+      color1: serializer.fromJson<String>(json['color1']),
+      color2: serializer.fromJson<String>(json['color2']),
+      color3: serializer.fromJson<String>(json['color3']),
+      estado: serializer.fromJson<bool>(json['estado']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'parametroDisenioId': serializer.toJson<int>(parametroDisenioId),
+      'objeto': serializer.toJson<String>(objeto),
+      'concepto': serializer.toJson<String>(concepto),
+      'nombre': serializer.toJson<String>(nombre),
+      'path': serializer.toJson<String>(path),
+      'color1': serializer.toJson<String>(color1),
+      'color2': serializer.toJson<String>(color2),
+      'color3': serializer.toJson<String>(color3),
+      'estado': serializer.toJson<bool>(estado),
+    };
+  }
+
+  ParametrosDisenioData copyWith(
+          {int parametroDisenioId,
+          String objeto,
+          String concepto,
+          String nombre,
+          String path,
+          String color1,
+          String color2,
+          String color3,
+          bool estado}) =>
+      ParametrosDisenioData(
+        parametroDisenioId: parametroDisenioId ?? this.parametroDisenioId,
+        objeto: objeto ?? this.objeto,
+        concepto: concepto ?? this.concepto,
+        nombre: nombre ?? this.nombre,
+        path: path ?? this.path,
+        color1: color1 ?? this.color1,
+        color2: color2 ?? this.color2,
+        color3: color3 ?? this.color3,
+        estado: estado ?? this.estado,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('ParametrosDisenioData(')
+          ..write('parametroDisenioId: $parametroDisenioId, ')
+          ..write('objeto: $objeto, ')
+          ..write('concepto: $concepto, ')
+          ..write('nombre: $nombre, ')
+          ..write('path: $path, ')
+          ..write('color1: $color1, ')
+          ..write('color2: $color2, ')
+          ..write('color3: $color3, ')
+          ..write('estado: $estado')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      parametroDisenioId.hashCode,
+      $mrjc(
+          objeto.hashCode,
+          $mrjc(
+              concepto.hashCode,
+              $mrjc(
+                  nombre.hashCode,
+                  $mrjc(
+                      path.hashCode,
+                      $mrjc(
+                          color1.hashCode,
+                          $mrjc(color2.hashCode,
+                              $mrjc(color3.hashCode, estado.hashCode)))))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is ParametrosDisenioData &&
+          other.parametroDisenioId == this.parametroDisenioId &&
+          other.objeto == this.objeto &&
+          other.concepto == this.concepto &&
+          other.nombre == this.nombre &&
+          other.path == this.path &&
+          other.color1 == this.color1 &&
+          other.color2 == this.color2 &&
+          other.color3 == this.color3 &&
+          other.estado == this.estado);
+}
+
+class ParametrosDisenioCompanion
+    extends UpdateCompanion<ParametrosDisenioData> {
+  final Value<int> parametroDisenioId;
+  final Value<String> objeto;
+  final Value<String> concepto;
+  final Value<String> nombre;
+  final Value<String> path;
+  final Value<String> color1;
+  final Value<String> color2;
+  final Value<String> color3;
+  final Value<bool> estado;
+  const ParametrosDisenioCompanion({
+    this.parametroDisenioId = const Value.absent(),
+    this.objeto = const Value.absent(),
+    this.concepto = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.path = const Value.absent(),
+    this.color1 = const Value.absent(),
+    this.color2 = const Value.absent(),
+    this.color3 = const Value.absent(),
+    this.estado = const Value.absent(),
+  });
+  ParametrosDisenioCompanion.insert({
+    this.parametroDisenioId = const Value.absent(),
+    this.objeto = const Value.absent(),
+    this.concepto = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.path = const Value.absent(),
+    this.color1 = const Value.absent(),
+    this.color2 = const Value.absent(),
+    this.color3 = const Value.absent(),
+    this.estado = const Value.absent(),
+  });
+  static Insertable<ParametrosDisenioData> custom({
+    Expression<int> parametroDisenioId,
+    Expression<String> objeto,
+    Expression<String> concepto,
+    Expression<String> nombre,
+    Expression<String> path,
+    Expression<String> color1,
+    Expression<String> color2,
+    Expression<String> color3,
+    Expression<bool> estado,
+  }) {
+    return RawValuesInsertable({
+      if (parametroDisenioId != null)
+        'parametro_disenio_id': parametroDisenioId,
+      if (objeto != null) 'objeto': objeto,
+      if (concepto != null) 'concepto': concepto,
+      if (nombre != null) 'nombre': nombre,
+      if (path != null) 'path': path,
+      if (color1 != null) 'color1': color1,
+      if (color2 != null) 'color2': color2,
+      if (color3 != null) 'color3': color3,
+      if (estado != null) 'estado': estado,
+    });
+  }
+
+  ParametrosDisenioCompanion copyWith(
+      {Value<int> parametroDisenioId,
+      Value<String> objeto,
+      Value<String> concepto,
+      Value<String> nombre,
+      Value<String> path,
+      Value<String> color1,
+      Value<String> color2,
+      Value<String> color3,
+      Value<bool> estado}) {
+    return ParametrosDisenioCompanion(
+      parametroDisenioId: parametroDisenioId ?? this.parametroDisenioId,
+      objeto: objeto ?? this.objeto,
+      concepto: concepto ?? this.concepto,
+      nombre: nombre ?? this.nombre,
+      path: path ?? this.path,
+      color1: color1 ?? this.color1,
+      color2: color2 ?? this.color2,
+      color3: color3 ?? this.color3,
+      estado: estado ?? this.estado,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (parametroDisenioId.present) {
+      map['parametro_disenio_id'] = Variable<int>(parametroDisenioId.value);
+    }
+    if (objeto.present) {
+      map['objeto'] = Variable<String>(objeto.value);
+    }
+    if (concepto.present) {
+      map['concepto'] = Variable<String>(concepto.value);
+    }
+    if (nombre.present) {
+      map['nombre'] = Variable<String>(nombre.value);
+    }
+    if (path.present) {
+      map['path'] = Variable<String>(path.value);
+    }
+    if (color1.present) {
+      map['color1'] = Variable<String>(color1.value);
+    }
+    if (color2.present) {
+      map['color2'] = Variable<String>(color2.value);
+    }
+    if (color3.present) {
+      map['color3'] = Variable<String>(color3.value);
+    }
+    if (estado.present) {
+      map['estado'] = Variable<bool>(estado.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ParametrosDisenioCompanion(')
+          ..write('parametroDisenioId: $parametroDisenioId, ')
+          ..write('objeto: $objeto, ')
+          ..write('concepto: $concepto, ')
+          ..write('nombre: $nombre, ')
+          ..write('path: $path, ')
+          ..write('color1: $color1, ')
+          ..write('color2: $color2, ')
+          ..write('color3: $color3, ')
+          ..write('estado: $estado')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ParametrosDisenioTable extends ParametrosDisenio
+    with TableInfo<$ParametrosDisenioTable, ParametrosDisenioData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $ParametrosDisenioTable(this._db, [this._alias]);
+  final VerificationMeta _parametroDisenioIdMeta =
+      const VerificationMeta('parametroDisenioId');
+  GeneratedIntColumn _parametroDisenioId;
+  @override
+  GeneratedIntColumn get parametroDisenioId =>
+      _parametroDisenioId ??= _constructParametroDisenioId();
+  GeneratedIntColumn _constructParametroDisenioId() {
+    return GeneratedIntColumn(
+      'parametro_disenio_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _objetoMeta = const VerificationMeta('objeto');
+  GeneratedTextColumn _objeto;
+  @override
+  GeneratedTextColumn get objeto => _objeto ??= _constructObjeto();
+  GeneratedTextColumn _constructObjeto() {
+    return GeneratedTextColumn(
+      'objeto',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _conceptoMeta = const VerificationMeta('concepto');
+  GeneratedTextColumn _concepto;
+  @override
+  GeneratedTextColumn get concepto => _concepto ??= _constructConcepto();
+  GeneratedTextColumn _constructConcepto() {
+    return GeneratedTextColumn(
+      'concepto',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _nombreMeta = const VerificationMeta('nombre');
+  GeneratedTextColumn _nombre;
+  @override
+  GeneratedTextColumn get nombre => _nombre ??= _constructNombre();
+  GeneratedTextColumn _constructNombre() {
+    return GeneratedTextColumn(
+      'nombre',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _pathMeta = const VerificationMeta('path');
+  GeneratedTextColumn _path;
+  @override
+  GeneratedTextColumn get path => _path ??= _constructPath();
+  GeneratedTextColumn _constructPath() {
+    return GeneratedTextColumn(
+      'path',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _color1Meta = const VerificationMeta('color1');
+  GeneratedTextColumn _color1;
+  @override
+  GeneratedTextColumn get color1 => _color1 ??= _constructColor1();
+  GeneratedTextColumn _constructColor1() {
+    return GeneratedTextColumn(
+      'color1',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _color2Meta = const VerificationMeta('color2');
+  GeneratedTextColumn _color2;
+  @override
+  GeneratedTextColumn get color2 => _color2 ??= _constructColor2();
+  GeneratedTextColumn _constructColor2() {
+    return GeneratedTextColumn(
+      'color2',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _color3Meta = const VerificationMeta('color3');
+  GeneratedTextColumn _color3;
+  @override
+  GeneratedTextColumn get color3 => _color3 ??= _constructColor3();
+  GeneratedTextColumn _constructColor3() {
+    return GeneratedTextColumn(
+      'color3',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoMeta = const VerificationMeta('estado');
+  GeneratedBoolColumn _estado;
+  @override
+  GeneratedBoolColumn get estado => _estado ??= _constructEstado();
+  GeneratedBoolColumn _constructEstado() {
+    return GeneratedBoolColumn(
+      'estado',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        parametroDisenioId,
+        objeto,
+        concepto,
+        nombre,
+        path,
+        color1,
+        color2,
+        color3,
+        estado
+      ];
+  @override
+  $ParametrosDisenioTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'parametros_disenio';
+  @override
+  final String actualTableName = 'parametros_disenio';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<ParametrosDisenioData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('parametro_disenio_id')) {
+      context.handle(
+          _parametroDisenioIdMeta,
+          parametroDisenioId.isAcceptableOrUnknown(
+              data['parametro_disenio_id'], _parametroDisenioIdMeta));
+    }
+    if (data.containsKey('objeto')) {
+      context.handle(_objetoMeta,
+          objeto.isAcceptableOrUnknown(data['objeto'], _objetoMeta));
+    }
+    if (data.containsKey('concepto')) {
+      context.handle(_conceptoMeta,
+          concepto.isAcceptableOrUnknown(data['concepto'], _conceptoMeta));
+    }
+    if (data.containsKey('nombre')) {
+      context.handle(_nombreMeta,
+          nombre.isAcceptableOrUnknown(data['nombre'], _nombreMeta));
+    }
+    if (data.containsKey('path')) {
+      context.handle(
+          _pathMeta, path.isAcceptableOrUnknown(data['path'], _pathMeta));
+    }
+    if (data.containsKey('color1')) {
+      context.handle(_color1Meta,
+          color1.isAcceptableOrUnknown(data['color1'], _color1Meta));
+    }
+    if (data.containsKey('color2')) {
+      context.handle(_color2Meta,
+          color2.isAcceptableOrUnknown(data['color2'], _color2Meta));
+    }
+    if (data.containsKey('color3')) {
+      context.handle(_color3Meta,
+          color3.isAcceptableOrUnknown(data['color3'], _color3Meta));
+    }
+    if (data.containsKey('estado')) {
+      context.handle(_estadoMeta,
+          estado.isAcceptableOrUnknown(data['estado'], _estadoMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {parametroDisenioId};
+  @override
+  ParametrosDisenioData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return ParametrosDisenioData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $ParametrosDisenioTable createAlias(String alias) {
+    return $ParametrosDisenioTable(_db, alias);
+  }
+}
+
+class SilaboEventoData extends DataClass
+    implements Insertable<SilaboEventoData> {
+  final int silaboEventoId;
+  final String titulo;
+  final String descripcionGeneral;
+  final int planCursoId;
+  final int entidadId;
+  final int docenteId;
+  final int seccionId;
+  final int estadoId;
+  final int anioAcademicoId;
+  final int georeferenciaId;
+  final int silaboBaseId;
+  final int cargaCursoId;
+  final int parametroDisenioId;
+  final String fechaInicio;
+  final String fechaFin;
+  SilaboEventoData(
+      {@required this.silaboEventoId,
+      this.titulo,
+      this.descripcionGeneral,
+      this.planCursoId,
+      this.entidadId,
+      this.docenteId,
+      this.seccionId,
+      this.estadoId,
+      this.anioAcademicoId,
+      this.georeferenciaId,
+      this.silaboBaseId,
+      this.cargaCursoId,
+      this.parametroDisenioId,
+      this.fechaInicio,
+      this.fechaFin});
+  factory SilaboEventoData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return SilaboEventoData(
+      silaboEventoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}silabo_evento_id']),
+      titulo:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}titulo']),
+      descripcionGeneral: stringType.mapFromDatabaseResponse(
+          data['${effectivePrefix}descripcion_general']),
+      planCursoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}plan_curso_id']),
+      entidadId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}entidad_id']),
+      docenteId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}docente_id']),
+      seccionId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}seccion_id']),
+      estadoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}estado_id']),
+      anioAcademicoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}anio_academico_id']),
+      georeferenciaId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}georeferencia_id']),
+      silaboBaseId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}silabo_base_id']),
+      cargaCursoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}carga_curso_id']),
+      parametroDisenioId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}parametro_disenio_id']),
+      fechaInicio: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}fecha_inicio']),
+      fechaFin: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}fecha_fin']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || silaboEventoId != null) {
+      map['silabo_evento_id'] = Variable<int>(silaboEventoId);
+    }
+    if (!nullToAbsent || titulo != null) {
+      map['titulo'] = Variable<String>(titulo);
+    }
+    if (!nullToAbsent || descripcionGeneral != null) {
+      map['descripcion_general'] = Variable<String>(descripcionGeneral);
+    }
+    if (!nullToAbsent || planCursoId != null) {
+      map['plan_curso_id'] = Variable<int>(planCursoId);
+    }
+    if (!nullToAbsent || entidadId != null) {
+      map['entidad_id'] = Variable<int>(entidadId);
+    }
+    if (!nullToAbsent || docenteId != null) {
+      map['docente_id'] = Variable<int>(docenteId);
+    }
+    if (!nullToAbsent || seccionId != null) {
+      map['seccion_id'] = Variable<int>(seccionId);
+    }
+    if (!nullToAbsent || estadoId != null) {
+      map['estado_id'] = Variable<int>(estadoId);
+    }
+    if (!nullToAbsent || anioAcademicoId != null) {
+      map['anio_academico_id'] = Variable<int>(anioAcademicoId);
+    }
+    if (!nullToAbsent || georeferenciaId != null) {
+      map['georeferencia_id'] = Variable<int>(georeferenciaId);
+    }
+    if (!nullToAbsent || silaboBaseId != null) {
+      map['silabo_base_id'] = Variable<int>(silaboBaseId);
+    }
+    if (!nullToAbsent || cargaCursoId != null) {
+      map['carga_curso_id'] = Variable<int>(cargaCursoId);
+    }
+    if (!nullToAbsent || parametroDisenioId != null) {
+      map['parametro_disenio_id'] = Variable<int>(parametroDisenioId);
+    }
+    if (!nullToAbsent || fechaInicio != null) {
+      map['fecha_inicio'] = Variable<String>(fechaInicio);
+    }
+    if (!nullToAbsent || fechaFin != null) {
+      map['fecha_fin'] = Variable<String>(fechaFin);
+    }
+    return map;
+  }
+
+  SilaboEventoCompanion toCompanion(bool nullToAbsent) {
+    return SilaboEventoCompanion(
+      silaboEventoId: silaboEventoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(silaboEventoId),
+      titulo:
+          titulo == null && nullToAbsent ? const Value.absent() : Value(titulo),
+      descripcionGeneral: descripcionGeneral == null && nullToAbsent
+          ? const Value.absent()
+          : Value(descripcionGeneral),
+      planCursoId: planCursoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(planCursoId),
+      entidadId: entidadId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(entidadId),
+      docenteId: docenteId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(docenteId),
+      seccionId: seccionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(seccionId),
+      estadoId: estadoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadoId),
+      anioAcademicoId: anioAcademicoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(anioAcademicoId),
+      georeferenciaId: georeferenciaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(georeferenciaId),
+      silaboBaseId: silaboBaseId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(silaboBaseId),
+      cargaCursoId: cargaCursoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cargaCursoId),
+      parametroDisenioId: parametroDisenioId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parametroDisenioId),
+      fechaInicio: fechaInicio == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fechaInicio),
+      fechaFin: fechaFin == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fechaFin),
+    );
+  }
+
+  factory SilaboEventoData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return SilaboEventoData(
+      silaboEventoId: serializer.fromJson<int>(json['silaboEventoId']),
+      titulo: serializer.fromJson<String>(json['titulo']),
+      descripcionGeneral:
+          serializer.fromJson<String>(json['descripcionGeneral']),
+      planCursoId: serializer.fromJson<int>(json['planCursoId']),
+      entidadId: serializer.fromJson<int>(json['entidadId']),
+      docenteId: serializer.fromJson<int>(json['docenteId']),
+      seccionId: serializer.fromJson<int>(json['seccionId']),
+      estadoId: serializer.fromJson<int>(json['estadoId']),
+      anioAcademicoId: serializer.fromJson<int>(json['anioAcademicoId']),
+      georeferenciaId: serializer.fromJson<int>(json['georeferenciaId']),
+      silaboBaseId: serializer.fromJson<int>(json['silaboBaseId']),
+      cargaCursoId: serializer.fromJson<int>(json['cargaCursoId']),
+      parametroDisenioId: serializer.fromJson<int>(json['parametroDisenioId']),
+      fechaInicio: serializer.fromJson<String>(json['fechaInicio']),
+      fechaFin: serializer.fromJson<String>(json['fechaFin']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'silaboEventoId': serializer.toJson<int>(silaboEventoId),
+      'titulo': serializer.toJson<String>(titulo),
+      'descripcionGeneral': serializer.toJson<String>(descripcionGeneral),
+      'planCursoId': serializer.toJson<int>(planCursoId),
+      'entidadId': serializer.toJson<int>(entidadId),
+      'docenteId': serializer.toJson<int>(docenteId),
+      'seccionId': serializer.toJson<int>(seccionId),
+      'estadoId': serializer.toJson<int>(estadoId),
+      'anioAcademicoId': serializer.toJson<int>(anioAcademicoId),
+      'georeferenciaId': serializer.toJson<int>(georeferenciaId),
+      'silaboBaseId': serializer.toJson<int>(silaboBaseId),
+      'cargaCursoId': serializer.toJson<int>(cargaCursoId),
+      'parametroDisenioId': serializer.toJson<int>(parametroDisenioId),
+      'fechaInicio': serializer.toJson<String>(fechaInicio),
+      'fechaFin': serializer.toJson<String>(fechaFin),
+    };
+  }
+
+  SilaboEventoData copyWith(
+          {int silaboEventoId,
+          String titulo,
+          String descripcionGeneral,
+          int planCursoId,
+          int entidadId,
+          int docenteId,
+          int seccionId,
+          int estadoId,
+          int anioAcademicoId,
+          int georeferenciaId,
+          int silaboBaseId,
+          int cargaCursoId,
+          int parametroDisenioId,
+          String fechaInicio,
+          String fechaFin}) =>
+      SilaboEventoData(
+        silaboEventoId: silaboEventoId ?? this.silaboEventoId,
+        titulo: titulo ?? this.titulo,
+        descripcionGeneral: descripcionGeneral ?? this.descripcionGeneral,
+        planCursoId: planCursoId ?? this.planCursoId,
+        entidadId: entidadId ?? this.entidadId,
+        docenteId: docenteId ?? this.docenteId,
+        seccionId: seccionId ?? this.seccionId,
+        estadoId: estadoId ?? this.estadoId,
+        anioAcademicoId: anioAcademicoId ?? this.anioAcademicoId,
+        georeferenciaId: georeferenciaId ?? this.georeferenciaId,
+        silaboBaseId: silaboBaseId ?? this.silaboBaseId,
+        cargaCursoId: cargaCursoId ?? this.cargaCursoId,
+        parametroDisenioId: parametroDisenioId ?? this.parametroDisenioId,
+        fechaInicio: fechaInicio ?? this.fechaInicio,
+        fechaFin: fechaFin ?? this.fechaFin,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('SilaboEventoData(')
+          ..write('silaboEventoId: $silaboEventoId, ')
+          ..write('titulo: $titulo, ')
+          ..write('descripcionGeneral: $descripcionGeneral, ')
+          ..write('planCursoId: $planCursoId, ')
+          ..write('entidadId: $entidadId, ')
+          ..write('docenteId: $docenteId, ')
+          ..write('seccionId: $seccionId, ')
+          ..write('estadoId: $estadoId, ')
+          ..write('anioAcademicoId: $anioAcademicoId, ')
+          ..write('georeferenciaId: $georeferenciaId, ')
+          ..write('silaboBaseId: $silaboBaseId, ')
+          ..write('cargaCursoId: $cargaCursoId, ')
+          ..write('parametroDisenioId: $parametroDisenioId, ')
+          ..write('fechaInicio: $fechaInicio, ')
+          ..write('fechaFin: $fechaFin')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      silaboEventoId.hashCode,
+      $mrjc(
+          titulo.hashCode,
+          $mrjc(
+              descripcionGeneral.hashCode,
+              $mrjc(
+                  planCursoId.hashCode,
+                  $mrjc(
+                      entidadId.hashCode,
+                      $mrjc(
+                          docenteId.hashCode,
+                          $mrjc(
+                              seccionId.hashCode,
+                              $mrjc(
+                                  estadoId.hashCode,
+                                  $mrjc(
+                                      anioAcademicoId.hashCode,
+                                      $mrjc(
+                                          georeferenciaId.hashCode,
+                                          $mrjc(
+                                              silaboBaseId.hashCode,
+                                              $mrjc(
+                                                  cargaCursoId.hashCode,
+                                                  $mrjc(
+                                                      parametroDisenioId
+                                                          .hashCode,
+                                                      $mrjc(
+                                                          fechaInicio.hashCode,
+                                                          fechaFin
+                                                              .hashCode)))))))))))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is SilaboEventoData &&
+          other.silaboEventoId == this.silaboEventoId &&
+          other.titulo == this.titulo &&
+          other.descripcionGeneral == this.descripcionGeneral &&
+          other.planCursoId == this.planCursoId &&
+          other.entidadId == this.entidadId &&
+          other.docenteId == this.docenteId &&
+          other.seccionId == this.seccionId &&
+          other.estadoId == this.estadoId &&
+          other.anioAcademicoId == this.anioAcademicoId &&
+          other.georeferenciaId == this.georeferenciaId &&
+          other.silaboBaseId == this.silaboBaseId &&
+          other.cargaCursoId == this.cargaCursoId &&
+          other.parametroDisenioId == this.parametroDisenioId &&
+          other.fechaInicio == this.fechaInicio &&
+          other.fechaFin == this.fechaFin);
+}
+
+class SilaboEventoCompanion extends UpdateCompanion<SilaboEventoData> {
+  final Value<int> silaboEventoId;
+  final Value<String> titulo;
+  final Value<String> descripcionGeneral;
+  final Value<int> planCursoId;
+  final Value<int> entidadId;
+  final Value<int> docenteId;
+  final Value<int> seccionId;
+  final Value<int> estadoId;
+  final Value<int> anioAcademicoId;
+  final Value<int> georeferenciaId;
+  final Value<int> silaboBaseId;
+  final Value<int> cargaCursoId;
+  final Value<int> parametroDisenioId;
+  final Value<String> fechaInicio;
+  final Value<String> fechaFin;
+  const SilaboEventoCompanion({
+    this.silaboEventoId = const Value.absent(),
+    this.titulo = const Value.absent(),
+    this.descripcionGeneral = const Value.absent(),
+    this.planCursoId = const Value.absent(),
+    this.entidadId = const Value.absent(),
+    this.docenteId = const Value.absent(),
+    this.seccionId = const Value.absent(),
+    this.estadoId = const Value.absent(),
+    this.anioAcademicoId = const Value.absent(),
+    this.georeferenciaId = const Value.absent(),
+    this.silaboBaseId = const Value.absent(),
+    this.cargaCursoId = const Value.absent(),
+    this.parametroDisenioId = const Value.absent(),
+    this.fechaInicio = const Value.absent(),
+    this.fechaFin = const Value.absent(),
+  });
+  SilaboEventoCompanion.insert({
+    this.silaboEventoId = const Value.absent(),
+    this.titulo = const Value.absent(),
+    this.descripcionGeneral = const Value.absent(),
+    this.planCursoId = const Value.absent(),
+    this.entidadId = const Value.absent(),
+    this.docenteId = const Value.absent(),
+    this.seccionId = const Value.absent(),
+    this.estadoId = const Value.absent(),
+    this.anioAcademicoId = const Value.absent(),
+    this.georeferenciaId = const Value.absent(),
+    this.silaboBaseId = const Value.absent(),
+    this.cargaCursoId = const Value.absent(),
+    this.parametroDisenioId = const Value.absent(),
+    this.fechaInicio = const Value.absent(),
+    this.fechaFin = const Value.absent(),
+  });
+  static Insertable<SilaboEventoData> custom({
+    Expression<int> silaboEventoId,
+    Expression<String> titulo,
+    Expression<String> descripcionGeneral,
+    Expression<int> planCursoId,
+    Expression<int> entidadId,
+    Expression<int> docenteId,
+    Expression<int> seccionId,
+    Expression<int> estadoId,
+    Expression<int> anioAcademicoId,
+    Expression<int> georeferenciaId,
+    Expression<int> silaboBaseId,
+    Expression<int> cargaCursoId,
+    Expression<int> parametroDisenioId,
+    Expression<String> fechaInicio,
+    Expression<String> fechaFin,
+  }) {
+    return RawValuesInsertable({
+      if (silaboEventoId != null) 'silabo_evento_id': silaboEventoId,
+      if (titulo != null) 'titulo': titulo,
+      if (descripcionGeneral != null) 'descripcion_general': descripcionGeneral,
+      if (planCursoId != null) 'plan_curso_id': planCursoId,
+      if (entidadId != null) 'entidad_id': entidadId,
+      if (docenteId != null) 'docente_id': docenteId,
+      if (seccionId != null) 'seccion_id': seccionId,
+      if (estadoId != null) 'estado_id': estadoId,
+      if (anioAcademicoId != null) 'anio_academico_id': anioAcademicoId,
+      if (georeferenciaId != null) 'georeferencia_id': georeferenciaId,
+      if (silaboBaseId != null) 'silabo_base_id': silaboBaseId,
+      if (cargaCursoId != null) 'carga_curso_id': cargaCursoId,
+      if (parametroDisenioId != null)
+        'parametro_disenio_id': parametroDisenioId,
+      if (fechaInicio != null) 'fecha_inicio': fechaInicio,
+      if (fechaFin != null) 'fecha_fin': fechaFin,
+    });
+  }
+
+  SilaboEventoCompanion copyWith(
+      {Value<int> silaboEventoId,
+      Value<String> titulo,
+      Value<String> descripcionGeneral,
+      Value<int> planCursoId,
+      Value<int> entidadId,
+      Value<int> docenteId,
+      Value<int> seccionId,
+      Value<int> estadoId,
+      Value<int> anioAcademicoId,
+      Value<int> georeferenciaId,
+      Value<int> silaboBaseId,
+      Value<int> cargaCursoId,
+      Value<int> parametroDisenioId,
+      Value<String> fechaInicio,
+      Value<String> fechaFin}) {
+    return SilaboEventoCompanion(
+      silaboEventoId: silaboEventoId ?? this.silaboEventoId,
+      titulo: titulo ?? this.titulo,
+      descripcionGeneral: descripcionGeneral ?? this.descripcionGeneral,
+      planCursoId: planCursoId ?? this.planCursoId,
+      entidadId: entidadId ?? this.entidadId,
+      docenteId: docenteId ?? this.docenteId,
+      seccionId: seccionId ?? this.seccionId,
+      estadoId: estadoId ?? this.estadoId,
+      anioAcademicoId: anioAcademicoId ?? this.anioAcademicoId,
+      georeferenciaId: georeferenciaId ?? this.georeferenciaId,
+      silaboBaseId: silaboBaseId ?? this.silaboBaseId,
+      cargaCursoId: cargaCursoId ?? this.cargaCursoId,
+      parametroDisenioId: parametroDisenioId ?? this.parametroDisenioId,
+      fechaInicio: fechaInicio ?? this.fechaInicio,
+      fechaFin: fechaFin ?? this.fechaFin,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (silaboEventoId.present) {
+      map['silabo_evento_id'] = Variable<int>(silaboEventoId.value);
+    }
+    if (titulo.present) {
+      map['titulo'] = Variable<String>(titulo.value);
+    }
+    if (descripcionGeneral.present) {
+      map['descripcion_general'] = Variable<String>(descripcionGeneral.value);
+    }
+    if (planCursoId.present) {
+      map['plan_curso_id'] = Variable<int>(planCursoId.value);
+    }
+    if (entidadId.present) {
+      map['entidad_id'] = Variable<int>(entidadId.value);
+    }
+    if (docenteId.present) {
+      map['docente_id'] = Variable<int>(docenteId.value);
+    }
+    if (seccionId.present) {
+      map['seccion_id'] = Variable<int>(seccionId.value);
+    }
+    if (estadoId.present) {
+      map['estado_id'] = Variable<int>(estadoId.value);
+    }
+    if (anioAcademicoId.present) {
+      map['anio_academico_id'] = Variable<int>(anioAcademicoId.value);
+    }
+    if (georeferenciaId.present) {
+      map['georeferencia_id'] = Variable<int>(georeferenciaId.value);
+    }
+    if (silaboBaseId.present) {
+      map['silabo_base_id'] = Variable<int>(silaboBaseId.value);
+    }
+    if (cargaCursoId.present) {
+      map['carga_curso_id'] = Variable<int>(cargaCursoId.value);
+    }
+    if (parametroDisenioId.present) {
+      map['parametro_disenio_id'] = Variable<int>(parametroDisenioId.value);
+    }
+    if (fechaInicio.present) {
+      map['fecha_inicio'] = Variable<String>(fechaInicio.value);
+    }
+    if (fechaFin.present) {
+      map['fecha_fin'] = Variable<String>(fechaFin.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SilaboEventoCompanion(')
+          ..write('silaboEventoId: $silaboEventoId, ')
+          ..write('titulo: $titulo, ')
+          ..write('descripcionGeneral: $descripcionGeneral, ')
+          ..write('planCursoId: $planCursoId, ')
+          ..write('entidadId: $entidadId, ')
+          ..write('docenteId: $docenteId, ')
+          ..write('seccionId: $seccionId, ')
+          ..write('estadoId: $estadoId, ')
+          ..write('anioAcademicoId: $anioAcademicoId, ')
+          ..write('georeferenciaId: $georeferenciaId, ')
+          ..write('silaboBaseId: $silaboBaseId, ')
+          ..write('cargaCursoId: $cargaCursoId, ')
+          ..write('parametroDisenioId: $parametroDisenioId, ')
+          ..write('fechaInicio: $fechaInicio, ')
+          ..write('fechaFin: $fechaFin')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SilaboEventoTable extends SilaboEvento
+    with TableInfo<$SilaboEventoTable, SilaboEventoData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $SilaboEventoTable(this._db, [this._alias]);
+  final VerificationMeta _silaboEventoIdMeta =
+      const VerificationMeta('silaboEventoId');
+  GeneratedIntColumn _silaboEventoId;
+  @override
+  GeneratedIntColumn get silaboEventoId =>
+      _silaboEventoId ??= _constructSilaboEventoId();
+  GeneratedIntColumn _constructSilaboEventoId() {
+    return GeneratedIntColumn(
+      'silabo_evento_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _tituloMeta = const VerificationMeta('titulo');
+  GeneratedTextColumn _titulo;
+  @override
+  GeneratedTextColumn get titulo => _titulo ??= _constructTitulo();
+  GeneratedTextColumn _constructTitulo() {
+    return GeneratedTextColumn(
+      'titulo',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _descripcionGeneralMeta =
+      const VerificationMeta('descripcionGeneral');
+  GeneratedTextColumn _descripcionGeneral;
+  @override
+  GeneratedTextColumn get descripcionGeneral =>
+      _descripcionGeneral ??= _constructDescripcionGeneral();
+  GeneratedTextColumn _constructDescripcionGeneral() {
+    return GeneratedTextColumn(
+      'descripcion_general',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _planCursoIdMeta =
+      const VerificationMeta('planCursoId');
+  GeneratedIntColumn _planCursoId;
+  @override
+  GeneratedIntColumn get planCursoId =>
+      _planCursoId ??= _constructPlanCursoId();
+  GeneratedIntColumn _constructPlanCursoId() {
+    return GeneratedIntColumn(
+      'plan_curso_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _entidadIdMeta = const VerificationMeta('entidadId');
+  GeneratedIntColumn _entidadId;
+  @override
+  GeneratedIntColumn get entidadId => _entidadId ??= _constructEntidadId();
+  GeneratedIntColumn _constructEntidadId() {
+    return GeneratedIntColumn(
+      'entidad_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _docenteIdMeta = const VerificationMeta('docenteId');
+  GeneratedIntColumn _docenteId;
+  @override
+  GeneratedIntColumn get docenteId => _docenteId ??= _constructDocenteId();
+  GeneratedIntColumn _constructDocenteId() {
+    return GeneratedIntColumn(
+      'docente_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _seccionIdMeta = const VerificationMeta('seccionId');
+  GeneratedIntColumn _seccionId;
+  @override
+  GeneratedIntColumn get seccionId => _seccionId ??= _constructSeccionId();
+  GeneratedIntColumn _constructSeccionId() {
+    return GeneratedIntColumn(
+      'seccion_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoIdMeta = const VerificationMeta('estadoId');
+  GeneratedIntColumn _estadoId;
+  @override
+  GeneratedIntColumn get estadoId => _estadoId ??= _constructEstadoId();
+  GeneratedIntColumn _constructEstadoId() {
+    return GeneratedIntColumn(
+      'estado_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _anioAcademicoIdMeta =
+      const VerificationMeta('anioAcademicoId');
+  GeneratedIntColumn _anioAcademicoId;
+  @override
+  GeneratedIntColumn get anioAcademicoId =>
+      _anioAcademicoId ??= _constructAnioAcademicoId();
+  GeneratedIntColumn _constructAnioAcademicoId() {
+    return GeneratedIntColumn(
+      'anio_academico_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _georeferenciaIdMeta =
+      const VerificationMeta('georeferenciaId');
+  GeneratedIntColumn _georeferenciaId;
+  @override
+  GeneratedIntColumn get georeferenciaId =>
+      _georeferenciaId ??= _constructGeoreferenciaId();
+  GeneratedIntColumn _constructGeoreferenciaId() {
+    return GeneratedIntColumn(
+      'georeferencia_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _silaboBaseIdMeta =
+      const VerificationMeta('silaboBaseId');
+  GeneratedIntColumn _silaboBaseId;
+  @override
+  GeneratedIntColumn get silaboBaseId =>
+      _silaboBaseId ??= _constructSilaboBaseId();
+  GeneratedIntColumn _constructSilaboBaseId() {
+    return GeneratedIntColumn(
+      'silabo_base_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _cargaCursoIdMeta =
+      const VerificationMeta('cargaCursoId');
+  GeneratedIntColumn _cargaCursoId;
+  @override
+  GeneratedIntColumn get cargaCursoId =>
+      _cargaCursoId ??= _constructCargaCursoId();
+  GeneratedIntColumn _constructCargaCursoId() {
+    return GeneratedIntColumn(
+      'carga_curso_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _parametroDisenioIdMeta =
+      const VerificationMeta('parametroDisenioId');
+  GeneratedIntColumn _parametroDisenioId;
+  @override
+  GeneratedIntColumn get parametroDisenioId =>
+      _parametroDisenioId ??= _constructParametroDisenioId();
+  GeneratedIntColumn _constructParametroDisenioId() {
+    return GeneratedIntColumn(
+      'parametro_disenio_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _fechaInicioMeta =
+      const VerificationMeta('fechaInicio');
+  GeneratedTextColumn _fechaInicio;
+  @override
+  GeneratedTextColumn get fechaInicio =>
+      _fechaInicio ??= _constructFechaInicio();
+  GeneratedTextColumn _constructFechaInicio() {
+    return GeneratedTextColumn(
+      'fecha_inicio',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _fechaFinMeta = const VerificationMeta('fechaFin');
+  GeneratedTextColumn _fechaFin;
+  @override
+  GeneratedTextColumn get fechaFin => _fechaFin ??= _constructFechaFin();
+  GeneratedTextColumn _constructFechaFin() {
+    return GeneratedTextColumn(
+      'fecha_fin',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        silaboEventoId,
+        titulo,
+        descripcionGeneral,
+        planCursoId,
+        entidadId,
+        docenteId,
+        seccionId,
+        estadoId,
+        anioAcademicoId,
+        georeferenciaId,
+        silaboBaseId,
+        cargaCursoId,
+        parametroDisenioId,
+        fechaInicio,
+        fechaFin
+      ];
+  @override
+  $SilaboEventoTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'silabo_evento';
+  @override
+  final String actualTableName = 'silabo_evento';
+  @override
+  VerificationContext validateIntegrity(Insertable<SilaboEventoData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('silabo_evento_id')) {
+      context.handle(
+          _silaboEventoIdMeta,
+          silaboEventoId.isAcceptableOrUnknown(
+              data['silabo_evento_id'], _silaboEventoIdMeta));
+    }
+    if (data.containsKey('titulo')) {
+      context.handle(_tituloMeta,
+          titulo.isAcceptableOrUnknown(data['titulo'], _tituloMeta));
+    }
+    if (data.containsKey('descripcion_general')) {
+      context.handle(
+          _descripcionGeneralMeta,
+          descripcionGeneral.isAcceptableOrUnknown(
+              data['descripcion_general'], _descripcionGeneralMeta));
+    }
+    if (data.containsKey('plan_curso_id')) {
+      context.handle(
+          _planCursoIdMeta,
+          planCursoId.isAcceptableOrUnknown(
+              data['plan_curso_id'], _planCursoIdMeta));
+    }
+    if (data.containsKey('entidad_id')) {
+      context.handle(_entidadIdMeta,
+          entidadId.isAcceptableOrUnknown(data['entidad_id'], _entidadIdMeta));
+    }
+    if (data.containsKey('docente_id')) {
+      context.handle(_docenteIdMeta,
+          docenteId.isAcceptableOrUnknown(data['docente_id'], _docenteIdMeta));
+    }
+    if (data.containsKey('seccion_id')) {
+      context.handle(_seccionIdMeta,
+          seccionId.isAcceptableOrUnknown(data['seccion_id'], _seccionIdMeta));
+    }
+    if (data.containsKey('estado_id')) {
+      context.handle(_estadoIdMeta,
+          estadoId.isAcceptableOrUnknown(data['estado_id'], _estadoIdMeta));
+    }
+    if (data.containsKey('anio_academico_id')) {
+      context.handle(
+          _anioAcademicoIdMeta,
+          anioAcademicoId.isAcceptableOrUnknown(
+              data['anio_academico_id'], _anioAcademicoIdMeta));
+    }
+    if (data.containsKey('georeferencia_id')) {
+      context.handle(
+          _georeferenciaIdMeta,
+          georeferenciaId.isAcceptableOrUnknown(
+              data['georeferencia_id'], _georeferenciaIdMeta));
+    }
+    if (data.containsKey('silabo_base_id')) {
+      context.handle(
+          _silaboBaseIdMeta,
+          silaboBaseId.isAcceptableOrUnknown(
+              data['silabo_base_id'], _silaboBaseIdMeta));
+    }
+    if (data.containsKey('carga_curso_id')) {
+      context.handle(
+          _cargaCursoIdMeta,
+          cargaCursoId.isAcceptableOrUnknown(
+              data['carga_curso_id'], _cargaCursoIdMeta));
+    }
+    if (data.containsKey('parametro_disenio_id')) {
+      context.handle(
+          _parametroDisenioIdMeta,
+          parametroDisenioId.isAcceptableOrUnknown(
+              data['parametro_disenio_id'], _parametroDisenioIdMeta));
+    }
+    if (data.containsKey('fecha_inicio')) {
+      context.handle(
+          _fechaInicioMeta,
+          fechaInicio.isAcceptableOrUnknown(
+              data['fecha_inicio'], _fechaInicioMeta));
+    }
+    if (data.containsKey('fecha_fin')) {
+      context.handle(_fechaFinMeta,
+          fechaFin.isAcceptableOrUnknown(data['fecha_fin'], _fechaFinMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {silaboEventoId};
+  @override
+  SilaboEventoData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return SilaboEventoData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $SilaboEventoTable createAlias(String alias) {
+    return $SilaboEventoTable(_db, alias);
+  }
+}
+
 abstract class _$AppDataBase extends GeneratedDatabase {
   _$AppDataBase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $PersonaTable _persona;
@@ -6144,6 +10179,25 @@ abstract class _$AppDataBase extends GeneratedDatabase {
       _detalleContratoAcad ??= $DetalleContratoAcadTable(this);
   $ContratoTable _contrato;
   $ContratoTable get contrato => _contrato ??= $ContratoTable(this);
+  $CalendarioAcademicoTable _calendarioAcademico;
+  $CalendarioAcademicoTable get calendarioAcademico =>
+      _calendarioAcademico ??= $CalendarioAcademicoTable(this);
+  $CalendarioPeriodoTable _calendarioPeriodo;
+  $CalendarioPeriodoTable get calendarioPeriodo =>
+      _calendarioPeriodo ??= $CalendarioPeriodoTable(this);
+  $TiposTable _tipos;
+  $TiposTable get tipos => _tipos ??= $TiposTable(this);
+  $AreasBoletaTable _areasBoleta;
+  $AreasBoletaTable get areasBoleta => _areasBoleta ??= $AreasBoletaTable(this);
+  $NotasCalendarioBoletaTable _notasCalendarioBoleta;
+  $NotasCalendarioBoletaTable get notasCalendarioBoleta =>
+      _notasCalendarioBoleta ??= $NotasCalendarioBoletaTable(this);
+  $ParametrosDisenioTable _parametrosDisenio;
+  $ParametrosDisenioTable get parametrosDisenio =>
+      _parametrosDisenio ??= $ParametrosDisenioTable(this);
+  $SilaboEventoTable _silaboEvento;
+  $SilaboEventoTable get silaboEvento =>
+      _silaboEvento ??= $SilaboEventoTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
@@ -6158,6 +10212,13 @@ abstract class _$AppDataBase extends GeneratedDatabase {
         planCursos,
         cargaCurso,
         detalleContratoAcad,
-        contrato
+        contrato,
+        calendarioAcademico,
+        calendarioPeriodo,
+        tipos,
+        areasBoleta,
+        notasCalendarioBoleta,
+        parametrosDisenio,
+        silaboEvento
       ];
 }
