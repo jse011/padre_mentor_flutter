@@ -10915,6 +10915,7 @@ class RubroEvalDesempenioData extends DataClass
   final int seccionId;
   final String seccion;
   final int calendarioPeriodoId;
+  final int parametroDesenioId;
   RubroEvalDesempenioData(
       {this.nombreCurso,
       this.fechaEvaluacion,
@@ -10931,7 +10932,8 @@ class RubroEvalDesempenioData extends DataClass
       this.grado,
       this.seccionId,
       this.seccion,
-      this.calendarioPeriodoId});
+      this.calendarioPeriodoId,
+      this.parametroDesenioId});
   factory RubroEvalDesempenioData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
@@ -10972,6 +10974,8 @@ class RubroEvalDesempenioData extends DataClass
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}seccion']),
       calendarioPeriodoId: intType.mapFromDatabaseResponse(
           data['${effectivePrefix}calendario_periodo_id']),
+      parametroDesenioId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}parametro_desenio_id']),
     );
   }
   @override
@@ -11025,6 +11029,9 @@ class RubroEvalDesempenioData extends DataClass
     if (!nullToAbsent || calendarioPeriodoId != null) {
       map['calendario_periodo_id'] = Variable<int>(calendarioPeriodoId);
     }
+    if (!nullToAbsent || parametroDesenioId != null) {
+      map['parametro_desenio_id'] = Variable<int>(parametroDesenioId);
+    }
     return map;
   }
 
@@ -11077,6 +11084,9 @@ class RubroEvalDesempenioData extends DataClass
       calendarioPeriodoId: calendarioPeriodoId == null && nullToAbsent
           ? const Value.absent()
           : Value(calendarioPeriodoId),
+      parametroDesenioId: parametroDesenioId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parametroDesenioId),
     );
   }
 
@@ -11102,6 +11112,7 @@ class RubroEvalDesempenioData extends DataClass
       seccion: serializer.fromJson<String>(json['seccion']),
       calendarioPeriodoId:
           serializer.fromJson<int>(json['calendarioPeriodoId']),
+      parametroDesenioId: serializer.fromJson<int>(json['parametroDesenioId']),
     );
   }
   @override
@@ -11124,6 +11135,7 @@ class RubroEvalDesempenioData extends DataClass
       'seccionId': serializer.toJson<int>(seccionId),
       'seccion': serializer.toJson<String>(seccion),
       'calendarioPeriodoId': serializer.toJson<int>(calendarioPeriodoId),
+      'parametroDesenioId': serializer.toJson<int>(parametroDesenioId),
     };
   }
 
@@ -11143,7 +11155,8 @@ class RubroEvalDesempenioData extends DataClass
           String grado,
           int seccionId,
           String seccion,
-          int calendarioPeriodoId}) =>
+          int calendarioPeriodoId,
+          int parametroDesenioId}) =>
       RubroEvalDesempenioData(
         nombreCurso: nombreCurso ?? this.nombreCurso,
         fechaEvaluacion: fechaEvaluacion ?? this.fechaEvaluacion,
@@ -11161,6 +11174,7 @@ class RubroEvalDesempenioData extends DataClass
         seccionId: seccionId ?? this.seccionId,
         seccion: seccion ?? this.seccion,
         calendarioPeriodoId: calendarioPeriodoId ?? this.calendarioPeriodoId,
+        parametroDesenioId: parametroDesenioId ?? this.parametroDesenioId,
       );
   @override
   String toString() {
@@ -11180,7 +11194,8 @@ class RubroEvalDesempenioData extends DataClass
           ..write('grado: $grado, ')
           ..write('seccionId: $seccionId, ')
           ..write('seccion: $seccion, ')
-          ..write('calendarioPeriodoId: $calendarioPeriodoId')
+          ..write('calendarioPeriodoId: $calendarioPeriodoId, ')
+          ..write('parametroDesenioId: $parametroDesenioId')
           ..write(')'))
         .toString();
   }
@@ -11216,8 +11231,11 @@ class RubroEvalDesempenioData extends DataClass
                                                           seccionId.hashCode,
                                                           $mrjc(
                                                               seccion.hashCode,
-                                                              calendarioPeriodoId
-                                                                  .hashCode))))))))))))))));
+                                                              $mrjc(
+                                                                  calendarioPeriodoId
+                                                                      .hashCode,
+                                                                  parametroDesenioId
+                                                                      .hashCode)))))))))))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -11237,7 +11255,8 @@ class RubroEvalDesempenioData extends DataClass
           other.grado == this.grado &&
           other.seccionId == this.seccionId &&
           other.seccion == this.seccion &&
-          other.calendarioPeriodoId == this.calendarioPeriodoId);
+          other.calendarioPeriodoId == this.calendarioPeriodoId &&
+          other.parametroDesenioId == this.parametroDesenioId);
 }
 
 class RubroEvalDesempenioCompanion
@@ -11258,6 +11277,7 @@ class RubroEvalDesempenioCompanion
   final Value<int> seccionId;
   final Value<String> seccion;
   final Value<int> calendarioPeriodoId;
+  final Value<int> parametroDesenioId;
   const RubroEvalDesempenioCompanion({
     this.nombreCurso = const Value.absent(),
     this.fechaEvaluacion = const Value.absent(),
@@ -11275,6 +11295,7 @@ class RubroEvalDesempenioCompanion
     this.seccionId = const Value.absent(),
     this.seccion = const Value.absent(),
     this.calendarioPeriodoId = const Value.absent(),
+    this.parametroDesenioId = const Value.absent(),
   });
   RubroEvalDesempenioCompanion.insert({
     this.nombreCurso = const Value.absent(),
@@ -11293,6 +11314,7 @@ class RubroEvalDesempenioCompanion
     this.seccionId = const Value.absent(),
     this.seccion = const Value.absent(),
     this.calendarioPeriodoId = const Value.absent(),
+    this.parametroDesenioId = const Value.absent(),
   }) : rubroEvalProcesoId = Value(rubroEvalProcesoId);
   static Insertable<RubroEvalDesempenioData> custom({
     Expression<String> nombreCurso,
@@ -11311,6 +11333,7 @@ class RubroEvalDesempenioCompanion
     Expression<int> seccionId,
     Expression<String> seccion,
     Expression<int> calendarioPeriodoId,
+    Expression<int> parametroDesenioId,
   }) {
     return RawValuesInsertable({
       if (nombreCurso != null) 'nombre_curso': nombreCurso,
@@ -11331,6 +11354,8 @@ class RubroEvalDesempenioCompanion
       if (seccion != null) 'seccion': seccion,
       if (calendarioPeriodoId != null)
         'calendario_periodo_id': calendarioPeriodoId,
+      if (parametroDesenioId != null)
+        'parametro_desenio_id': parametroDesenioId,
     });
   }
 
@@ -11350,7 +11375,8 @@ class RubroEvalDesempenioCompanion
       Value<String> grado,
       Value<int> seccionId,
       Value<String> seccion,
-      Value<int> calendarioPeriodoId}) {
+      Value<int> calendarioPeriodoId,
+      Value<int> parametroDesenioId}) {
     return RubroEvalDesempenioCompanion(
       nombreCurso: nombreCurso ?? this.nombreCurso,
       fechaEvaluacion: fechaEvaluacion ?? this.fechaEvaluacion,
@@ -11368,6 +11394,7 @@ class RubroEvalDesempenioCompanion
       seccionId: seccionId ?? this.seccionId,
       seccion: seccion ?? this.seccion,
       calendarioPeriodoId: calendarioPeriodoId ?? this.calendarioPeriodoId,
+      parametroDesenioId: parametroDesenioId ?? this.parametroDesenioId,
     );
   }
 
@@ -11422,6 +11449,9 @@ class RubroEvalDesempenioCompanion
     if (calendarioPeriodoId.present) {
       map['calendario_periodo_id'] = Variable<int>(calendarioPeriodoId.value);
     }
+    if (parametroDesenioId.present) {
+      map['parametro_desenio_id'] = Variable<int>(parametroDesenioId.value);
+    }
     return map;
   }
 
@@ -11443,7 +11473,8 @@ class RubroEvalDesempenioCompanion
           ..write('grado: $grado, ')
           ..write('seccionId: $seccionId, ')
           ..write('seccion: $seccion, ')
-          ..write('calendarioPeriodoId: $calendarioPeriodoId')
+          ..write('calendarioPeriodoId: $calendarioPeriodoId, ')
+          ..write('parametroDesenioId: $parametroDesenioId')
           ..write(')'))
         .toString();
   }
@@ -11668,6 +11699,20 @@ class $RubroEvalDesempenioTable extends RubroEvalDesempenio
     );
   }
 
+  final VerificationMeta _parametroDesenioIdMeta =
+      const VerificationMeta('parametroDesenioId');
+  GeneratedIntColumn _parametroDesenioId;
+  @override
+  GeneratedIntColumn get parametroDesenioId =>
+      _parametroDesenioId ??= _constructParametroDesenioId();
+  GeneratedIntColumn _constructParametroDesenioId() {
+    return GeneratedIntColumn(
+      'parametro_desenio_id',
+      $tableName,
+      true,
+    );
+  }
+
   @override
   List<GeneratedColumn> get $columns => [
         nombreCurso,
@@ -11685,7 +11730,8 @@ class $RubroEvalDesempenioTable extends RubroEvalDesempenio
         grado,
         seccionId,
         seccion,
-        calendarioPeriodoId
+        calendarioPeriodoId,
+        parametroDesenioId
       ];
   @override
   $RubroEvalDesempenioTable get asDslTable => this;
@@ -11786,6 +11832,12 @@ class $RubroEvalDesempenioTable extends RubroEvalDesempenio
           _calendarioPeriodoIdMeta,
           calendarioPeriodoId.isAcceptableOrUnknown(
               data['calendario_periodo_id'], _calendarioPeriodoIdMeta));
+    }
+    if (data.containsKey('parametro_desenio_id')) {
+      context.handle(
+          _parametroDesenioIdMeta,
+          parametroDesenioId.isAcceptableOrUnknown(
+              data['parametro_desenio_id'], _parametroDesenioIdMeta));
     }
     return context;
   }

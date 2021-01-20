@@ -463,7 +463,8 @@ class SerializableConvert{
         programaAcadId: serial.programaAcadId,
         rubroEvalProcesoId: serial.rubroEvalProcesoId,
         alumnoId: serial.alumnoId,
-        calendarioPeriodoId: serial.calendarioPeriodoId
+        calendarioPeriodoId: serial.calendarioPeriodoId,
+        parametroDesenioId: serial.parametroDesenioId
     );
   }
 

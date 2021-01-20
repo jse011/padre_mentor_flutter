@@ -524,6 +524,7 @@ class RubroEvalDesempeniosSerial{
  int seccionId;
  String seccion;
  int calendarioPeriodoId;
+ int parametroDesenioId;
 
   RubroEvalDesempeniosSerial(
       {this.nombreCurso,
@@ -542,7 +543,8 @@ class RubroEvalDesempeniosSerial{
       this.grado,
       this.seccionId,
       this.seccion,
-      this.calendarioPeriodoId});
+      this.calendarioPeriodoId,
+      this.parametroDesenioId});
 
   factory RubroEvalDesempeniosSerial.fromJson(Map<String, dynamic> json) => _$RubroEvalDesempeniosSerialFromJson(json);
 

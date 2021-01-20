@@ -17,6 +17,7 @@ class RubroEvalDesempenio extends Table{
   IntColumn get seccionId => integer().nullable()();
   TextColumn get seccion => text().nullable()();
   IntColumn get calendarioPeriodoId => integer().nullable()();
+  IntColumn get parametroDesenioId => integer().nullable()();
 
   @override
   Set<Column> get primaryKey => {rubroEvalProcesoId};

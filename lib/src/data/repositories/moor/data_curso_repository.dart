@@ -338,6 +338,7 @@ class DataCursoRepository extends CursoRepository{
       query.where(SQL.rubroEvalDesempenio.calendarioPeriodoId.equals(calendarioPeridoId));
       query.where(SQL.rubroEvalDesempenio.alumnoId.equals(alumnoId));
       query.where(isNull(SQL.evaluacionDesempenio.secRubroEvalProcesoId));
+      query.orderBy([OrderingTerm(expression: SQL.rubroEvalDesempenio.silaboEventoId)]);
       //query.where(SQL.evaluacionDesempenio.secRubroEvalProcesoId.equals(""));
       var rows = await query.get();
 
@@ -360,7 +361,7 @@ class DataCursoRepository extends CursoRepository{
         rubroEvaluacionUi.cursoUi.silaboEventoId = rubroEvalDesempenioData.silaboEventoId;
         rubroEvaluacionUi.cursoUi.cargaCursoId = rubroEvalDesempenioData.cargaCursoId;
         rubroEvaluacionUi.cursoUi.nombre = rubroEvalDesempenioData.nombreCurso;
-        ParametrosDisenioData parametrosDisenioData = await (SQL.selectSingle(SQL.parametrosDisenio)..where((tbl) => tbl.parametroDisenioId.equals(rubroEvalDesempenioData.silaboEventoId))).getSingle();
+        ParametrosDisenioData parametrosDisenioData = await (SQL.selectSingle(SQL.parametrosDisenio)..where((tbl) => tbl.parametroDisenioId.equals(rubroEvalDesempenioData.parametroDesenioId))).getSingle();
         if(parametrosDisenioData!=null){
           rubroEvaluacionUi.cursoUi.colorCurso = parametrosDisenioData.color1;
           rubroEvaluacionUi.cursoUi.colorCurso2 = parametrosDisenioData.color2;

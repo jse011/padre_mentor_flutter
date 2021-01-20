@@ -529,6 +529,7 @@ RubroEvalDesempeniosSerial _$RubroEvalDesempeniosSerialFromJson(
     seccionId: json['seccionId'] as int,
     seccion: json['seccion'] as String,
     calendarioPeriodoId: json['calendarioPeriodoId'] as int,
+    parametroDesenioId: json['parametroDesenioId'] as int,
   );
 }
 
@@ -552,6 +553,7 @@ Map<String, dynamic> _$RubroEvalDesempeniosSerialToJson(
       'seccionId': instance.seccionId,
       'seccion': instance.seccion,
       'calendarioPeriodoId': instance.calendarioPeriodoId,
+      'parametroDesenioId': instance.parametroDesenioId,
     };
 
 EvaluacionDesempeniosSerial _$EvaluacionDesempeniosSerialFromJson(

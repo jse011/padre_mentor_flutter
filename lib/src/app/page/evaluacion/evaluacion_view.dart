@@ -12,6 +12,7 @@ import 'package:padre_mentor/src/device/repositories/http/device_http_datos_repo
 import 'package:padre_mentor/src/domain/entities/curso_ui.dart';
 import 'package:padre_mentor/src/domain/entities/evaluacion_rubro_ui.dart';
 import 'package:padre_mentor/src/domain/entities/rubro_evaluacion_ui.dart';
+import 'package:padre_mentor/src/domain/entities/tipo_nota_enum_ui.dart';
 
 class EvaluacionView extends View{
   final int alumnoId;
@@ -261,14 +262,14 @@ class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionControlle
                                                 ),
                                                 child: Row(
                                                   children: [
-                                                    Expanded(child: Container(margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12), child: Text(o.nombre, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 18)))),
+                                                    Expanded(child: Container(margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12), child: Text(o.nombre, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w500, fontSize: 20)))),
                                                   ],
                                                 ),
                                               ),
                                             );
                                           }else if(o is RubroEvaluacionUi){
                                             return  Container(
-                                              height: 85,
+                                              height: 134,
                                               child: Row(
                                                 children: [
                                                   Container(
@@ -334,25 +335,68 @@ class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionControlle
                                                               Expanded(
                                                                   child: Container(
                                                                       margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12),
-                                                                      child: Text("cursoBoletaUi.competencia", maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 16))
+                                                                      child: Column(
+                                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                                        mainAxisSize: MainAxisSize.min,
+                                                                        children: [
+                                                                          Text(o.fecha, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.black54, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 16)),
+                                                                          SizedBox(height: 6),
+                                                                          Text(o.titulo, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 17)),
+                                                                          SizedBox(height: 4),
+                                                                          Text("Formativa - " + o.tipo, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w300, fontSize: 14)),
+                                                                        ],
+                                                                      )
                                                                   )
                                                               ),
                                                               Container(
-                                                                margin: const EdgeInsets.only(right: 16),
-                                                                height: 40.0,
-                                                                width: 40.0,
-                                                                decoration: BoxDecoration(
-                                                                    color:   HexColor("#757575") ,
-                                                                    borderRadius: new BorderRadius.only(
-                                                                      topLeft: const Radius.circular(10.0),
-                                                                      topRight: const Radius.circular(10.0),
-                                                                      bottomLeft:const Radius.circular(10.0),
-                                                                      bottomRight: const Radius.circular(10.0),
-                                                                    )
-                                                                ),
-                                                                child: Center(
-                                                                  child: Text("nota", style: TextStyle( color: AppTheme.white, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 18)),
-                                                                ),
+                                                                margin: const EdgeInsets.only(right: 8),
+                                                                width: 68.0,
+                                                                child: (() {
+
+                                                                  switch(o.tipoNotaEnum){
+                                                                    case TipoNotaEnumUi.VALOR_NUMERICO:
+                                                                      return Center(
+                                                                        child: Text(o.nota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 24)),
+                                                                      );
+                                                                    case TipoNotaEnumUi.SELECTOR_NUMERICO:
+                                                                      return Center(
+                                                                        child: Text(o.nota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 24)),
+                                                                      );
+                                                                    case TipoNotaEnumUi.SELECTOR_VALORES:
+                                                                      return Center(
+                                                                        child: Text(o.tituloNota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 24)),
+                                                                      );
+                                                                    case TipoNotaEnumUi.SELECTOR_ICONOS:
+                                                                      return Column(
+                                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          CachedNetworkImage(
+                                                                              height: 40.0,
+                                                                              width: 40.0,
+                                                                              placeholder: (context, url) => CircularProgressIndicator(),
+                                                                              imageUrl: "https://i.pinimg.com/originals/49/83/74/498374267516c7c6ffd2051c23611da5.png",
+                                                                              imageBuilder: (context, imageProvider) => Container(
+                                                                                  decoration: BoxDecoration(
+                                                                                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                                                                                    image: DecorationImage(
+                                                                                      image: imageProvider,
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  )
+                                                                              )
+                                                                          ),
+                                                                          SizedBox(height: 4),
+                                                                          Text(o.descNota, textAlign: TextAlign.center, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w500, fontSize: 12))
+                                                                        ],
+                                                                      );
+                                                                    case TipoNotaEnumUi.VALOR_ASISTENCIA:
+                                                                      return Center(
+                                                                        child: Text(o.nota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 24)),
+                                                                      );
+                                                                  }
+
+                                                                }()),
                                                               )
                                                             ],
                                                           ),
