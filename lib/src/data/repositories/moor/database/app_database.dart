@@ -6,6 +6,7 @@ import 'package:padre_mentor/src/data/repositories/moor/model/calendario_periodo
 import 'package:padre_mentor/src/data/repositories/moor/model/carga_cursos.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/contrato.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/detalle_contrato_acad.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/evaluacion_desempenio.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/notas_calendario_boleta.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/parametros_disenio.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/persona.dart';
@@ -13,6 +14,7 @@ import 'package:padre_mentor/src/data/repositories/moor/model/plan_cursos.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/plan_estudios.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/programas_educativo.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/relaciones.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/rubro_eval_desempenio.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/session_user.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/silabo_evento.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/tipos.dart';
@@ -21,7 +23,7 @@ import 'package:padre_mentor/src/data/repositories/moor/model/usuario.dart';
 part 'app_database.g.dart';
 
 @UseMoor(tables: [Persona, Usuario, SessionUser, Relaciones, AnioAcademicoAlumno, ProgramasEducativo, PlanEstudio, PlanCursos, CargaCurso, DetalleContratoAcad, Contrato, CalendarioAcademico, CalendarioPeriodo, Tipos,
-                  AreasBoleta, NotasCalendarioBoleta, ParametrosDisenio, SilaboEvento])
+                  AreasBoleta, NotasCalendarioBoleta, ParametrosDisenio, SilaboEvento, EvaluacionDesempenio, RubroEvalDesempenio])
 class AppDataBase extends _$AppDataBase{
 
   @override
@@ -36,6 +38,11 @@ class AppDataBase extends _$AppDataBase{
   AppDataBase._internal(): super(FlutterQueryExecutor.inDatabaseFolder(
       path: "db.sqlite", logStatements: true));
 
+  SimpleSelectStatement<T, R> selectSingle<T extends Table, R extends DataClass>(TableInfo<T, R> table, {bool distinct = false}){
+    var query = select(table, distinct: distinct);
+    query.limit(1);
+    return query;
+  }
 }
 /*
 * Moor integrates with Dart’s build system, so you can generate all the code needed with flutter packages pub run build_runner build.

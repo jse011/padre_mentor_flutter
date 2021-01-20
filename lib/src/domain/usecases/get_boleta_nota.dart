@@ -21,7 +21,7 @@ class GetBoletaNota extends UseCase<GetBoletaNotaResponse, GetBoletaNotaParams>{
       ContratoUi contratoUi = await repository.getContratoUi(params.anioAcademicoId, params.alumnoId);
 
       Map<String, dynamic> datosBoleta = await httprepository.getBoletasNotas(params.anioAcademicoId, params.programaId, contratoUi.periodoId, contratoUi.seccionId, params.calendarioPeridoId, params.alumnoId, params.georeferenciaId);
-      await repository.saveBoletaNotas(datosBoleta);
+      await repository.saveBoletaNotas(datosBoleta, params.anioAcademicoId, contratoUi.seccionId, contratoUi.periodoId, params.programaId);
 
     controller.add(GetBoletaNotaResponse(await repository.getBoletaNotas(params.alumnoId, params.anioAcademicoId, params.calendarioPeridoId, params.programaId, contratoUi.periodoId, contratoUi.seccionId)));
     logger.finest('SyncDatosInicioPadre successful.');

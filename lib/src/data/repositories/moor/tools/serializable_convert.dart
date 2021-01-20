@@ -304,7 +304,7 @@ class SerializableConvert{
     return items;
   }
 
-  static AreasBoletaData converSerializeAreasBoleta(Map<String,dynamic> model){
+  static AreasBoletaData converSerializeAreasBoleta(Map<String,dynamic> model, int anioAcademicoId, int seccionId, int periodoId, int programaEducativoId){
     AreasBoletaSerial serial = AreasBoletaSerial.fromJson(model);
 
     return AreasBoletaData(
@@ -319,18 +319,22 @@ class SerializableConvert{
         competenciaId: serial.competenciaId,
         tipoCompetenciaId: serial.tipoCompetenciaId,
         calendarioPeriodoId: serial.calendarioPeriodoId,
-        anioAcademicoId: serial.anioAcademicoId,
-        programaEducativoId: serial.programaEducativoId,
-        periodoId: serial.periodoId,
-        seccionId: serial.seccionId
+        //anioAcademicoId: serial.anioAcademicoId,
+        anioAcademicoId: anioAcademicoId,
+        //programaEducativoId: serial.programaEducativoId,
+        programaEducativoId: programaEducativoId,
+        //periodoId: serial.periodoId,
+        periodoId: periodoId,
+        //seccionId: serial.seccionId
+        seccionId: seccionId
     );
   }
 
-  static List<AreasBoletaData> converListSerializeAreasBoleta(dynamic model){
+  static List<AreasBoletaData> converListSerializeAreasBoleta(dynamic model, int anioAcademicoId, int seccionId, int periodoId, int programaEducativoId){
     List<AreasBoletaData> items = [];
     Iterable l = model;
     for(var item in l){
-      items.add(converSerializeAreasBoleta(item));
+      items.add(converSerializeAreasBoleta(item, anioAcademicoId, seccionId, periodoId, programaEducativoId));
     }
     return items;
   }
@@ -415,4 +419,62 @@ class SerializableConvert{
     }
     return items;
   }
+
+
+  static EvaluacionDesempenioData converSerializeEvaluacionDesempenio(EvaluacionDesempeniosSerial serial){
+    return EvaluacionDesempenioData(
+        iconoNivelLogro: serial.iconoNivelLogro,
+        tituloNivelLogro: serial.tituloNivelLogro,
+        descripcionNivelLogro: serial.descripcionNivelLogro,
+        tipoIdNivelLogro: serial.tipoIdNivelLogro,
+        notaEvalaucion: serial.notaEvalaucion,
+        desempenioEvalaucion: serial.desempenioEvalaucion,
+        desempenioIcdTipoId: serial.desempenioIcdTipoId,
+        rubroEvalProcesoId: serial.rubroEvalProcesoId,
+        alumnoId: serial.alumnoId,
+        evaluacionProcesoId: serial.evaluacionProcesoId,
+        calendarioPeriodoId: serial.calendarioPeriodoId
+    );
+  }
+
+  static List<EvaluacionDesempenioData> converListSerializeEvaluacionDesempenio(List<EvaluacionDesempeniosSerial> serialList){
+    List<EvaluacionDesempenioData> items = [];
+    for(var item in serialList){
+      items.add(converSerializeEvaluacionDesempenio(item));
+    }
+    return items;
+  }
+
+  static RubroEvalDesempenioData converSerializeRubroEvalDesempenio(Map<String,dynamic> model){
+    RubroEvalDesempeniosSerial serial = RubroEvalDesempeniosSerial.fromJson(model);
+    return RubroEvalDesempenioData(
+        nombreCurso: serial.nombreCurso,
+        gradoId: serial.gradoId,
+        grado: serial.grado,
+        seccionId: serial.seccionId,
+        seccion: serial.seccion,
+        fechaEvaluacion: DateTime.fromMillisecondsSinceEpoch(serial.fechaEvaluacion),
+        tituloEvaluacion: serial.tituloEvaluacion,
+        formaEvaluacion: serial.formaEvaluacion,
+        tipoRubroEvalId: serial.tipoRubroEvalId,
+        cargaCursoId: serial.cargaCursoId,
+        silaboEventoId: serial.silaboEventoId,
+        anioAcademicoId: serial.anioAcademicoId,
+        programaAcadId: serial.programaAcadId,
+        rubroEvalProcesoId: serial.rubroEvalProcesoId,
+        alumnoId: serial.alumnoId,
+        calendarioPeriodoId: serial.calendarioPeriodoId
+    );
+  }
+
+  static List<RubroEvalDesempenioData> converListSerializeRubroEvalDesempenio(dynamic model){
+    List<RubroEvalDesempenioData> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeRubroEvalDesempenio(item));
+    }
+    return items;
+  }
+
+
 }

@@ -1,5 +1,8 @@
 import 'dart:ui';
 
+import 'package:padre_mentor/src/app/utils/app_theme.dart';
+import 'package:padre_mentor/src/app/utils/app_utils.dart';
+
 class HexColor extends Color {
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 

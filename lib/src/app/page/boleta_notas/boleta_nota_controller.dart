@@ -11,9 +11,11 @@ class BoletaNotaController extends Controller{
   CalendarioPeriodoUI get calendarioPeriodoUI => _calendarioPeriodoUI;
   List<CursoBoletaUi> _cursoBoletaUiList = [];
   List<CursoBoletaUi> get cursoBoletaUiList => _cursoBoletaUiList;
-
+  final String fotoAlumno;
   BoletaNotasPresenter presenter;
-  BoletaNotaController(alumnoId, programaAcademicoId, anioAcademicoId, cursoRepo, httpRepo):presenter = BoletaNotasPresenter(alumnoId, programaAcademicoId, anioAcademicoId, cursoRepo, httpRepo), super();
+  BoletaNotaController(alumnoId, programaAcademicoId, anioAcademicoId, this.fotoAlumno, cursoRepo, httpRepo):presenter = BoletaNotasPresenter(alumnoId, programaAcademicoId, anioAcademicoId, cursoRepo, httpRepo), super();
+  bool _isLoading = false;
+  get isLoading => _isLoading;
 
   @override
   void initListeners() {
@@ -27,19 +29,21 @@ class BoletaNotaController extends Controller{
         refreshUI();
       };
       presenter.getCalendarioPeridoOnComplete = (){
+        presenter.getBoletaNota(_calendarioPeriodoUI);
+      };
 
+      presenter.getBoletaNotaOnError = (e){
+        _cursoBoletaUiList = [];
+        hideProgress();
+        refreshUI();
       };
       presenter.getBoletaNotaOnNext = (List<CursoBoletaUi> items){
         _cursoBoletaUiList = items;
+      };
 
-        refreshUI();
-      };
-      presenter.getBoletaNotaOnError = (e){
-        _cursoBoletaUiList = [];
-        refreshUI();
-      };
       presenter.getBoletaNotaOnComplete = (){
-
+        hideProgress();
+        refreshUI();
       };
 
   }
@@ -47,8 +51,8 @@ class BoletaNotaController extends Controller{
   @override
   void onInitState() {
     super.onInitState();
+    showProgress();
     presenter.getCalendarioPerido();
-    presenter.getBoletaNota(calendarioPeriodoUI);
   }
 
   void onSelectedCalendarioPeriodo(CalendarioPeriodoUI calendarioPeriodoUi) {
@@ -57,8 +61,17 @@ class BoletaNotaController extends Controller{
         item.selected = false;
       }
       calendarioPeriodoUI.selected = true;
+      showProgress();
+      presenter.getBoletaNota(calendarioPeriodoUi);
       refreshUI();
   }
 
+  void showProgress(){
+    _isLoading = true;
+  }
+
+  void hideProgress(){
+    _isLoading = false;
+  }
 }
 

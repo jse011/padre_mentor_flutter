@@ -9,7 +9,6 @@ class BoletaNotasPresenter extends Presenter{
   final int programaAcademicoId;
   final int alumnoId;
   final int anioAcademicoId;
-
   GetCalendarioPerido _getCalendarioPerido;
   Function getCalendarioPeridoOnNext, getCalendarioPeridoOnComplete, getCalendarioPeridoOnError;
   GetBoletaNota _getBoletaNota;
@@ -85,7 +84,7 @@ class _GetBoletaNotaCase extends Observer<GetBoletaNotaResponse>{
       cursoBoletaUiList.add(parent);
       if(parent.cursoBoletaUiList!=null){
         for(var hijo in parent.cursoBoletaUiList){
-          parent.padre = false;
+          hijo.padre = false;
           cursoBoletaUiList.add(hijo);
         }
       }

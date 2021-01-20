@@ -5,20 +5,22 @@ import 'package:padre_mentor/src/domain/repositories/http_datos_repository.dart'
 class DeviceHttpDatosRepositorio extends HttpDatosRepository{
   //'http://educar.icrmedu.com/CRMMovil/PortalAcadMovil.ashx/'
   String url = 'http://educar.icrmedu.com/CRMMovil/PortalAcadMovil.ashx/';
-
+  static const  TAG = "DeviceHttpDatosRepositorio";
   String getBody(String method, Object parameters){
     Map<String, dynamic> body = Map<String, dynamic>();
     body["interface"] = "RestAPI";
     body["method"] = method;
     body["parameters"] = parameters;
-    return json.encode(body);
+    String s = json.encode(body);
+    print(TAG + " "+s);
+    return s;
   }
 
   @override
   Future<Map<String, dynamic>> getDatosInicioPadre(int usuarioId) async {
     Map<String, dynamic> parameters = Map<String, dynamic>();
     parameters["vint_UsuarioId"] = usuarioId;
-    final response = await http.post(url, body: getBody("flst_getDatosInicioSesionPadreFull",parameters));
+    final response = await http.post(url, body: getBody("flst_getDatosInicioFlutter",parameters));
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
@@ -61,6 +63,31 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
       // If the server did not return a 200 OK response,
       // then throw an exception.
       throw Exception('Failed to load boleta notas 0');
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> getEvaluacionesPorCurso(int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId) async{
+    Map<String, dynamic> parameters = Map<String, dynamic>();
+    parameters["vint_alumnoId"] = alumnoId;
+    parameters["vint_programaEduId"] = programaId;
+    parameters["vstr_calendarioPeriodo"] = calendarioPeridoId;
+    parameters["vint_anioAcademicoId"] = anioAcademicoId;
+    final response = await http.post(url, body: getBody("getEvaluacionesPorCurso",parameters));
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      Map<String,dynamic> body = json.decode(response.body);
+      if(body.containsKey("Successful")&&body.containsKey("Value")){
+        return body["Value"];
+      }else{
+        throw Exception('Failed to load evaluaciones 1');
+      }
+
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load evaluaciones 0');
     }
   }
 

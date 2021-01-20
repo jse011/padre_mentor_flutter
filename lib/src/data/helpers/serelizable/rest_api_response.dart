@@ -504,3 +504,83 @@ class SilaboEventoSerial {
 
   Map<String, dynamic> toJson() => _$SilaboEventoSerialToJson(this);
 }
+
+@JsonSerializable()
+class RubroEvalDesempeniosSerial{
+  String nombreCurso;
+  int fechaEvaluacion;//long
+  String tituloEvaluacion;
+  String formaEvaluacion;
+  List<EvaluacionDesempeniosSerial> evaluacionDesempenios;
+ int tipoRubroEvalId;
+ int cargaCursoId;
+ int silaboEventoId;
+ int anioAcademicoId;
+ int programaAcadId;
+ String rubroEvalProcesoId;
+ int alumnoId;
+ int gradoId;
+ String grado;
+ int seccionId;
+ String seccion;
+ int calendarioPeriodoId;
+
+  RubroEvalDesempeniosSerial(
+      {this.nombreCurso,
+      this.fechaEvaluacion,
+      this.tituloEvaluacion,
+      this.formaEvaluacion,
+      this.evaluacionDesempenios,
+      this.tipoRubroEvalId,
+      this.cargaCursoId,
+      this.silaboEventoId,
+      this.anioAcademicoId,
+      this.programaAcadId,
+      this.rubroEvalProcesoId,
+      this.alumnoId,
+      this.gradoId,
+      this.grado,
+      this.seccionId,
+      this.seccion,
+      this.calendarioPeriodoId});
+
+  factory RubroEvalDesempeniosSerial.fromJson(Map<String, dynamic> json) => _$RubroEvalDesempeniosSerialFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RubroEvalDesempeniosSerialToJson(this);
+}
+
+@JsonSerializable()
+class EvaluacionDesempeniosSerial{
+
+  String iconoNivelLogro;
+  String tituloNivelLogro;
+  String descripcionNivelLogro;
+  int tipoIdNivelLogro;
+  double notaEvalaucion;
+  String desempenioEvalaucion;
+  int desempenioIcdTipoId;
+  String rubroEvalProcesoId;
+  String secRubroEvalProcesoId;
+  int alumnoId;
+  String evaluacionProcesoId;
+  int calendarioPeriodoId;
+
+  EvaluacionDesempeniosSerial(
+      {this.iconoNivelLogro,
+      this.tituloNivelLogro,
+      this.descripcionNivelLogro,
+      this.tipoIdNivelLogro,
+      this.notaEvalaucion,
+      this.desempenioEvalaucion,
+      this.desempenioIcdTipoId,
+      this.rubroEvalProcesoId,
+      this.secRubroEvalProcesoId,
+      this.alumnoId,
+      this.evaluacionProcesoId,
+      this.calendarioPeriodoId});
+
+  factory EvaluacionDesempeniosSerial.fromJson(Map<String, dynamic> json) => _$EvaluacionDesempeniosSerialFromJson(json);
+
+  Map<String, dynamic> toJson() => _$EvaluacionDesempeniosSerialToJson(this);
+}
+

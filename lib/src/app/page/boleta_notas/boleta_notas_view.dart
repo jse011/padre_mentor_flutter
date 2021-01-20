@@ -18,12 +18,12 @@ class BoletasNotasView extends View {
   final int programaAcademicoId;
   final int alumnoId;
   final int anioAcademicoId;
+  final String fotoAlumno;
 
-
-  BoletasNotasView({this.programaAcademicoId, this.alumnoId, this.anioAcademicoId});
+  BoletasNotasView({this.programaAcademicoId, this.alumnoId, this.anioAcademicoId, this.fotoAlumno});
 
   @override
-  _BoletasNotasViewState createState() => _BoletasNotasViewState(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId);
+  _BoletasNotasViewState createState() => _BoletasNotasViewState(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, this.fotoAlumno);
 }
 
 
@@ -33,7 +33,7 @@ class _BoletasNotasViewState extends ViewState<BoletasNotasView, BoletaNotaContr
   double topBarOpacity = 0.0;
   AnimationController animationController;
 
-  _BoletasNotasViewState(alumnoId,programaAcademicoId, anioAcademicoId) : super(BoletaNotaController(alumnoId, programaAcademicoId, anioAcademicoId, DataCursoRepository(), DeviceHttpDatosRepositorio()));
+  _BoletasNotasViewState(alumnoId,programaAcademicoId, anioAcademicoId, fotoAlumno) : super(BoletaNotaController(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno, DataCursoRepository(), DeviceHttpDatosRepositorio()));
 
   @override
   void initState() {
@@ -178,7 +178,7 @@ class _BoletasNotasViewState extends ViewState<BoletasNotasView, BoletaNotaContr
                                 }else{
                                   return CachedNetworkImage(
                                       placeholder: (context, url) => CircularProgressIndicator(),
-                                      imageUrl:'https://i.blogs.es/594843/chrome/450_1000.jpg',
+                                      imageUrl: controller.fotoAlumno,
                                       imageBuilder: (context, imageProvider) => Container(
                                           height: 45 + 6 - 6 * topBarOpacity,
                                           width: 45 + 6 - 6 * topBarOpacity,
@@ -211,7 +211,7 @@ class _BoletasNotasViewState extends ViewState<BoletasNotasView, BoletaNotaContr
     );
   }
 
-
+  int countView = 4;
   Widget getMainTab() {
     return Row(
       children: [
@@ -222,215 +222,180 @@ class _BoletasNotasViewState extends ViewState<BoletasNotasView, BoletaNotaContr
                       MediaQuery.of(context).padding.top +
                       0,
                 ),
-                child: ControlledWidgetBuilder<BoletaNotaController>(
-                    builder: (context, controller) {
-
-                      return  CustomScrollView(
-                        controller: scrollController,
-                        slivers: <Widget>[
-                          SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                  (BuildContext context, int index){
-                                    CursoBoletaUi cursoBoletaUi = controller.cursoBoletaUiList[index];
-                                    return Card(
-                                      color: Colors.amber,
-                                      margin: const EdgeInsets.only(top: 24, left: 16, right: 0, bottom: 8),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10), // if you need this
-                                        side: BorderSide(
-                                          color: Colors.grey.withOpacity(0.2),
-                                          width: 1,
-                                        ),
-                                      ),
-                                      child: Container(
-                                        margin: const EdgeInsets.only(top: 2, left: 8, right: 2, bottom: 2),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: new BorderRadius.only(
-                                            topLeft: const Radius.circular(10.0),
-                                            topRight: const Radius.circular(10.0),
-                                            bottomLeft:const Radius.circular(10.0),
-                                            bottomRight: const Radius.circular(10.0),
+                child: AnimationView(
+                  animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                      parent: animationController,
+                      curve:
+                      Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                  animationController: animationController,
+                  child:  ControlledWidgetBuilder<BoletaNotaController>(
+                      builder: (context, controller) {
+                        return Stack(
+                          children: [
+                            CustomScrollView(
+                              controller: scrollController,
+                              slivers: <Widget>[
+                                SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                        (BuildContext context, int index){
+                                      CursoBoletaUi cursoBoletaUi = controller.cursoBoletaUiList[index];
+                                      if(cursoBoletaUi.padre){
+                                        return Card(
+                                          color: cursoBoletaUi.colorCurso == null ? AppTheme.colorAccent : HexColor(cursoBoletaUi.colorCurso),
+                                          margin: const EdgeInsets.only(top: 24, left: 16, right: 0, bottom: 8),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10), // if you need this
+                                            side: BorderSide(
+                                              color: Colors.grey.withOpacity(0.2),
+                                              width: 1,
+                                            ),
                                           ),
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            Expanded(child: Container(margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12), child: Text("MATEMÁTICA", style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 18)))),
-                                            Container(
-                                              margin: const EdgeInsets.only(right: 16),
-                                              height: 40.0,
-                                              width: 40.0,
-                                              decoration: BoxDecoration(
-                                                  color: HexColor("#3a4fc6"),
-                                                  borderRadius: new BorderRadius.only(
-                                                    topLeft: const Radius.circular(10.0),
-                                                    topRight: const Radius.circular(10.0),
-                                                    bottomLeft:const Radius.circular(10.0),
-                                                    bottomRight: const Radius.circular(10.0),
-                                                  )
-                                              ),
-                                              child: Center(
-                                                child: Text("00", style: TextStyle( color: AppTheme.white, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 18)),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                childCount: controller.cursoBoletaUiList.length,
-                              ),
-
-                          ),
-                          SliverList(
-                              delegate: SliverChildListDelegate(
-                                [
-                                  Card(
-                                    color: Colors.amber,
-                                    margin: const EdgeInsets.only(top: 24, left: 16, right: 0, bottom: 8),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10), // if you need this
-                                      side: BorderSide(
-                                        color: Colors.grey.withOpacity(0.2),
-                                        width: 1,
-                                      ),
-                                    ),
-                                    child: Container(
-                                      margin: const EdgeInsets.only(top: 2, left: 8, right: 2, bottom: 2),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: new BorderRadius.only(
-                                          topLeft: const Radius.circular(10.0),
-                                          topRight: const Radius.circular(10.0),
-                                          bottomLeft:const Radius.circular(10.0),
-                                          bottomRight: const Radius.circular(10.0),
-                                        ),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Expanded(child: Container(margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12), child: Text("MATEMÁTICA", style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 18)))),
-                                          Container(
-                                            margin: const EdgeInsets.only(right: 16),
-                                            height: 40.0,
-                                            width: 40.0,
+                                          child: Container(
+                                            margin: const EdgeInsets.only(top: 2, left: 8, right: 2, bottom: 2),
                                             decoration: BoxDecoration(
-                                                color: HexColor("#3a4fc6"),
-                                                borderRadius: new BorderRadius.only(
-                                                  topLeft: const Radius.circular(10.0),
-                                                  topRight: const Radius.circular(10.0),
-                                                  bottomLeft:const Radius.circular(10.0),
-                                                  bottomRight: const Radius.circular(10.0),
-                                                )
-                                            ),
-                                            child: Center(
-                                              child: Text("00", style: TextStyle( color: AppTheme.white, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 18)),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 85,
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          margin: const EdgeInsets.only(left: 24),
-                                          child: Column(
-                                            children: [
-                                              Expanded(
-                                                  child: Center(
-                                                    child:
-                                                    Container(
-                                                      margin: const EdgeInsets.only(bottom: 4),
-                                                      color: Colors.red,
-                                                      width: 3,
-                                                    ),
-                                                  )
+                                              color: Colors.white,
+                                              borderRadius: new BorderRadius.only(
+                                                topLeft: const Radius.circular(10.0),
+                                                topRight: const Radius.circular(10.0),
+                                                bottomLeft:const Radius.circular(10.0),
+                                                bottomRight: const Radius.circular(10.0),
                                               ),
-                                              Container(
-                                                width: 20,
-                                                height: 20,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Colors.white,
-                                                  border: Border.all(color: Colors.grey, width: 2)
-                                                ),
-                                                child: Center(
-                                                  child: Container(
-                                                    width: 9,
-                                                    height: 9,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.grey,
-                                                    ),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Expanded(child: Container(margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12), child: Text(cursoBoletaUi.nombre, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 18)))),
+                                                Container(
+                                                  margin: const EdgeInsets.only(right: 16),
+                                                  height: 40.0,
+                                                  width: 40.0,
+                                                  decoration: BoxDecoration(
+                                                      color: cursoBoletaUi.color == null || cursoBoletaUi.color.isEmpty ?  HexColor("#757575") :  HexColor(cursoBoletaUi.color),
+                                                      borderRadius: new BorderRadius.only(
+                                                        topLeft: const Radius.circular(10.0),
+                                                        topRight: const Radius.circular(10.0),
+                                                        bottomLeft:const Radius.circular(10.0),
+                                                        bottomRight: const Radius.circular(10.0),
+                                                      )
                                                   ),
+                                                  child: Center(
+                                                    child: Text(cursoBoletaUi.nota == null? "":cursoBoletaUi.nota, style: TextStyle( color: AppTheme.white, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 18)),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      }else{
+                                        return  Container(
+                                          height: 85,
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                margin: const EdgeInsets.only(left: 24),
+                                                child: Column(
+                                                  children: [
+                                                    Expanded(
+                                                        child: Center(
+                                                          child:
+                                                          Container(
+                                                            margin: const EdgeInsets.only(bottom: 4),
+                                                            color: cursoBoletaUi.colorCurso2 == null || cursoBoletaUi.colorCurso2.isEmpty ?  Colors.black :  HexColor(cursoBoletaUi.colorCurso2),
+                                                            width: 3,
+                                                          ),
+                                                        )
+                                                    ),
+                                                    Container(
+                                                      width: 20,
+                                                      height: 20,
+                                                      decoration: BoxDecoration(
+                                                          shape: BoxShape.circle,
+                                                          color: Colors.white,
+                                                          border: Border.all(color: cursoBoletaUi.color == null || cursoBoletaUi.color.isEmpty ?  HexColor("#757575") :  HexColor(cursoBoletaUi.color), width: 2)
+                                                      ),
+                                                      child: Center(
+                                                        child: Container(
+                                                          width: 9,
+                                                          height: 9,
+                                                          decoration: BoxDecoration(
+                                                            shape: BoxShape.circle,
+                                                            color: cursoBoletaUi.color == null || cursoBoletaUi.color.isEmpty ?  HexColor("#757575") :  HexColor(cursoBoletaUi.color),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                        child: Center(
+                                                          child:
+                                                          Container(
+                                                            margin: const EdgeInsets.only(top: 4),
+                                                            color:cursoBoletaUi.colorCurso2 == null || cursoBoletaUi.colorCurso2.isEmpty ?  Colors.black :  HexColor(cursoBoletaUi.colorCurso2),
+                                                            width: 3,
+                                                          ),
+                                                        )
+                                                    )
+                                                  ],
                                                 ),
                                               ),
                                               Expanded(
-                                                  child: Center(
-                                                    child:
-                                                    Container(
-                                                      margin: const EdgeInsets.only(top: 4),
-                                                      color: Colors.red,
-                                                      width: 3,
+                                                  child:  Card(
+                                                    color: AppTheme.colorCard,
+                                                    margin: const EdgeInsets.only(top: 8, left: 8, right: 0, bottom: 8),
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(10), // if you need this
+                                                      side: BorderSide(
+                                                        color: Colors.grey.withOpacity(0.2),
+                                                        width: 1,
+                                                      ),
+                                                    ),
+                                                    child: Container(
+                                                      child: Row(
+                                                        children: [
+                                                          Expanded(
+                                                              child: Container(
+                                                                  margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12),
+                                                                  child: Text(cursoBoletaUi.competencia, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 16))
+                                                              )
+                                                          ),
+                                                          Container(
+                                                            margin: const EdgeInsets.only(right: 16),
+                                                            height: 40.0,
+                                                            width: 40.0,
+                                                            decoration: BoxDecoration(
+                                                                color: cursoBoletaUi.color == null || cursoBoletaUi.color.isEmpty ?  HexColor("#757575") :  HexColor(cursoBoletaUi.color),
+                                                                borderRadius: new BorderRadius.only(
+                                                                  topLeft: const Radius.circular(10.0),
+                                                                  topRight: const Radius.circular(10.0),
+                                                                  bottomLeft:const Radius.circular(10.0),
+                                                                  bottomRight: const Radius.circular(10.0),
+                                                                )
+                                                            ),
+                                                            child: Center(
+                                                              child: Text(cursoBoletaUi.nota==null?"":cursoBoletaUi.nota, style: TextStyle( color: AppTheme.white, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 18)),
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
                                                     ),
                                                   )
                                               )
                                             ],
                                           ),
-                                        ),
-                                        Expanded(
-                                            child:  Card(
-                                              color: AppTheme.colorCard,
-                                              margin: const EdgeInsets.only(top: 8, left: 8, right: 0, bottom: 8),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(10), // if you need this
-                                                side: BorderSide(
-                                                  color: Colors.grey.withOpacity(0.2),
-                                                  width: 1,
-                                                ),
-                                              ),
-                                              child: Container(
-                                                child: Row(
-                                                  children: [
-                                                    Expanded(
-                                                        child: Container(
-                                                            margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12),
-                                                            child: Text("Resuelve problemas de forma, movimiento y localización", maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 16))
-                                                        )
-                                                    ),
-                                                    Container(
-                                                      margin: const EdgeInsets.only(right: 16),
-                                                      height: 40.0,
-                                                      width: 40.0,
-                                                      decoration: BoxDecoration(
-                                                          color: HexColor("#3a4fc6"),
-                                                          borderRadius: new BorderRadius.only(
-                                                            topLeft: const Radius.circular(10.0),
-                                                            topRight: const Radius.circular(10.0),
-                                                            bottomLeft:const Radius.circular(10.0),
-                                                            bottomRight: const Radius.circular(10.0),
-                                                          )
-                                                      ),
-                                                      child: Center(
-                                                        child: Text("00", style: TextStyle( color: AppTheme.white, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 18)),
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            )
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              )
-                          ),
-                        ],
-                      );
-                    })
+                                        );
+                                      }
+                                    },
+                                    childCount: controller.cursoBoletaUiList.length,
+                                  ),
+
+                                ),
+                              ],
+                            ),
+                            controller.isLoading ?  Container(child: Center(
+                              child: CircularProgressIndicator(),
+                            )): Container(),
+                          ],
+                        );
+                      }),
+                )
             )),
         Container(
           width: 32,
@@ -439,56 +404,64 @@ class _BoletasNotasViewState extends ViewState<BoletasNotasView, BoletaNotaContr
                 MediaQuery.of(context).padding.top +
                 0,
           ),
-          child: ControlledWidgetBuilder<BoletaNotaController>(
-              builder: (context, controller) {
-                return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: controller.calendarioPeriodoList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Center(
-                          child:Container(
-                            margin: const EdgeInsets.only(top: 0, left: 8, right: 0, bottom: 0),
-                            decoration: BoxDecoration(
-                              color: AppTheme.colorAccent,
-                              borderRadius: new BorderRadius.only(
-                                topLeft: const Radius.circular(10.0),
-                                bottomLeft:const Radius.circular(10.0),
-                              ),
-                            ),
-                            child: Container(
-                              height: 110,
-                              margin: const EdgeInsets.only(top: 1, left: 1, right: 1, bottom: 1),
+          child:
+          AnimationView(
+            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                parent: animationController,
+                curve:
+                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+            animationController: animationController,
+            child: ControlledWidgetBuilder<BoletaNotaController>(
+                builder: (context, controller) {
+                  return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: controller.calendarioPeriodoList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Center(
+                            child:Container(
+                              margin: const EdgeInsets.only(top: 0, left: 8, right: 0, bottom: 0),
                               decoration: BoxDecoration(
-                                color:controller.calendarioPeriodoList[index].selected ? AppTheme.white: AppTheme.colorAccent,
+                                color: AppTheme.colorAccent,
                                 borderRadius: new BorderRadius.only(
                                   topLeft: const Radius.circular(10.0),
                                   bottomLeft:const Radius.circular(10.0),
                                 ),
                               ),
-                              child: Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  focusColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  borderRadius: const BorderRadius.all(Radius.circular(9.0)),
-                                  splashColor: AppTheme.nearlyDarkBlue.withOpacity(0.8),
-                                  onTap: () {
-                                    controller.onSelectedCalendarioPeriodo(controller.calendarioPeriodoList[index]);
-                                  },
-                                  child: Center(
-                                    child: RotatedBox(quarterTurns: 1,
-                                        child: Text(controller.calendarioPeriodoList[index].nombre?.toUpperCase(), style: TextStyle(color: controller.calendarioPeriodoList[index].selected ? AppTheme.colorAccent: AppTheme.white, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w600, fontSize: 9), )
+                              child: Container(
+                                height: 110,
+                                margin: const EdgeInsets.only(top: 1, left: 1, right: 1, bottom: 1),
+                                decoration: BoxDecoration(
+                                  color:controller.calendarioPeriodoList[index].selected ? AppTheme.white: AppTheme.colorAccent,
+                                  borderRadius: new BorderRadius.only(
+                                    topLeft: const Radius.circular(10.0),
+                                    bottomLeft:const Radius.circular(10.0),
+                                  ),
+                                ),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    focusColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    borderRadius: const BorderRadius.all(Radius.circular(9.0)),
+                                    splashColor: AppTheme.nearlyDarkBlue.withOpacity(0.8),
+                                    onTap: () {
+                                      controller.onSelectedCalendarioPeriodo(controller.calendarioPeriodoList[index]);
+                                    },
+                                    child: Center(
+                                      child: RotatedBox(quarterTurns: 1,
+                                          child: Text(controller.calendarioPeriodoList[index].nombre?.toUpperCase(), style: TextStyle(color: controller.calendarioPeriodoList[index].selected ? AppTheme.colorAccent: AppTheme.white, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w600, fontSize: 9), )
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          )
-                      );
-                    }
-                );
-              }),
+                            )
+                        );
+                      }
+                  );
+                }),
+          )
         )
       ],
     );
