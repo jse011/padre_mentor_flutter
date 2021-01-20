@@ -262,23 +262,6 @@ class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionControlle
                                                 child: Row(
                                                   children: [
                                                     Expanded(child: Container(margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12), child: Text(o.nombre, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 18)))),
-                                                    Container(
-                                                      margin: const EdgeInsets.only(right: 16),
-                                                      height: 40.0,
-                                                      width: 40.0,
-                                                      decoration: BoxDecoration(
-                                                          color: HexColor("#757575"),
-                                                          borderRadius: new BorderRadius.only(
-                                                            topLeft: const Radius.circular(10.0),
-                                                            topRight: const Radius.circular(10.0),
-                                                            bottomLeft:const Radius.circular(10.0),
-                                                            bottomRight: const Radius.circular(10.0),
-                                                          )
-                                                      ),
-                                                      child: Center(
-                                                        child: Text("", style: TextStyle( color: AppTheme.white, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 18)),
-                                                      ),
-                                                    )
                                                   ],
                                                 ),
                                               ),

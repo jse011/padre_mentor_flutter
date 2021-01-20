@@ -26,7 +26,7 @@ class GetEvaluacion extends UseCase<GetEvaluacionCaseResponse, GetEvaluacionCase
       await repository.saveEvaluaciones(datosEvaluaciones);
       List<dynamic> lista = [];
       List<RubroEvaluacionUi> rubroEvaluacionList = await repository.getEvaluacionesPorCurso(params.anioAcademicoId, params.programaId, params.calendarioPeridoId, params.alumnoId);
-      logger.finest('GetEvaluacion count: ' + rubroEvaluacionList.length.toString());
+
       for(RubroEvaluacionUi rubroEvalItem in rubroEvaluacionList){
         CursoUi cursoUi = rubroEvalItem.cursoUi;
 

@@ -335,10 +335,10 @@ class DataCursoRepository extends CursoRepository{
             innerJoin(SQL.evaluacionDesempenio, SQL.rubroEvalDesempenio.rubroEvalProcesoId.equalsExp(SQL.evaluacionDesempenio.rubroEvalProcesoId))]);
       query.where(SQL.rubroEvalDesempenio.anioAcademicoId.equals(anioAcademicoId));
       query.where(SQL.rubroEvalDesempenio.programaAcadId.equals(programaId));
-      //query.where(SQL.rubroEvalDesempenio.calendarioPeriodoId.equals(calendarioPeridoId));
-      //query.where(SQL.rubroEvalDesempenio.alumnoId.equals(alumnoId));
-      //query.where(isNull(SQL.evaluacionDesempenio.secRubroEvalProcesoId));
-      //query.where(SQL.evaluacionDesempenio.secRubroEvalProcesoId.isNotIn([""]));
+      query.where(SQL.rubroEvalDesempenio.calendarioPeriodoId.equals(calendarioPeridoId));
+      query.where(SQL.rubroEvalDesempenio.alumnoId.equals(alumnoId));
+      query.where(isNull(SQL.evaluacionDesempenio.secRubroEvalProcesoId));
+      //query.where(SQL.evaluacionDesempenio.secRubroEvalProcesoId.equals(""));
       var rows = await query.get();
 
       ParametrosDisenioData defaultParametrosDisenioData = await (SQL.selectSingle(SQL.parametrosDisenio)..where((tbl) => tbl.nombre.equals("default"))).getSingle();
