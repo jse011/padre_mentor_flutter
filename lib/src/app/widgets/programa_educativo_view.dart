@@ -19,11 +19,11 @@ class ProgramaEducativoView extends StatelessWidget {
         margin: const EdgeInsets.only(left: 8, right: 8, top: 0, bottom: 0),
         child:
         Stack(
-            //alignment: Alignment.center,
-            //overflow: Overflow.visible,
+            alignment: Alignment.center,
+            overflow: Overflow.visible,
             children: [
               Positioned(
-                top: 0.0,
+                top: 8.0,
                 left: 0.0,
                 right: 0.0,
                 child:  Stack(
@@ -31,6 +31,7 @@ class ProgramaEducativoView extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 0, bottom: 0),
                         child: Container(
+                          height: 84,
                           decoration: BoxDecoration(
                             color: AppTheme.white,
                             borderRadius: BorderRadius.only(
@@ -41,8 +42,8 @@ class ProgramaEducativoView extends StatelessWidget {
                             boxShadow: <BoxShadow>[
                               BoxShadow(
                                   color: AppTheme.textGrey.withOpacity(0.4),
-                                  offset: Offset(1.1, 1.1),
-                                  blurRadius: 10.0),
+                                  offset: const Offset(1.1, 1.1),
+                                  blurRadius: 8.0),
                             ],
                           ),
                           child: Stack(
@@ -52,60 +53,83 @@ class ProgramaEducativoView extends StatelessWidget {
                                 borderRadius:
                                 BorderRadius.all(Radius.circular(8.0)),
                                 child: SizedBox(
-                                  height: 74,
+                                  height: 70,
                                   child: AspectRatio(
                                     aspectRatio: 1.714,
                                     child: Image.asset(
-                                        "assets/fitness_app/back_1.png"),
+                                        "assets/fitness_app/back.png"),
                                   ),
                                 ),
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 100,
-                                          right: 16,
-                                          top: 16,
-                                        ),
-                                        child: Text(
-                                          titulo,
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            fontFamily:
-                                            AppTheme.fontName,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                            letterSpacing: 0.0,
-                                            color:
-                                            AppTheme.colorPrimary,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 100,
-                                      bottom: 12,
-                                      top: 4,
-                                      right: 16,
+                                      padding: const EdgeInsets.only(left: 24, right: 0),
+                                    child: CachedNetworkImage(
+                                        height: 60,
+                                        width: 60,
+                                        placeholder: (context, url) => CircularProgressIndicator(),
+                                        imageUrl: foto,
+                                        imageBuilder: (context, imageProvider) =>
+                                            Container(
+
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                                                  image: DecorationImage(
+                                                    image: imageProvider,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                )
+                                            )
                                     ),
-                                    child: Text(
-                                      subTitulo,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontFamily: AppTheme.fontName,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 10,
-                                        letterSpacing: 0.0,
-                                        color: AppTheme.textGrey
-                                            .withOpacity(0.5),
-                                      ),
-                                    ),
+                                  ),
+                                  Expanded(
+                                      child: Container(
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                left: 16,
+                                                right: 16,
+                                              ),
+                                              child: Text(
+                                                titulo,
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontFamily:
+                                                  AppTheme.fontName,
+                                                  fontSize: 16,
+                                                  letterSpacing: 0.0,
+                                                  color:
+                                                  AppTheme.colorPrimary,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                left: 16,
+                                                top: 4,
+                                                right: 16,
+                                              ),
+                                              child: Text(
+                                                subTitulo,
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontFamily: AppTheme.fontName,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 12,
+                                                  letterSpacing: 0.0,
+                                                  color: AppTheme.textGrey
+                                                      .withOpacity(0.7),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
                                   ),
                                 ],
                               ),
@@ -113,33 +137,6 @@ class ProgramaEducativoView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
-                        height: 70,
-                        width: 70,
-                        child: Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
-                            child: CachedNetworkImage(
-                                height: 60,
-                                width: 60,
-                                placeholder: (context, url) => CircularProgressIndicator(),
-                                imageUrl: foto,
-                                imageBuilder: (context, imageProvider) => Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                                        image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.cover,
-                                        ),
-                                        /*boxShadow: <BoxShadow>[
-                                          BoxShadow(color: AppTheme.grey.withOpacity(0.6), offset: const Offset(1.0, 4.0), blurRadius: 8),
-                                        ]*/
-                                    )
-                                )
-                            ),
-                          ),
-                        ),
-                      )
                       /*SizedBox(
                         width: 100,
                         height: 100,

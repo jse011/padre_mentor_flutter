@@ -245,7 +245,7 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                           animationController: widget.animationController,
                           child: CarouselSlider(
                               options: CarouselOptions(
-                                height: 100.0,
+                                height: 108.0,
                                 autoPlay: false,
                                 autoPlayInterval: Duration(seconds: 3),
                                 autoPlayAnimationDuration: Duration(milliseconds: 800),
