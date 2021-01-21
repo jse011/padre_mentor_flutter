@@ -79,7 +79,10 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
       // then parse the JSON.
       Map<String,dynamic> body = json.decode(response.body);
       if(body.containsKey("Successful")&&body.containsKey("Value")){
-        return body["Value"];
+        List<dynamic> lista = body["Value"];
+        Map<String, dynamic> salida = new  Map<String, dynamic>();
+        salida["evaluaciones"] = lista;
+        return salida;
       }else{
         throw Exception('Failed to load evaluaciones 1');
       }

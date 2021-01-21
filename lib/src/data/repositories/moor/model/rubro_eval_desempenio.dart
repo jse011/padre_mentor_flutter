@@ -10,7 +10,7 @@ class RubroEvalDesempenio extends Table{
   IntColumn get silaboEventoId => integer().nullable()();
   IntColumn get anioAcademicoId => integer().nullable()();
   IntColumn get programaAcadId => integer().nullable()();
-  TextColumn get rubroEvalProcesoId => text()();
+  TextColumn get rubroEvalProcesoId => text().nullable()();
   IntColumn get alumnoId => integer().nullable()();
   IntColumn get gradoId => integer().nullable()();
   TextColumn get grado => text().nullable()();
@@ -18,8 +18,16 @@ class RubroEvalDesempenio extends Table{
   TextColumn get seccion => text().nullable()();
   IntColumn get calendarioPeriodoId => integer().nullable()();
   IntColumn get parametroDesenioId => integer().nullable()();
+  TextColumn get iconoNivelLogro => text().nullable()();
+  TextColumn get tituloNivelLogro => text().nullable()();
+  TextColumn get descripcionNivelLogro => text().nullable()();
+  IntColumn get tipoIdNivelLogro => integer().nullable()();
+  RealColumn get notaEvalaucion => real().nullable()();
+  TextColumn get desempenioEvalaucion => text().nullable()();
+  IntColumn get desempenioIcdTipoId => integer().nullable()();
+  TextColumn get evaluacionProcesoId => text()();
 
   @override
-  Set<Column> get primaryKey => {rubroEvalProcesoId};
+  Set<Column> get primaryKey => {evaluacionProcesoId};
 
 }

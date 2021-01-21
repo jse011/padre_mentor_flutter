@@ -343,7 +343,7 @@ class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionControlle
                                                                           SizedBox(height: 6),
                                                                           Text(o.titulo, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 17)),
                                                                           SizedBox(height: 4),
-                                                                          Text("Formativa - " + o.tipo, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w300, fontSize: 14)),
+                                                                          Text(o.tipo, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w300, fontSize: 14)),
                                                                         ],
                                                                       )
                                                                   )
@@ -371,11 +371,11 @@ class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionControlle
                                                                         mainAxisAlignment: MainAxisAlignment.center,
                                                                         crossAxisAlignment: CrossAxisAlignment.center,
                                                                         children: [
-                                                                          CachedNetworkImage(
+                                                                          o.iconoNota != null && o.iconoNota.length > 0 ? CachedNetworkImage(
                                                                               height: 40.0,
                                                                               width: 40.0,
                                                                               placeholder: (context, url) => CircularProgressIndicator(),
-                                                                              imageUrl: "https://i.pinimg.com/originals/49/83/74/498374267516c7c6ffd2051c23611da5.png",
+                                                                              imageUrl: o.iconoNota,
                                                                               imageBuilder: (context, imageProvider) => Container(
                                                                                   decoration: BoxDecoration(
                                                                                     borderRadius: BorderRadius.all(Radius.circular(30)),
@@ -385,7 +385,7 @@ class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionControlle
                                                                                     ),
                                                                                   )
                                                                               )
-                                                                          ),
+                                                                          ) : Container(),
                                                                           SizedBox(height: 4),
                                                                           Text(o.descNota, textAlign: TextAlign.center, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w500, fontSize: 12))
                                                                         ],

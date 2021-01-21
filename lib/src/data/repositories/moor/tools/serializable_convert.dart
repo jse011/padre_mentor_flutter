@@ -419,40 +419,12 @@ class SerializableConvert{
     }
     return items;
   }
-
-
-  static EvaluacionDesempenioData converSerializeEvaluacionDesempenio(EvaluacionDesempeniosSerial serial){
-    return EvaluacionDesempenioData(
-        iconoNivelLogro: serial.iconoNivelLogro,
-        tituloNivelLogro: serial.tituloNivelLogro,
-        descripcionNivelLogro: serial.descripcionNivelLogro,
-        tipoIdNivelLogro: serial.tipoIdNivelLogro,
-        notaEvalaucion: serial.notaEvalaucion,
-        desempenioEvalaucion: serial.desempenioEvalaucion,
-        desempenioIcdTipoId: serial.desempenioIcdTipoId,
-        rubroEvalProcesoId: serial.rubroEvalProcesoId,
-        alumnoId: serial.alumnoId,
-        evaluacionProcesoId: serial.evaluacionProcesoId,
-        calendarioPeriodoId: serial.calendarioPeriodoId
-    );
-  }
-
-  static List<EvaluacionDesempenioData> converListSerializeEvaluacionDesempenio(List<EvaluacionDesempeniosSerial> serialList){
-    List<EvaluacionDesempenioData> items = [];
-    for(var item in serialList){
-      items.add(converSerializeEvaluacionDesempenio(item));
-    }
-    return items;
-  }
+  
 
   static RubroEvalDesempenioData converSerializeRubroEvalDesempenio(Map<String,dynamic> model){
     RubroEvalDesempeniosSerial serial = RubroEvalDesempeniosSerial.fromJson(model);
     return RubroEvalDesempenioData(
         nombreCurso: serial.nombreCurso,
-        gradoId: serial.gradoId,
-        grado: serial.grado,
-        seccionId: serial.seccionId,
-        seccion: serial.seccion,
         fechaEvaluacion: DateTime.fromMillisecondsSinceEpoch(serial.fechaEvaluacion),
         tituloEvaluacion: serial.tituloEvaluacion,
         formaEvaluacion: serial.formaEvaluacion,
@@ -463,8 +435,20 @@ class SerializableConvert{
         programaAcadId: serial.programaAcadId,
         rubroEvalProcesoId: serial.rubroEvalProcesoId,
         alumnoId: serial.alumnoId,
+        gradoId: serial.gradoId,
+        grado: serial.grado,
+        seccionId: serial.seccionId,
+        seccion: serial.seccion,
         calendarioPeriodoId: serial.calendarioPeriodoId,
-        parametroDesenioId: serial.parametroDesenioId
+        parametroDesenioId: serial.parametroDesenioId,
+        iconoNivelLogro: serial.iconoNivelLogro,
+        tituloNivelLogro: serial.tituloNivelLogro,
+        descripcionNivelLogro: serial.descripcionNivelLogro,
+        tipoIdNivelLogro: serial.tipoIdNivelLogro,
+        notaEvalaucion: serial.notaEvalaucion,
+        desempenioEvalaucion: serial.desempenioEvalaucion,
+        desempenioIcdTipoId: serial.desempenioIcdTipoId,
+        evaluacionProcesoId: serial.evaluacionProcesoId
     );
   }
 
@@ -473,6 +457,24 @@ class SerializableConvert{
     Iterable l = model;
     for(var item in l){
       items.add(converSerializeRubroEvalDesempenio(item));
+    }
+    return items;
+  }
+
+
+  static WebConfig converSerializeWebConfigs(Map<String,dynamic> model){
+    WebConfigsSerial serial = WebConfigsSerial.fromJson(model);
+    return WebConfig(
+        nombre: serial.nombre,
+        content: serial.content
+    );
+  }
+
+  static List<WebConfig> converListSerializeWebConfigs(dynamic model){
+    List<WebConfig> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeWebConfigs(item));
     }
     return items;
   }

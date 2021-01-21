@@ -511,7 +511,6 @@ class RubroEvalDesempeniosSerial{
   int fechaEvaluacion;//long
   String tituloEvaluacion;
   String formaEvaluacion;
-  List<EvaluacionDesempeniosSerial> evaluacionDesempenios;
  int tipoRubroEvalId;
  int cargaCursoId;
  int silaboEventoId;
@@ -525,13 +524,21 @@ class RubroEvalDesempeniosSerial{
  String seccion;
  int calendarioPeriodoId;
  int parametroDesenioId;
+  String iconoNivelLogro;
+  String tituloNivelLogro;
+  String descripcionNivelLogro;
+  int tipoIdNivelLogro;
+  double notaEvalaucion;
+  String desempenioEvalaucion;
+  int desempenioIcdTipoId;
+  String evaluacionProcesoId;
+
 
   RubroEvalDesempeniosSerial(
-      {this.nombreCurso,
+      this.nombreCurso,
       this.fechaEvaluacion,
       this.tituloEvaluacion,
       this.formaEvaluacion,
-      this.evaluacionDesempenios,
       this.tipoRubroEvalId,
       this.cargaCursoId,
       this.silaboEventoId,
@@ -544,45 +551,84 @@ class RubroEvalDesempeniosSerial{
       this.seccionId,
       this.seccion,
       this.calendarioPeriodoId,
-      this.parametroDesenioId});
-
-  factory RubroEvalDesempeniosSerial.fromJson(Map<String, dynamic> json) => _$RubroEvalDesempeniosSerialFromJson(json);
-
-  Map<String, dynamic> toJson() => _$RubroEvalDesempeniosSerialToJson(this);
-}
-
-@JsonSerializable()
-class EvaluacionDesempeniosSerial{
-
-  String iconoNivelLogro;
-  String tituloNivelLogro;
-  String descripcionNivelLogro;
-  int tipoIdNivelLogro;
-  double notaEvalaucion;
-  String desempenioEvalaucion;
-  int desempenioIcdTipoId;
-  String rubroEvalProcesoId;
-  String secRubroEvalProcesoId;
-  int alumnoId;
-  String evaluacionProcesoId;
-  int calendarioPeriodoId;
-
-  EvaluacionDesempeniosSerial(
-      {this.iconoNivelLogro,
+      this.parametroDesenioId,
+      this.iconoNivelLogro,
       this.tituloNivelLogro,
       this.descripcionNivelLogro,
       this.tipoIdNivelLogro,
       this.notaEvalaucion,
       this.desempenioEvalaucion,
       this.desempenioIcdTipoId,
-      this.rubroEvalProcesoId,
-      this.secRubroEvalProcesoId,
-      this.alumnoId,
-      this.evaluacionProcesoId,
-      this.calendarioPeriodoId});
+      this.evaluacionProcesoId);
 
-  factory EvaluacionDesempeniosSerial.fromJson(Map<String, dynamic> json) => _$EvaluacionDesempeniosSerialFromJson(json);
+  factory RubroEvalDesempeniosSerial.fromJson(Map<String, dynamic> json) => _$RubroEvalDesempeniosSerialFromJson(json);
 
-  Map<String, dynamic> toJson() => _$EvaluacionDesempeniosSerialToJson(this);
+  Map<String, dynamic> toJson() => _$RubroEvalDesempeniosSerialToJson(this);
 }
 
+
+@JsonSerializable()
+class WebConfigsSerial {
+  String nombre;
+  String content;
+
+  WebConfigsSerial(this.nombre, this.content);
+
+  factory WebConfigsSerial.fromJson(Map<String, dynamic> json) => _$WebConfigsSerialFromJson(json);
+
+  Map<String, dynamic> toJson() => _$WebConfigsSerialToJson(this);
+}
+
+@JsonSerializable()
+class TareaCursoSerializable{
+  String tareaEvaluacionId;
+  String nombreCurso;
+  int gradoId;
+  String grado;
+  int seccionId;
+  String seccion;
+  int fechaEvaluacion;
+  String tituloEvaluacion;
+  String formaEvaluacion;
+  int tipoRubroEvalId;
+  int cargaCursoId;
+  int silaboEventoId;
+  int anioAcademicoId;
+  int programaAcadId;
+  String rubroEvalProcesoId;
+  int alumnoId;
+  int calendarioPeriodoId;
+  int parametroDesenioId;
+  String iconoNivelLogro;
+  String tituloNivelLogro;
+  String descripcionNivelLogro;
+  int tipoIdNivelLogro;
+  double notaEvalaucion;
+  int evaluacionProcesoId;
+  TareaCursoSerializable(
+    {this.tareaEvaluacionId,
+      this.nombreCurso,
+      this.gradoId,
+      this.grado,
+      this.seccionId,
+      this.seccion,
+      this.fechaEvaluacion,
+      this.tituloEvaluacion,
+      this.formaEvaluacion,
+      this.tipoRubroEvalId,
+      this.cargaCursoId,
+      this.silaboEventoId,
+      this.anioAcademicoId,
+      this.programaAcadId,
+      this.rubroEvalProcesoId,
+      this.alumnoId,
+      this.calendarioPeriodoId,
+      this.parametroDesenioId,
+      this.iconoNivelLogro,
+      this.tituloNivelLogro,
+      this.descripcionNivelLogro,
+      this.tipoIdNivelLogro,
+      this.notaEvalaucion,
+      this.evaluacionProcesoId
+    });
+}

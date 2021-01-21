@@ -16,20 +16,20 @@ class ProgramaEducativoView extends StatelessWidget {
     return Container(
         height: MediaQuery.of(context).size.height*0.30,
         width: MediaQuery.of(context).size.width,
-        margin: const EdgeInsets.only(left: 8, right: 8, top: 0, bottom: 16),
+        margin: const EdgeInsets.only(left: 8, right: 8, top: 0, bottom: 0),
         child:
         Stack(
-            alignment: Alignment.center,
-            overflow: Overflow.visible,
+            //alignment: Alignment.center,
+            //overflow: Overflow.visible,
             children: [
               Positioned(
-                top: -10.0,
+                top: 0.0,
                 left: 0.0,
                 right: 0.0,
                 child:  Stack(
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(top: 24, bottom: 0),
+                        padding: const EdgeInsets.only(top: 0, bottom: 0),
                         child: Container(
                           decoration: BoxDecoration(
                             color: AppTheme.white,
@@ -40,7 +40,7 @@ class ProgramaEducativoView extends StatelessWidget {
                                 topRight: Radius.circular(8.0)),
                             boxShadow: <BoxShadow>[
                               BoxShadow(
-                                  color: AppTheme.grey.withOpacity(0.4),
+                                  color: AppTheme.textGrey.withOpacity(0.4),
                                   offset: Offset(1.1, 1.1),
                                   blurRadius: 10.0),
                             ],
@@ -56,7 +56,7 @@ class ProgramaEducativoView extends StatelessWidget {
                                   child: AspectRatio(
                                     aspectRatio: 1.714,
                                     child: Image.asset(
-                                        "assets/fitness_app/back.png"),
+                                        "assets/fitness_app/back_1.png"),
                                   ),
                                 ),
                               ),
@@ -81,7 +81,7 @@ class ProgramaEducativoView extends StatelessWidget {
                                             fontSize: 14,
                                             letterSpacing: 0.0,
                                             color:
-                                            AppTheme.nearlyDarkBlue,
+                                            AppTheme.colorPrimary,
                                           ),
                                         ),
                                       ),
@@ -102,7 +102,7 @@ class ProgramaEducativoView extends StatelessWidget {
                                         fontWeight: FontWeight.w500,
                                         fontSize: 10,
                                         letterSpacing: 0.0,
-                                        color: AppTheme.grey
+                                        color: AppTheme.textGrey
                                             .withOpacity(0.5),
                                       ),
                                     ),
@@ -114,7 +114,7 @@ class ProgramaEducativoView extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        height: 80,
+                        height: 70,
                         width: 70,
                         child: Center(
                           child: Padding(
@@ -131,9 +131,9 @@ class ProgramaEducativoView extends StatelessWidget {
                                           image: imageProvider,
                                           fit: BoxFit.cover,
                                         ),
-                                        boxShadow: <BoxShadow>[
+                                        /*boxShadow: <BoxShadow>[
                                           BoxShadow(color: AppTheme.grey.withOpacity(0.6), offset: const Offset(1.0, 4.0), blurRadius: 8),
-                                        ]
+                                        ]*/
                                     )
                                 )
                             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../utils/app_theme.dart';
 
@@ -55,7 +56,10 @@ class MenuItemView extends StatelessWidget {
                       Expanded(child: Padding(
                         padding:
                         const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 0),
-                        child: Image.asset(imagepath),
+                        child: SvgPicture.asset(
+                          imagepath,
+                          semanticsLabel:"Eventos",
+                        ),
                       )),
                       Container(
                         margin: EdgeInsets.only(top: 0, left: 0, right: 0, bottom: 16),

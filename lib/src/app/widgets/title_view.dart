@@ -32,7 +32,7 @@ class TitleView extends StatelessWidget {
               fontWeight: FontWeight.w500,
               fontSize: 18,
               letterSpacing: 0.5,
-              color: AppTheme.lightText,
+              color: AppTheme.colorPrimaryDark,
             ),
           ),
         ),
@@ -57,7 +57,7 @@ class TitleView extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                   fontSize: 16,
                   letterSpacing: 0.5,
-                  color: AppTheme.nearlyDarkBlue,
+                  color: AppTheme.colorAccent,
                 ),
               ),
               SizedBox(
@@ -65,7 +65,7 @@ class TitleView extends StatelessWidget {
                 width: 26,
                 child: Icon(
                   Icons.arrow_forward,
-                  color: AppTheme.darkText,
+                  color: AppTheme.colorAccent,
                   size: 18,
                 ),
               )

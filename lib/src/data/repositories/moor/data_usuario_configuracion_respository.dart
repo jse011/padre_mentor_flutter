@@ -2,6 +2,7 @@ import 'package:moor_flutter/moor_flutter.dart';
 import 'package:padre_mentor/src/data/repositories/moor/database/app_database.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/persona.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/programas_educativo.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/silabo_evento.dart';
 import 'package:padre_mentor/src/data/repositories/moor/tools/serializable_convert.dart';
 import 'package:padre_mentor/src/domain/entities/hijos_ui.dart';
 import 'package:padre_mentor/src/domain/entities/programa_educativo_ui.dart';
@@ -166,6 +167,11 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
 
        if(datosInicioPadre.containsKey("silaboEvento")){
          batch.insertAll(SQL.silaboEvento, SerializableConvert.converListSerializeSilaboEvento(datosInicioPadre["silaboEvento"]), mode: InsertMode.insertOrReplace);
+       }
+
+       if(datosInicioPadre.containsKey("bEWebConfigs")){
+         batch.deleteWhere(SQL.webConfigs, (row) => const Constant(true));
+         batch.insertAll(SQL.webConfigs, SerializableConvert.converListSerializeWebConfigs(datosInicioPadre["bEWebConfigs"]), mode: InsertMode.insertOrReplace);
        }
 
      });

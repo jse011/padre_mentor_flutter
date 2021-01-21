@@ -140,18 +140,18 @@ class _BottomBarViewState extends State<BottomBarView>
                     child: Container(
                       // alignment: Alignment.center,s
                       decoration: BoxDecoration(
-                        color: AppTheme.nearlyDarkBlue,
+                        color: AppTheme.colorPrimary,
                         gradient: LinearGradient(
                             colors: [
-                              AppTheme.nearlyDarkBlue,
-                              HexColor('#6A88E5'),
+                              AppTheme.colorPrimary,
+                              AppTheme.colorAccent,
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight),
                         shape: BoxShape.circle,
                         boxShadow: <BoxShadow>[
                           BoxShadow(
-                              color: AppTheme.nearlyDarkBlue
+                              color: AppTheme.colorPrimary
                                   .withOpacity(0.4),
                               offset: const Offset(8.0, 16.0),
                               blurRadius: 16.0),
@@ -169,7 +169,7 @@ class _BottomBarViewState extends State<BottomBarView>
                           child:Center(
                             child: SizedBox(width: 32, height: 32,
                               child: SvgPicture.asset(
-                              'assets/fitness_app/ico_evento.svg',
+                              'assets/educar/logo_educar.svg',
                               color: Colors.white,
                               semanticsLabel:"Eventos",
                               ),
@@ -183,7 +183,7 @@ class _BottomBarViewState extends State<BottomBarView>
               ),
             ),
           ),
-        ),
+        )
       ],
     );
   }
@@ -276,7 +276,7 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                       width: 8,
                       height: 8,
                       decoration: BoxDecoration(
-                        color: AppTheme.nearlyDarkBlue,
+                        color: AppTheme.colorPrimary,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -297,7 +297,7 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                       width: 4,
                       height: 4,
                       decoration: BoxDecoration(
-                        color: AppTheme.nearlyDarkBlue,
+                        color: AppTheme.colorPrimary,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -318,7 +318,7 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                       width: 6,
                       height: 6,
                       decoration: BoxDecoration(
-                        color: AppTheme.nearlyDarkBlue,
+                        color: AppTheme.colorPrimary,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -346,6 +346,9 @@ class TabClipper extends CustomClipper<Path> {
     path.lineTo(0, 0);
     path.arcTo(Rect.fromLTWH(0, 0, radius, radius), degreeToRadians(180),
         degreeToRadians(90), false);
+    /*
+    * Corte del boton del medio
+    * */
     path.arcTo(
         Rect.fromLTWH(
             ((size.width / 2) - v / 2) - radius + v * 0.04, 0, radius, radius),
@@ -362,6 +365,8 @@ class TabClipper extends CustomClipper<Path> {
         degreeToRadians(200),
         degreeToRadians(70),
         false);
+
+    /*End*/
     path.arcTo(Rect.fromLTWH(size.width - radius, 0, radius, radius),
         degreeToRadians(270), degreeToRadians(90), false);
     path.lineTo(size.width, 0);

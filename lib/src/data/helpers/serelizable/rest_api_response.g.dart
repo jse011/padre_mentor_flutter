@@ -508,28 +508,31 @@ Map<String, dynamic> _$SilaboEventoSerialToJson(SilaboEventoSerial instance) =>
 RubroEvalDesempeniosSerial _$RubroEvalDesempeniosSerialFromJson(
     Map<String, dynamic> json) {
   return RubroEvalDesempeniosSerial(
-    nombreCurso: json['nombreCurso'] as String,
-    fechaEvaluacion: json['fechaEvaluacion'] as int,
-    tituloEvaluacion: json['tituloEvaluacion'] as String,
-    formaEvaluacion: json['formaEvaluacion'] as String,
-    evaluacionDesempenios: (json['evaluacionDesempenios'] as List)
-        ?.map((e) => e == null
-            ? null
-            : EvaluacionDesempeniosSerial.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
-    tipoRubroEvalId: json['tipoRubroEvalId'] as int,
-    cargaCursoId: json['cargaCursoId'] as int,
-    silaboEventoId: json['silaboEventoId'] as int,
-    anioAcademicoId: json['anioAcademicoId'] as int,
-    programaAcadId: json['programaAcadId'] as int,
-    rubroEvalProcesoId: json['rubroEvalProcesoId'] as String,
-    alumnoId: json['alumnoId'] as int,
-    gradoId: json['gradoId'] as int,
-    grado: json['grado'] as String,
-    seccionId: json['seccionId'] as int,
-    seccion: json['seccion'] as String,
-    calendarioPeriodoId: json['calendarioPeriodoId'] as int,
-    parametroDesenioId: json['parametroDesenioId'] as int,
+    json['nombreCurso'] as String,
+    json['fechaEvaluacion'] as int,
+    json['tituloEvaluacion'] as String,
+    json['formaEvaluacion'] as String,
+    json['tipoRubroEvalId'] as int,
+    json['cargaCursoId'] as int,
+    json['silaboEventoId'] as int,
+    json['anioAcademicoId'] as int,
+    json['programaAcadId'] as int,
+    json['rubroEvalProcesoId'] as String,
+    json['alumnoId'] as int,
+    json['gradoId'] as int,
+    json['grado'] as String,
+    json['seccionId'] as int,
+    json['seccion'] as String,
+    json['calendarioPeriodoId'] as int,
+    json['parametroDesenioId'] as int,
+    json['iconoNivelLogro'] as String,
+    json['tituloNivelLogro'] as String,
+    json['descripcionNivelLogro'] as String,
+    json['tipoIdNivelLogro'] as int,
+    (json['notaEvalaucion'] as num)?.toDouble(),
+    json['desempenioEvalaucion'] as String,
+    json['desempenioIcdTipoId'] as int,
+    json['evaluacionProcesoId'] as String,
   );
 }
 
@@ -540,7 +543,6 @@ Map<String, dynamic> _$RubroEvalDesempeniosSerialToJson(
       'fechaEvaluacion': instance.fechaEvaluacion,
       'tituloEvaluacion': instance.tituloEvaluacion,
       'formaEvaluacion': instance.formaEvaluacion,
-      'evaluacionDesempenios': instance.evaluacionDesempenios,
       'tipoRubroEvalId': instance.tipoRubroEvalId,
       'cargaCursoId': instance.cargaCursoId,
       'silaboEventoId': instance.silaboEventoId,
@@ -554,29 +556,6 @@ Map<String, dynamic> _$RubroEvalDesempeniosSerialToJson(
       'seccion': instance.seccion,
       'calendarioPeriodoId': instance.calendarioPeriodoId,
       'parametroDesenioId': instance.parametroDesenioId,
-    };
-
-EvaluacionDesempeniosSerial _$EvaluacionDesempeniosSerialFromJson(
-    Map<String, dynamic> json) {
-  return EvaluacionDesempeniosSerial(
-    iconoNivelLogro: json['iconoNivelLogro'] as String,
-    tituloNivelLogro: json['tituloNivelLogro'] as String,
-    descripcionNivelLogro: json['descripcionNivelLogro'] as String,
-    tipoIdNivelLogro: json['tipoIdNivelLogro'] as int,
-    notaEvalaucion: (json['notaEvalaucion'] as num)?.toDouble(),
-    desempenioEvalaucion: json['desempenioEvalaucion'] as String,
-    desempenioIcdTipoId: json['desempenioIcdTipoId'] as int,
-    rubroEvalProcesoId: json['rubroEvalProcesoId'] as String,
-    secRubroEvalProcesoId: json['secRubroEvalProcesoId'] as String,
-    alumnoId: json['alumnoId'] as int,
-    evaluacionProcesoId: json['evaluacionProcesoId'] as String,
-    calendarioPeriodoId: json['calendarioPeriodoId'] as int,
-  );
-}
-
-Map<String, dynamic> _$EvaluacionDesempeniosSerialToJson(
-        EvaluacionDesempeniosSerial instance) =>
-    <String, dynamic>{
       'iconoNivelLogro': instance.iconoNivelLogro,
       'tituloNivelLogro': instance.tituloNivelLogro,
       'descripcionNivelLogro': instance.descripcionNivelLogro,
@@ -584,9 +563,18 @@ Map<String, dynamic> _$EvaluacionDesempeniosSerialToJson(
       'notaEvalaucion': instance.notaEvalaucion,
       'desempenioEvalaucion': instance.desempenioEvalaucion,
       'desempenioIcdTipoId': instance.desempenioIcdTipoId,
-      'rubroEvalProcesoId': instance.rubroEvalProcesoId,
-      'secRubroEvalProcesoId': instance.secRubroEvalProcesoId,
-      'alumnoId': instance.alumnoId,
       'evaluacionProcesoId': instance.evaluacionProcesoId,
-      'calendarioPeriodoId': instance.calendarioPeriodoId,
+    };
+
+WebConfigsSerial _$WebConfigsSerialFromJson(Map<String, dynamic> json) {
+  return WebConfigsSerial(
+    json['nombre'] as String,
+    json['content'] as String,
+  );
+}
+
+Map<String, dynamic> _$WebConfigsSerialToJson(WebConfigsSerial instance) =>
+    <String, dynamic>{
+      'nombre': instance.nombre,
+      'content': instance.content,
     };

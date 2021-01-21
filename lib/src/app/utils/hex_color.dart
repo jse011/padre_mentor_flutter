@@ -11,6 +11,8 @@ class HexColor extends Color {
     if (hexColor.length == 6) {
       hexColor = 'FF' + hexColor;
     }
-    return int.parse(hexColor, radix: 16);
+    int i  = int.parse(hexColor, radix: 16);
+    print("_getColorFromHex: "+i.toString());
+    return i;
   }
 }
