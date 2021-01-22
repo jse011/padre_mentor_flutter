@@ -14,7 +14,7 @@ class ProgramaEducativoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: MediaQuery.of(context).size.height*0.30,
+        //height: MediaQuery.of(context).size.height*0.30,
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.only(left: 8, right: 8, top: 0, bottom: 0),
         child:

@@ -14,6 +14,9 @@ void main() {
 class MyApp2 extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
+    // it should be the first line in main method
+    //WidgetsFlutterBinding.ensureInitialized();
+    //UseCase
     FlutterCleanArchitecture.debugModeOn();
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

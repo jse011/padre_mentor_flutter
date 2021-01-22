@@ -3,6 +3,7 @@ import 'package:padre_mentor/src/data/repositories/floor_beta/database/app_datab
 import 'package:padre_mentor/src/data/repositories/floor_beta/mapping/persona.dart';
 import 'package:padre_mentor/src/data/repositories/floor_beta/mapping/session_user.dart';
 import 'package:padre_mentor/src/data/repositories/floor_beta/tools/serializable_convert.dart';
+import 'package:padre_mentor/src/domain/entities/hijos_ui.dart';
 import 'package:padre_mentor/src/domain/entities/usuario_ui.dart';
 import 'package:padre_mentor/src/domain/repositories/usuario_configuarion_repository.dart';
 import 'package:padre_mentor/src/domain/tools/app_tools.dart';
@@ -49,6 +50,12 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
       database.personaDao.insertAllTodo(SerializableConvert.converListSerializePersona(datosInicioPadre["relaciones"]));
     }
 
+  }
+
+  @override
+  Future<HijosUi> getHijo(int alumnoId) {
+    // TODO: implement getHijo
+    throw UnimplementedError();
   }
 
 

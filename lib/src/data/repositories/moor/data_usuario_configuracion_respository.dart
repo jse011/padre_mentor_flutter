@@ -41,7 +41,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
       await Future.forEach(rowRelaciones, (hijo) async{
         PersonaData personaData = hijo.readTable(SQL.persona);
         UsuarioData usuarioData = await (SQL.select(SQL.usuario)..where((tbl) => tbl.personaId.equals(personaData.personaId))).getSingle();
-        hijos.add(HijosUi(usuarioId: usuarioData==null ? 0 : usuarioData.usuarioId, personaId: personaData.personaId, nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}', foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}'));
+        hijos.add(HijosUi(usuarioId: usuarioData==null ? 0 : usuarioData.usuarioId, personaId: personaData.personaId, nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}', foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}',documento: personaData.numDoc));
       });
       UsuarioUi usuarioUi = UsuarioUi(id: personaData == null ? 0 : personaData.personaId ,
           nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}',
@@ -180,28 +180,19 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
    }
   }
 
-  /// Watches all entries in the given [category]. If the category is null, all
-  /// entries will be shown instead.
-  /*Stream<List<EntryWithCategory>> watchEntriesInCategory(Category category) {
-    final query = select(todos).join(
-        [leftOuterJoin(categories, categories.id.equalsExp(todos.category))]);
+  @override
+  Future<HijosUi> getHijo(int alumnoId) async {
+    print("getHijo" );
+    AppDataBase SQL = AppDataBase();
+    try{
 
-    if (category != null) {
-      query.where(categories.id.equals(category.id));
-    } else {
-      query.where(isNull(categories.id));
+      PersonaData personaData = await (SQL.selectSingle(SQL.persona)..where((tbl) => tbl.personaId.equals(alumnoId))).getSingle();
+      UsuarioData usuarioData = await (SQL.select(SQL.usuario)..where((tbl) => tbl.personaId.equals(alumnoId))).getSingle();
+      return HijosUi(usuarioId: usuarioData==null ? 0 : usuarioData.usuarioId, personaId: personaData.personaId, nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}', foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}', documento: personaData.numDoc);
+
+    }catch(e){
+      throw Exception(e);
     }
-
-    return query.watch().map((rows) {
-      // read both the entry and the associated category for each row
-      return rows.map((row) {
-        return EntryWithCategory(
-          row.readTable(todos),
-          row.readTable(categories),
-        );
-      }).toList();
-    });
-  }*/
-
+  }
 
 }
