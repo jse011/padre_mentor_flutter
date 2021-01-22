@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:padre_mentor/src/app/page/evaluacion/evaluacion_controller.dart';
+import 'package:padre_mentor/src/app/page/tarea_evaluacion/tarea_evaluacion_controller.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/app/utils/hex_color.dart';
 import 'package:padre_mentor/src/app/widgets/animation_view.dart';
@@ -12,23 +12,24 @@ import 'package:padre_mentor/src/device/repositories/http/device_http_datos_repo
 import 'package:padre_mentor/src/domain/entities/curso_ui.dart';
 import 'package:padre_mentor/src/domain/entities/evaluacion_rubro_ui.dart';
 import 'package:padre_mentor/src/domain/entities/rubro_evaluacion_ui.dart';
+import 'package:padre_mentor/src/domain/entities/tarea_eval_curso_ui.dart';
 import 'package:padre_mentor/src/domain/entities/tipo_nota_enum_ui.dart';
 
-class EvaluacionView extends View{
+class TareaEvaluacionView extends View{
   final int alumnoId;
   final int programaAcademicoId;
   final int anioAcademicoId;
   final String fotoAlumno;
 
-  EvaluacionView({this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, this.fotoAlumno});
+  TareaEvaluacionView({this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, this.fotoAlumno});
 
   @override
-  _EvaluacionViewState createState() => _EvaluacionViewState(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno);
+  _TareaEvaluacionViewState createState() => _TareaEvaluacionViewState(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno);
 
 }
 
-class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionController> with TickerProviderStateMixin{
-  _EvaluacionViewState(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno) : super(EvaluacionController(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno, DataCursoRepository(), DeviceHttpDatosRepositorio()));
+class _TareaEvaluacionViewState extends ViewState<TareaEvaluacionView, TareaEvaluacionController> with TickerProviderStateMixin{
+  _TareaEvaluacionViewState(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno) : super(TareaEvaluacionController(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno, DataCursoRepository(), DeviceHttpDatosRepositorio()));
   Animation<double> topBarAnimation;
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
@@ -155,7 +156,7 @@ class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionControlle
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Evaluación',
+                                  'Tarea',
                                   textAlign: TextAlign.left,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -168,7 +169,7 @@ class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionControlle
                                 ),
                               ),
                             ),
-                            ControlledWidgetBuilder<EvaluacionController>(
+                            ControlledWidgetBuilder<TareaEvaluacionController>(
                               builder: (context, controller) {
                                 if(false){
                                   return Padding(
@@ -227,13 +228,96 @@ class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionControlle
                       curve:
                       Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
                   animationController: animationController,
-                  child:  ControlledWidgetBuilder<EvaluacionController>(
+                  child:  ControlledWidgetBuilder<TareaEvaluacionController>(
                       builder: (context, controller) {
                         return Stack(
                           children: [
                             CustomScrollView(
                               controller: scrollController,
                               slivers: <Widget>[
+                                SliverList(
+                                    delegate: SliverChildListDelegate([
+                                      Card(
+                                        color: AppTheme.colorAccent ,
+                                        margin: const EdgeInsets.only(top: 24, left: 16, right: 0, bottom: 0),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10), // if you need this
+                                          side: BorderSide(
+                                            color: Colors.grey.withOpacity(0.2),
+                                            width: 1,
+                                          ),
+                                        ),
+                                        child: Container(
+                                          margin: const EdgeInsets.only(top: 2, left: 8, right: 2, bottom: 2),
+                                          height: 60,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: new BorderRadius.only(
+                                              topLeft: const Radius.circular(10.0),
+                                              topRight: const Radius.circular(10.0),
+                                              bottomLeft:const Radius.circular(10.0),
+                                              bottomRight: const Radius.circular(10.0),
+                                            ),
+                                          ),
+                                          child:  Row(
+                                            /* switch (o.evalEstado){
+                                                                            case TareaEvalEstadoEnumUi.SINFECHA:
+                                                                              return  AppTheme.grey;
+                                                                            case TareaEvalEstadoEnumUi.HA_ENTREGAR:
+                                                                              return AppTheme.black;
+                                                                            case TareaEvalEstadoEnumUi.HA_ENTREGAR_RETRAZO:
+                                                                              return AppTheme.deepOrangeAccent4;
+                                                                            case TareaEvalEstadoEnumUi.ENTREGADO:
+                                                                              //return AppTheme.greenAccent3;
+                                                                              return AppTheme.blueAccent4;
+                                                                          }*/
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                margin: const EdgeInsets.only(left: 0, right: 16),
+                                                width: 70,
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(controller.cantSinCalificar.toString(), maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: AppTheme.deepOrangeAccent4, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 18)),
+                                                    Text('Sin calificar', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: AppTheme.greyDarken1, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 10)),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: const EdgeInsets.only(left: 0, right: 16),
+                                                width: 70,
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(controller.cantCalificado.toString(), maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: AppTheme.blueAccent4, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 18)),
+                                                    Text('Calificado', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: AppTheme.greyDarken1, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 10)),
+                                                  ],
+                                                ),
+                                              ),
+
+                                              Container(
+                                                margin: const EdgeInsets.only(left: 0, right: 16),
+                                                width: 60,
+
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    Text((controller.cantCalificado+controller.cantSinCalificar).toString(), maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: AppTheme.black, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 18)),
+                                                    Text('Total', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: AppTheme.greyDarken1, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 10)),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ])
+                                ),
                                 SliverList(
                                   delegate: SliverChildBuilderDelegate(
                                         (BuildContext context, int index){
@@ -262,14 +346,14 @@ class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionControlle
                                                 ),
                                                 child: Row(
                                                   children: [
-                                                    Expanded(child: Container(margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12), child: Text(o.nombre, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w500, fontSize: 20)))),
+                                                    Expanded(child: Container(margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12), child: Text(o.nombre??'', style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w500, fontSize: 20)))),
                                                   ],
                                                 ),
                                               ),
                                             );
-                                          }else if(o is RubroEvaluacionUi){
+                                          }else if(o is TareaEvaluacionCursoUi){
                                             return  Container(
-                                              height: 134,
+                                              height: 100,
                                               child: Row(
                                                 children: [
                                                   Container(
@@ -334,67 +418,108 @@ class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionControlle
                                                             children: [
                                                               Expanded(
                                                                   child: Container(
-                                                                      margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12),
+                                                                      margin: const EdgeInsets.only(left: 20, right: 8, top: 16, bottom: 12),
                                                                       child: Column(
                                                                         crossAxisAlignment: CrossAxisAlignment.start,
-                                                                        mainAxisSize: MainAxisSize.min,
+                                                                        mainAxisAlignment: MainAxisAlignment.center,
                                                                         children: [
-                                                                          Text(o.fecha??'', maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.black54, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 16)),
-                                                                          SizedBox(height: 6),
-                                                                          Text(o.titulo??'', maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 17)),
+                                                                          Text(o.tituloTarea??'', maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 12)),
                                                                           SizedBox(height: 4),
-                                                                          Text(o.tipo??'', maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w300, fontSize: 14)),
+                                                                          Text(o.nombreDocente??'', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w300, fontSize: 10)),
                                                                         ],
                                                                       )
                                                                   )
                                                               ),
                                                               Container(
+                                                                margin: const EdgeInsets.only(left: 0, right: 8),
+                                                                width: 48,
+                                                                child: Column(
+                                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                                  children: [
+                                                                    Text(o.finDiaSemana??'', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.black54, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w500, fontSize: 10)),
+                                                                    Text(o.finDia??'--', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(
+                                                                        color:((){
+                                                                          switch (o.evalEstado){
+                                                                            case TareaEvalEstadoEnumUi.SINFECHA:
+                                                                              return  AppTheme.grey;
+                                                                            case TareaEvalEstadoEnumUi.HA_ENTREGAR:
+                                                                              return AppTheme.black;
+                                                                            case TareaEvalEstadoEnumUi.HA_ENTREGAR_RETRAZO:
+                                                                              return AppTheme.deepOrangeAccent4;
+                                                                            case TareaEvalEstadoEnumUi.ENTREGADO:
+                                                                              //return AppTheme.greenAccent3;
+                                                                              return AppTheme.blueAccent4;
+                                                                          }
+                                                                        }()),
+                                                                        fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 12)),
+                                                                    Text(o.finMes??'', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.black54, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w500, fontSize: 10)),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                margin: const EdgeInsets.only(left: 0, right: 0),
+                                                                width: 46,
+                                                                child: Column(
+                                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                                  children: [
+                                                                    Text(o.incioDiaSemana??'-', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.black54, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w500, fontSize: 10)),
+                                                                    Text(o.incioDia??'-', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: AppTheme.black, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 12)),
+                                                                    Text(o.incioMes??'-', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.black54, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w500, fontSize: 10)),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              Container(
                                                                 margin: const EdgeInsets.only(right: 8),
-                                                                width: 68.0,
+                                                                width: 50.0,
                                                                 child: (() {
 
-                                                                  switch(o.tipoNotaEnum){
-                                                                    case TipoNotaEnumUi.VALOR_NUMERICO:
-                                                                      return Center(
-                                                                        child: Text(o.nota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 24)),
-                                                                      );
-                                                                    case TipoNotaEnumUi.SELECTOR_NUMERICO:
-                                                                      return Center(
-                                                                        child: Text(o.nota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 24)),
-                                                                      );
-                                                                    case TipoNotaEnumUi.SELECTOR_VALORES:
-                                                                      return Center(
-                                                                        child: Text(o.tituloNota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 24)),
-                                                                      );
-                                                                    case TipoNotaEnumUi.SELECTOR_ICONOS:
-                                                                      return Column(
-                                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                                                        children: [
-                                                                          o.iconoNota != null && o.iconoNota.length > 0 ? CachedNetworkImage(
-                                                                              height: 40.0,
-                                                                              width: 40.0,
-                                                                              placeholder: (context, url) => CircularProgressIndicator(),
-                                                                              imageUrl: o.iconoNota,
-                                                                              imageBuilder: (context, imageProvider) => Container(
-                                                                                  decoration: BoxDecoration(
-                                                                                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                                                                                    image: DecorationImage(
-                                                                                      image: imageProvider,
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  )
-                                                                              )
-                                                                          ) : Container(),
-                                                                          SizedBox(height: 4),
-                                                                          Text(o.descNota, textAlign: TextAlign.center, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w500, fontSize: 12))
-                                                                        ],
-                                                                      );
-                                                                    case TipoNotaEnumUi.VALOR_ASISTENCIA:
-                                                                      return Center(
-                                                                        child: Text(o.nota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 24)),
-                                                                      );
+                                                                  if(o.rubroEvaluacionId!=null&&o.rubroEvaluacionId.length>0){
+                                                                    switch(o.tipoNotaEnum){
+                                                                      case TipoNotaEnumUi.VALOR_NUMERICO:
+                                                                        return Center(
+                                                                          child: Text(o.nota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 20)),
+                                                                        );
+                                                                      case TipoNotaEnumUi.SELECTOR_NUMERICO:
+                                                                        return Center(
+                                                                          child: Text(o.nota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 20)),
+                                                                        );
+                                                                      case TipoNotaEnumUi.SELECTOR_VALORES:
+                                                                        return Center(
+                                                                          child: Text(o.tituloNota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 20)),
+                                                                        );
+                                                                      case TipoNotaEnumUi.SELECTOR_ICONOS:
+                                                                        return Column(
+                                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            o.iconoNota != null && o.iconoNota.length > 0 ? CachedNetworkImage(
+                                                                                height: 30.0,
+                                                                                width: 30.0,
+                                                                                placeholder: (context, url) => CircularProgressIndicator(),
+                                                                                imageUrl: o.iconoNota,
+                                                                                imageBuilder: (context, imageProvider) => Container(
+                                                                                    decoration: BoxDecoration(
+                                                                                      borderRadius: BorderRadius.all(Radius.circular(30)),
+                                                                                      image: DecorationImage(
+                                                                                        image: imageProvider,
+                                                                                        fit: BoxFit.cover,
+                                                                                      ),
+                                                                                    )
+                                                                                )
+                                                                            ) : Container(),
+                                                                            SizedBox(height: 4),
+                                                                            Text(o.descNota, textAlign: TextAlign.center, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w500, fontSize: 9))
+                                                                          ],
+                                                                        );
+                                                                      case TipoNotaEnumUi.VALOR_ASISTENCIA:
+                                                                        return Center(
+                                                                          child: Text(o.nota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 20)),
+                                                                        );
+                                                                    }
                                                                   }
+
 
                                                                 }()),
                                                               )
@@ -439,7 +564,7 @@ class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionControlle
                   curve:
                   Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
               animationController: animationController,
-              child: ControlledWidgetBuilder<EvaluacionController>(
+              child: ControlledWidgetBuilder<TareaEvaluacionController>(
                   builder: (context, controller) {
                     return ListView.builder(
                         shrinkWrap: true,

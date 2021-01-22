@@ -450,7 +450,7 @@ class _BoletasNotasViewState extends ViewState<BoletasNotasView, BoletaNotaContr
                                     },
                                     child: Center(
                                       child: RotatedBox(quarterTurns: 1,
-                                          child: Text(controller.calendarioPeriodoList[index].nombre?.toUpperCase(), style: TextStyle(color: controller.calendarioPeriodoList[index].selected ? AppTheme.colorAccent: AppTheme.white, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w600, fontSize: 9), )
+                                          child: Text(controller.calendarioPeriodoList[index].nombre?.toUpperCase()??'', style: TextStyle(color: controller.calendarioPeriodoList[index].selected ? AppTheme.colorAccent: AppTheme.white, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w600, fontSize: 9), )
                                       ),
                                     ),
                                   ),

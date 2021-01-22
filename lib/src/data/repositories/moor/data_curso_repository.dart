@@ -7,9 +7,11 @@ import 'package:padre_mentor/src/domain/entities/contrato_ui_ui.dart';
 import 'package:padre_mentor/src/domain/entities/curso_boleta_ui.dart';
 import 'package:padre_mentor/src/domain/entities/curso_ui.dart';
 import 'package:padre_mentor/src/domain/entities/rubro_evaluacion_ui.dart';
+import 'package:padre_mentor/src/domain/entities/tarea_eval_curso_ui.dart';
 import 'package:padre_mentor/src/domain/entities/tipo_nota_enum_ui.dart';
 import 'package:padre_mentor/src/domain/repositories/curso_repository.dart';
 import 'package:padre_mentor/src/domain/tools/app_tools.dart';
+import 'package:intl/intl.dart';
 
 import 'database/app_database.dart';
 
@@ -266,6 +268,7 @@ class DataCursoRepository extends CursoRepository{
     }else if (tipoNotaId == 474){
       tipoNotaEnumUi = TipoNotaEnumUi.VALOR_ASISTENCIA;
     }
+    print("getTipoNotaEnumUi " + tipoNotaEnumUi.toString());
     return tipoNotaEnumUi;
   }
 
@@ -368,6 +371,98 @@ class DataCursoRepository extends CursoRepository{
       throw Exception(e);
     }
   }
+
+  @override
+  Future<void> saveTareaEvaluaciones(Map<String, dynamic> datosTareaEvalaucion) async{
+    AppDataBase SQL = AppDataBase();
+    try{
+      await SQL.batch((batch) async {
+        // functions in a batch don't have to be awaited - just
+        // await the whole batch afterwards.
+        //rubroEvalList.add(SerializableConvert.converSerializeRubroEvalDesempenio(item));
+        batch.insertAll(SQL.tareaCurso, SerializableConvert.converListSerializeTareaCurso(datosTareaEvalaucion["tareas"]), mode: InsertMode.insertOrReplace );
+
+      });
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<List<TareaEvaluacionCursoUi>> getTareaEvaluacionPorCurso(int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId) async{
+    print("getTareaEvaluacionPorCurso alumnoId: "+alumnoId.toString() + "anioAcademicoId: " + anioAcademicoId.toString() +" calendarioPeridoId: "+calendarioPeridoId.toString()+" programaEducativoId: "+programaId.toString());
+    AppDataBase SQL = AppDataBase();
+    try{
+
+      WebConfig webConfig = await (SQL.selectSingle(SQL.webConfigs)..where((tbl) => tbl.nombre.equals("wstr_UrlExpresiones"))).getSingle();
+      String urlExpresiones = webConfig?.content == null ? "" : webConfig.content;
+      /*
+      * Obtner tareas por cursos
+      * */
+      List<TareaEvaluacionCursoUi> tareaCursoUiList = [];
+
+      var query = SQL.select(SQL.tareaCurso)
+          .join([
+        leftOuterJoin(SQL.parametrosDisenio, SQL.tareaCurso.parametroDesenioId.equalsExp(SQL.parametrosDisenio.parametroDisenioId))]);
+      //
+      query.where(SQL.tareaCurso.anioAcademicoId.equals(anioAcademicoId));
+      query.where(SQL.tareaCurso.programaAcadId.equals(programaId));
+      query.where(SQL.tareaCurso.calendarioPeriodoId.equals(calendarioPeridoId));
+      query.where(SQL.tareaCurso.alumnoId.equals(alumnoId));
+      query.orderBy([OrderingTerm(expression: SQL.tareaCurso.silaboEventoId)]);
+      //query.where(SQL.evaluacionDesempenio.secRubroEvalProcesoId.equals(""));
+      var rows = await query.get();
+
+      ParametrosDisenioData defaultParametrosDisenioData = await (SQL.selectSingle(SQL.parametrosDisenio)..where((tbl) => tbl.nombre.equals("default"))).getSingle();
+
+      Future.forEach(rows, (item) {
+        TareaCursoData tareaCursoData = item.readTable(SQL.tareaCurso);
+        ParametrosDisenioData parametrosDisenioData = item.readTable(SQL.parametrosDisenio);
+        TareaEvaluacionCursoUi tareaEvaluacionCursoUi = TareaEvaluacionCursoUi();
+        tareaEvaluacionCursoUi.tareaId = tareaCursoData.tareaId;
+        tareaEvaluacionCursoUi.tituloTarea = tareaCursoData.tareaTitulo;
+        tareaEvaluacionCursoUi.nombreDocente = AppTools.capitalize(tareaCursoData.docenteNombre) + " " + AppTools.capitalize(tareaCursoData.docenteApellPat) + " " + AppTools.capitalize(tareaCursoData.docenteApellMat);
+        tareaEvaluacionCursoUi.fechaInicio = tareaCursoData.tareafechaCreacion;
+        tareaEvaluacionCursoUi.fechaEntrega =  tareaCursoData.tareaFechaEntrega!=null?AppTools.convertDateTimePtBR(tareaCursoData.tareaFechaEntrega, tareaCursoData.tareaHoraEntrega):null; //tareaCursoData.tareaFechaEntrega;
+        //tareaEvaluacionCursoUi.rubroEvalId = rubroEvalDesempenioData.rubroEvalProcesoId;
+        //tareaEvaluacionCursoUi.titulo = rubroEvalDesempenioData.tituloEvaluacion;
+
+        //tareaEvaluacionCursoUi.fecha = AppTools.f_fecha_letras(rubroEvalDesempenioData.fechaEvaluacion);
+        tareaEvaluacionCursoUi.tipoNotaEnum = getTipoNotaEnumUi(tareaCursoData.tipoIdNivelLogro);
+        tareaEvaluacionCursoUi.nota = tareaCursoData.notaEvalaucion != null ? tareaCursoData.notaEvalaucion.toStringAsFixed(1): "";
+        tareaEvaluacionCursoUi.iconoNota = tareaCursoData.iconoNivelLogro != null && tareaCursoData.iconoNivelLogro.length > 0 ? urlExpresiones + tareaCursoData.iconoNivelLogro: null;
+        tareaEvaluacionCursoUi.descNota = tareaCursoData.descripcionNivelLogro;
+        tareaEvaluacionCursoUi.tituloNota = tareaCursoData.tituloNivelLogro;
+        tareaEvaluacionCursoUi.cursoUi = CursoUi();
+        tareaEvaluacionCursoUi.cursoUi.silaboEventoId = tareaCursoData.silaboEventoId;
+        tareaEvaluacionCursoUi.cursoUi.cargaCursoId = tareaCursoData.cargaCursoId;
+        tareaEvaluacionCursoUi.cursoUi.nombre = tareaCursoData.nombreCurso;
+        tareaEvaluacionCursoUi.cursoUi.seccion = tareaCursoData.seccion;
+        tareaEvaluacionCursoUi.cursoUi.grado = tareaCursoData.grado;
+
+        tareaEvaluacionCursoUi.rubroEvaluacionId = tareaCursoData.rubroEvalProcesoId;
+
+        if(parametrosDisenioData!=null){
+          tareaEvaluacionCursoUi.cursoUi.colorCurso = parametrosDisenioData.color1;
+          tareaEvaluacionCursoUi.cursoUi.colorCurso2 = parametrosDisenioData.color2;
+          tareaEvaluacionCursoUi.cursoUi.colorCurso3 = parametrosDisenioData.color3;
+        }else{
+          if(defaultParametrosDisenioData!=null){
+            tareaEvaluacionCursoUi.cursoUi.colorCurso = defaultParametrosDisenioData.color1;
+            tareaEvaluacionCursoUi.cursoUi.colorCurso2 = defaultParametrosDisenioData.color2;
+            tareaEvaluacionCursoUi.cursoUi.colorCurso3 = defaultParametrosDisenioData.color3;
+          }
+        }
+        tareaCursoUiList.add(tareaEvaluacionCursoUi);
+      });
+
+
+      return tareaCursoUiList;
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+  
 
 
 }

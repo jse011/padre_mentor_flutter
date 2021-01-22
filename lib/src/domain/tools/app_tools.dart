@@ -1,7 +1,20 @@
 class AppTools {
   static String capitalize(String texto) {
     try{
-      return "${texto[0].toUpperCase()}${texto.substring(1).toLowerCase()}";
+      StringBuffer result = new StringBuffer();
+      int count = 0;
+      for (String ws in texto.split(" ")){
+        count++;
+        if(count > 1) result.write(" ");
+        if(ws.length < 2){
+        result.write(ws);
+        }else {
+          result.write(ws.substring(0, 1).toUpperCase());
+          result.write(ws.substring(1).toLowerCase());
+        }
+    }
+
+    return result.toString();
     }catch(e){
       return '';
     }
@@ -22,5 +35,34 @@ class AppTools {
     return mstr_fecha;
   }
 
+  static DateTime convertDateTimePtBR(String fecha, String hora)
+  {
+    DateTime parsedDate = DateTime.parse('0001-11-30 00:00:00.000');
+    try{
+
+      String day = "0001";
+      String month = "11";
+      String year = "30";
+
+      List<String> validadeSplit = fecha.split('/');
+
+      if(validadeSplit.length > 1)
+      {
+         day = validadeSplit[0].toString();
+         month = validadeSplit[1].toString();
+         year = validadeSplit[2].toString();
+      }
+
+      if(hora!=null&&hora.length > 0){
+        parsedDate = DateTime.parse('$year-$month-$day $hora');
+      }else{
+        parsedDate = DateTime.parse('$year-$month-$day 00:00:00.000');
+      }
+    }catch(e){
+        print("Error al convertir string to DateTime" + fecha!=null?fecha:"" +  hora!=null?hora:"");
+    }
+
+    return parsedDate;
+  }
 
 }

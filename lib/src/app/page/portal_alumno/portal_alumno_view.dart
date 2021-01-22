@@ -6,8 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:padre_mentor/src/app/page/boleta_notas/boleta_notas_router.dart';
+import 'package:padre_mentor/src/app/page/estado_cuenta/estado_cuenta.dart';
+import 'package:padre_mentor/src/app/page/estado_cuenta/estado_cuenta_router.dart';
 import 'package:padre_mentor/src/app/page/evaluacion/evaluacion_router.dart';
 import 'package:padre_mentor/src/app/page/portal_alumno/portal_alumno_controller.dart';
+import 'package:padre_mentor/src/app/page/tarea_evaluacion/tarea_evaluacion_router.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/app/widgets/animation_view.dart';
 import 'package:padre_mentor/src/app/widgets/area_list_view.dart';
@@ -285,7 +288,7 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                               onTap: () {
                                 var programaEducativo = controller.programaEducativoSelected;
                                 if(programaEducativo!=null){
-                                    Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo)); 
+                                    Navigator.of(context).push(TareaEvaluacionRouter.createRouteEvaluacion(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
                                 }
                               },
                           ),
@@ -390,7 +393,7 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                             onTap: () {
                               var programaEducativo = controller.programaEducativoSelected;
                                 if(programaEducativo!=null){
-                                    Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo)); 
+                                    Navigator.of(context).push(EstadoCuentaRouter.createRouteEstadoCuenta(alumnoId: programaEducativo.hijoId, fotoAlumno: programaEducativo.fotoHijo));
                                 }
                             },
                           )

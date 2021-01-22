@@ -16,6 +16,7 @@ import 'package:padre_mentor/src/data/repositories/moor/model/relaciones.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/rubro_eval_desempenio.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/session_user.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/silabo_evento.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/tarea_curso.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/tipos.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/usuario.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/web_configs.dart';
@@ -23,7 +24,7 @@ import 'package:padre_mentor/src/data/repositories/moor/model/web_configs.dart';
 part 'app_database.g.dart';
 
 @UseMoor(tables: [Persona, Usuario, SessionUser, Relaciones, AnioAcademicoAlumno, ProgramasEducativo, PlanEstudio, PlanCursos, CargaCurso, DetalleContratoAcad, Contrato, CalendarioAcademico, CalendarioPeriodo, Tipos,
-                  AreasBoleta, NotasCalendarioBoleta, ParametrosDisenio, SilaboEvento, RubroEvalDesempenio, WebConfigs])
+                  AreasBoleta, NotasCalendarioBoleta, ParametrosDisenio, SilaboEvento, RubroEvalDesempenio, WebConfigs, TareaCurso])
 class AppDataBase extends _$AppDataBase{
 
   @override

@@ -581,13 +581,20 @@ class WebConfigsSerial {
 
 @JsonSerializable()
 class TareaCursoSerializable{
-  String tareaEvaluacionId;
-  String nombreCurso;
+  String tareaId;
+  String tareaTitulo;
+  String tareaInstrucciones;
+  int tareafechaCreacion;
+  String tareaEstadoId;
+  int unidadAprendizajeId;
+  int sesionAprendizajeId;
+  String tareaFechaEntrega;
+  String tareaHoraEntrega;
   int gradoId;
   String grado;
   int seccionId;
   String seccion;
-  int fechaEvaluacion;
+  int fechaEvaluacion; //long
   String tituloEvaluacion;
   String formaEvaluacion;
   int tipoRubroEvalId;
@@ -604,10 +611,23 @@ class TareaCursoSerializable{
   String descripcionNivelLogro;
   int tipoIdNivelLogro;
   double notaEvalaucion;
-  int evaluacionProcesoId;
+  String evaluacionProcesoId;
+  String nombreCurso;
+
+  String docenteApellMat;
+  String docenteApellPat;
+  String docenteNombre;
+
   TareaCursoSerializable(
-    {this.tareaEvaluacionId,
-      this.nombreCurso,
+    {this.tareaId,
+      this.tareaTitulo,
+      this.tareaInstrucciones,
+      this.tareafechaCreacion,
+      this.tareaEstadoId,
+      this.unidadAprendizajeId,
+      this.sesionAprendizajeId,
+      this.tareaFechaEntrega,
+      this.tareaHoraEntrega,
       this.gradoId,
       this.grado,
       this.seccionId,
@@ -629,6 +649,13 @@ class TareaCursoSerializable{
       this.descripcionNivelLogro,
       this.tipoIdNivelLogro,
       this.notaEvalaucion,
-      this.evaluacionProcesoId
-    });
+      this.evaluacionProcesoId,
+      this.nombreCurso,
+    this.docenteApellMat,
+    this.docenteApellPat,
+    this.docenteNombre});
+
+  factory TareaCursoSerializable.fromJson(Map<String, dynamic> json) => _$TareaCursoSerializableFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TareaCursoSerializableToJson(this);
 }

@@ -39,6 +39,7 @@ dependencies:
   moor_flutter: ^3.1.0
   auto_size_text: ^2.1.0
   carousel_slider: ^2.3.1
+  webview_flutter: ^1.0.7
 dev_dependencies:
   flutter_test:
     sdk: flutter

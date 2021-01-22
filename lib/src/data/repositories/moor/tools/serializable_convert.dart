@@ -479,5 +479,55 @@ class SerializableConvert{
     return items;
   }
 
+  static TareaCursoData converSerializeTareaCurso(Map<String,dynamic> model){
+    TareaCursoSerializable serial = TareaCursoSerializable.fromJson(model);
+    return TareaCursoData(
+        tareaId: serial.tareaId,
+    tareaTitulo: serial.tareaTitulo,
+    tareaInstrucciones: serial.tareaInstrucciones,
+    tareafechaCreacion: DateTime.fromMillisecondsSinceEpoch(serial.tareafechaCreacion),
+    tareaEstadoId: serial.tareaEstadoId,
+    unidadAprendizajeId: serial.unidadAprendizajeId,
+    sesionAprendizajeId: serial.sesionAprendizajeId,
+    tareaFechaEntrega: serial.tareaFechaEntrega,
+    tareaHoraEntrega: serial.tareaHoraEntrega,
+    gradoId: serial.gradoId,
+    grado: serial.grado,
+    seccionId: serial.seccionId,
+    seccion: serial.seccion,
+    fechaEvaluacion: DateTime.fromMillisecondsSinceEpoch(serial.fechaEvaluacion),
+    tituloEvaluacion: serial.tituloEvaluacion,
+    formaEvaluacion: serial.formaEvaluacion,
+    tipoRubroEvalId: serial.tipoRubroEvalId,
+    cargaCursoId: serial.cargaCursoId,
+    silaboEventoId: serial.silaboEventoId,
+    anioAcademicoId: serial.anioAcademicoId,
+    programaAcadId: serial.programaAcadId,
+    rubroEvalProcesoId: serial.rubroEvalProcesoId,
+    alumnoId: serial.alumnoId,
+    calendarioPeriodoId: serial.calendarioPeriodoId,
+    parametroDesenioId: serial.parametroDesenioId,
+    iconoNivelLogro: serial.iconoNivelLogro,
+    tituloNivelLogro: serial.tituloNivelLogro,
+    descripcionNivelLogro: serial.descripcionNivelLogro,
+    tipoIdNivelLogro: serial.tipoIdNivelLogro,
+    notaEvalaucion: serial.notaEvalaucion,
+    evaluacionProcesoId: serial.evaluacionProcesoId,
+    nombreCurso: serial.nombreCurso,
+      docenteApellMat: serial.docenteApellMat,
+      docenteApellPat: serial.docenteApellPat,
+      docenteNombre: serial.docenteNombre
+    );
+  }
+
+  static List<TareaCursoData> converListSerializeTareaCurso(dynamic model){
+    List<TareaCursoData> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeTareaCurso(item));
+    }
+    return items;
+  }
+
 
 }

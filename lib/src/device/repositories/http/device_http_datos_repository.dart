@@ -94,5 +94,33 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
     }
   }
 
+  @override
+  Future<Map<String, dynamic>> getTareaPorCurso(int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId)async {
+    Map<String, dynamic> parameters = Map<String, dynamic>();
+    parameters["vint_alumnoId"] = alumnoId;
+    parameters["vint_programaEduId"] = programaId;
+    parameters["vstr_calendarioPeriodo"] = calendarioPeridoId;
+    parameters["vint_anioAcademicoId"] = anioAcademicoId;
+    final response = await http.post(url, body: getBody("getTareaPorCurso",parameters));
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      Map<String,dynamic> body = json.decode(response.body);
+      if(body.containsKey("Successful")&&body.containsKey("Value")){
+        List<dynamic> lista = body["Value"];
+        Map<String, dynamic> salida = new  Map<String, dynamic>();
+        salida["tareas"] = lista;
+        return salida;
+      }else{
+        throw Exception('Failed to load evaluaciones 1');
+      }
+
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load evaluaciones 0');
+    }
+  }
+
 
 }

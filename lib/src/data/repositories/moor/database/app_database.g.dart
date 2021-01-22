@@ -11710,6 +11710,1846 @@ class $WebConfigsTable extends WebConfigs
   }
 }
 
+class TareaCursoData extends DataClass implements Insertable<TareaCursoData> {
+  final String tareaId;
+  final String tareaTitulo;
+  final String tareaInstrucciones;
+  final DateTime tareafechaCreacion;
+  final String tareaEstadoId;
+  final int unidadAprendizajeId;
+  final int sesionAprendizajeId;
+  final String tareaFechaEntrega;
+  final String tareaHoraEntrega;
+  final int gradoId;
+  final String grado;
+  final int seccionId;
+  final String seccion;
+  final DateTime fechaEvaluacion;
+  final String tituloEvaluacion;
+  final String formaEvaluacion;
+  final int tipoRubroEvalId;
+  final int cargaCursoId;
+  final int silaboEventoId;
+  final int anioAcademicoId;
+  final int programaAcadId;
+  final String rubroEvalProcesoId;
+  final int alumnoId;
+  final int calendarioPeriodoId;
+  final int parametroDesenioId;
+  final String iconoNivelLogro;
+  final String tituloNivelLogro;
+  final String descripcionNivelLogro;
+  final int tipoIdNivelLogro;
+  final double notaEvalaucion;
+  final String evaluacionProcesoId;
+  final String nombreCurso;
+  final String docenteApellMat;
+  final String docenteApellPat;
+  final String docenteNombre;
+  TareaCursoData(
+      {@required this.tareaId,
+      this.tareaTitulo,
+      this.tareaInstrucciones,
+      this.tareafechaCreacion,
+      this.tareaEstadoId,
+      this.unidadAprendizajeId,
+      this.sesionAprendizajeId,
+      this.tareaFechaEntrega,
+      this.tareaHoraEntrega,
+      this.gradoId,
+      this.grado,
+      this.seccionId,
+      this.seccion,
+      this.fechaEvaluacion,
+      this.tituloEvaluacion,
+      this.formaEvaluacion,
+      this.tipoRubroEvalId,
+      this.cargaCursoId,
+      this.silaboEventoId,
+      this.anioAcademicoId,
+      this.programaAcadId,
+      this.rubroEvalProcesoId,
+      this.alumnoId,
+      this.calendarioPeriodoId,
+      this.parametroDesenioId,
+      this.iconoNivelLogro,
+      this.tituloNivelLogro,
+      this.descripcionNivelLogro,
+      this.tipoIdNivelLogro,
+      this.notaEvalaucion,
+      this.evaluacionProcesoId,
+      this.nombreCurso,
+      this.docenteApellMat,
+      this.docenteApellPat,
+      this.docenteNombre});
+  factory TareaCursoData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final stringType = db.typeSystem.forDartType<String>();
+    final dateTimeType = db.typeSystem.forDartType<DateTime>();
+    final intType = db.typeSystem.forDartType<int>();
+    final doubleType = db.typeSystem.forDartType<double>();
+    return TareaCursoData(
+      tareaId: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}tarea_id']),
+      tareaTitulo: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}tarea_titulo']),
+      tareaInstrucciones: stringType.mapFromDatabaseResponse(
+          data['${effectivePrefix}tarea_instrucciones']),
+      tareafechaCreacion: dateTimeType.mapFromDatabaseResponse(
+          data['${effectivePrefix}tareafecha_creacion']),
+      tareaEstadoId: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}tarea_estado_id']),
+      unidadAprendizajeId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}unidad_aprendizaje_id']),
+      sesionAprendizajeId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}sesion_aprendizaje_id']),
+      tareaFechaEntrega: stringType.mapFromDatabaseResponse(
+          data['${effectivePrefix}tarea_fecha_entrega']),
+      tareaHoraEntrega: stringType.mapFromDatabaseResponse(
+          data['${effectivePrefix}tarea_hora_entrega']),
+      gradoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}grado_id']),
+      grado:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}grado']),
+      seccionId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}seccion_id']),
+      seccion:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}seccion']),
+      fechaEvaluacion: dateTimeType
+          .mapFromDatabaseResponse(data['${effectivePrefix}fecha_evaluacion']),
+      tituloEvaluacion: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}titulo_evaluacion']),
+      formaEvaluacion: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}forma_evaluacion']),
+      tipoRubroEvalId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}tipo_rubro_eval_id']),
+      cargaCursoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}carga_curso_id']),
+      silaboEventoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}silabo_evento_id']),
+      anioAcademicoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}anio_academico_id']),
+      programaAcadId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}programa_acad_id']),
+      rubroEvalProcesoId: stringType.mapFromDatabaseResponse(
+          data['${effectivePrefix}rubro_eval_proceso_id']),
+      alumnoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}alumno_id']),
+      calendarioPeriodoId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}calendario_periodo_id']),
+      parametroDesenioId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}parametro_desenio_id']),
+      iconoNivelLogro: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}icono_nivel_logro']),
+      tituloNivelLogro: stringType.mapFromDatabaseResponse(
+          data['${effectivePrefix}titulo_nivel_logro']),
+      descripcionNivelLogro: stringType.mapFromDatabaseResponse(
+          data['${effectivePrefix}descripcion_nivel_logro']),
+      tipoIdNivelLogro: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}tipo_id_nivel_logro']),
+      notaEvalaucion: doubleType
+          .mapFromDatabaseResponse(data['${effectivePrefix}nota_evalaucion']),
+      evaluacionProcesoId: stringType.mapFromDatabaseResponse(
+          data['${effectivePrefix}evaluacion_proceso_id']),
+      nombreCurso: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}nombre_curso']),
+      docenteApellMat: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}docente_apell_mat']),
+      docenteApellPat: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}docente_apell_pat']),
+      docenteNombre: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}docente_nombre']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || tareaId != null) {
+      map['tarea_id'] = Variable<String>(tareaId);
+    }
+    if (!nullToAbsent || tareaTitulo != null) {
+      map['tarea_titulo'] = Variable<String>(tareaTitulo);
+    }
+    if (!nullToAbsent || tareaInstrucciones != null) {
+      map['tarea_instrucciones'] = Variable<String>(tareaInstrucciones);
+    }
+    if (!nullToAbsent || tareafechaCreacion != null) {
+      map['tareafecha_creacion'] = Variable<DateTime>(tareafechaCreacion);
+    }
+    if (!nullToAbsent || tareaEstadoId != null) {
+      map['tarea_estado_id'] = Variable<String>(tareaEstadoId);
+    }
+    if (!nullToAbsent || unidadAprendizajeId != null) {
+      map['unidad_aprendizaje_id'] = Variable<int>(unidadAprendizajeId);
+    }
+    if (!nullToAbsent || sesionAprendizajeId != null) {
+      map['sesion_aprendizaje_id'] = Variable<int>(sesionAprendizajeId);
+    }
+    if (!nullToAbsent || tareaFechaEntrega != null) {
+      map['tarea_fecha_entrega'] = Variable<String>(tareaFechaEntrega);
+    }
+    if (!nullToAbsent || tareaHoraEntrega != null) {
+      map['tarea_hora_entrega'] = Variable<String>(tareaHoraEntrega);
+    }
+    if (!nullToAbsent || gradoId != null) {
+      map['grado_id'] = Variable<int>(gradoId);
+    }
+    if (!nullToAbsent || grado != null) {
+      map['grado'] = Variable<String>(grado);
+    }
+    if (!nullToAbsent || seccionId != null) {
+      map['seccion_id'] = Variable<int>(seccionId);
+    }
+    if (!nullToAbsent || seccion != null) {
+      map['seccion'] = Variable<String>(seccion);
+    }
+    if (!nullToAbsent || fechaEvaluacion != null) {
+      map['fecha_evaluacion'] = Variable<DateTime>(fechaEvaluacion);
+    }
+    if (!nullToAbsent || tituloEvaluacion != null) {
+      map['titulo_evaluacion'] = Variable<String>(tituloEvaluacion);
+    }
+    if (!nullToAbsent || formaEvaluacion != null) {
+      map['forma_evaluacion'] = Variable<String>(formaEvaluacion);
+    }
+    if (!nullToAbsent || tipoRubroEvalId != null) {
+      map['tipo_rubro_eval_id'] = Variable<int>(tipoRubroEvalId);
+    }
+    if (!nullToAbsent || cargaCursoId != null) {
+      map['carga_curso_id'] = Variable<int>(cargaCursoId);
+    }
+    if (!nullToAbsent || silaboEventoId != null) {
+      map['silabo_evento_id'] = Variable<int>(silaboEventoId);
+    }
+    if (!nullToAbsent || anioAcademicoId != null) {
+      map['anio_academico_id'] = Variable<int>(anioAcademicoId);
+    }
+    if (!nullToAbsent || programaAcadId != null) {
+      map['programa_acad_id'] = Variable<int>(programaAcadId);
+    }
+    if (!nullToAbsent || rubroEvalProcesoId != null) {
+      map['rubro_eval_proceso_id'] = Variable<String>(rubroEvalProcesoId);
+    }
+    if (!nullToAbsent || alumnoId != null) {
+      map['alumno_id'] = Variable<int>(alumnoId);
+    }
+    if (!nullToAbsent || calendarioPeriodoId != null) {
+      map['calendario_periodo_id'] = Variable<int>(calendarioPeriodoId);
+    }
+    if (!nullToAbsent || parametroDesenioId != null) {
+      map['parametro_desenio_id'] = Variable<int>(parametroDesenioId);
+    }
+    if (!nullToAbsent || iconoNivelLogro != null) {
+      map['icono_nivel_logro'] = Variable<String>(iconoNivelLogro);
+    }
+    if (!nullToAbsent || tituloNivelLogro != null) {
+      map['titulo_nivel_logro'] = Variable<String>(tituloNivelLogro);
+    }
+    if (!nullToAbsent || descripcionNivelLogro != null) {
+      map['descripcion_nivel_logro'] = Variable<String>(descripcionNivelLogro);
+    }
+    if (!nullToAbsent || tipoIdNivelLogro != null) {
+      map['tipo_id_nivel_logro'] = Variable<int>(tipoIdNivelLogro);
+    }
+    if (!nullToAbsent || notaEvalaucion != null) {
+      map['nota_evalaucion'] = Variable<double>(notaEvalaucion);
+    }
+    if (!nullToAbsent || evaluacionProcesoId != null) {
+      map['evaluacion_proceso_id'] = Variable<String>(evaluacionProcesoId);
+    }
+    if (!nullToAbsent || nombreCurso != null) {
+      map['nombre_curso'] = Variable<String>(nombreCurso);
+    }
+    if (!nullToAbsent || docenteApellMat != null) {
+      map['docente_apell_mat'] = Variable<String>(docenteApellMat);
+    }
+    if (!nullToAbsent || docenteApellPat != null) {
+      map['docente_apell_pat'] = Variable<String>(docenteApellPat);
+    }
+    if (!nullToAbsent || docenteNombre != null) {
+      map['docente_nombre'] = Variable<String>(docenteNombre);
+    }
+    return map;
+  }
+
+  TareaCursoCompanion toCompanion(bool nullToAbsent) {
+    return TareaCursoCompanion(
+      tareaId: tareaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tareaId),
+      tareaTitulo: tareaTitulo == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tareaTitulo),
+      tareaInstrucciones: tareaInstrucciones == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tareaInstrucciones),
+      tareafechaCreacion: tareafechaCreacion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tareafechaCreacion),
+      tareaEstadoId: tareaEstadoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tareaEstadoId),
+      unidadAprendizajeId: unidadAprendizajeId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(unidadAprendizajeId),
+      sesionAprendizajeId: sesionAprendizajeId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(sesionAprendizajeId),
+      tareaFechaEntrega: tareaFechaEntrega == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tareaFechaEntrega),
+      tareaHoraEntrega: tareaHoraEntrega == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tareaHoraEntrega),
+      gradoId: gradoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(gradoId),
+      grado:
+          grado == null && nullToAbsent ? const Value.absent() : Value(grado),
+      seccionId: seccionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(seccionId),
+      seccion: seccion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(seccion),
+      fechaEvaluacion: fechaEvaluacion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fechaEvaluacion),
+      tituloEvaluacion: tituloEvaluacion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tituloEvaluacion),
+      formaEvaluacion: formaEvaluacion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(formaEvaluacion),
+      tipoRubroEvalId: tipoRubroEvalId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tipoRubroEvalId),
+      cargaCursoId: cargaCursoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cargaCursoId),
+      silaboEventoId: silaboEventoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(silaboEventoId),
+      anioAcademicoId: anioAcademicoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(anioAcademicoId),
+      programaAcadId: programaAcadId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(programaAcadId),
+      rubroEvalProcesoId: rubroEvalProcesoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(rubroEvalProcesoId),
+      alumnoId: alumnoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(alumnoId),
+      calendarioPeriodoId: calendarioPeriodoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(calendarioPeriodoId),
+      parametroDesenioId: parametroDesenioId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parametroDesenioId),
+      iconoNivelLogro: iconoNivelLogro == null && nullToAbsent
+          ? const Value.absent()
+          : Value(iconoNivelLogro),
+      tituloNivelLogro: tituloNivelLogro == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tituloNivelLogro),
+      descripcionNivelLogro: descripcionNivelLogro == null && nullToAbsent
+          ? const Value.absent()
+          : Value(descripcionNivelLogro),
+      tipoIdNivelLogro: tipoIdNivelLogro == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tipoIdNivelLogro),
+      notaEvalaucion: notaEvalaucion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(notaEvalaucion),
+      evaluacionProcesoId: evaluacionProcesoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(evaluacionProcesoId),
+      nombreCurso: nombreCurso == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nombreCurso),
+      docenteApellMat: docenteApellMat == null && nullToAbsent
+          ? const Value.absent()
+          : Value(docenteApellMat),
+      docenteApellPat: docenteApellPat == null && nullToAbsent
+          ? const Value.absent()
+          : Value(docenteApellPat),
+      docenteNombre: docenteNombre == null && nullToAbsent
+          ? const Value.absent()
+          : Value(docenteNombre),
+    );
+  }
+
+  factory TareaCursoData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return TareaCursoData(
+      tareaId: serializer.fromJson<String>(json['tareaId']),
+      tareaTitulo: serializer.fromJson<String>(json['tareaTitulo']),
+      tareaInstrucciones:
+          serializer.fromJson<String>(json['tareaInstrucciones']),
+      tareafechaCreacion:
+          serializer.fromJson<DateTime>(json['tareafechaCreacion']),
+      tareaEstadoId: serializer.fromJson<String>(json['tareaEstadoId']),
+      unidadAprendizajeId:
+          serializer.fromJson<int>(json['unidadAprendizajeId']),
+      sesionAprendizajeId:
+          serializer.fromJson<int>(json['sesionAprendizajeId']),
+      tareaFechaEntrega: serializer.fromJson<String>(json['tareaFechaEntrega']),
+      tareaHoraEntrega: serializer.fromJson<String>(json['tareaHoraEntrega']),
+      gradoId: serializer.fromJson<int>(json['gradoId']),
+      grado: serializer.fromJson<String>(json['grado']),
+      seccionId: serializer.fromJson<int>(json['seccionId']),
+      seccion: serializer.fromJson<String>(json['seccion']),
+      fechaEvaluacion: serializer.fromJson<DateTime>(json['fechaEvaluacion']),
+      tituloEvaluacion: serializer.fromJson<String>(json['tituloEvaluacion']),
+      formaEvaluacion: serializer.fromJson<String>(json['formaEvaluacion']),
+      tipoRubroEvalId: serializer.fromJson<int>(json['tipoRubroEvalId']),
+      cargaCursoId: serializer.fromJson<int>(json['cargaCursoId']),
+      silaboEventoId: serializer.fromJson<int>(json['silaboEventoId']),
+      anioAcademicoId: serializer.fromJson<int>(json['anioAcademicoId']),
+      programaAcadId: serializer.fromJson<int>(json['programaAcadId']),
+      rubroEvalProcesoId:
+          serializer.fromJson<String>(json['rubroEvalProcesoId']),
+      alumnoId: serializer.fromJson<int>(json['alumnoId']),
+      calendarioPeriodoId:
+          serializer.fromJson<int>(json['calendarioPeriodoId']),
+      parametroDesenioId: serializer.fromJson<int>(json['parametroDesenioId']),
+      iconoNivelLogro: serializer.fromJson<String>(json['iconoNivelLogro']),
+      tituloNivelLogro: serializer.fromJson<String>(json['tituloNivelLogro']),
+      descripcionNivelLogro:
+          serializer.fromJson<String>(json['descripcionNivelLogro']),
+      tipoIdNivelLogro: serializer.fromJson<int>(json['tipoIdNivelLogro']),
+      notaEvalaucion: serializer.fromJson<double>(json['notaEvalaucion']),
+      evaluacionProcesoId:
+          serializer.fromJson<String>(json['evaluacionProcesoId']),
+      nombreCurso: serializer.fromJson<String>(json['nombreCurso']),
+      docenteApellMat: serializer.fromJson<String>(json['docenteApellMat']),
+      docenteApellPat: serializer.fromJson<String>(json['docenteApellPat']),
+      docenteNombre: serializer.fromJson<String>(json['docenteNombre']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'tareaId': serializer.toJson<String>(tareaId),
+      'tareaTitulo': serializer.toJson<String>(tareaTitulo),
+      'tareaInstrucciones': serializer.toJson<String>(tareaInstrucciones),
+      'tareafechaCreacion': serializer.toJson<DateTime>(tareafechaCreacion),
+      'tareaEstadoId': serializer.toJson<String>(tareaEstadoId),
+      'unidadAprendizajeId': serializer.toJson<int>(unidadAprendizajeId),
+      'sesionAprendizajeId': serializer.toJson<int>(sesionAprendizajeId),
+      'tareaFechaEntrega': serializer.toJson<String>(tareaFechaEntrega),
+      'tareaHoraEntrega': serializer.toJson<String>(tareaHoraEntrega),
+      'gradoId': serializer.toJson<int>(gradoId),
+      'grado': serializer.toJson<String>(grado),
+      'seccionId': serializer.toJson<int>(seccionId),
+      'seccion': serializer.toJson<String>(seccion),
+      'fechaEvaluacion': serializer.toJson<DateTime>(fechaEvaluacion),
+      'tituloEvaluacion': serializer.toJson<String>(tituloEvaluacion),
+      'formaEvaluacion': serializer.toJson<String>(formaEvaluacion),
+      'tipoRubroEvalId': serializer.toJson<int>(tipoRubroEvalId),
+      'cargaCursoId': serializer.toJson<int>(cargaCursoId),
+      'silaboEventoId': serializer.toJson<int>(silaboEventoId),
+      'anioAcademicoId': serializer.toJson<int>(anioAcademicoId),
+      'programaAcadId': serializer.toJson<int>(programaAcadId),
+      'rubroEvalProcesoId': serializer.toJson<String>(rubroEvalProcesoId),
+      'alumnoId': serializer.toJson<int>(alumnoId),
+      'calendarioPeriodoId': serializer.toJson<int>(calendarioPeriodoId),
+      'parametroDesenioId': serializer.toJson<int>(parametroDesenioId),
+      'iconoNivelLogro': serializer.toJson<String>(iconoNivelLogro),
+      'tituloNivelLogro': serializer.toJson<String>(tituloNivelLogro),
+      'descripcionNivelLogro': serializer.toJson<String>(descripcionNivelLogro),
+      'tipoIdNivelLogro': serializer.toJson<int>(tipoIdNivelLogro),
+      'notaEvalaucion': serializer.toJson<double>(notaEvalaucion),
+      'evaluacionProcesoId': serializer.toJson<String>(evaluacionProcesoId),
+      'nombreCurso': serializer.toJson<String>(nombreCurso),
+      'docenteApellMat': serializer.toJson<String>(docenteApellMat),
+      'docenteApellPat': serializer.toJson<String>(docenteApellPat),
+      'docenteNombre': serializer.toJson<String>(docenteNombre),
+    };
+  }
+
+  TareaCursoData copyWith(
+          {String tareaId,
+          String tareaTitulo,
+          String tareaInstrucciones,
+          DateTime tareafechaCreacion,
+          String tareaEstadoId,
+          int unidadAprendizajeId,
+          int sesionAprendizajeId,
+          String tareaFechaEntrega,
+          String tareaHoraEntrega,
+          int gradoId,
+          String grado,
+          int seccionId,
+          String seccion,
+          DateTime fechaEvaluacion,
+          String tituloEvaluacion,
+          String formaEvaluacion,
+          int tipoRubroEvalId,
+          int cargaCursoId,
+          int silaboEventoId,
+          int anioAcademicoId,
+          int programaAcadId,
+          String rubroEvalProcesoId,
+          int alumnoId,
+          int calendarioPeriodoId,
+          int parametroDesenioId,
+          String iconoNivelLogro,
+          String tituloNivelLogro,
+          String descripcionNivelLogro,
+          int tipoIdNivelLogro,
+          double notaEvalaucion,
+          String evaluacionProcesoId,
+          String nombreCurso,
+          String docenteApellMat,
+          String docenteApellPat,
+          String docenteNombre}) =>
+      TareaCursoData(
+        tareaId: tareaId ?? this.tareaId,
+        tareaTitulo: tareaTitulo ?? this.tareaTitulo,
+        tareaInstrucciones: tareaInstrucciones ?? this.tareaInstrucciones,
+        tareafechaCreacion: tareafechaCreacion ?? this.tareafechaCreacion,
+        tareaEstadoId: tareaEstadoId ?? this.tareaEstadoId,
+        unidadAprendizajeId: unidadAprendizajeId ?? this.unidadAprendizajeId,
+        sesionAprendizajeId: sesionAprendizajeId ?? this.sesionAprendizajeId,
+        tareaFechaEntrega: tareaFechaEntrega ?? this.tareaFechaEntrega,
+        tareaHoraEntrega: tareaHoraEntrega ?? this.tareaHoraEntrega,
+        gradoId: gradoId ?? this.gradoId,
+        grado: grado ?? this.grado,
+        seccionId: seccionId ?? this.seccionId,
+        seccion: seccion ?? this.seccion,
+        fechaEvaluacion: fechaEvaluacion ?? this.fechaEvaluacion,
+        tituloEvaluacion: tituloEvaluacion ?? this.tituloEvaluacion,
+        formaEvaluacion: formaEvaluacion ?? this.formaEvaluacion,
+        tipoRubroEvalId: tipoRubroEvalId ?? this.tipoRubroEvalId,
+        cargaCursoId: cargaCursoId ?? this.cargaCursoId,
+        silaboEventoId: silaboEventoId ?? this.silaboEventoId,
+        anioAcademicoId: anioAcademicoId ?? this.anioAcademicoId,
+        programaAcadId: programaAcadId ?? this.programaAcadId,
+        rubroEvalProcesoId: rubroEvalProcesoId ?? this.rubroEvalProcesoId,
+        alumnoId: alumnoId ?? this.alumnoId,
+        calendarioPeriodoId: calendarioPeriodoId ?? this.calendarioPeriodoId,
+        parametroDesenioId: parametroDesenioId ?? this.parametroDesenioId,
+        iconoNivelLogro: iconoNivelLogro ?? this.iconoNivelLogro,
+        tituloNivelLogro: tituloNivelLogro ?? this.tituloNivelLogro,
+        descripcionNivelLogro:
+            descripcionNivelLogro ?? this.descripcionNivelLogro,
+        tipoIdNivelLogro: tipoIdNivelLogro ?? this.tipoIdNivelLogro,
+        notaEvalaucion: notaEvalaucion ?? this.notaEvalaucion,
+        evaluacionProcesoId: evaluacionProcesoId ?? this.evaluacionProcesoId,
+        nombreCurso: nombreCurso ?? this.nombreCurso,
+        docenteApellMat: docenteApellMat ?? this.docenteApellMat,
+        docenteApellPat: docenteApellPat ?? this.docenteApellPat,
+        docenteNombre: docenteNombre ?? this.docenteNombre,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('TareaCursoData(')
+          ..write('tareaId: $tareaId, ')
+          ..write('tareaTitulo: $tareaTitulo, ')
+          ..write('tareaInstrucciones: $tareaInstrucciones, ')
+          ..write('tareafechaCreacion: $tareafechaCreacion, ')
+          ..write('tareaEstadoId: $tareaEstadoId, ')
+          ..write('unidadAprendizajeId: $unidadAprendizajeId, ')
+          ..write('sesionAprendizajeId: $sesionAprendizajeId, ')
+          ..write('tareaFechaEntrega: $tareaFechaEntrega, ')
+          ..write('tareaHoraEntrega: $tareaHoraEntrega, ')
+          ..write('gradoId: $gradoId, ')
+          ..write('grado: $grado, ')
+          ..write('seccionId: $seccionId, ')
+          ..write('seccion: $seccion, ')
+          ..write('fechaEvaluacion: $fechaEvaluacion, ')
+          ..write('tituloEvaluacion: $tituloEvaluacion, ')
+          ..write('formaEvaluacion: $formaEvaluacion, ')
+          ..write('tipoRubroEvalId: $tipoRubroEvalId, ')
+          ..write('cargaCursoId: $cargaCursoId, ')
+          ..write('silaboEventoId: $silaboEventoId, ')
+          ..write('anioAcademicoId: $anioAcademicoId, ')
+          ..write('programaAcadId: $programaAcadId, ')
+          ..write('rubroEvalProcesoId: $rubroEvalProcesoId, ')
+          ..write('alumnoId: $alumnoId, ')
+          ..write('calendarioPeriodoId: $calendarioPeriodoId, ')
+          ..write('parametroDesenioId: $parametroDesenioId, ')
+          ..write('iconoNivelLogro: $iconoNivelLogro, ')
+          ..write('tituloNivelLogro: $tituloNivelLogro, ')
+          ..write('descripcionNivelLogro: $descripcionNivelLogro, ')
+          ..write('tipoIdNivelLogro: $tipoIdNivelLogro, ')
+          ..write('notaEvalaucion: $notaEvalaucion, ')
+          ..write('evaluacionProcesoId: $evaluacionProcesoId, ')
+          ..write('nombreCurso: $nombreCurso, ')
+          ..write('docenteApellMat: $docenteApellMat, ')
+          ..write('docenteApellPat: $docenteApellPat, ')
+          ..write('docenteNombre: $docenteNombre')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      tareaId.hashCode,
+      $mrjc(
+          tareaTitulo.hashCode,
+          $mrjc(
+              tareaInstrucciones.hashCode,
+              $mrjc(
+                  tareafechaCreacion.hashCode,
+                  $mrjc(
+                      tareaEstadoId.hashCode,
+                      $mrjc(
+                          unidadAprendizajeId.hashCode,
+                          $mrjc(
+                              sesionAprendizajeId.hashCode,
+                              $mrjc(
+                                  tareaFechaEntrega.hashCode,
+                                  $mrjc(
+                                      tareaHoraEntrega.hashCode,
+                                      $mrjc(
+                                          gradoId.hashCode,
+                                          $mrjc(
+                                              grado.hashCode,
+                                              $mrjc(
+                                                  seccionId.hashCode,
+                                                  $mrjc(
+                                                      seccion.hashCode,
+                                                      $mrjc(
+                                                          fechaEvaluacion
+                                                              .hashCode,
+                                                          $mrjc(
+                                                              tituloEvaluacion
+                                                                  .hashCode,
+                                                              $mrjc(
+                                                                  formaEvaluacion
+                                                                      .hashCode,
+                                                                  $mrjc(
+                                                                      tipoRubroEvalId
+                                                                          .hashCode,
+                                                                      $mrjc(
+                                                                          cargaCursoId
+                                                                              .hashCode,
+                                                                          $mrjc(
+                                                                              silaboEventoId.hashCode,
+                                                                              $mrjc(anioAcademicoId.hashCode, $mrjc(programaAcadId.hashCode, $mrjc(rubroEvalProcesoId.hashCode, $mrjc(alumnoId.hashCode, $mrjc(calendarioPeriodoId.hashCode, $mrjc(parametroDesenioId.hashCode, $mrjc(iconoNivelLogro.hashCode, $mrjc(tituloNivelLogro.hashCode, $mrjc(descripcionNivelLogro.hashCode, $mrjc(tipoIdNivelLogro.hashCode, $mrjc(notaEvalaucion.hashCode, $mrjc(evaluacionProcesoId.hashCode, $mrjc(nombreCurso.hashCode, $mrjc(docenteApellMat.hashCode, $mrjc(docenteApellPat.hashCode, docenteNombre.hashCode)))))))))))))))))))))))))))))))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is TareaCursoData &&
+          other.tareaId == this.tareaId &&
+          other.tareaTitulo == this.tareaTitulo &&
+          other.tareaInstrucciones == this.tareaInstrucciones &&
+          other.tareafechaCreacion == this.tareafechaCreacion &&
+          other.tareaEstadoId == this.tareaEstadoId &&
+          other.unidadAprendizajeId == this.unidadAprendizajeId &&
+          other.sesionAprendizajeId == this.sesionAprendizajeId &&
+          other.tareaFechaEntrega == this.tareaFechaEntrega &&
+          other.tareaHoraEntrega == this.tareaHoraEntrega &&
+          other.gradoId == this.gradoId &&
+          other.grado == this.grado &&
+          other.seccionId == this.seccionId &&
+          other.seccion == this.seccion &&
+          other.fechaEvaluacion == this.fechaEvaluacion &&
+          other.tituloEvaluacion == this.tituloEvaluacion &&
+          other.formaEvaluacion == this.formaEvaluacion &&
+          other.tipoRubroEvalId == this.tipoRubroEvalId &&
+          other.cargaCursoId == this.cargaCursoId &&
+          other.silaboEventoId == this.silaboEventoId &&
+          other.anioAcademicoId == this.anioAcademicoId &&
+          other.programaAcadId == this.programaAcadId &&
+          other.rubroEvalProcesoId == this.rubroEvalProcesoId &&
+          other.alumnoId == this.alumnoId &&
+          other.calendarioPeriodoId == this.calendarioPeriodoId &&
+          other.parametroDesenioId == this.parametroDesenioId &&
+          other.iconoNivelLogro == this.iconoNivelLogro &&
+          other.tituloNivelLogro == this.tituloNivelLogro &&
+          other.descripcionNivelLogro == this.descripcionNivelLogro &&
+          other.tipoIdNivelLogro == this.tipoIdNivelLogro &&
+          other.notaEvalaucion == this.notaEvalaucion &&
+          other.evaluacionProcesoId == this.evaluacionProcesoId &&
+          other.nombreCurso == this.nombreCurso &&
+          other.docenteApellMat == this.docenteApellMat &&
+          other.docenteApellPat == this.docenteApellPat &&
+          other.docenteNombre == this.docenteNombre);
+}
+
+class TareaCursoCompanion extends UpdateCompanion<TareaCursoData> {
+  final Value<String> tareaId;
+  final Value<String> tareaTitulo;
+  final Value<String> tareaInstrucciones;
+  final Value<DateTime> tareafechaCreacion;
+  final Value<String> tareaEstadoId;
+  final Value<int> unidadAprendizajeId;
+  final Value<int> sesionAprendizajeId;
+  final Value<String> tareaFechaEntrega;
+  final Value<String> tareaHoraEntrega;
+  final Value<int> gradoId;
+  final Value<String> grado;
+  final Value<int> seccionId;
+  final Value<String> seccion;
+  final Value<DateTime> fechaEvaluacion;
+  final Value<String> tituloEvaluacion;
+  final Value<String> formaEvaluacion;
+  final Value<int> tipoRubroEvalId;
+  final Value<int> cargaCursoId;
+  final Value<int> silaboEventoId;
+  final Value<int> anioAcademicoId;
+  final Value<int> programaAcadId;
+  final Value<String> rubroEvalProcesoId;
+  final Value<int> alumnoId;
+  final Value<int> calendarioPeriodoId;
+  final Value<int> parametroDesenioId;
+  final Value<String> iconoNivelLogro;
+  final Value<String> tituloNivelLogro;
+  final Value<String> descripcionNivelLogro;
+  final Value<int> tipoIdNivelLogro;
+  final Value<double> notaEvalaucion;
+  final Value<String> evaluacionProcesoId;
+  final Value<String> nombreCurso;
+  final Value<String> docenteApellMat;
+  final Value<String> docenteApellPat;
+  final Value<String> docenteNombre;
+  const TareaCursoCompanion({
+    this.tareaId = const Value.absent(),
+    this.tareaTitulo = const Value.absent(),
+    this.tareaInstrucciones = const Value.absent(),
+    this.tareafechaCreacion = const Value.absent(),
+    this.tareaEstadoId = const Value.absent(),
+    this.unidadAprendizajeId = const Value.absent(),
+    this.sesionAprendizajeId = const Value.absent(),
+    this.tareaFechaEntrega = const Value.absent(),
+    this.tareaHoraEntrega = const Value.absent(),
+    this.gradoId = const Value.absent(),
+    this.grado = const Value.absent(),
+    this.seccionId = const Value.absent(),
+    this.seccion = const Value.absent(),
+    this.fechaEvaluacion = const Value.absent(),
+    this.tituloEvaluacion = const Value.absent(),
+    this.formaEvaluacion = const Value.absent(),
+    this.tipoRubroEvalId = const Value.absent(),
+    this.cargaCursoId = const Value.absent(),
+    this.silaboEventoId = const Value.absent(),
+    this.anioAcademicoId = const Value.absent(),
+    this.programaAcadId = const Value.absent(),
+    this.rubroEvalProcesoId = const Value.absent(),
+    this.alumnoId = const Value.absent(),
+    this.calendarioPeriodoId = const Value.absent(),
+    this.parametroDesenioId = const Value.absent(),
+    this.iconoNivelLogro = const Value.absent(),
+    this.tituloNivelLogro = const Value.absent(),
+    this.descripcionNivelLogro = const Value.absent(),
+    this.tipoIdNivelLogro = const Value.absent(),
+    this.notaEvalaucion = const Value.absent(),
+    this.evaluacionProcesoId = const Value.absent(),
+    this.nombreCurso = const Value.absent(),
+    this.docenteApellMat = const Value.absent(),
+    this.docenteApellPat = const Value.absent(),
+    this.docenteNombre = const Value.absent(),
+  });
+  TareaCursoCompanion.insert({
+    @required String tareaId,
+    this.tareaTitulo = const Value.absent(),
+    this.tareaInstrucciones = const Value.absent(),
+    this.tareafechaCreacion = const Value.absent(),
+    this.tareaEstadoId = const Value.absent(),
+    this.unidadAprendizajeId = const Value.absent(),
+    this.sesionAprendizajeId = const Value.absent(),
+    this.tareaFechaEntrega = const Value.absent(),
+    this.tareaHoraEntrega = const Value.absent(),
+    this.gradoId = const Value.absent(),
+    this.grado = const Value.absent(),
+    this.seccionId = const Value.absent(),
+    this.seccion = const Value.absent(),
+    this.fechaEvaluacion = const Value.absent(),
+    this.tituloEvaluacion = const Value.absent(),
+    this.formaEvaluacion = const Value.absent(),
+    this.tipoRubroEvalId = const Value.absent(),
+    this.cargaCursoId = const Value.absent(),
+    this.silaboEventoId = const Value.absent(),
+    this.anioAcademicoId = const Value.absent(),
+    this.programaAcadId = const Value.absent(),
+    this.rubroEvalProcesoId = const Value.absent(),
+    this.alumnoId = const Value.absent(),
+    this.calendarioPeriodoId = const Value.absent(),
+    this.parametroDesenioId = const Value.absent(),
+    this.iconoNivelLogro = const Value.absent(),
+    this.tituloNivelLogro = const Value.absent(),
+    this.descripcionNivelLogro = const Value.absent(),
+    this.tipoIdNivelLogro = const Value.absent(),
+    this.notaEvalaucion = const Value.absent(),
+    this.evaluacionProcesoId = const Value.absent(),
+    this.nombreCurso = const Value.absent(),
+    this.docenteApellMat = const Value.absent(),
+    this.docenteApellPat = const Value.absent(),
+    this.docenteNombre = const Value.absent(),
+  }) : tareaId = Value(tareaId);
+  static Insertable<TareaCursoData> custom({
+    Expression<String> tareaId,
+    Expression<String> tareaTitulo,
+    Expression<String> tareaInstrucciones,
+    Expression<DateTime> tareafechaCreacion,
+    Expression<String> tareaEstadoId,
+    Expression<int> unidadAprendizajeId,
+    Expression<int> sesionAprendizajeId,
+    Expression<String> tareaFechaEntrega,
+    Expression<String> tareaHoraEntrega,
+    Expression<int> gradoId,
+    Expression<String> grado,
+    Expression<int> seccionId,
+    Expression<String> seccion,
+    Expression<DateTime> fechaEvaluacion,
+    Expression<String> tituloEvaluacion,
+    Expression<String> formaEvaluacion,
+    Expression<int> tipoRubroEvalId,
+    Expression<int> cargaCursoId,
+    Expression<int> silaboEventoId,
+    Expression<int> anioAcademicoId,
+    Expression<int> programaAcadId,
+    Expression<String> rubroEvalProcesoId,
+    Expression<int> alumnoId,
+    Expression<int> calendarioPeriodoId,
+    Expression<int> parametroDesenioId,
+    Expression<String> iconoNivelLogro,
+    Expression<String> tituloNivelLogro,
+    Expression<String> descripcionNivelLogro,
+    Expression<int> tipoIdNivelLogro,
+    Expression<double> notaEvalaucion,
+    Expression<String> evaluacionProcesoId,
+    Expression<String> nombreCurso,
+    Expression<String> docenteApellMat,
+    Expression<String> docenteApellPat,
+    Expression<String> docenteNombre,
+  }) {
+    return RawValuesInsertable({
+      if (tareaId != null) 'tarea_id': tareaId,
+      if (tareaTitulo != null) 'tarea_titulo': tareaTitulo,
+      if (tareaInstrucciones != null) 'tarea_instrucciones': tareaInstrucciones,
+      if (tareafechaCreacion != null) 'tareafecha_creacion': tareafechaCreacion,
+      if (tareaEstadoId != null) 'tarea_estado_id': tareaEstadoId,
+      if (unidadAprendizajeId != null)
+        'unidad_aprendizaje_id': unidadAprendizajeId,
+      if (sesionAprendizajeId != null)
+        'sesion_aprendizaje_id': sesionAprendizajeId,
+      if (tareaFechaEntrega != null) 'tarea_fecha_entrega': tareaFechaEntrega,
+      if (tareaHoraEntrega != null) 'tarea_hora_entrega': tareaHoraEntrega,
+      if (gradoId != null) 'grado_id': gradoId,
+      if (grado != null) 'grado': grado,
+      if (seccionId != null) 'seccion_id': seccionId,
+      if (seccion != null) 'seccion': seccion,
+      if (fechaEvaluacion != null) 'fecha_evaluacion': fechaEvaluacion,
+      if (tituloEvaluacion != null) 'titulo_evaluacion': tituloEvaluacion,
+      if (formaEvaluacion != null) 'forma_evaluacion': formaEvaluacion,
+      if (tipoRubroEvalId != null) 'tipo_rubro_eval_id': tipoRubroEvalId,
+      if (cargaCursoId != null) 'carga_curso_id': cargaCursoId,
+      if (silaboEventoId != null) 'silabo_evento_id': silaboEventoId,
+      if (anioAcademicoId != null) 'anio_academico_id': anioAcademicoId,
+      if (programaAcadId != null) 'programa_acad_id': programaAcadId,
+      if (rubroEvalProcesoId != null)
+        'rubro_eval_proceso_id': rubroEvalProcesoId,
+      if (alumnoId != null) 'alumno_id': alumnoId,
+      if (calendarioPeriodoId != null)
+        'calendario_periodo_id': calendarioPeriodoId,
+      if (parametroDesenioId != null)
+        'parametro_desenio_id': parametroDesenioId,
+      if (iconoNivelLogro != null) 'icono_nivel_logro': iconoNivelLogro,
+      if (tituloNivelLogro != null) 'titulo_nivel_logro': tituloNivelLogro,
+      if (descripcionNivelLogro != null)
+        'descripcion_nivel_logro': descripcionNivelLogro,
+      if (tipoIdNivelLogro != null) 'tipo_id_nivel_logro': tipoIdNivelLogro,
+      if (notaEvalaucion != null) 'nota_evalaucion': notaEvalaucion,
+      if (evaluacionProcesoId != null)
+        'evaluacion_proceso_id': evaluacionProcesoId,
+      if (nombreCurso != null) 'nombre_curso': nombreCurso,
+      if (docenteApellMat != null) 'docente_apell_mat': docenteApellMat,
+      if (docenteApellPat != null) 'docente_apell_pat': docenteApellPat,
+      if (docenteNombre != null) 'docente_nombre': docenteNombre,
+    });
+  }
+
+  TareaCursoCompanion copyWith(
+      {Value<String> tareaId,
+      Value<String> tareaTitulo,
+      Value<String> tareaInstrucciones,
+      Value<DateTime> tareafechaCreacion,
+      Value<String> tareaEstadoId,
+      Value<int> unidadAprendizajeId,
+      Value<int> sesionAprendizajeId,
+      Value<String> tareaFechaEntrega,
+      Value<String> tareaHoraEntrega,
+      Value<int> gradoId,
+      Value<String> grado,
+      Value<int> seccionId,
+      Value<String> seccion,
+      Value<DateTime> fechaEvaluacion,
+      Value<String> tituloEvaluacion,
+      Value<String> formaEvaluacion,
+      Value<int> tipoRubroEvalId,
+      Value<int> cargaCursoId,
+      Value<int> silaboEventoId,
+      Value<int> anioAcademicoId,
+      Value<int> programaAcadId,
+      Value<String> rubroEvalProcesoId,
+      Value<int> alumnoId,
+      Value<int> calendarioPeriodoId,
+      Value<int> parametroDesenioId,
+      Value<String> iconoNivelLogro,
+      Value<String> tituloNivelLogro,
+      Value<String> descripcionNivelLogro,
+      Value<int> tipoIdNivelLogro,
+      Value<double> notaEvalaucion,
+      Value<String> evaluacionProcesoId,
+      Value<String> nombreCurso,
+      Value<String> docenteApellMat,
+      Value<String> docenteApellPat,
+      Value<String> docenteNombre}) {
+    return TareaCursoCompanion(
+      tareaId: tareaId ?? this.tareaId,
+      tareaTitulo: tareaTitulo ?? this.tareaTitulo,
+      tareaInstrucciones: tareaInstrucciones ?? this.tareaInstrucciones,
+      tareafechaCreacion: tareafechaCreacion ?? this.tareafechaCreacion,
+      tareaEstadoId: tareaEstadoId ?? this.tareaEstadoId,
+      unidadAprendizajeId: unidadAprendizajeId ?? this.unidadAprendizajeId,
+      sesionAprendizajeId: sesionAprendizajeId ?? this.sesionAprendizajeId,
+      tareaFechaEntrega: tareaFechaEntrega ?? this.tareaFechaEntrega,
+      tareaHoraEntrega: tareaHoraEntrega ?? this.tareaHoraEntrega,
+      gradoId: gradoId ?? this.gradoId,
+      grado: grado ?? this.grado,
+      seccionId: seccionId ?? this.seccionId,
+      seccion: seccion ?? this.seccion,
+      fechaEvaluacion: fechaEvaluacion ?? this.fechaEvaluacion,
+      tituloEvaluacion: tituloEvaluacion ?? this.tituloEvaluacion,
+      formaEvaluacion: formaEvaluacion ?? this.formaEvaluacion,
+      tipoRubroEvalId: tipoRubroEvalId ?? this.tipoRubroEvalId,
+      cargaCursoId: cargaCursoId ?? this.cargaCursoId,
+      silaboEventoId: silaboEventoId ?? this.silaboEventoId,
+      anioAcademicoId: anioAcademicoId ?? this.anioAcademicoId,
+      programaAcadId: programaAcadId ?? this.programaAcadId,
+      rubroEvalProcesoId: rubroEvalProcesoId ?? this.rubroEvalProcesoId,
+      alumnoId: alumnoId ?? this.alumnoId,
+      calendarioPeriodoId: calendarioPeriodoId ?? this.calendarioPeriodoId,
+      parametroDesenioId: parametroDesenioId ?? this.parametroDesenioId,
+      iconoNivelLogro: iconoNivelLogro ?? this.iconoNivelLogro,
+      tituloNivelLogro: tituloNivelLogro ?? this.tituloNivelLogro,
+      descripcionNivelLogro:
+          descripcionNivelLogro ?? this.descripcionNivelLogro,
+      tipoIdNivelLogro: tipoIdNivelLogro ?? this.tipoIdNivelLogro,
+      notaEvalaucion: notaEvalaucion ?? this.notaEvalaucion,
+      evaluacionProcesoId: evaluacionProcesoId ?? this.evaluacionProcesoId,
+      nombreCurso: nombreCurso ?? this.nombreCurso,
+      docenteApellMat: docenteApellMat ?? this.docenteApellMat,
+      docenteApellPat: docenteApellPat ?? this.docenteApellPat,
+      docenteNombre: docenteNombre ?? this.docenteNombre,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (tareaId.present) {
+      map['tarea_id'] = Variable<String>(tareaId.value);
+    }
+    if (tareaTitulo.present) {
+      map['tarea_titulo'] = Variable<String>(tareaTitulo.value);
+    }
+    if (tareaInstrucciones.present) {
+      map['tarea_instrucciones'] = Variable<String>(tareaInstrucciones.value);
+    }
+    if (tareafechaCreacion.present) {
+      map['tareafecha_creacion'] = Variable<DateTime>(tareafechaCreacion.value);
+    }
+    if (tareaEstadoId.present) {
+      map['tarea_estado_id'] = Variable<String>(tareaEstadoId.value);
+    }
+    if (unidadAprendizajeId.present) {
+      map['unidad_aprendizaje_id'] = Variable<int>(unidadAprendizajeId.value);
+    }
+    if (sesionAprendizajeId.present) {
+      map['sesion_aprendizaje_id'] = Variable<int>(sesionAprendizajeId.value);
+    }
+    if (tareaFechaEntrega.present) {
+      map['tarea_fecha_entrega'] = Variable<String>(tareaFechaEntrega.value);
+    }
+    if (tareaHoraEntrega.present) {
+      map['tarea_hora_entrega'] = Variable<String>(tareaHoraEntrega.value);
+    }
+    if (gradoId.present) {
+      map['grado_id'] = Variable<int>(gradoId.value);
+    }
+    if (grado.present) {
+      map['grado'] = Variable<String>(grado.value);
+    }
+    if (seccionId.present) {
+      map['seccion_id'] = Variable<int>(seccionId.value);
+    }
+    if (seccion.present) {
+      map['seccion'] = Variable<String>(seccion.value);
+    }
+    if (fechaEvaluacion.present) {
+      map['fecha_evaluacion'] = Variable<DateTime>(fechaEvaluacion.value);
+    }
+    if (tituloEvaluacion.present) {
+      map['titulo_evaluacion'] = Variable<String>(tituloEvaluacion.value);
+    }
+    if (formaEvaluacion.present) {
+      map['forma_evaluacion'] = Variable<String>(formaEvaluacion.value);
+    }
+    if (tipoRubroEvalId.present) {
+      map['tipo_rubro_eval_id'] = Variable<int>(tipoRubroEvalId.value);
+    }
+    if (cargaCursoId.present) {
+      map['carga_curso_id'] = Variable<int>(cargaCursoId.value);
+    }
+    if (silaboEventoId.present) {
+      map['silabo_evento_id'] = Variable<int>(silaboEventoId.value);
+    }
+    if (anioAcademicoId.present) {
+      map['anio_academico_id'] = Variable<int>(anioAcademicoId.value);
+    }
+    if (programaAcadId.present) {
+      map['programa_acad_id'] = Variable<int>(programaAcadId.value);
+    }
+    if (rubroEvalProcesoId.present) {
+      map['rubro_eval_proceso_id'] = Variable<String>(rubroEvalProcesoId.value);
+    }
+    if (alumnoId.present) {
+      map['alumno_id'] = Variable<int>(alumnoId.value);
+    }
+    if (calendarioPeriodoId.present) {
+      map['calendario_periodo_id'] = Variable<int>(calendarioPeriodoId.value);
+    }
+    if (parametroDesenioId.present) {
+      map['parametro_desenio_id'] = Variable<int>(parametroDesenioId.value);
+    }
+    if (iconoNivelLogro.present) {
+      map['icono_nivel_logro'] = Variable<String>(iconoNivelLogro.value);
+    }
+    if (tituloNivelLogro.present) {
+      map['titulo_nivel_logro'] = Variable<String>(tituloNivelLogro.value);
+    }
+    if (descripcionNivelLogro.present) {
+      map['descripcion_nivel_logro'] =
+          Variable<String>(descripcionNivelLogro.value);
+    }
+    if (tipoIdNivelLogro.present) {
+      map['tipo_id_nivel_logro'] = Variable<int>(tipoIdNivelLogro.value);
+    }
+    if (notaEvalaucion.present) {
+      map['nota_evalaucion'] = Variable<double>(notaEvalaucion.value);
+    }
+    if (evaluacionProcesoId.present) {
+      map['evaluacion_proceso_id'] =
+          Variable<String>(evaluacionProcesoId.value);
+    }
+    if (nombreCurso.present) {
+      map['nombre_curso'] = Variable<String>(nombreCurso.value);
+    }
+    if (docenteApellMat.present) {
+      map['docente_apell_mat'] = Variable<String>(docenteApellMat.value);
+    }
+    if (docenteApellPat.present) {
+      map['docente_apell_pat'] = Variable<String>(docenteApellPat.value);
+    }
+    if (docenteNombre.present) {
+      map['docente_nombre'] = Variable<String>(docenteNombre.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TareaCursoCompanion(')
+          ..write('tareaId: $tareaId, ')
+          ..write('tareaTitulo: $tareaTitulo, ')
+          ..write('tareaInstrucciones: $tareaInstrucciones, ')
+          ..write('tareafechaCreacion: $tareafechaCreacion, ')
+          ..write('tareaEstadoId: $tareaEstadoId, ')
+          ..write('unidadAprendizajeId: $unidadAprendizajeId, ')
+          ..write('sesionAprendizajeId: $sesionAprendizajeId, ')
+          ..write('tareaFechaEntrega: $tareaFechaEntrega, ')
+          ..write('tareaHoraEntrega: $tareaHoraEntrega, ')
+          ..write('gradoId: $gradoId, ')
+          ..write('grado: $grado, ')
+          ..write('seccionId: $seccionId, ')
+          ..write('seccion: $seccion, ')
+          ..write('fechaEvaluacion: $fechaEvaluacion, ')
+          ..write('tituloEvaluacion: $tituloEvaluacion, ')
+          ..write('formaEvaluacion: $formaEvaluacion, ')
+          ..write('tipoRubroEvalId: $tipoRubroEvalId, ')
+          ..write('cargaCursoId: $cargaCursoId, ')
+          ..write('silaboEventoId: $silaboEventoId, ')
+          ..write('anioAcademicoId: $anioAcademicoId, ')
+          ..write('programaAcadId: $programaAcadId, ')
+          ..write('rubroEvalProcesoId: $rubroEvalProcesoId, ')
+          ..write('alumnoId: $alumnoId, ')
+          ..write('calendarioPeriodoId: $calendarioPeriodoId, ')
+          ..write('parametroDesenioId: $parametroDesenioId, ')
+          ..write('iconoNivelLogro: $iconoNivelLogro, ')
+          ..write('tituloNivelLogro: $tituloNivelLogro, ')
+          ..write('descripcionNivelLogro: $descripcionNivelLogro, ')
+          ..write('tipoIdNivelLogro: $tipoIdNivelLogro, ')
+          ..write('notaEvalaucion: $notaEvalaucion, ')
+          ..write('evaluacionProcesoId: $evaluacionProcesoId, ')
+          ..write('nombreCurso: $nombreCurso, ')
+          ..write('docenteApellMat: $docenteApellMat, ')
+          ..write('docenteApellPat: $docenteApellPat, ')
+          ..write('docenteNombre: $docenteNombre')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TareaCursoTable extends TareaCurso
+    with TableInfo<$TareaCursoTable, TareaCursoData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $TareaCursoTable(this._db, [this._alias]);
+  final VerificationMeta _tareaIdMeta = const VerificationMeta('tareaId');
+  GeneratedTextColumn _tareaId;
+  @override
+  GeneratedTextColumn get tareaId => _tareaId ??= _constructTareaId();
+  GeneratedTextColumn _constructTareaId() {
+    return GeneratedTextColumn(
+      'tarea_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _tareaTituloMeta =
+      const VerificationMeta('tareaTitulo');
+  GeneratedTextColumn _tareaTitulo;
+  @override
+  GeneratedTextColumn get tareaTitulo =>
+      _tareaTitulo ??= _constructTareaTitulo();
+  GeneratedTextColumn _constructTareaTitulo() {
+    return GeneratedTextColumn(
+      'tarea_titulo',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tareaInstruccionesMeta =
+      const VerificationMeta('tareaInstrucciones');
+  GeneratedTextColumn _tareaInstrucciones;
+  @override
+  GeneratedTextColumn get tareaInstrucciones =>
+      _tareaInstrucciones ??= _constructTareaInstrucciones();
+  GeneratedTextColumn _constructTareaInstrucciones() {
+    return GeneratedTextColumn(
+      'tarea_instrucciones',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tareafechaCreacionMeta =
+      const VerificationMeta('tareafechaCreacion');
+  GeneratedDateTimeColumn _tareafechaCreacion;
+  @override
+  GeneratedDateTimeColumn get tareafechaCreacion =>
+      _tareafechaCreacion ??= _constructTareafechaCreacion();
+  GeneratedDateTimeColumn _constructTareafechaCreacion() {
+    return GeneratedDateTimeColumn(
+      'tareafecha_creacion',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tareaEstadoIdMeta =
+      const VerificationMeta('tareaEstadoId');
+  GeneratedTextColumn _tareaEstadoId;
+  @override
+  GeneratedTextColumn get tareaEstadoId =>
+      _tareaEstadoId ??= _constructTareaEstadoId();
+  GeneratedTextColumn _constructTareaEstadoId() {
+    return GeneratedTextColumn(
+      'tarea_estado_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _unidadAprendizajeIdMeta =
+      const VerificationMeta('unidadAprendizajeId');
+  GeneratedIntColumn _unidadAprendizajeId;
+  @override
+  GeneratedIntColumn get unidadAprendizajeId =>
+      _unidadAprendizajeId ??= _constructUnidadAprendizajeId();
+  GeneratedIntColumn _constructUnidadAprendizajeId() {
+    return GeneratedIntColumn(
+      'unidad_aprendizaje_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _sesionAprendizajeIdMeta =
+      const VerificationMeta('sesionAprendizajeId');
+  GeneratedIntColumn _sesionAprendizajeId;
+  @override
+  GeneratedIntColumn get sesionAprendizajeId =>
+      _sesionAprendizajeId ??= _constructSesionAprendizajeId();
+  GeneratedIntColumn _constructSesionAprendizajeId() {
+    return GeneratedIntColumn(
+      'sesion_aprendizaje_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tareaFechaEntregaMeta =
+      const VerificationMeta('tareaFechaEntrega');
+  GeneratedTextColumn _tareaFechaEntrega;
+  @override
+  GeneratedTextColumn get tareaFechaEntrega =>
+      _tareaFechaEntrega ??= _constructTareaFechaEntrega();
+  GeneratedTextColumn _constructTareaFechaEntrega() {
+    return GeneratedTextColumn(
+      'tarea_fecha_entrega',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tareaHoraEntregaMeta =
+      const VerificationMeta('tareaHoraEntrega');
+  GeneratedTextColumn _tareaHoraEntrega;
+  @override
+  GeneratedTextColumn get tareaHoraEntrega =>
+      _tareaHoraEntrega ??= _constructTareaHoraEntrega();
+  GeneratedTextColumn _constructTareaHoraEntrega() {
+    return GeneratedTextColumn(
+      'tarea_hora_entrega',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _gradoIdMeta = const VerificationMeta('gradoId');
+  GeneratedIntColumn _gradoId;
+  @override
+  GeneratedIntColumn get gradoId => _gradoId ??= _constructGradoId();
+  GeneratedIntColumn _constructGradoId() {
+    return GeneratedIntColumn(
+      'grado_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _gradoMeta = const VerificationMeta('grado');
+  GeneratedTextColumn _grado;
+  @override
+  GeneratedTextColumn get grado => _grado ??= _constructGrado();
+  GeneratedTextColumn _constructGrado() {
+    return GeneratedTextColumn(
+      'grado',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _seccionIdMeta = const VerificationMeta('seccionId');
+  GeneratedIntColumn _seccionId;
+  @override
+  GeneratedIntColumn get seccionId => _seccionId ??= _constructSeccionId();
+  GeneratedIntColumn _constructSeccionId() {
+    return GeneratedIntColumn(
+      'seccion_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _seccionMeta = const VerificationMeta('seccion');
+  GeneratedTextColumn _seccion;
+  @override
+  GeneratedTextColumn get seccion => _seccion ??= _constructSeccion();
+  GeneratedTextColumn _constructSeccion() {
+    return GeneratedTextColumn(
+      'seccion',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _fechaEvaluacionMeta =
+      const VerificationMeta('fechaEvaluacion');
+  GeneratedDateTimeColumn _fechaEvaluacion;
+  @override
+  GeneratedDateTimeColumn get fechaEvaluacion =>
+      _fechaEvaluacion ??= _constructFechaEvaluacion();
+  GeneratedDateTimeColumn _constructFechaEvaluacion() {
+    return GeneratedDateTimeColumn(
+      'fecha_evaluacion',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tituloEvaluacionMeta =
+      const VerificationMeta('tituloEvaluacion');
+  GeneratedTextColumn _tituloEvaluacion;
+  @override
+  GeneratedTextColumn get tituloEvaluacion =>
+      _tituloEvaluacion ??= _constructTituloEvaluacion();
+  GeneratedTextColumn _constructTituloEvaluacion() {
+    return GeneratedTextColumn(
+      'titulo_evaluacion',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _formaEvaluacionMeta =
+      const VerificationMeta('formaEvaluacion');
+  GeneratedTextColumn _formaEvaluacion;
+  @override
+  GeneratedTextColumn get formaEvaluacion =>
+      _formaEvaluacion ??= _constructFormaEvaluacion();
+  GeneratedTextColumn _constructFormaEvaluacion() {
+    return GeneratedTextColumn(
+      'forma_evaluacion',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoRubroEvalIdMeta =
+      const VerificationMeta('tipoRubroEvalId');
+  GeneratedIntColumn _tipoRubroEvalId;
+  @override
+  GeneratedIntColumn get tipoRubroEvalId =>
+      _tipoRubroEvalId ??= _constructTipoRubroEvalId();
+  GeneratedIntColumn _constructTipoRubroEvalId() {
+    return GeneratedIntColumn(
+      'tipo_rubro_eval_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _cargaCursoIdMeta =
+      const VerificationMeta('cargaCursoId');
+  GeneratedIntColumn _cargaCursoId;
+  @override
+  GeneratedIntColumn get cargaCursoId =>
+      _cargaCursoId ??= _constructCargaCursoId();
+  GeneratedIntColumn _constructCargaCursoId() {
+    return GeneratedIntColumn(
+      'carga_curso_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _silaboEventoIdMeta =
+      const VerificationMeta('silaboEventoId');
+  GeneratedIntColumn _silaboEventoId;
+  @override
+  GeneratedIntColumn get silaboEventoId =>
+      _silaboEventoId ??= _constructSilaboEventoId();
+  GeneratedIntColumn _constructSilaboEventoId() {
+    return GeneratedIntColumn(
+      'silabo_evento_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _anioAcademicoIdMeta =
+      const VerificationMeta('anioAcademicoId');
+  GeneratedIntColumn _anioAcademicoId;
+  @override
+  GeneratedIntColumn get anioAcademicoId =>
+      _anioAcademicoId ??= _constructAnioAcademicoId();
+  GeneratedIntColumn _constructAnioAcademicoId() {
+    return GeneratedIntColumn(
+      'anio_academico_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _programaAcadIdMeta =
+      const VerificationMeta('programaAcadId');
+  GeneratedIntColumn _programaAcadId;
+  @override
+  GeneratedIntColumn get programaAcadId =>
+      _programaAcadId ??= _constructProgramaAcadId();
+  GeneratedIntColumn _constructProgramaAcadId() {
+    return GeneratedIntColumn(
+      'programa_acad_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _rubroEvalProcesoIdMeta =
+      const VerificationMeta('rubroEvalProcesoId');
+  GeneratedTextColumn _rubroEvalProcesoId;
+  @override
+  GeneratedTextColumn get rubroEvalProcesoId =>
+      _rubroEvalProcesoId ??= _constructRubroEvalProcesoId();
+  GeneratedTextColumn _constructRubroEvalProcesoId() {
+    return GeneratedTextColumn(
+      'rubro_eval_proceso_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _alumnoIdMeta = const VerificationMeta('alumnoId');
+  GeneratedIntColumn _alumnoId;
+  @override
+  GeneratedIntColumn get alumnoId => _alumnoId ??= _constructAlumnoId();
+  GeneratedIntColumn _constructAlumnoId() {
+    return GeneratedIntColumn(
+      'alumno_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _calendarioPeriodoIdMeta =
+      const VerificationMeta('calendarioPeriodoId');
+  GeneratedIntColumn _calendarioPeriodoId;
+  @override
+  GeneratedIntColumn get calendarioPeriodoId =>
+      _calendarioPeriodoId ??= _constructCalendarioPeriodoId();
+  GeneratedIntColumn _constructCalendarioPeriodoId() {
+    return GeneratedIntColumn(
+      'calendario_periodo_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _parametroDesenioIdMeta =
+      const VerificationMeta('parametroDesenioId');
+  GeneratedIntColumn _parametroDesenioId;
+  @override
+  GeneratedIntColumn get parametroDesenioId =>
+      _parametroDesenioId ??= _constructParametroDesenioId();
+  GeneratedIntColumn _constructParametroDesenioId() {
+    return GeneratedIntColumn(
+      'parametro_desenio_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _iconoNivelLogroMeta =
+      const VerificationMeta('iconoNivelLogro');
+  GeneratedTextColumn _iconoNivelLogro;
+  @override
+  GeneratedTextColumn get iconoNivelLogro =>
+      _iconoNivelLogro ??= _constructIconoNivelLogro();
+  GeneratedTextColumn _constructIconoNivelLogro() {
+    return GeneratedTextColumn(
+      'icono_nivel_logro',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tituloNivelLogroMeta =
+      const VerificationMeta('tituloNivelLogro');
+  GeneratedTextColumn _tituloNivelLogro;
+  @override
+  GeneratedTextColumn get tituloNivelLogro =>
+      _tituloNivelLogro ??= _constructTituloNivelLogro();
+  GeneratedTextColumn _constructTituloNivelLogro() {
+    return GeneratedTextColumn(
+      'titulo_nivel_logro',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _descripcionNivelLogroMeta =
+      const VerificationMeta('descripcionNivelLogro');
+  GeneratedTextColumn _descripcionNivelLogro;
+  @override
+  GeneratedTextColumn get descripcionNivelLogro =>
+      _descripcionNivelLogro ??= _constructDescripcionNivelLogro();
+  GeneratedTextColumn _constructDescripcionNivelLogro() {
+    return GeneratedTextColumn(
+      'descripcion_nivel_logro',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoIdNivelLogroMeta =
+      const VerificationMeta('tipoIdNivelLogro');
+  GeneratedIntColumn _tipoIdNivelLogro;
+  @override
+  GeneratedIntColumn get tipoIdNivelLogro =>
+      _tipoIdNivelLogro ??= _constructTipoIdNivelLogro();
+  GeneratedIntColumn _constructTipoIdNivelLogro() {
+    return GeneratedIntColumn(
+      'tipo_id_nivel_logro',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _notaEvalaucionMeta =
+      const VerificationMeta('notaEvalaucion');
+  GeneratedRealColumn _notaEvalaucion;
+  @override
+  GeneratedRealColumn get notaEvalaucion =>
+      _notaEvalaucion ??= _constructNotaEvalaucion();
+  GeneratedRealColumn _constructNotaEvalaucion() {
+    return GeneratedRealColumn(
+      'nota_evalaucion',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _evaluacionProcesoIdMeta =
+      const VerificationMeta('evaluacionProcesoId');
+  GeneratedTextColumn _evaluacionProcesoId;
+  @override
+  GeneratedTextColumn get evaluacionProcesoId =>
+      _evaluacionProcesoId ??= _constructEvaluacionProcesoId();
+  GeneratedTextColumn _constructEvaluacionProcesoId() {
+    return GeneratedTextColumn(
+      'evaluacion_proceso_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _nombreCursoMeta =
+      const VerificationMeta('nombreCurso');
+  GeneratedTextColumn _nombreCurso;
+  @override
+  GeneratedTextColumn get nombreCurso =>
+      _nombreCurso ??= _constructNombreCurso();
+  GeneratedTextColumn _constructNombreCurso() {
+    return GeneratedTextColumn(
+      'nombre_curso',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _docenteApellMatMeta =
+      const VerificationMeta('docenteApellMat');
+  GeneratedTextColumn _docenteApellMat;
+  @override
+  GeneratedTextColumn get docenteApellMat =>
+      _docenteApellMat ??= _constructDocenteApellMat();
+  GeneratedTextColumn _constructDocenteApellMat() {
+    return GeneratedTextColumn(
+      'docente_apell_mat',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _docenteApellPatMeta =
+      const VerificationMeta('docenteApellPat');
+  GeneratedTextColumn _docenteApellPat;
+  @override
+  GeneratedTextColumn get docenteApellPat =>
+      _docenteApellPat ??= _constructDocenteApellPat();
+  GeneratedTextColumn _constructDocenteApellPat() {
+    return GeneratedTextColumn(
+      'docente_apell_pat',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _docenteNombreMeta =
+      const VerificationMeta('docenteNombre');
+  GeneratedTextColumn _docenteNombre;
+  @override
+  GeneratedTextColumn get docenteNombre =>
+      _docenteNombre ??= _constructDocenteNombre();
+  GeneratedTextColumn _constructDocenteNombre() {
+    return GeneratedTextColumn(
+      'docente_nombre',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        tareaId,
+        tareaTitulo,
+        tareaInstrucciones,
+        tareafechaCreacion,
+        tareaEstadoId,
+        unidadAprendizajeId,
+        sesionAprendizajeId,
+        tareaFechaEntrega,
+        tareaHoraEntrega,
+        gradoId,
+        grado,
+        seccionId,
+        seccion,
+        fechaEvaluacion,
+        tituloEvaluacion,
+        formaEvaluacion,
+        tipoRubroEvalId,
+        cargaCursoId,
+        silaboEventoId,
+        anioAcademicoId,
+        programaAcadId,
+        rubroEvalProcesoId,
+        alumnoId,
+        calendarioPeriodoId,
+        parametroDesenioId,
+        iconoNivelLogro,
+        tituloNivelLogro,
+        descripcionNivelLogro,
+        tipoIdNivelLogro,
+        notaEvalaucion,
+        evaluacionProcesoId,
+        nombreCurso,
+        docenteApellMat,
+        docenteApellPat,
+        docenteNombre
+      ];
+  @override
+  $TareaCursoTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'tarea_curso';
+  @override
+  final String actualTableName = 'tarea_curso';
+  @override
+  VerificationContext validateIntegrity(Insertable<TareaCursoData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('tarea_id')) {
+      context.handle(_tareaIdMeta,
+          tareaId.isAcceptableOrUnknown(data['tarea_id'], _tareaIdMeta));
+    } else if (isInserting) {
+      context.missing(_tareaIdMeta);
+    }
+    if (data.containsKey('tarea_titulo')) {
+      context.handle(
+          _tareaTituloMeta,
+          tareaTitulo.isAcceptableOrUnknown(
+              data['tarea_titulo'], _tareaTituloMeta));
+    }
+    if (data.containsKey('tarea_instrucciones')) {
+      context.handle(
+          _tareaInstruccionesMeta,
+          tareaInstrucciones.isAcceptableOrUnknown(
+              data['tarea_instrucciones'], _tareaInstruccionesMeta));
+    }
+    if (data.containsKey('tareafecha_creacion')) {
+      context.handle(
+          _tareafechaCreacionMeta,
+          tareafechaCreacion.isAcceptableOrUnknown(
+              data['tareafecha_creacion'], _tareafechaCreacionMeta));
+    }
+    if (data.containsKey('tarea_estado_id')) {
+      context.handle(
+          _tareaEstadoIdMeta,
+          tareaEstadoId.isAcceptableOrUnknown(
+              data['tarea_estado_id'], _tareaEstadoIdMeta));
+    }
+    if (data.containsKey('unidad_aprendizaje_id')) {
+      context.handle(
+          _unidadAprendizajeIdMeta,
+          unidadAprendizajeId.isAcceptableOrUnknown(
+              data['unidad_aprendizaje_id'], _unidadAprendizajeIdMeta));
+    }
+    if (data.containsKey('sesion_aprendizaje_id')) {
+      context.handle(
+          _sesionAprendizajeIdMeta,
+          sesionAprendizajeId.isAcceptableOrUnknown(
+              data['sesion_aprendizaje_id'], _sesionAprendizajeIdMeta));
+    }
+    if (data.containsKey('tarea_fecha_entrega')) {
+      context.handle(
+          _tareaFechaEntregaMeta,
+          tareaFechaEntrega.isAcceptableOrUnknown(
+              data['tarea_fecha_entrega'], _tareaFechaEntregaMeta));
+    }
+    if (data.containsKey('tarea_hora_entrega')) {
+      context.handle(
+          _tareaHoraEntregaMeta,
+          tareaHoraEntrega.isAcceptableOrUnknown(
+              data['tarea_hora_entrega'], _tareaHoraEntregaMeta));
+    }
+    if (data.containsKey('grado_id')) {
+      context.handle(_gradoIdMeta,
+          gradoId.isAcceptableOrUnknown(data['grado_id'], _gradoIdMeta));
+    }
+    if (data.containsKey('grado')) {
+      context.handle(
+          _gradoMeta, grado.isAcceptableOrUnknown(data['grado'], _gradoMeta));
+    }
+    if (data.containsKey('seccion_id')) {
+      context.handle(_seccionIdMeta,
+          seccionId.isAcceptableOrUnknown(data['seccion_id'], _seccionIdMeta));
+    }
+    if (data.containsKey('seccion')) {
+      context.handle(_seccionMeta,
+          seccion.isAcceptableOrUnknown(data['seccion'], _seccionMeta));
+    }
+    if (data.containsKey('fecha_evaluacion')) {
+      context.handle(
+          _fechaEvaluacionMeta,
+          fechaEvaluacion.isAcceptableOrUnknown(
+              data['fecha_evaluacion'], _fechaEvaluacionMeta));
+    }
+    if (data.containsKey('titulo_evaluacion')) {
+      context.handle(
+          _tituloEvaluacionMeta,
+          tituloEvaluacion.isAcceptableOrUnknown(
+              data['titulo_evaluacion'], _tituloEvaluacionMeta));
+    }
+    if (data.containsKey('forma_evaluacion')) {
+      context.handle(
+          _formaEvaluacionMeta,
+          formaEvaluacion.isAcceptableOrUnknown(
+              data['forma_evaluacion'], _formaEvaluacionMeta));
+    }
+    if (data.containsKey('tipo_rubro_eval_id')) {
+      context.handle(
+          _tipoRubroEvalIdMeta,
+          tipoRubroEvalId.isAcceptableOrUnknown(
+              data['tipo_rubro_eval_id'], _tipoRubroEvalIdMeta));
+    }
+    if (data.containsKey('carga_curso_id')) {
+      context.handle(
+          _cargaCursoIdMeta,
+          cargaCursoId.isAcceptableOrUnknown(
+              data['carga_curso_id'], _cargaCursoIdMeta));
+    }
+    if (data.containsKey('silabo_evento_id')) {
+      context.handle(
+          _silaboEventoIdMeta,
+          silaboEventoId.isAcceptableOrUnknown(
+              data['silabo_evento_id'], _silaboEventoIdMeta));
+    }
+    if (data.containsKey('anio_academico_id')) {
+      context.handle(
+          _anioAcademicoIdMeta,
+          anioAcademicoId.isAcceptableOrUnknown(
+              data['anio_academico_id'], _anioAcademicoIdMeta));
+    }
+    if (data.containsKey('programa_acad_id')) {
+      context.handle(
+          _programaAcadIdMeta,
+          programaAcadId.isAcceptableOrUnknown(
+              data['programa_acad_id'], _programaAcadIdMeta));
+    }
+    if (data.containsKey('rubro_eval_proceso_id')) {
+      context.handle(
+          _rubroEvalProcesoIdMeta,
+          rubroEvalProcesoId.isAcceptableOrUnknown(
+              data['rubro_eval_proceso_id'], _rubroEvalProcesoIdMeta));
+    }
+    if (data.containsKey('alumno_id')) {
+      context.handle(_alumnoIdMeta,
+          alumnoId.isAcceptableOrUnknown(data['alumno_id'], _alumnoIdMeta));
+    }
+    if (data.containsKey('calendario_periodo_id')) {
+      context.handle(
+          _calendarioPeriodoIdMeta,
+          calendarioPeriodoId.isAcceptableOrUnknown(
+              data['calendario_periodo_id'], _calendarioPeriodoIdMeta));
+    }
+    if (data.containsKey('parametro_desenio_id')) {
+      context.handle(
+          _parametroDesenioIdMeta,
+          parametroDesenioId.isAcceptableOrUnknown(
+              data['parametro_desenio_id'], _parametroDesenioIdMeta));
+    }
+    if (data.containsKey('icono_nivel_logro')) {
+      context.handle(
+          _iconoNivelLogroMeta,
+          iconoNivelLogro.isAcceptableOrUnknown(
+              data['icono_nivel_logro'], _iconoNivelLogroMeta));
+    }
+    if (data.containsKey('titulo_nivel_logro')) {
+      context.handle(
+          _tituloNivelLogroMeta,
+          tituloNivelLogro.isAcceptableOrUnknown(
+              data['titulo_nivel_logro'], _tituloNivelLogroMeta));
+    }
+    if (data.containsKey('descripcion_nivel_logro')) {
+      context.handle(
+          _descripcionNivelLogroMeta,
+          descripcionNivelLogro.isAcceptableOrUnknown(
+              data['descripcion_nivel_logro'], _descripcionNivelLogroMeta));
+    }
+    if (data.containsKey('tipo_id_nivel_logro')) {
+      context.handle(
+          _tipoIdNivelLogroMeta,
+          tipoIdNivelLogro.isAcceptableOrUnknown(
+              data['tipo_id_nivel_logro'], _tipoIdNivelLogroMeta));
+    }
+    if (data.containsKey('nota_evalaucion')) {
+      context.handle(
+          _notaEvalaucionMeta,
+          notaEvalaucion.isAcceptableOrUnknown(
+              data['nota_evalaucion'], _notaEvalaucionMeta));
+    }
+    if (data.containsKey('evaluacion_proceso_id')) {
+      context.handle(
+          _evaluacionProcesoIdMeta,
+          evaluacionProcesoId.isAcceptableOrUnknown(
+              data['evaluacion_proceso_id'], _evaluacionProcesoIdMeta));
+    }
+    if (data.containsKey('nombre_curso')) {
+      context.handle(
+          _nombreCursoMeta,
+          nombreCurso.isAcceptableOrUnknown(
+              data['nombre_curso'], _nombreCursoMeta));
+    }
+    if (data.containsKey('docente_apell_mat')) {
+      context.handle(
+          _docenteApellMatMeta,
+          docenteApellMat.isAcceptableOrUnknown(
+              data['docente_apell_mat'], _docenteApellMatMeta));
+    }
+    if (data.containsKey('docente_apell_pat')) {
+      context.handle(
+          _docenteApellPatMeta,
+          docenteApellPat.isAcceptableOrUnknown(
+              data['docente_apell_pat'], _docenteApellPatMeta));
+    }
+    if (data.containsKey('docente_nombre')) {
+      context.handle(
+          _docenteNombreMeta,
+          docenteNombre.isAcceptableOrUnknown(
+              data['docente_nombre'], _docenteNombreMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {tareaId};
+  @override
+  TareaCursoData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return TareaCursoData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $TareaCursoTable createAlias(String alias) {
+    return $TareaCursoTable(_db, alias);
+  }
+}
+
 abstract class _$AppDataBase extends GeneratedDatabase {
   _$AppDataBase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $PersonaTable _persona;
@@ -11761,6 +13601,8 @@ abstract class _$AppDataBase extends GeneratedDatabase {
       _rubroEvalDesempenio ??= $RubroEvalDesempenioTable(this);
   $WebConfigsTable _webConfigs;
   $WebConfigsTable get webConfigs => _webConfigs ??= $WebConfigsTable(this);
+  $TareaCursoTable _tareaCurso;
+  $TareaCursoTable get tareaCurso => _tareaCurso ??= $TareaCursoTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
@@ -11784,6 +13626,7 @@ abstract class _$AppDataBase extends GeneratedDatabase {
         parametrosDisenio,
         silaboEvento,
         rubroEvalDesempenio,
-        webConfigs
+        webConfigs,
+        tareaCurso
       ];
 }
