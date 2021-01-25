@@ -29,6 +29,7 @@ class AppTheme{
 
 
   static const Color colorCard = Color(0xFFFAFAFA);
+  static const Color colorShimmer = Color(0xFFDFDFDF);
 
   static const String fontName = 'Roboto';
 
