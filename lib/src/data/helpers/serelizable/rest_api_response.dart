@@ -659,3 +659,97 @@ class TareaCursoSerializable{
 
   Map<String, dynamic> toJson() => _$TareaCursoSerializableToJson(this);
 }
+
+@JsonSerializable()
+class EventoSerializable {
+  String eventoId;
+  String titulo;
+  String descripcion;
+  String calendarioId;
+  int tipoEventoId;
+  int estadoId;
+  bool estadoPublicacion;
+ int entidadId;
+ int georeferenciaId;
+  String fechaEvento_;
+  String horaEvento;
+  String pathImagen;
+ bool envioPersonalizado;
+  String tipoEventoNombre;
+ int usuarioReceptorId;
+ int eventoHijoId;
+  String nombreEntidad;
+  String fotoEntidad;
+  String nombreEntidadSiglas;
+  EventoSerializable(
+  {this.eventoId,
+      this.titulo,
+      this.descripcion,
+      this.calendarioId,
+      this.tipoEventoId,
+      this.estadoId,
+      this.estadoPublicacion,
+      this.entidadId,
+      this.georeferenciaId,
+      this.fechaEvento_,
+      this.horaEvento,
+      this.pathImagen,
+      this.envioPersonalizado,
+      this.tipoEventoNombre,
+      this.usuarioReceptorId,
+      this.eventoHijoId,
+      this.nombreEntidad,
+      this.fotoEntidad,
+      this.nombreEntidadSiglas});
+
+  factory EventoSerializable.fromJson(Map<String, dynamic> json) => _$EventoSerializableFromJson(json);
+
+  Map<String, dynamic> toJson() => _$EventoSerializableToJson(this);
+
+}
+
+@JsonSerializable()
+class CalendarioSerializable{
+  String calendarioId;
+  String nombre;
+  String descripcion;
+  int estado;
+// int usuarioId;
+  int entidadId;
+  int georeferenciaId;
+//string fechaAccion;
+//string fechaCrecion;
+  String nUsuario;
+  String cargo;
+  int usuarioId;
+
+  int cargaAcademicaId;
+  int cargaCursoId;
+  int estadoPublicacion;
+  int rolId;
+  int fechaCreacion;
+  int usuarioAccionId;
+  int fechaAccion;
+
+  CalendarioSerializable(
+  {this.calendarioId,
+      this.nombre,
+      this.descripcion,
+      this.estado,
+      this.entidadId,
+      this.georeferenciaId,
+      this.nUsuario,
+      this.cargo,
+      this.usuarioId,
+      this.cargaAcademicaId,
+      this.cargaCursoId,
+      this.estadoPublicacion,
+      this.rolId,
+      this.fechaCreacion,
+      this.usuarioAccionId,
+      this.fechaAccion});
+
+  factory CalendarioSerializable.fromJson(Map<String, dynamic> json) => _$CalendarioSerializableFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CalendarioSerializableToJson(this);
+}

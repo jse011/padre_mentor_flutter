@@ -23,16 +23,16 @@ class TitleView extends StatelessWidget {
     var widgetList = <Widget>[
       Expanded(
         child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: 38),
+          constraints: BoxConstraints(minHeight: 18),
           child:  Text(
             titleTxt,
             textAlign: TextAlign.left,
             style: TextStyle(
               fontFamily: AppTheme.fontName,
               fontWeight: FontWeight.w500,
-              fontSize: 18,
+              fontSize: 16,
               letterSpacing: 0.5,
-              color: AppTheme.colorPrimaryDark,
+              color: AppTheme.colorPrimary,
             ),
           ),
         ),
@@ -55,9 +55,9 @@ class TitleView extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.normal,
-                  fontSize: 16,
+                  fontSize: 14,
                   letterSpacing: 0.5,
-                  color: AppTheme.colorAccent,
+                  color: AppTheme.colorPrimary,
                 ),
               ),
               SizedBox(
@@ -65,8 +65,8 @@ class TitleView extends StatelessWidget {
                 width: 26,
                 child: Icon(
                   Icons.arrow_forward,
-                  color: AppTheme.colorAccent,
-                  size: 18,
+                  color: AppTheme.colorPrimary,
+                  size: 14,
                 ),
               )
             ],

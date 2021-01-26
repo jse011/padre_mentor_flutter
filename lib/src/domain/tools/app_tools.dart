@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class AppTools {
   static String capitalize(String texto) {
     try{
@@ -63,6 +65,68 @@ class AppTools {
     }
 
     return parsedDate;
+  }
+
+  static String tiempoFechaCreacion(DateTime fecha){
+
+    try{
+      DateTime calendarActual = DateTime.now();
+      int anhoActual = calendarActual.year;
+      int mesActual = calendarActual.month;
+      int diaActual = calendarActual.day;
+
+      int anhio = fecha.year;
+      int mes= fecha.month;
+      int dia = fecha.day;
+      int hora = fecha.hour;
+      int minuto = fecha.minute;
+
+      calendarActual.add(new Duration(days: 1));
+
+
+      int anioManiana = calendarActual.year;
+      int mesManiana= calendarActual.month;
+      int diaManiana = calendarActual.day;
+
+      if (anhio==anhoActual&&mesActual==mes&&dia==diaActual){
+        if(hora==0&&minuto==0){
+          return "para hoy";
+        }else {
+          return "para hoy a las " + changeTime12Hour(hora,minuto);
+        }
+
+      }else if (anhio==anioManiana&&mesManiana==mes&&dia==diaManiana) {
+        if(hora==0&&minuto==0){
+          return "para mañana";
+        }else {
+          return "para mañana a las " + changeTime12Hour(fecha.hour,fecha.minute);
+        }
+
+      }else if(anhio==anhoActual){
+        if(hora==0&&minuto==0){
+          return "para el "+ f_fecha_letras(fecha);
+        }else {
+          return "para el "+ f_fecha_letras(fecha) + " " + changeTime12Hour(fecha.day,fecha.minute);
+        }
+      }else {
+        if(hora==0&&minuto==0){
+          return  "para el "+ getFechaDiaMesAnho(fecha);
+        }else {
+          return  "para el "+ getFechaDiaMesAnho(fecha) + " " + changeTime12Hour(fecha.day,fecha.minute);
+        }
+      }
+    }catch(e){
+      return "";
+    }
+
+  }
+
+  static String changeTime12Hour(int hr , int min){
+    return  "${hr%12}:${min} ${((hr>=12) ? "PM" : "AM")}";
+  }
+
+  static String getFechaDiaMesAnho(DateTime fecha) {
+    return DateFormat("d MMM yyyy").format(fecha);
   }
 
 }

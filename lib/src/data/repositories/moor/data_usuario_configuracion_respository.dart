@@ -4,8 +4,10 @@ import 'package:padre_mentor/src/data/repositories/moor/model/persona.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/programas_educativo.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/silabo_evento.dart';
 import 'package:padre_mentor/src/data/repositories/moor/tools/serializable_convert.dart';
+import 'package:padre_mentor/src/domain/entities/evento_ui.dart';
 import 'package:padre_mentor/src/domain/entities/hijos_ui.dart';
 import 'package:padre_mentor/src/domain/entities/programa_educativo_ui.dart';
+import 'package:padre_mentor/src/domain/entities/tipo_evento_ui.dart';
 import 'package:padre_mentor/src/domain/entities/usuario_ui.dart';
 import 'package:padre_mentor/src/domain/repositories/usuario_configuarion_repository.dart';
 import 'package:padre_mentor/src/domain/tools/app_tools.dart';
@@ -45,7 +47,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
       });
       UsuarioUi usuarioUi = UsuarioUi(id: personaData == null ? 0 : personaData.personaId ,
           nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}',
-          foto: personaData.foto,
+          foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}',
           hijos: hijos);
 
       /*
@@ -190,6 +192,159 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
       UsuarioData usuarioData = await (SQL.select(SQL.usuario)..where((tbl) => tbl.personaId.equals(alumnoId))).getSingle();
       return HijosUi(usuarioId: usuarioData==null ? 0 : usuarioData.usuarioId, personaId: personaData.personaId, nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}', foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}', documento: personaData.numDoc);
 
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<void> saveEventoAgenda(Map<String, dynamic> eventoAgenda) async{
+    AppDataBase SQL = AppDataBase();
+    try{
+      await SQL.batch((batch) async {
+        // functions in a batch don't have to be awaited - just
+        // await the whole batch afterwards.
+        if(eventoAgenda.containsKey("eventos")){
+          batch.insertAll(SQL.evento, SerializableConvert.converListSerializeEvento(eventoAgenda["eventos"]), mode: InsertMode.insertOrReplace );
+        }
+
+        if(eventoAgenda.containsKey("calendarios")){
+          //personaSerelizable.addAll(datosInicioPadre["usuariosrelacionados"]);
+          //database.personaDao.insertAllTodo(SerializableConvert.converListSerializePersona(datosInicioPadre["personas"]));
+          batch.insertAll(SQL.calendario, SerializableConvert.converListSerializeCalendario(eventoAgenda["calendarios"]), mode: InsertMode.insertOrReplace);
+        }
+
+        if(eventoAgenda.containsKey("tipos")){
+          //personaSerelizable.addAll(datosInicioPadre["usuariosrelacionados"]);
+          batch.insertAll(SQL.tipos, SerializableConvert.converListSerializeTipos(eventoAgenda["tipos"]), mode: InsertMode.insertOrReplace);
+        }
+
+      });
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<List<TipoEventoUi>> getTiposEvento()async {
+
+      AppDataBase SQL = AppDataBase();
+      try{
+
+        List<TipoEventoUi> tipoEventoUiList = [];
+        var query = SQL.select(SQL.tipos)..where((tbl) => tbl.concepto.equals("TipoEvento"));
+        query.where((tbl) => tbl.objeto.equals("T_CE_MOV_EVENTOS"));
+        /*EVENTO=526, ACTIVIDAD=528, CITA=530, TAREA=529, NOTICIA=527, AGENDA = 620;
+        * */
+        List<Tipo> tipos =  await query.get();
+        for(Tipo item in tipos){
+          TipoEventoUi tipoEventoUi = TipoEventoUi();
+          tipoEventoUi.id = item.tipoId;
+          tipoEventoUi.nombre = item.nombre;
+          switch(item.tipoId){
+            case 526:
+              tipoEventoUi.tipo = EventoIconoEnumUI.EVENTO;
+              break;
+            case 528:
+              tipoEventoUi.tipo = EventoIconoEnumUI.ACTIVIDAD;
+              break;
+            case 530:
+              tipoEventoUi.tipo = EventoIconoEnumUI.CITA;
+              break;
+            case 529:
+              tipoEventoUi.tipo = EventoIconoEnumUI.TAREA;
+              break;
+            case 527:
+              tipoEventoUi.tipo = EventoIconoEnumUI.NOTICIA;
+              break;
+            case 620:
+              tipoEventoUi.tipo = EventoIconoEnumUI.AGENDA;
+              break;
+            default:
+              tipoEventoUi.tipo = EventoIconoEnumUI.DEFAULT;
+              break;
+          }
+
+          tipoEventoUiList.add(tipoEventoUi);
+        }
+
+        TipoEventoUi tipoEventoUi = TipoEventoUi();
+        tipoEventoUi.id = 0;
+        tipoEventoUi.nombre = "Todos";
+        tipoEventoUi.tipo = EventoIconoEnumUI.TODOS;
+        tipoEventoUiList.add(tipoEventoUi);
+
+        return tipoEventoUiList;
+      }catch(e){
+        throw Exception(e);
+      }
+  }
+
+  @override
+  Future<List<EventoUi>> getEventosAgenda(int padreId, int tipoEventoId, List<int> hijos) async{
+
+    AppDataBase SQL = AppDataBase();
+    try{
+
+      List<EventoUi> eventoUiList = [];
+      var query = SQL.select(SQL.evento).join([
+        innerJoin(SQL.calendario, SQL.evento.calendarioId.equalsExp(SQL.calendario.calendarioId)),
+      ]);
+      query.where(SQL.evento.usuarioReceptorId.equals(padreId));
+
+      if(tipoEventoId>0){
+        query.where(SQL.evento.tipoEventoId.equals(tipoEventoId));
+      }
+
+      if(hijos != null && hijos.isNotEmpty){
+        query.where(SQL.evento.eventoHijoId.isIn(hijos));
+      }
+
+      var rows = await query.get();
+      for(var item in  rows){
+        EventoData eventoData = item.readTable(SQL.evento);
+        EventoUi eventoUi = new EventoUi();
+        eventoUi.id = eventoData.eventoId;
+        eventoUi.nombreEntidad = eventoData.nombreEntidad;
+        eventoUi.fotoEntidad = eventoData.fotoEntidad;
+        eventoUi.cantLike =  eventoData.likeCount;
+        eventoUi.titulo = eventoData.titulo;
+        eventoUi.descripcion = eventoData.descripcion;
+        eventoUi.fecha =  eventoData.fechaEvento!=null?AppTools.convertDateTimePtBR(eventoData.fechaEvento, eventoData.horaEvento):null;
+        eventoUi.foto = eventoData.pathImagen;
+        eventoUi.tipoEventoUi = TipoEventoUi();
+        eventoUi.tipoEventoUi.id = eventoData.tipoEventoId;
+        eventoUi.tipoEventoUi.nombre = eventoData.tipoEventoNombre;
+        switch(eventoUi.tipoEventoUi.id){
+          case 526:
+            eventoUi.tipoEventoUi.tipo = EventoIconoEnumUI.EVENTO;
+            break;
+          case 528:
+            eventoUi.tipoEventoUi.tipo = EventoIconoEnumUI.ACTIVIDAD;
+            break;
+          case 530:
+            eventoUi.tipoEventoUi.tipo = EventoIconoEnumUI.CITA;
+            break;
+          case 529:
+            eventoUi.tipoEventoUi.tipo = EventoIconoEnumUI.TAREA;
+            break;
+          case 527:
+            eventoUi.tipoEventoUi.tipo = EventoIconoEnumUI.NOTICIA;
+            break;
+          case 620:
+            eventoUi.tipoEventoUi.tipo = EventoIconoEnumUI.AGENDA;
+            break;
+          default:
+            eventoUi.tipoEventoUi.tipo = EventoIconoEnumUI.DEFAULT;
+            break;
+        }
+        eventoUi.fotoEntidad = eventoData.fotoEntidad;
+        eventoUi.nombreEntidad = eventoData.nombreEntidad;
+        eventoUiList.add(eventoUi);
+      }
+
+
+      return eventoUiList;
     }catch(e){
       throw Exception(e);
     }

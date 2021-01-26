@@ -3,7 +3,9 @@ import 'package:padre_mentor/src/data/repositories/floor_beta/database/app_datab
 import 'package:padre_mentor/src/data/repositories/floor_beta/mapping/persona.dart';
 import 'package:padre_mentor/src/data/repositories/floor_beta/mapping/session_user.dart';
 import 'package:padre_mentor/src/data/repositories/floor_beta/tools/serializable_convert.dart';
+import 'package:padre_mentor/src/domain/entities/evento_ui.dart';
 import 'package:padre_mentor/src/domain/entities/hijos_ui.dart';
+import 'package:padre_mentor/src/domain/entities/tipo_evento_ui.dart';
 import 'package:padre_mentor/src/domain/entities/usuario_ui.dart';
 import 'package:padre_mentor/src/domain/repositories/usuario_configuarion_repository.dart';
 import 'package:padre_mentor/src/domain/tools/app_tools.dart';
@@ -55,6 +57,24 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
   @override
   Future<HijosUi> getHijo(int alumnoId) {
     // TODO: implement getHijo
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> saveEventoAgenda(Map<String, dynamic> eventoAgenda) {
+    // TODO: implement saveEventoAgenda
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<TipoEventoUi>> getTiposEvento() {
+    // TODO: implement getTiposEvento
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<EventoUi>> getEventosAgenda(int padreId, int tipoEventoId, List<int> hijos) {
+    // TODO: implement getEventosAgenda
     throw UnimplementedError();
   }
 

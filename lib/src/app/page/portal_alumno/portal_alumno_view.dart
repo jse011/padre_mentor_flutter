@@ -223,7 +223,7 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                 SliverList(
                     delegate: SliverChildListDelegate(
                       [
-                        WorkoutView(
+                       WorkoutView(
                           animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
                               parent: widget.animationController,
                               curve:
@@ -247,7 +247,7 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                           animationController: widget.animationController,
                           child: CarouselSlider(
                               options: CarouselOptions(
-                                height: 108.0,
+                                height: 100.0,
                                 autoPlay: false,
                                 autoPlayInterval: Duration(seconds: 3),
                                 autoPlayAnimationDuration: Duration(milliseconds: 800),
@@ -266,140 +266,144 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                       ],
                     )
                 ),
-                //https://www.flaticon.es/packs/online-learning-192?k=1611187904419
-                SliverGrid(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 24.0,
-                      crossAxisSpacing: 0.0,
-                      childAspectRatio: 1.0,
-                    ),
-                    delegate: SliverChildListDelegate(
-                        [
-                          MenuItemView(
-                            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-                                parent: widget.animationController,
-                                curve:
-                                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
-                            animationController: widget.animationController,
-                            titulo: "Tareas",
-                            imagepath: "assets/fitness_app/icono_tarea.svg",
+                SliverPadding(
+                  padding: const EdgeInsets.only(left: 16, right: 16),
+                  sliver: SliverGrid(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        mainAxisSpacing: 16.0,
+                        crossAxisSpacing: 16.0,
+                        childAspectRatio: 1.0,
+                      ),
+                      delegate: SliverChildListDelegate(
+                          [
+                            MenuItemView(
+                              animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                  parent: widget.animationController,
+                                  curve:
+                                  Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                              animationController: widget.animationController,
+                              titulo: "Tareas",
+                              imagepath: "assets/fitness_app/icono_tarea.svg",
                               onTap: () {
                                 var programaEducativo = controller.programaEducativoSelected;
                                 if(programaEducativo!=null){
-                                    Navigator.of(context).push(TareaEvaluacionRouter.createRouteEvaluacion(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
+                                  Navigator.of(context).push(TareaEvaluacionRouter.createRouteEvaluacion(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
                                 }
                               },
-                          ),
-                          MenuItemView(
-                            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-                                parent: widget.animationController,
-                                curve:
-                                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
-                            animationController: widget.animationController,
-                            titulo: "Evaluación",
-                            imagepath: "assets/fitness_app/icono_evaluacion.svg",
-                            onTap: () {
-                              var programaEducativo = controller.programaEducativoSelected;
+                            ),
+                            MenuItemView(
+                              animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                  parent: widget.animationController,
+                                  curve:
+                                  Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                              animationController: widget.animationController,
+                              titulo: "Evaluación",
+                              imagepath: "assets/fitness_app/icono_evaluacion.svg",
+                              onTap: () {
+                                var programaEducativo = controller.programaEducativoSelected;
                                 if(programaEducativo!=null){
-                                    Navigator.of(context).push(EvaluacionRouter.createRouteEvaluacion(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
+                                  Navigator.of(context).push(EvaluacionRouter.createRouteEvaluacion(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
                                 }
-                            },
-                          ),
-                          MenuItemView(
-                            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-                                parent: widget.animationController,
-                                curve:
-                                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
-                            animationController: widget.animationController,
-                            titulo: "Asistencia",
-                            imagepath: "assets/fitness_app/icono_asistencia.svg",
-                            onTap: () {
-                              var programaEducativo = controller.programaEducativoSelected;
+                              },
+                            ),
+                            MenuItemView(
+                              animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                  parent: widget.animationController,
+                                  curve:
+                                  Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                              animationController: widget.animationController,
+                              titulo: "Asistencia",
+                              imagepath: "assets/fitness_app/icono_asistencia.svg",
+                              onTap: () {
+                                var programaEducativo = controller.programaEducativoSelected;
                                 if(programaEducativo!=null){
-                                    Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
+                                  Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
                                 }
-                            },
-                          ),
-                          MenuItemView(
-                            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-                                parent: widget.animationController,
-                                curve:
-                                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
-                            animationController: widget.animationController,
-                            titulo: "Comportamiento",
-                            imagepath: "assets/fitness_app/icono_comportamiento.svg",
-                            onTap: () {
-                              var programaEducativo = controller.programaEducativoSelected;
+                              },
+                            ),
+                            MenuItemView(
+                              animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                  parent: widget.animationController,
+                                  curve:
+                                  Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                              animationController: widget.animationController,
+                              titulo: "Comportamiento",
+                              imagepath: "assets/fitness_app/icono_comportamiento.svg",
+                              onTap: () {
+                                var programaEducativo = controller.programaEducativoSelected;
                                 if(programaEducativo!=null){
-                                    Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
+                                  Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
                                 }
-                            },
-                          ),
-                          MenuItemView(
-                            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-                                parent: widget.animationController,
-                                curve:
-                                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
-                            animationController: widget.animationController,
-                            titulo: "Horario",
-                            imagepath: "assets/fitness_app/icono_horario.svg",
-                            onTap: () {
-                              var programaEducativo = controller.programaEducativoSelected;
+                              },
+                            ),
+                            MenuItemView(
+                              animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                  parent: widget.animationController,
+                                  curve:
+                                  Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                              animationController: widget.animationController,
+                              titulo: "Horario",
+                              imagepath: "assets/fitness_app/icono_horario.svg",
+                              onTap: () {
+                                var programaEducativo = controller.programaEducativoSelected;
                                 if(programaEducativo!=null){
-                                    Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
+                                  Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
                                 }
-                            },
-                          ),
-                          MenuItemView(
-                            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-                                parent: widget.animationController,
-                                curve:
-                                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
-                            animationController: widget.animationController,
-                            titulo: "Cursos",
-                            imagepath: "assets/fitness_app/icono_curso.svg",
-                            onTap: () {
-                              var programaEducativo = controller.programaEducativoSelected;
+                              },
+                            ),
+                            MenuItemView(
+                              animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                  parent: widget.animationController,
+                                  curve:
+                                  Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                              animationController: widget.animationController,
+                              titulo: "Cursos",
+                              imagepath: "assets/fitness_app/icono_curso.svg",
+                              onTap: () {
+                                var programaEducativo = controller.programaEducativoSelected;
                                 if(programaEducativo!=null){
-                                    Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
+                                  Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
                                 }
-                            },
-                          ),
-                          MenuItemView(
-                            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-                                parent: widget.animationController,
-                                curve:
-                                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
-                            animationController: widget.animationController,
-                            titulo: "Boleta de Nota",
-                            imagepath: "assets/fitness_app/icono_boleta.svg",
-                            onTap: () {
-                              var programaEducativo = controller.programaEducativoSelected;
+                              },
+                            ),
+                            MenuItemView(
+                              animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                  parent: widget.animationController,
+                                  curve:
+                                  Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                              animationController: widget.animationController,
+                              titulo: "Boleta de Nota",
+                              imagepath: "assets/fitness_app/icono_boleta.svg",
+                              onTap: () {
+                                var programaEducativo = controller.programaEducativoSelected;
                                 if(programaEducativo!=null){
-                                    Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
+                                  Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
                                 }
-                            },
-                          ),
-                          MenuItemView(
-                            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-                                parent: widget.animationController,
-                                curve:
-                                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
-                            animationController: widget.animationController,
-                            titulo: "Pago en línea",
-                            imagepath: "assets/fitness_app/icono_pago.svg",
-                            onTap: () {
-                              var programaEducativo = controller.programaEducativoSelected;
+                              },
+                            ),
+                            MenuItemView(
+                              animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                  parent: widget.animationController,
+                                  curve:
+                                  Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                              animationController: widget.animationController,
+                              titulo: "Pago en línea",
+                              imagepath: "assets/fitness_app/icono_pago.svg",
+                              onTap: () {
+                                var programaEducativo = controller.programaEducativoSelected;
                                 if(programaEducativo!=null){
-                                    Navigator.of(context).push(EstadoCuentaRouter.createRouteEstadoCuenta(alumnoId: programaEducativo.hijoId, fotoAlumno: programaEducativo.fotoHijo));
+                                  Navigator.of(context).push(EstadoCuentaRouter.createRouteEstadoCuenta(alumnoId: programaEducativo.hijoId, fotoAlumno: programaEducativo.fotoHijo));
                                 }
-                            },
-                          )
+                              },
+                            )
 
-                        ]
-                    )
+                          ]
+                      )
+                  ),
                 )
+                //https://www.flaticon.es/packs/online-learning-192?k=1611187904419
+
               ],
             );
           })

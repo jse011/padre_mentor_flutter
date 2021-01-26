@@ -659,3 +659,93 @@ Map<String, dynamic> _$TareaCursoSerializableToJson(
       'docenteApellPat': instance.docenteApellPat,
       'docenteNombre': instance.docenteNombre,
     };
+
+EventoSerializable _$EventoSerializableFromJson(Map<String, dynamic> json) {
+  return EventoSerializable(
+    eventoId: json['eventoId'] as String,
+    titulo: json['titulo'] as String,
+    descripcion: json['descripcion'] as String,
+    calendarioId: json['calendarioId'] as String,
+    tipoEventoId: json['tipoEventoId'] as int,
+    estadoId: json['estadoId'] as int,
+    estadoPublicacion: json['estadoPublicacion'] as bool,
+    entidadId: json['entidadId'] as int,
+    georeferenciaId: json['georeferenciaId'] as int,
+    fechaEvento_: json['fechaEvento_'] as String,
+    horaEvento: json['horaEvento'] as String,
+    pathImagen: json['pathImagen'] as String,
+    envioPersonalizado: json['envioPersonalizado'] as bool,
+    tipoEventoNombre: json['tipoEventoNombre'] as String,
+    usuarioReceptorId: json['usuarioReceptorId'] as int,
+    eventoHijoId: json['eventoHijoId'] as int,
+    nombreEntidad: json['nombreEntidad'] as String,
+    fotoEntidad: json['fotoEntidad'] as String,
+    nombreEntidadSiglas: json['nombreEntidadSiglas'] as String,
+  );
+}
+
+Map<String, dynamic> _$EventoSerializableToJson(EventoSerializable instance) =>
+    <String, dynamic>{
+      'eventoId': instance.eventoId,
+      'titulo': instance.titulo,
+      'descripcion': instance.descripcion,
+      'calendarioId': instance.calendarioId,
+      'tipoEventoId': instance.tipoEventoId,
+      'estadoId': instance.estadoId,
+      'estadoPublicacion': instance.estadoPublicacion,
+      'entidadId': instance.entidadId,
+      'georeferenciaId': instance.georeferenciaId,
+      'fechaEvento_': instance.fechaEvento_,
+      'horaEvento': instance.horaEvento,
+      'pathImagen': instance.pathImagen,
+      'envioPersonalizado': instance.envioPersonalizado,
+      'tipoEventoNombre': instance.tipoEventoNombre,
+      'usuarioReceptorId': instance.usuarioReceptorId,
+      'eventoHijoId': instance.eventoHijoId,
+      'nombreEntidad': instance.nombreEntidad,
+      'fotoEntidad': instance.fotoEntidad,
+      'nombreEntidadSiglas': instance.nombreEntidadSiglas,
+    };
+
+CalendarioSerializable _$CalendarioSerializableFromJson(
+    Map<String, dynamic> json) {
+  return CalendarioSerializable(
+    calendarioId: json['calendarioId'] as String,
+    nombre: json['nombre'] as String,
+    descripcion: json['descripcion'] as String,
+    estado: json['estado'] as int,
+    entidadId: json['entidadId'] as int,
+    georeferenciaId: json['georeferenciaId'] as int,
+    nUsuario: json['nUsuario'] as String,
+    cargo: json['cargo'] as String,
+    usuarioId: json['usuarioId'] as int,
+    cargaAcademicaId: json['cargaAcademicaId'] as int,
+    cargaCursoId: json['cargaCursoId'] as int,
+    estadoPublicacion: json['estadoPublicacion'] as int,
+    rolId: json['rolId'] as int,
+    fechaCreacion: json['fechaCreacion'] as int,
+    usuarioAccionId: json['usuarioAccionId'] as int,
+    fechaAccion: json['fechaAccion'] as int,
+  );
+}
+
+Map<String, dynamic> _$CalendarioSerializableToJson(
+        CalendarioSerializable instance) =>
+    <String, dynamic>{
+      'calendarioId': instance.calendarioId,
+      'nombre': instance.nombre,
+      'descripcion': instance.descripcion,
+      'estado': instance.estado,
+      'entidadId': instance.entidadId,
+      'georeferenciaId': instance.georeferenciaId,
+      'nUsuario': instance.nUsuario,
+      'cargo': instance.cargo,
+      'usuarioId': instance.usuarioId,
+      'cargaAcademicaId': instance.cargaAcademicaId,
+      'cargaCursoId': instance.cargaCursoId,
+      'estadoPublicacion': instance.estadoPublicacion,
+      'rolId': instance.rolId,
+      'fechaCreacion': instance.fechaCreacion,
+      'usuarioAccionId': instance.usuarioAccionId,
+      'fechaAccion': instance.fechaAccion,
+    };

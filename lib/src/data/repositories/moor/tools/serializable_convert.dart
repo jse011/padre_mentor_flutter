@@ -530,4 +530,69 @@ class SerializableConvert{
   }
 
 
+  static EventoData converSerializeEvento(Map<String,dynamic> model){
+    EventoSerializable serial = EventoSerializable.fromJson(model);
+    return EventoData(
+        eventoId: serial.eventoId,
+        titulo: serial.titulo,
+        descripcion: serial.descripcion,
+        calendarioId: serial.calendarioId,
+        tipoEventoId: serial.tipoEventoId,
+        estadoId: serial.estadoId,
+        estadoPublicacion: serial.estadoPublicacion,
+        entidadId: serial.entidadId,
+        georeferenciaId: serial.georeferenciaId,
+        fechaEvento: serial.fechaEvento_,
+        horaEvento: serial.horaEvento,
+        pathImagen: serial.pathImagen,
+        envioPersonalizado: serial.envioPersonalizado,
+        tipoEventoNombre: serial.tipoEventoNombre,
+        usuarioReceptorId: serial.usuarioReceptorId,
+        eventoHijoId: serial.eventoHijoId,
+        nombreEntidad: serial.nombreEntidad,
+        fotoEntidad: serial.fotoEntidad,
+        nombreEntidadSiglas: serial.nombreEntidadSiglas
+    );
+  }
+
+  static List<EventoData> converListSerializeEvento(dynamic model){
+    List<EventoData> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeEvento(item));
+    }
+    return items;
+  }
+
+  static CalendarioData converSerializeCalendario(Map<String,dynamic> model){
+    CalendarioSerializable serial = CalendarioSerializable.fromJson(model);
+    return CalendarioData(
+    calendarioId: serial.calendarioId,
+    nombre: serial.nombre,
+    descripcion: serial.descripcion,
+    estado: serial.estado,
+    entidadId: serial.entidadId,
+    georeferenciaId: serial.georeferenciaId,
+    nUsuario: serial.nUsuario,
+    cargo: serial.cargo,
+    usuarioId: serial.usuarioId,
+    cargaAcademicaId: serial.cargaAcademicaId,
+    cargaCursoId: serial.cargaCursoId,
+    estadoPublicacionCal: serial.estadoPublicacion,
+    rolId: serial.rolId,
+    fechaCreacion:  DateTime.fromMillisecondsSinceEpoch(serial.fechaCreacion),
+    usuarioAccionId: serial.usuarioAccionId,
+    fechaAccion:  DateTime.fromMillisecondsSinceEpoch(serial.fechaAccion),
+    );
+  }
+
+  static List<CalendarioData> converListSerializeCalendario(dynamic model){
+    List<CalendarioData> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeCalendario(item));
+    }
+    return items;
+  }
+
 }

@@ -13550,6 +13550,1999 @@ class $TareaCursoTable extends TareaCurso
   }
 }
 
+class EventoData extends DataClass implements Insertable<EventoData> {
+  final String eventoId;
+  final String titulo;
+  final String descripcion;
+  final String calendarioId;
+  final int tipoEventoId;
+  final int estadoId;
+  final bool estadoPublicacion;
+  final int entidadId;
+  final int georeferenciaId;
+  final String fechaEvento;
+  final String horaEvento;
+  final String pathImagen;
+  final bool envioPersonalizado;
+  final String tipoEventoNombre;
+  final int usuarioReceptorId;
+  final int eventoHijoId;
+  final int likeCount;
+  final String nombreEntidad;
+  final String fotoEntidad;
+  final String nombreEntidadSiglas;
+  EventoData(
+      {@required this.eventoId,
+      this.titulo,
+      this.descripcion,
+      this.calendarioId,
+      this.tipoEventoId,
+      this.estadoId,
+      this.estadoPublicacion,
+      this.entidadId,
+      this.georeferenciaId,
+      this.fechaEvento,
+      this.horaEvento,
+      this.pathImagen,
+      this.envioPersonalizado,
+      this.tipoEventoNombre,
+      this.usuarioReceptorId,
+      this.eventoHijoId,
+      this.likeCount,
+      this.nombreEntidad,
+      this.fotoEntidad,
+      this.nombreEntidadSiglas});
+  factory EventoData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final stringType = db.typeSystem.forDartType<String>();
+    final intType = db.typeSystem.forDartType<int>();
+    final boolType = db.typeSystem.forDartType<bool>();
+    return EventoData(
+      eventoId: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}evento_id']),
+      titulo:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}titulo']),
+      descripcion: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}descripcion']),
+      calendarioId: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}calendario_id']),
+      tipoEventoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}tipo_evento_id']),
+      estadoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}estado_id']),
+      estadoPublicacion: boolType.mapFromDatabaseResponse(
+          data['${effectivePrefix}estado_publicacion']),
+      entidadId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}entidad_id']),
+      georeferenciaId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}georeferencia_id']),
+      fechaEvento: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}fecha_evento']),
+      horaEvento: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}hora_evento']),
+      pathImagen: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}path_imagen']),
+      envioPersonalizado: boolType.mapFromDatabaseResponse(
+          data['${effectivePrefix}envio_personalizado']),
+      tipoEventoNombre: stringType.mapFromDatabaseResponse(
+          data['${effectivePrefix}tipo_evento_nombre']),
+      usuarioReceptorId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}usuario_receptor_id']),
+      eventoHijoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}evento_hijo_id']),
+      likeCount:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}like_count']),
+      nombreEntidad: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}nombre_entidad']),
+      fotoEntidad: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}foto_entidad']),
+      nombreEntidadSiglas: stringType.mapFromDatabaseResponse(
+          data['${effectivePrefix}nombre_entidad_siglas']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || eventoId != null) {
+      map['evento_id'] = Variable<String>(eventoId);
+    }
+    if (!nullToAbsent || titulo != null) {
+      map['titulo'] = Variable<String>(titulo);
+    }
+    if (!nullToAbsent || descripcion != null) {
+      map['descripcion'] = Variable<String>(descripcion);
+    }
+    if (!nullToAbsent || calendarioId != null) {
+      map['calendario_id'] = Variable<String>(calendarioId);
+    }
+    if (!nullToAbsent || tipoEventoId != null) {
+      map['tipo_evento_id'] = Variable<int>(tipoEventoId);
+    }
+    if (!nullToAbsent || estadoId != null) {
+      map['estado_id'] = Variable<int>(estadoId);
+    }
+    if (!nullToAbsent || estadoPublicacion != null) {
+      map['estado_publicacion'] = Variable<bool>(estadoPublicacion);
+    }
+    if (!nullToAbsent || entidadId != null) {
+      map['entidad_id'] = Variable<int>(entidadId);
+    }
+    if (!nullToAbsent || georeferenciaId != null) {
+      map['georeferencia_id'] = Variable<int>(georeferenciaId);
+    }
+    if (!nullToAbsent || fechaEvento != null) {
+      map['fecha_evento'] = Variable<String>(fechaEvento);
+    }
+    if (!nullToAbsent || horaEvento != null) {
+      map['hora_evento'] = Variable<String>(horaEvento);
+    }
+    if (!nullToAbsent || pathImagen != null) {
+      map['path_imagen'] = Variable<String>(pathImagen);
+    }
+    if (!nullToAbsent || envioPersonalizado != null) {
+      map['envio_personalizado'] = Variable<bool>(envioPersonalizado);
+    }
+    if (!nullToAbsent || tipoEventoNombre != null) {
+      map['tipo_evento_nombre'] = Variable<String>(tipoEventoNombre);
+    }
+    if (!nullToAbsent || usuarioReceptorId != null) {
+      map['usuario_receptor_id'] = Variable<int>(usuarioReceptorId);
+    }
+    if (!nullToAbsent || eventoHijoId != null) {
+      map['evento_hijo_id'] = Variable<int>(eventoHijoId);
+    }
+    if (!nullToAbsent || likeCount != null) {
+      map['like_count'] = Variable<int>(likeCount);
+    }
+    if (!nullToAbsent || nombreEntidad != null) {
+      map['nombre_entidad'] = Variable<String>(nombreEntidad);
+    }
+    if (!nullToAbsent || fotoEntidad != null) {
+      map['foto_entidad'] = Variable<String>(fotoEntidad);
+    }
+    if (!nullToAbsent || nombreEntidadSiglas != null) {
+      map['nombre_entidad_siglas'] = Variable<String>(nombreEntidadSiglas);
+    }
+    return map;
+  }
+
+  EventoCompanion toCompanion(bool nullToAbsent) {
+    return EventoCompanion(
+      eventoId: eventoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(eventoId),
+      titulo:
+          titulo == null && nullToAbsent ? const Value.absent() : Value(titulo),
+      descripcion: descripcion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(descripcion),
+      calendarioId: calendarioId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(calendarioId),
+      tipoEventoId: tipoEventoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tipoEventoId),
+      estadoId: estadoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadoId),
+      estadoPublicacion: estadoPublicacion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadoPublicacion),
+      entidadId: entidadId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(entidadId),
+      georeferenciaId: georeferenciaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(georeferenciaId),
+      fechaEvento: fechaEvento == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fechaEvento),
+      horaEvento: horaEvento == null && nullToAbsent
+          ? const Value.absent()
+          : Value(horaEvento),
+      pathImagen: pathImagen == null && nullToAbsent
+          ? const Value.absent()
+          : Value(pathImagen),
+      envioPersonalizado: envioPersonalizado == null && nullToAbsent
+          ? const Value.absent()
+          : Value(envioPersonalizado),
+      tipoEventoNombre: tipoEventoNombre == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tipoEventoNombre),
+      usuarioReceptorId: usuarioReceptorId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(usuarioReceptorId),
+      eventoHijoId: eventoHijoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(eventoHijoId),
+      likeCount: likeCount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(likeCount),
+      nombreEntidad: nombreEntidad == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nombreEntidad),
+      fotoEntidad: fotoEntidad == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fotoEntidad),
+      nombreEntidadSiglas: nombreEntidadSiglas == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nombreEntidadSiglas),
+    );
+  }
+
+  factory EventoData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return EventoData(
+      eventoId: serializer.fromJson<String>(json['eventoId']),
+      titulo: serializer.fromJson<String>(json['titulo']),
+      descripcion: serializer.fromJson<String>(json['descripcion']),
+      calendarioId: serializer.fromJson<String>(json['calendarioId']),
+      tipoEventoId: serializer.fromJson<int>(json['tipoEventoId']),
+      estadoId: serializer.fromJson<int>(json['estadoId']),
+      estadoPublicacion: serializer.fromJson<bool>(json['estadoPublicacion']),
+      entidadId: serializer.fromJson<int>(json['entidadId']),
+      georeferenciaId: serializer.fromJson<int>(json['georeferenciaId']),
+      fechaEvento: serializer.fromJson<String>(json['fechaEvento']),
+      horaEvento: serializer.fromJson<String>(json['horaEvento']),
+      pathImagen: serializer.fromJson<String>(json['pathImagen']),
+      envioPersonalizado: serializer.fromJson<bool>(json['envioPersonalizado']),
+      tipoEventoNombre: serializer.fromJson<String>(json['tipoEventoNombre']),
+      usuarioReceptorId: serializer.fromJson<int>(json['usuarioReceptorId']),
+      eventoHijoId: serializer.fromJson<int>(json['eventoHijoId']),
+      likeCount: serializer.fromJson<int>(json['likeCount']),
+      nombreEntidad: serializer.fromJson<String>(json['nombreEntidad']),
+      fotoEntidad: serializer.fromJson<String>(json['fotoEntidad']),
+      nombreEntidadSiglas:
+          serializer.fromJson<String>(json['nombreEntidadSiglas']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'eventoId': serializer.toJson<String>(eventoId),
+      'titulo': serializer.toJson<String>(titulo),
+      'descripcion': serializer.toJson<String>(descripcion),
+      'calendarioId': serializer.toJson<String>(calendarioId),
+      'tipoEventoId': serializer.toJson<int>(tipoEventoId),
+      'estadoId': serializer.toJson<int>(estadoId),
+      'estadoPublicacion': serializer.toJson<bool>(estadoPublicacion),
+      'entidadId': serializer.toJson<int>(entidadId),
+      'georeferenciaId': serializer.toJson<int>(georeferenciaId),
+      'fechaEvento': serializer.toJson<String>(fechaEvento),
+      'horaEvento': serializer.toJson<String>(horaEvento),
+      'pathImagen': serializer.toJson<String>(pathImagen),
+      'envioPersonalizado': serializer.toJson<bool>(envioPersonalizado),
+      'tipoEventoNombre': serializer.toJson<String>(tipoEventoNombre),
+      'usuarioReceptorId': serializer.toJson<int>(usuarioReceptorId),
+      'eventoHijoId': serializer.toJson<int>(eventoHijoId),
+      'likeCount': serializer.toJson<int>(likeCount),
+      'nombreEntidad': serializer.toJson<String>(nombreEntidad),
+      'fotoEntidad': serializer.toJson<String>(fotoEntidad),
+      'nombreEntidadSiglas': serializer.toJson<String>(nombreEntidadSiglas),
+    };
+  }
+
+  EventoData copyWith(
+          {String eventoId,
+          String titulo,
+          String descripcion,
+          String calendarioId,
+          int tipoEventoId,
+          int estadoId,
+          bool estadoPublicacion,
+          int entidadId,
+          int georeferenciaId,
+          String fechaEvento,
+          String horaEvento,
+          String pathImagen,
+          bool envioPersonalizado,
+          String tipoEventoNombre,
+          int usuarioReceptorId,
+          int eventoHijoId,
+          int likeCount,
+          String nombreEntidad,
+          String fotoEntidad,
+          String nombreEntidadSiglas}) =>
+      EventoData(
+        eventoId: eventoId ?? this.eventoId,
+        titulo: titulo ?? this.titulo,
+        descripcion: descripcion ?? this.descripcion,
+        calendarioId: calendarioId ?? this.calendarioId,
+        tipoEventoId: tipoEventoId ?? this.tipoEventoId,
+        estadoId: estadoId ?? this.estadoId,
+        estadoPublicacion: estadoPublicacion ?? this.estadoPublicacion,
+        entidadId: entidadId ?? this.entidadId,
+        georeferenciaId: georeferenciaId ?? this.georeferenciaId,
+        fechaEvento: fechaEvento ?? this.fechaEvento,
+        horaEvento: horaEvento ?? this.horaEvento,
+        pathImagen: pathImagen ?? this.pathImagen,
+        envioPersonalizado: envioPersonalizado ?? this.envioPersonalizado,
+        tipoEventoNombre: tipoEventoNombre ?? this.tipoEventoNombre,
+        usuarioReceptorId: usuarioReceptorId ?? this.usuarioReceptorId,
+        eventoHijoId: eventoHijoId ?? this.eventoHijoId,
+        likeCount: likeCount ?? this.likeCount,
+        nombreEntidad: nombreEntidad ?? this.nombreEntidad,
+        fotoEntidad: fotoEntidad ?? this.fotoEntidad,
+        nombreEntidadSiglas: nombreEntidadSiglas ?? this.nombreEntidadSiglas,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('EventoData(')
+          ..write('eventoId: $eventoId, ')
+          ..write('titulo: $titulo, ')
+          ..write('descripcion: $descripcion, ')
+          ..write('calendarioId: $calendarioId, ')
+          ..write('tipoEventoId: $tipoEventoId, ')
+          ..write('estadoId: $estadoId, ')
+          ..write('estadoPublicacion: $estadoPublicacion, ')
+          ..write('entidadId: $entidadId, ')
+          ..write('georeferenciaId: $georeferenciaId, ')
+          ..write('fechaEvento: $fechaEvento, ')
+          ..write('horaEvento: $horaEvento, ')
+          ..write('pathImagen: $pathImagen, ')
+          ..write('envioPersonalizado: $envioPersonalizado, ')
+          ..write('tipoEventoNombre: $tipoEventoNombre, ')
+          ..write('usuarioReceptorId: $usuarioReceptorId, ')
+          ..write('eventoHijoId: $eventoHijoId, ')
+          ..write('likeCount: $likeCount, ')
+          ..write('nombreEntidad: $nombreEntidad, ')
+          ..write('fotoEntidad: $fotoEntidad, ')
+          ..write('nombreEntidadSiglas: $nombreEntidadSiglas')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      eventoId.hashCode,
+      $mrjc(
+          titulo.hashCode,
+          $mrjc(
+              descripcion.hashCode,
+              $mrjc(
+                  calendarioId.hashCode,
+                  $mrjc(
+                      tipoEventoId.hashCode,
+                      $mrjc(
+                          estadoId.hashCode,
+                          $mrjc(
+                              estadoPublicacion.hashCode,
+                              $mrjc(
+                                  entidadId.hashCode,
+                                  $mrjc(
+                                      georeferenciaId.hashCode,
+                                      $mrjc(
+                                          fechaEvento.hashCode,
+                                          $mrjc(
+                                              horaEvento.hashCode,
+                                              $mrjc(
+                                                  pathImagen.hashCode,
+                                                  $mrjc(
+                                                      envioPersonalizado
+                                                          .hashCode,
+                                                      $mrjc(
+                                                          tipoEventoNombre
+                                                              .hashCode,
+                                                          $mrjc(
+                                                              usuarioReceptorId
+                                                                  .hashCode,
+                                                              $mrjc(
+                                                                  eventoHijoId
+                                                                      .hashCode,
+                                                                  $mrjc(
+                                                                      likeCount
+                                                                          .hashCode,
+                                                                      $mrjc(
+                                                                          nombreEntidad
+                                                                              .hashCode,
+                                                                          $mrjc(
+                                                                              fotoEntidad.hashCode,
+                                                                              nombreEntidadSiglas.hashCode))))))))))))))))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is EventoData &&
+          other.eventoId == this.eventoId &&
+          other.titulo == this.titulo &&
+          other.descripcion == this.descripcion &&
+          other.calendarioId == this.calendarioId &&
+          other.tipoEventoId == this.tipoEventoId &&
+          other.estadoId == this.estadoId &&
+          other.estadoPublicacion == this.estadoPublicacion &&
+          other.entidadId == this.entidadId &&
+          other.georeferenciaId == this.georeferenciaId &&
+          other.fechaEvento == this.fechaEvento &&
+          other.horaEvento == this.horaEvento &&
+          other.pathImagen == this.pathImagen &&
+          other.envioPersonalizado == this.envioPersonalizado &&
+          other.tipoEventoNombre == this.tipoEventoNombre &&
+          other.usuarioReceptorId == this.usuarioReceptorId &&
+          other.eventoHijoId == this.eventoHijoId &&
+          other.likeCount == this.likeCount &&
+          other.nombreEntidad == this.nombreEntidad &&
+          other.fotoEntidad == this.fotoEntidad &&
+          other.nombreEntidadSiglas == this.nombreEntidadSiglas);
+}
+
+class EventoCompanion extends UpdateCompanion<EventoData> {
+  final Value<String> eventoId;
+  final Value<String> titulo;
+  final Value<String> descripcion;
+  final Value<String> calendarioId;
+  final Value<int> tipoEventoId;
+  final Value<int> estadoId;
+  final Value<bool> estadoPublicacion;
+  final Value<int> entidadId;
+  final Value<int> georeferenciaId;
+  final Value<String> fechaEvento;
+  final Value<String> horaEvento;
+  final Value<String> pathImagen;
+  final Value<bool> envioPersonalizado;
+  final Value<String> tipoEventoNombre;
+  final Value<int> usuarioReceptorId;
+  final Value<int> eventoHijoId;
+  final Value<int> likeCount;
+  final Value<String> nombreEntidad;
+  final Value<String> fotoEntidad;
+  final Value<String> nombreEntidadSiglas;
+  const EventoCompanion({
+    this.eventoId = const Value.absent(),
+    this.titulo = const Value.absent(),
+    this.descripcion = const Value.absent(),
+    this.calendarioId = const Value.absent(),
+    this.tipoEventoId = const Value.absent(),
+    this.estadoId = const Value.absent(),
+    this.estadoPublicacion = const Value.absent(),
+    this.entidadId = const Value.absent(),
+    this.georeferenciaId = const Value.absent(),
+    this.fechaEvento = const Value.absent(),
+    this.horaEvento = const Value.absent(),
+    this.pathImagen = const Value.absent(),
+    this.envioPersonalizado = const Value.absent(),
+    this.tipoEventoNombre = const Value.absent(),
+    this.usuarioReceptorId = const Value.absent(),
+    this.eventoHijoId = const Value.absent(),
+    this.likeCount = const Value.absent(),
+    this.nombreEntidad = const Value.absent(),
+    this.fotoEntidad = const Value.absent(),
+    this.nombreEntidadSiglas = const Value.absent(),
+  });
+  EventoCompanion.insert({
+    @required String eventoId,
+    this.titulo = const Value.absent(),
+    this.descripcion = const Value.absent(),
+    this.calendarioId = const Value.absent(),
+    this.tipoEventoId = const Value.absent(),
+    this.estadoId = const Value.absent(),
+    this.estadoPublicacion = const Value.absent(),
+    this.entidadId = const Value.absent(),
+    this.georeferenciaId = const Value.absent(),
+    this.fechaEvento = const Value.absent(),
+    this.horaEvento = const Value.absent(),
+    this.pathImagen = const Value.absent(),
+    this.envioPersonalizado = const Value.absent(),
+    this.tipoEventoNombre = const Value.absent(),
+    this.usuarioReceptorId = const Value.absent(),
+    this.eventoHijoId = const Value.absent(),
+    this.likeCount = const Value.absent(),
+    this.nombreEntidad = const Value.absent(),
+    this.fotoEntidad = const Value.absent(),
+    this.nombreEntidadSiglas = const Value.absent(),
+  }) : eventoId = Value(eventoId);
+  static Insertable<EventoData> custom({
+    Expression<String> eventoId,
+    Expression<String> titulo,
+    Expression<String> descripcion,
+    Expression<String> calendarioId,
+    Expression<int> tipoEventoId,
+    Expression<int> estadoId,
+    Expression<bool> estadoPublicacion,
+    Expression<int> entidadId,
+    Expression<int> georeferenciaId,
+    Expression<String> fechaEvento,
+    Expression<String> horaEvento,
+    Expression<String> pathImagen,
+    Expression<bool> envioPersonalizado,
+    Expression<String> tipoEventoNombre,
+    Expression<int> usuarioReceptorId,
+    Expression<int> eventoHijoId,
+    Expression<int> likeCount,
+    Expression<String> nombreEntidad,
+    Expression<String> fotoEntidad,
+    Expression<String> nombreEntidadSiglas,
+  }) {
+    return RawValuesInsertable({
+      if (eventoId != null) 'evento_id': eventoId,
+      if (titulo != null) 'titulo': titulo,
+      if (descripcion != null) 'descripcion': descripcion,
+      if (calendarioId != null) 'calendario_id': calendarioId,
+      if (tipoEventoId != null) 'tipo_evento_id': tipoEventoId,
+      if (estadoId != null) 'estado_id': estadoId,
+      if (estadoPublicacion != null) 'estado_publicacion': estadoPublicacion,
+      if (entidadId != null) 'entidad_id': entidadId,
+      if (georeferenciaId != null) 'georeferencia_id': georeferenciaId,
+      if (fechaEvento != null) 'fecha_evento': fechaEvento,
+      if (horaEvento != null) 'hora_evento': horaEvento,
+      if (pathImagen != null) 'path_imagen': pathImagen,
+      if (envioPersonalizado != null) 'envio_personalizado': envioPersonalizado,
+      if (tipoEventoNombre != null) 'tipo_evento_nombre': tipoEventoNombre,
+      if (usuarioReceptorId != null) 'usuario_receptor_id': usuarioReceptorId,
+      if (eventoHijoId != null) 'evento_hijo_id': eventoHijoId,
+      if (likeCount != null) 'like_count': likeCount,
+      if (nombreEntidad != null) 'nombre_entidad': nombreEntidad,
+      if (fotoEntidad != null) 'foto_entidad': fotoEntidad,
+      if (nombreEntidadSiglas != null)
+        'nombre_entidad_siglas': nombreEntidadSiglas,
+    });
+  }
+
+  EventoCompanion copyWith(
+      {Value<String> eventoId,
+      Value<String> titulo,
+      Value<String> descripcion,
+      Value<String> calendarioId,
+      Value<int> tipoEventoId,
+      Value<int> estadoId,
+      Value<bool> estadoPublicacion,
+      Value<int> entidadId,
+      Value<int> georeferenciaId,
+      Value<String> fechaEvento,
+      Value<String> horaEvento,
+      Value<String> pathImagen,
+      Value<bool> envioPersonalizado,
+      Value<String> tipoEventoNombre,
+      Value<int> usuarioReceptorId,
+      Value<int> eventoHijoId,
+      Value<int> likeCount,
+      Value<String> nombreEntidad,
+      Value<String> fotoEntidad,
+      Value<String> nombreEntidadSiglas}) {
+    return EventoCompanion(
+      eventoId: eventoId ?? this.eventoId,
+      titulo: titulo ?? this.titulo,
+      descripcion: descripcion ?? this.descripcion,
+      calendarioId: calendarioId ?? this.calendarioId,
+      tipoEventoId: tipoEventoId ?? this.tipoEventoId,
+      estadoId: estadoId ?? this.estadoId,
+      estadoPublicacion: estadoPublicacion ?? this.estadoPublicacion,
+      entidadId: entidadId ?? this.entidadId,
+      georeferenciaId: georeferenciaId ?? this.georeferenciaId,
+      fechaEvento: fechaEvento ?? this.fechaEvento,
+      horaEvento: horaEvento ?? this.horaEvento,
+      pathImagen: pathImagen ?? this.pathImagen,
+      envioPersonalizado: envioPersonalizado ?? this.envioPersonalizado,
+      tipoEventoNombre: tipoEventoNombre ?? this.tipoEventoNombre,
+      usuarioReceptorId: usuarioReceptorId ?? this.usuarioReceptorId,
+      eventoHijoId: eventoHijoId ?? this.eventoHijoId,
+      likeCount: likeCount ?? this.likeCount,
+      nombreEntidad: nombreEntidad ?? this.nombreEntidad,
+      fotoEntidad: fotoEntidad ?? this.fotoEntidad,
+      nombreEntidadSiglas: nombreEntidadSiglas ?? this.nombreEntidadSiglas,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (eventoId.present) {
+      map['evento_id'] = Variable<String>(eventoId.value);
+    }
+    if (titulo.present) {
+      map['titulo'] = Variable<String>(titulo.value);
+    }
+    if (descripcion.present) {
+      map['descripcion'] = Variable<String>(descripcion.value);
+    }
+    if (calendarioId.present) {
+      map['calendario_id'] = Variable<String>(calendarioId.value);
+    }
+    if (tipoEventoId.present) {
+      map['tipo_evento_id'] = Variable<int>(tipoEventoId.value);
+    }
+    if (estadoId.present) {
+      map['estado_id'] = Variable<int>(estadoId.value);
+    }
+    if (estadoPublicacion.present) {
+      map['estado_publicacion'] = Variable<bool>(estadoPublicacion.value);
+    }
+    if (entidadId.present) {
+      map['entidad_id'] = Variable<int>(entidadId.value);
+    }
+    if (georeferenciaId.present) {
+      map['georeferencia_id'] = Variable<int>(georeferenciaId.value);
+    }
+    if (fechaEvento.present) {
+      map['fecha_evento'] = Variable<String>(fechaEvento.value);
+    }
+    if (horaEvento.present) {
+      map['hora_evento'] = Variable<String>(horaEvento.value);
+    }
+    if (pathImagen.present) {
+      map['path_imagen'] = Variable<String>(pathImagen.value);
+    }
+    if (envioPersonalizado.present) {
+      map['envio_personalizado'] = Variable<bool>(envioPersonalizado.value);
+    }
+    if (tipoEventoNombre.present) {
+      map['tipo_evento_nombre'] = Variable<String>(tipoEventoNombre.value);
+    }
+    if (usuarioReceptorId.present) {
+      map['usuario_receptor_id'] = Variable<int>(usuarioReceptorId.value);
+    }
+    if (eventoHijoId.present) {
+      map['evento_hijo_id'] = Variable<int>(eventoHijoId.value);
+    }
+    if (likeCount.present) {
+      map['like_count'] = Variable<int>(likeCount.value);
+    }
+    if (nombreEntidad.present) {
+      map['nombre_entidad'] = Variable<String>(nombreEntidad.value);
+    }
+    if (fotoEntidad.present) {
+      map['foto_entidad'] = Variable<String>(fotoEntidad.value);
+    }
+    if (nombreEntidadSiglas.present) {
+      map['nombre_entidad_siglas'] =
+          Variable<String>(nombreEntidadSiglas.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('EventoCompanion(')
+          ..write('eventoId: $eventoId, ')
+          ..write('titulo: $titulo, ')
+          ..write('descripcion: $descripcion, ')
+          ..write('calendarioId: $calendarioId, ')
+          ..write('tipoEventoId: $tipoEventoId, ')
+          ..write('estadoId: $estadoId, ')
+          ..write('estadoPublicacion: $estadoPublicacion, ')
+          ..write('entidadId: $entidadId, ')
+          ..write('georeferenciaId: $georeferenciaId, ')
+          ..write('fechaEvento: $fechaEvento, ')
+          ..write('horaEvento: $horaEvento, ')
+          ..write('pathImagen: $pathImagen, ')
+          ..write('envioPersonalizado: $envioPersonalizado, ')
+          ..write('tipoEventoNombre: $tipoEventoNombre, ')
+          ..write('usuarioReceptorId: $usuarioReceptorId, ')
+          ..write('eventoHijoId: $eventoHijoId, ')
+          ..write('likeCount: $likeCount, ')
+          ..write('nombreEntidad: $nombreEntidad, ')
+          ..write('fotoEntidad: $fotoEntidad, ')
+          ..write('nombreEntidadSiglas: $nombreEntidadSiglas')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $EventoTable extends Evento with TableInfo<$EventoTable, EventoData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $EventoTable(this._db, [this._alias]);
+  final VerificationMeta _eventoIdMeta = const VerificationMeta('eventoId');
+  GeneratedTextColumn _eventoId;
+  @override
+  GeneratedTextColumn get eventoId => _eventoId ??= _constructEventoId();
+  GeneratedTextColumn _constructEventoId() {
+    return GeneratedTextColumn(
+      'evento_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _tituloMeta = const VerificationMeta('titulo');
+  GeneratedTextColumn _titulo;
+  @override
+  GeneratedTextColumn get titulo => _titulo ??= _constructTitulo();
+  GeneratedTextColumn _constructTitulo() {
+    return GeneratedTextColumn(
+      'titulo',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _descripcionMeta =
+      const VerificationMeta('descripcion');
+  GeneratedTextColumn _descripcion;
+  @override
+  GeneratedTextColumn get descripcion =>
+      _descripcion ??= _constructDescripcion();
+  GeneratedTextColumn _constructDescripcion() {
+    return GeneratedTextColumn(
+      'descripcion',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _calendarioIdMeta =
+      const VerificationMeta('calendarioId');
+  GeneratedTextColumn _calendarioId;
+  @override
+  GeneratedTextColumn get calendarioId =>
+      _calendarioId ??= _constructCalendarioId();
+  GeneratedTextColumn _constructCalendarioId() {
+    return GeneratedTextColumn(
+      'calendario_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoEventoIdMeta =
+      const VerificationMeta('tipoEventoId');
+  GeneratedIntColumn _tipoEventoId;
+  @override
+  GeneratedIntColumn get tipoEventoId =>
+      _tipoEventoId ??= _constructTipoEventoId();
+  GeneratedIntColumn _constructTipoEventoId() {
+    return GeneratedIntColumn(
+      'tipo_evento_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoIdMeta = const VerificationMeta('estadoId');
+  GeneratedIntColumn _estadoId;
+  @override
+  GeneratedIntColumn get estadoId => _estadoId ??= _constructEstadoId();
+  GeneratedIntColumn _constructEstadoId() {
+    return GeneratedIntColumn(
+      'estado_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoPublicacionMeta =
+      const VerificationMeta('estadoPublicacion');
+  GeneratedBoolColumn _estadoPublicacion;
+  @override
+  GeneratedBoolColumn get estadoPublicacion =>
+      _estadoPublicacion ??= _constructEstadoPublicacion();
+  GeneratedBoolColumn _constructEstadoPublicacion() {
+    return GeneratedBoolColumn(
+      'estado_publicacion',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _entidadIdMeta = const VerificationMeta('entidadId');
+  GeneratedIntColumn _entidadId;
+  @override
+  GeneratedIntColumn get entidadId => _entidadId ??= _constructEntidadId();
+  GeneratedIntColumn _constructEntidadId() {
+    return GeneratedIntColumn(
+      'entidad_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _georeferenciaIdMeta =
+      const VerificationMeta('georeferenciaId');
+  GeneratedIntColumn _georeferenciaId;
+  @override
+  GeneratedIntColumn get georeferenciaId =>
+      _georeferenciaId ??= _constructGeoreferenciaId();
+  GeneratedIntColumn _constructGeoreferenciaId() {
+    return GeneratedIntColumn(
+      'georeferencia_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _fechaEventoMeta =
+      const VerificationMeta('fechaEvento');
+  GeneratedTextColumn _fechaEvento;
+  @override
+  GeneratedTextColumn get fechaEvento =>
+      _fechaEvento ??= _constructFechaEvento();
+  GeneratedTextColumn _constructFechaEvento() {
+    return GeneratedTextColumn(
+      'fecha_evento',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _horaEventoMeta = const VerificationMeta('horaEvento');
+  GeneratedTextColumn _horaEvento;
+  @override
+  GeneratedTextColumn get horaEvento => _horaEvento ??= _constructHoraEvento();
+  GeneratedTextColumn _constructHoraEvento() {
+    return GeneratedTextColumn(
+      'hora_evento',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _pathImagenMeta = const VerificationMeta('pathImagen');
+  GeneratedTextColumn _pathImagen;
+  @override
+  GeneratedTextColumn get pathImagen => _pathImagen ??= _constructPathImagen();
+  GeneratedTextColumn _constructPathImagen() {
+    return GeneratedTextColumn(
+      'path_imagen',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _envioPersonalizadoMeta =
+      const VerificationMeta('envioPersonalizado');
+  GeneratedBoolColumn _envioPersonalizado;
+  @override
+  GeneratedBoolColumn get envioPersonalizado =>
+      _envioPersonalizado ??= _constructEnvioPersonalizado();
+  GeneratedBoolColumn _constructEnvioPersonalizado() {
+    return GeneratedBoolColumn(
+      'envio_personalizado',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoEventoNombreMeta =
+      const VerificationMeta('tipoEventoNombre');
+  GeneratedTextColumn _tipoEventoNombre;
+  @override
+  GeneratedTextColumn get tipoEventoNombre =>
+      _tipoEventoNombre ??= _constructTipoEventoNombre();
+  GeneratedTextColumn _constructTipoEventoNombre() {
+    return GeneratedTextColumn(
+      'tipo_evento_nombre',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _usuarioReceptorIdMeta =
+      const VerificationMeta('usuarioReceptorId');
+  GeneratedIntColumn _usuarioReceptorId;
+  @override
+  GeneratedIntColumn get usuarioReceptorId =>
+      _usuarioReceptorId ??= _constructUsuarioReceptorId();
+  GeneratedIntColumn _constructUsuarioReceptorId() {
+    return GeneratedIntColumn(
+      'usuario_receptor_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _eventoHijoIdMeta =
+      const VerificationMeta('eventoHijoId');
+  GeneratedIntColumn _eventoHijoId;
+  @override
+  GeneratedIntColumn get eventoHijoId =>
+      _eventoHijoId ??= _constructEventoHijoId();
+  GeneratedIntColumn _constructEventoHijoId() {
+    return GeneratedIntColumn(
+      'evento_hijo_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _likeCountMeta = const VerificationMeta('likeCount');
+  GeneratedIntColumn _likeCount;
+  @override
+  GeneratedIntColumn get likeCount => _likeCount ??= _constructLikeCount();
+  GeneratedIntColumn _constructLikeCount() {
+    return GeneratedIntColumn(
+      'like_count',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _nombreEntidadMeta =
+      const VerificationMeta('nombreEntidad');
+  GeneratedTextColumn _nombreEntidad;
+  @override
+  GeneratedTextColumn get nombreEntidad =>
+      _nombreEntidad ??= _constructNombreEntidad();
+  GeneratedTextColumn _constructNombreEntidad() {
+    return GeneratedTextColumn(
+      'nombre_entidad',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _fotoEntidadMeta =
+      const VerificationMeta('fotoEntidad');
+  GeneratedTextColumn _fotoEntidad;
+  @override
+  GeneratedTextColumn get fotoEntidad =>
+      _fotoEntidad ??= _constructFotoEntidad();
+  GeneratedTextColumn _constructFotoEntidad() {
+    return GeneratedTextColumn(
+      'foto_entidad',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _nombreEntidadSiglasMeta =
+      const VerificationMeta('nombreEntidadSiglas');
+  GeneratedTextColumn _nombreEntidadSiglas;
+  @override
+  GeneratedTextColumn get nombreEntidadSiglas =>
+      _nombreEntidadSiglas ??= _constructNombreEntidadSiglas();
+  GeneratedTextColumn _constructNombreEntidadSiglas() {
+    return GeneratedTextColumn(
+      'nombre_entidad_siglas',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        eventoId,
+        titulo,
+        descripcion,
+        calendarioId,
+        tipoEventoId,
+        estadoId,
+        estadoPublicacion,
+        entidadId,
+        georeferenciaId,
+        fechaEvento,
+        horaEvento,
+        pathImagen,
+        envioPersonalizado,
+        tipoEventoNombre,
+        usuarioReceptorId,
+        eventoHijoId,
+        likeCount,
+        nombreEntidad,
+        fotoEntidad,
+        nombreEntidadSiglas
+      ];
+  @override
+  $EventoTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'evento';
+  @override
+  final String actualTableName = 'evento';
+  @override
+  VerificationContext validateIntegrity(Insertable<EventoData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('evento_id')) {
+      context.handle(_eventoIdMeta,
+          eventoId.isAcceptableOrUnknown(data['evento_id'], _eventoIdMeta));
+    } else if (isInserting) {
+      context.missing(_eventoIdMeta);
+    }
+    if (data.containsKey('titulo')) {
+      context.handle(_tituloMeta,
+          titulo.isAcceptableOrUnknown(data['titulo'], _tituloMeta));
+    }
+    if (data.containsKey('descripcion')) {
+      context.handle(
+          _descripcionMeta,
+          descripcion.isAcceptableOrUnknown(
+              data['descripcion'], _descripcionMeta));
+    }
+    if (data.containsKey('calendario_id')) {
+      context.handle(
+          _calendarioIdMeta,
+          calendarioId.isAcceptableOrUnknown(
+              data['calendario_id'], _calendarioIdMeta));
+    }
+    if (data.containsKey('tipo_evento_id')) {
+      context.handle(
+          _tipoEventoIdMeta,
+          tipoEventoId.isAcceptableOrUnknown(
+              data['tipo_evento_id'], _tipoEventoIdMeta));
+    }
+    if (data.containsKey('estado_id')) {
+      context.handle(_estadoIdMeta,
+          estadoId.isAcceptableOrUnknown(data['estado_id'], _estadoIdMeta));
+    }
+    if (data.containsKey('estado_publicacion')) {
+      context.handle(
+          _estadoPublicacionMeta,
+          estadoPublicacion.isAcceptableOrUnknown(
+              data['estado_publicacion'], _estadoPublicacionMeta));
+    }
+    if (data.containsKey('entidad_id')) {
+      context.handle(_entidadIdMeta,
+          entidadId.isAcceptableOrUnknown(data['entidad_id'], _entidadIdMeta));
+    }
+    if (data.containsKey('georeferencia_id')) {
+      context.handle(
+          _georeferenciaIdMeta,
+          georeferenciaId.isAcceptableOrUnknown(
+              data['georeferencia_id'], _georeferenciaIdMeta));
+    }
+    if (data.containsKey('fecha_evento')) {
+      context.handle(
+          _fechaEventoMeta,
+          fechaEvento.isAcceptableOrUnknown(
+              data['fecha_evento'], _fechaEventoMeta));
+    }
+    if (data.containsKey('hora_evento')) {
+      context.handle(
+          _horaEventoMeta,
+          horaEvento.isAcceptableOrUnknown(
+              data['hora_evento'], _horaEventoMeta));
+    }
+    if (data.containsKey('path_imagen')) {
+      context.handle(
+          _pathImagenMeta,
+          pathImagen.isAcceptableOrUnknown(
+              data['path_imagen'], _pathImagenMeta));
+    }
+    if (data.containsKey('envio_personalizado')) {
+      context.handle(
+          _envioPersonalizadoMeta,
+          envioPersonalizado.isAcceptableOrUnknown(
+              data['envio_personalizado'], _envioPersonalizadoMeta));
+    }
+    if (data.containsKey('tipo_evento_nombre')) {
+      context.handle(
+          _tipoEventoNombreMeta,
+          tipoEventoNombre.isAcceptableOrUnknown(
+              data['tipo_evento_nombre'], _tipoEventoNombreMeta));
+    }
+    if (data.containsKey('usuario_receptor_id')) {
+      context.handle(
+          _usuarioReceptorIdMeta,
+          usuarioReceptorId.isAcceptableOrUnknown(
+              data['usuario_receptor_id'], _usuarioReceptorIdMeta));
+    }
+    if (data.containsKey('evento_hijo_id')) {
+      context.handle(
+          _eventoHijoIdMeta,
+          eventoHijoId.isAcceptableOrUnknown(
+              data['evento_hijo_id'], _eventoHijoIdMeta));
+    }
+    if (data.containsKey('like_count')) {
+      context.handle(_likeCountMeta,
+          likeCount.isAcceptableOrUnknown(data['like_count'], _likeCountMeta));
+    }
+    if (data.containsKey('nombre_entidad')) {
+      context.handle(
+          _nombreEntidadMeta,
+          nombreEntidad.isAcceptableOrUnknown(
+              data['nombre_entidad'], _nombreEntidadMeta));
+    }
+    if (data.containsKey('foto_entidad')) {
+      context.handle(
+          _fotoEntidadMeta,
+          fotoEntidad.isAcceptableOrUnknown(
+              data['foto_entidad'], _fotoEntidadMeta));
+    }
+    if (data.containsKey('nombre_entidad_siglas')) {
+      context.handle(
+          _nombreEntidadSiglasMeta,
+          nombreEntidadSiglas.isAcceptableOrUnknown(
+              data['nombre_entidad_siglas'], _nombreEntidadSiglasMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {eventoId};
+  @override
+  EventoData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return EventoData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $EventoTable createAlias(String alias) {
+    return $EventoTable(_db, alias);
+  }
+}
+
+class CalendarioData extends DataClass implements Insertable<CalendarioData> {
+  final String calendarioId;
+  final String nombre;
+  final String descripcion;
+  final int estado;
+  final int entidadId;
+  final int georeferenciaId;
+  final String nUsuario;
+  final String cargo;
+  final int usuarioId;
+  final int cargaAcademicaId;
+  final int cargaCursoId;
+  final int estadoPublicacionCal;
+  final int rolId;
+  final DateTime fechaCreacion;
+  final int usuarioAccionId;
+  final DateTime fechaAccion;
+  CalendarioData(
+      {@required this.calendarioId,
+      this.nombre,
+      this.descripcion,
+      this.estado,
+      this.entidadId,
+      this.georeferenciaId,
+      this.nUsuario,
+      this.cargo,
+      this.usuarioId,
+      this.cargaAcademicaId,
+      this.cargaCursoId,
+      this.estadoPublicacionCal,
+      this.rolId,
+      this.fechaCreacion,
+      this.usuarioAccionId,
+      this.fechaAccion});
+  factory CalendarioData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final stringType = db.typeSystem.forDartType<String>();
+    final intType = db.typeSystem.forDartType<int>();
+    final dateTimeType = db.typeSystem.forDartType<DateTime>();
+    return CalendarioData(
+      calendarioId: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}calendario_id']),
+      nombre:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}nombre']),
+      descripcion: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}descripcion']),
+      estado: intType.mapFromDatabaseResponse(data['${effectivePrefix}estado']),
+      entidadId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}entidad_id']),
+      georeferenciaId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}georeferencia_id']),
+      nUsuario: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}n_usuario']),
+      cargo:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}cargo']),
+      usuarioId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}usuario_id']),
+      cargaAcademicaId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}carga_academica_id']),
+      cargaCursoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}carga_curso_id']),
+      estadoPublicacionCal: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}estado_publicacion_cal']),
+      rolId: intType.mapFromDatabaseResponse(data['${effectivePrefix}rol_id']),
+      fechaCreacion: dateTimeType
+          .mapFromDatabaseResponse(data['${effectivePrefix}fecha_creacion']),
+      usuarioAccionId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}usuario_accion_id']),
+      fechaAccion: dateTimeType
+          .mapFromDatabaseResponse(data['${effectivePrefix}fecha_accion']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || calendarioId != null) {
+      map['calendario_id'] = Variable<String>(calendarioId);
+    }
+    if (!nullToAbsent || nombre != null) {
+      map['nombre'] = Variable<String>(nombre);
+    }
+    if (!nullToAbsent || descripcion != null) {
+      map['descripcion'] = Variable<String>(descripcion);
+    }
+    if (!nullToAbsent || estado != null) {
+      map['estado'] = Variable<int>(estado);
+    }
+    if (!nullToAbsent || entidadId != null) {
+      map['entidad_id'] = Variable<int>(entidadId);
+    }
+    if (!nullToAbsent || georeferenciaId != null) {
+      map['georeferencia_id'] = Variable<int>(georeferenciaId);
+    }
+    if (!nullToAbsent || nUsuario != null) {
+      map['n_usuario'] = Variable<String>(nUsuario);
+    }
+    if (!nullToAbsent || cargo != null) {
+      map['cargo'] = Variable<String>(cargo);
+    }
+    if (!nullToAbsent || usuarioId != null) {
+      map['usuario_id'] = Variable<int>(usuarioId);
+    }
+    if (!nullToAbsent || cargaAcademicaId != null) {
+      map['carga_academica_id'] = Variable<int>(cargaAcademicaId);
+    }
+    if (!nullToAbsent || cargaCursoId != null) {
+      map['carga_curso_id'] = Variable<int>(cargaCursoId);
+    }
+    if (!nullToAbsent || estadoPublicacionCal != null) {
+      map['estado_publicacion_cal'] = Variable<int>(estadoPublicacionCal);
+    }
+    if (!nullToAbsent || rolId != null) {
+      map['rol_id'] = Variable<int>(rolId);
+    }
+    if (!nullToAbsent || fechaCreacion != null) {
+      map['fecha_creacion'] = Variable<DateTime>(fechaCreacion);
+    }
+    if (!nullToAbsent || usuarioAccionId != null) {
+      map['usuario_accion_id'] = Variable<int>(usuarioAccionId);
+    }
+    if (!nullToAbsent || fechaAccion != null) {
+      map['fecha_accion'] = Variable<DateTime>(fechaAccion);
+    }
+    return map;
+  }
+
+  CalendarioCompanion toCompanion(bool nullToAbsent) {
+    return CalendarioCompanion(
+      calendarioId: calendarioId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(calendarioId),
+      nombre:
+          nombre == null && nullToAbsent ? const Value.absent() : Value(nombre),
+      descripcion: descripcion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(descripcion),
+      estado:
+          estado == null && nullToAbsent ? const Value.absent() : Value(estado),
+      entidadId: entidadId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(entidadId),
+      georeferenciaId: georeferenciaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(georeferenciaId),
+      nUsuario: nUsuario == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nUsuario),
+      cargo:
+          cargo == null && nullToAbsent ? const Value.absent() : Value(cargo),
+      usuarioId: usuarioId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(usuarioId),
+      cargaAcademicaId: cargaAcademicaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cargaAcademicaId),
+      cargaCursoId: cargaCursoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cargaCursoId),
+      estadoPublicacionCal: estadoPublicacionCal == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadoPublicacionCal),
+      rolId:
+          rolId == null && nullToAbsent ? const Value.absent() : Value(rolId),
+      fechaCreacion: fechaCreacion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fechaCreacion),
+      usuarioAccionId: usuarioAccionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(usuarioAccionId),
+      fechaAccion: fechaAccion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fechaAccion),
+    );
+  }
+
+  factory CalendarioData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return CalendarioData(
+      calendarioId: serializer.fromJson<String>(json['calendarioId']),
+      nombre: serializer.fromJson<String>(json['nombre']),
+      descripcion: serializer.fromJson<String>(json['descripcion']),
+      estado: serializer.fromJson<int>(json['estado']),
+      entidadId: serializer.fromJson<int>(json['entidadId']),
+      georeferenciaId: serializer.fromJson<int>(json['georeferenciaId']),
+      nUsuario: serializer.fromJson<String>(json['nUsuario']),
+      cargo: serializer.fromJson<String>(json['cargo']),
+      usuarioId: serializer.fromJson<int>(json['usuarioId']),
+      cargaAcademicaId: serializer.fromJson<int>(json['cargaAcademicaId']),
+      cargaCursoId: serializer.fromJson<int>(json['cargaCursoId']),
+      estadoPublicacionCal:
+          serializer.fromJson<int>(json['estadoPublicacionCal']),
+      rolId: serializer.fromJson<int>(json['rolId']),
+      fechaCreacion: serializer.fromJson<DateTime>(json['fechaCreacion']),
+      usuarioAccionId: serializer.fromJson<int>(json['usuarioAccionId']),
+      fechaAccion: serializer.fromJson<DateTime>(json['fechaAccion']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'calendarioId': serializer.toJson<String>(calendarioId),
+      'nombre': serializer.toJson<String>(nombre),
+      'descripcion': serializer.toJson<String>(descripcion),
+      'estado': serializer.toJson<int>(estado),
+      'entidadId': serializer.toJson<int>(entidadId),
+      'georeferenciaId': serializer.toJson<int>(georeferenciaId),
+      'nUsuario': serializer.toJson<String>(nUsuario),
+      'cargo': serializer.toJson<String>(cargo),
+      'usuarioId': serializer.toJson<int>(usuarioId),
+      'cargaAcademicaId': serializer.toJson<int>(cargaAcademicaId),
+      'cargaCursoId': serializer.toJson<int>(cargaCursoId),
+      'estadoPublicacionCal': serializer.toJson<int>(estadoPublicacionCal),
+      'rolId': serializer.toJson<int>(rolId),
+      'fechaCreacion': serializer.toJson<DateTime>(fechaCreacion),
+      'usuarioAccionId': serializer.toJson<int>(usuarioAccionId),
+      'fechaAccion': serializer.toJson<DateTime>(fechaAccion),
+    };
+  }
+
+  CalendarioData copyWith(
+          {String calendarioId,
+          String nombre,
+          String descripcion,
+          int estado,
+          int entidadId,
+          int georeferenciaId,
+          String nUsuario,
+          String cargo,
+          int usuarioId,
+          int cargaAcademicaId,
+          int cargaCursoId,
+          int estadoPublicacionCal,
+          int rolId,
+          DateTime fechaCreacion,
+          int usuarioAccionId,
+          DateTime fechaAccion}) =>
+      CalendarioData(
+        calendarioId: calendarioId ?? this.calendarioId,
+        nombre: nombre ?? this.nombre,
+        descripcion: descripcion ?? this.descripcion,
+        estado: estado ?? this.estado,
+        entidadId: entidadId ?? this.entidadId,
+        georeferenciaId: georeferenciaId ?? this.georeferenciaId,
+        nUsuario: nUsuario ?? this.nUsuario,
+        cargo: cargo ?? this.cargo,
+        usuarioId: usuarioId ?? this.usuarioId,
+        cargaAcademicaId: cargaAcademicaId ?? this.cargaAcademicaId,
+        cargaCursoId: cargaCursoId ?? this.cargaCursoId,
+        estadoPublicacionCal: estadoPublicacionCal ?? this.estadoPublicacionCal,
+        rolId: rolId ?? this.rolId,
+        fechaCreacion: fechaCreacion ?? this.fechaCreacion,
+        usuarioAccionId: usuarioAccionId ?? this.usuarioAccionId,
+        fechaAccion: fechaAccion ?? this.fechaAccion,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('CalendarioData(')
+          ..write('calendarioId: $calendarioId, ')
+          ..write('nombre: $nombre, ')
+          ..write('descripcion: $descripcion, ')
+          ..write('estado: $estado, ')
+          ..write('entidadId: $entidadId, ')
+          ..write('georeferenciaId: $georeferenciaId, ')
+          ..write('nUsuario: $nUsuario, ')
+          ..write('cargo: $cargo, ')
+          ..write('usuarioId: $usuarioId, ')
+          ..write('cargaAcademicaId: $cargaAcademicaId, ')
+          ..write('cargaCursoId: $cargaCursoId, ')
+          ..write('estadoPublicacionCal: $estadoPublicacionCal, ')
+          ..write('rolId: $rolId, ')
+          ..write('fechaCreacion: $fechaCreacion, ')
+          ..write('usuarioAccionId: $usuarioAccionId, ')
+          ..write('fechaAccion: $fechaAccion')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      calendarioId.hashCode,
+      $mrjc(
+          nombre.hashCode,
+          $mrjc(
+              descripcion.hashCode,
+              $mrjc(
+                  estado.hashCode,
+                  $mrjc(
+                      entidadId.hashCode,
+                      $mrjc(
+                          georeferenciaId.hashCode,
+                          $mrjc(
+                              nUsuario.hashCode,
+                              $mrjc(
+                                  cargo.hashCode,
+                                  $mrjc(
+                                      usuarioId.hashCode,
+                                      $mrjc(
+                                          cargaAcademicaId.hashCode,
+                                          $mrjc(
+                                              cargaCursoId.hashCode,
+                                              $mrjc(
+                                                  estadoPublicacionCal.hashCode,
+                                                  $mrjc(
+                                                      rolId.hashCode,
+                                                      $mrjc(
+                                                          fechaCreacion
+                                                              .hashCode,
+                                                          $mrjc(
+                                                              usuarioAccionId
+                                                                  .hashCode,
+                                                              fechaAccion
+                                                                  .hashCode))))))))))))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is CalendarioData &&
+          other.calendarioId == this.calendarioId &&
+          other.nombre == this.nombre &&
+          other.descripcion == this.descripcion &&
+          other.estado == this.estado &&
+          other.entidadId == this.entidadId &&
+          other.georeferenciaId == this.georeferenciaId &&
+          other.nUsuario == this.nUsuario &&
+          other.cargo == this.cargo &&
+          other.usuarioId == this.usuarioId &&
+          other.cargaAcademicaId == this.cargaAcademicaId &&
+          other.cargaCursoId == this.cargaCursoId &&
+          other.estadoPublicacionCal == this.estadoPublicacionCal &&
+          other.rolId == this.rolId &&
+          other.fechaCreacion == this.fechaCreacion &&
+          other.usuarioAccionId == this.usuarioAccionId &&
+          other.fechaAccion == this.fechaAccion);
+}
+
+class CalendarioCompanion extends UpdateCompanion<CalendarioData> {
+  final Value<String> calendarioId;
+  final Value<String> nombre;
+  final Value<String> descripcion;
+  final Value<int> estado;
+  final Value<int> entidadId;
+  final Value<int> georeferenciaId;
+  final Value<String> nUsuario;
+  final Value<String> cargo;
+  final Value<int> usuarioId;
+  final Value<int> cargaAcademicaId;
+  final Value<int> cargaCursoId;
+  final Value<int> estadoPublicacionCal;
+  final Value<int> rolId;
+  final Value<DateTime> fechaCreacion;
+  final Value<int> usuarioAccionId;
+  final Value<DateTime> fechaAccion;
+  const CalendarioCompanion({
+    this.calendarioId = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.descripcion = const Value.absent(),
+    this.estado = const Value.absent(),
+    this.entidadId = const Value.absent(),
+    this.georeferenciaId = const Value.absent(),
+    this.nUsuario = const Value.absent(),
+    this.cargo = const Value.absent(),
+    this.usuarioId = const Value.absent(),
+    this.cargaAcademicaId = const Value.absent(),
+    this.cargaCursoId = const Value.absent(),
+    this.estadoPublicacionCal = const Value.absent(),
+    this.rolId = const Value.absent(),
+    this.fechaCreacion = const Value.absent(),
+    this.usuarioAccionId = const Value.absent(),
+    this.fechaAccion = const Value.absent(),
+  });
+  CalendarioCompanion.insert({
+    @required String calendarioId,
+    this.nombre = const Value.absent(),
+    this.descripcion = const Value.absent(),
+    this.estado = const Value.absent(),
+    this.entidadId = const Value.absent(),
+    this.georeferenciaId = const Value.absent(),
+    this.nUsuario = const Value.absent(),
+    this.cargo = const Value.absent(),
+    this.usuarioId = const Value.absent(),
+    this.cargaAcademicaId = const Value.absent(),
+    this.cargaCursoId = const Value.absent(),
+    this.estadoPublicacionCal = const Value.absent(),
+    this.rolId = const Value.absent(),
+    this.fechaCreacion = const Value.absent(),
+    this.usuarioAccionId = const Value.absent(),
+    this.fechaAccion = const Value.absent(),
+  }) : calendarioId = Value(calendarioId);
+  static Insertable<CalendarioData> custom({
+    Expression<String> calendarioId,
+    Expression<String> nombre,
+    Expression<String> descripcion,
+    Expression<int> estado,
+    Expression<int> entidadId,
+    Expression<int> georeferenciaId,
+    Expression<String> nUsuario,
+    Expression<String> cargo,
+    Expression<int> usuarioId,
+    Expression<int> cargaAcademicaId,
+    Expression<int> cargaCursoId,
+    Expression<int> estadoPublicacionCal,
+    Expression<int> rolId,
+    Expression<DateTime> fechaCreacion,
+    Expression<int> usuarioAccionId,
+    Expression<DateTime> fechaAccion,
+  }) {
+    return RawValuesInsertable({
+      if (calendarioId != null) 'calendario_id': calendarioId,
+      if (nombre != null) 'nombre': nombre,
+      if (descripcion != null) 'descripcion': descripcion,
+      if (estado != null) 'estado': estado,
+      if (entidadId != null) 'entidad_id': entidadId,
+      if (georeferenciaId != null) 'georeferencia_id': georeferenciaId,
+      if (nUsuario != null) 'n_usuario': nUsuario,
+      if (cargo != null) 'cargo': cargo,
+      if (usuarioId != null) 'usuario_id': usuarioId,
+      if (cargaAcademicaId != null) 'carga_academica_id': cargaAcademicaId,
+      if (cargaCursoId != null) 'carga_curso_id': cargaCursoId,
+      if (estadoPublicacionCal != null)
+        'estado_publicacion_cal': estadoPublicacionCal,
+      if (rolId != null) 'rol_id': rolId,
+      if (fechaCreacion != null) 'fecha_creacion': fechaCreacion,
+      if (usuarioAccionId != null) 'usuario_accion_id': usuarioAccionId,
+      if (fechaAccion != null) 'fecha_accion': fechaAccion,
+    });
+  }
+
+  CalendarioCompanion copyWith(
+      {Value<String> calendarioId,
+      Value<String> nombre,
+      Value<String> descripcion,
+      Value<int> estado,
+      Value<int> entidadId,
+      Value<int> georeferenciaId,
+      Value<String> nUsuario,
+      Value<String> cargo,
+      Value<int> usuarioId,
+      Value<int> cargaAcademicaId,
+      Value<int> cargaCursoId,
+      Value<int> estadoPublicacionCal,
+      Value<int> rolId,
+      Value<DateTime> fechaCreacion,
+      Value<int> usuarioAccionId,
+      Value<DateTime> fechaAccion}) {
+    return CalendarioCompanion(
+      calendarioId: calendarioId ?? this.calendarioId,
+      nombre: nombre ?? this.nombre,
+      descripcion: descripcion ?? this.descripcion,
+      estado: estado ?? this.estado,
+      entidadId: entidadId ?? this.entidadId,
+      georeferenciaId: georeferenciaId ?? this.georeferenciaId,
+      nUsuario: nUsuario ?? this.nUsuario,
+      cargo: cargo ?? this.cargo,
+      usuarioId: usuarioId ?? this.usuarioId,
+      cargaAcademicaId: cargaAcademicaId ?? this.cargaAcademicaId,
+      cargaCursoId: cargaCursoId ?? this.cargaCursoId,
+      estadoPublicacionCal: estadoPublicacionCal ?? this.estadoPublicacionCal,
+      rolId: rolId ?? this.rolId,
+      fechaCreacion: fechaCreacion ?? this.fechaCreacion,
+      usuarioAccionId: usuarioAccionId ?? this.usuarioAccionId,
+      fechaAccion: fechaAccion ?? this.fechaAccion,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (calendarioId.present) {
+      map['calendario_id'] = Variable<String>(calendarioId.value);
+    }
+    if (nombre.present) {
+      map['nombre'] = Variable<String>(nombre.value);
+    }
+    if (descripcion.present) {
+      map['descripcion'] = Variable<String>(descripcion.value);
+    }
+    if (estado.present) {
+      map['estado'] = Variable<int>(estado.value);
+    }
+    if (entidadId.present) {
+      map['entidad_id'] = Variable<int>(entidadId.value);
+    }
+    if (georeferenciaId.present) {
+      map['georeferencia_id'] = Variable<int>(georeferenciaId.value);
+    }
+    if (nUsuario.present) {
+      map['n_usuario'] = Variable<String>(nUsuario.value);
+    }
+    if (cargo.present) {
+      map['cargo'] = Variable<String>(cargo.value);
+    }
+    if (usuarioId.present) {
+      map['usuario_id'] = Variable<int>(usuarioId.value);
+    }
+    if (cargaAcademicaId.present) {
+      map['carga_academica_id'] = Variable<int>(cargaAcademicaId.value);
+    }
+    if (cargaCursoId.present) {
+      map['carga_curso_id'] = Variable<int>(cargaCursoId.value);
+    }
+    if (estadoPublicacionCal.present) {
+      map['estado_publicacion_cal'] = Variable<int>(estadoPublicacionCal.value);
+    }
+    if (rolId.present) {
+      map['rol_id'] = Variable<int>(rolId.value);
+    }
+    if (fechaCreacion.present) {
+      map['fecha_creacion'] = Variable<DateTime>(fechaCreacion.value);
+    }
+    if (usuarioAccionId.present) {
+      map['usuario_accion_id'] = Variable<int>(usuarioAccionId.value);
+    }
+    if (fechaAccion.present) {
+      map['fecha_accion'] = Variable<DateTime>(fechaAccion.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CalendarioCompanion(')
+          ..write('calendarioId: $calendarioId, ')
+          ..write('nombre: $nombre, ')
+          ..write('descripcion: $descripcion, ')
+          ..write('estado: $estado, ')
+          ..write('entidadId: $entidadId, ')
+          ..write('georeferenciaId: $georeferenciaId, ')
+          ..write('nUsuario: $nUsuario, ')
+          ..write('cargo: $cargo, ')
+          ..write('usuarioId: $usuarioId, ')
+          ..write('cargaAcademicaId: $cargaAcademicaId, ')
+          ..write('cargaCursoId: $cargaCursoId, ')
+          ..write('estadoPublicacionCal: $estadoPublicacionCal, ')
+          ..write('rolId: $rolId, ')
+          ..write('fechaCreacion: $fechaCreacion, ')
+          ..write('usuarioAccionId: $usuarioAccionId, ')
+          ..write('fechaAccion: $fechaAccion')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CalendarioTable extends Calendario
+    with TableInfo<$CalendarioTable, CalendarioData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $CalendarioTable(this._db, [this._alias]);
+  final VerificationMeta _calendarioIdMeta =
+      const VerificationMeta('calendarioId');
+  GeneratedTextColumn _calendarioId;
+  @override
+  GeneratedTextColumn get calendarioId =>
+      _calendarioId ??= _constructCalendarioId();
+  GeneratedTextColumn _constructCalendarioId() {
+    return GeneratedTextColumn(
+      'calendario_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _nombreMeta = const VerificationMeta('nombre');
+  GeneratedTextColumn _nombre;
+  @override
+  GeneratedTextColumn get nombre => _nombre ??= _constructNombre();
+  GeneratedTextColumn _constructNombre() {
+    return GeneratedTextColumn(
+      'nombre',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _descripcionMeta =
+      const VerificationMeta('descripcion');
+  GeneratedTextColumn _descripcion;
+  @override
+  GeneratedTextColumn get descripcion =>
+      _descripcion ??= _constructDescripcion();
+  GeneratedTextColumn _constructDescripcion() {
+    return GeneratedTextColumn(
+      'descripcion',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoMeta = const VerificationMeta('estado');
+  GeneratedIntColumn _estado;
+  @override
+  GeneratedIntColumn get estado => _estado ??= _constructEstado();
+  GeneratedIntColumn _constructEstado() {
+    return GeneratedIntColumn(
+      'estado',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _entidadIdMeta = const VerificationMeta('entidadId');
+  GeneratedIntColumn _entidadId;
+  @override
+  GeneratedIntColumn get entidadId => _entidadId ??= _constructEntidadId();
+  GeneratedIntColumn _constructEntidadId() {
+    return GeneratedIntColumn(
+      'entidad_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _georeferenciaIdMeta =
+      const VerificationMeta('georeferenciaId');
+  GeneratedIntColumn _georeferenciaId;
+  @override
+  GeneratedIntColumn get georeferenciaId =>
+      _georeferenciaId ??= _constructGeoreferenciaId();
+  GeneratedIntColumn _constructGeoreferenciaId() {
+    return GeneratedIntColumn(
+      'georeferencia_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _nUsuarioMeta = const VerificationMeta('nUsuario');
+  GeneratedTextColumn _nUsuario;
+  @override
+  GeneratedTextColumn get nUsuario => _nUsuario ??= _constructNUsuario();
+  GeneratedTextColumn _constructNUsuario() {
+    return GeneratedTextColumn(
+      'n_usuario',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _cargoMeta = const VerificationMeta('cargo');
+  GeneratedTextColumn _cargo;
+  @override
+  GeneratedTextColumn get cargo => _cargo ??= _constructCargo();
+  GeneratedTextColumn _constructCargo() {
+    return GeneratedTextColumn(
+      'cargo',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _usuarioIdMeta = const VerificationMeta('usuarioId');
+  GeneratedIntColumn _usuarioId;
+  @override
+  GeneratedIntColumn get usuarioId => _usuarioId ??= _constructUsuarioId();
+  GeneratedIntColumn _constructUsuarioId() {
+    return GeneratedIntColumn(
+      'usuario_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _cargaAcademicaIdMeta =
+      const VerificationMeta('cargaAcademicaId');
+  GeneratedIntColumn _cargaAcademicaId;
+  @override
+  GeneratedIntColumn get cargaAcademicaId =>
+      _cargaAcademicaId ??= _constructCargaAcademicaId();
+  GeneratedIntColumn _constructCargaAcademicaId() {
+    return GeneratedIntColumn(
+      'carga_academica_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _cargaCursoIdMeta =
+      const VerificationMeta('cargaCursoId');
+  GeneratedIntColumn _cargaCursoId;
+  @override
+  GeneratedIntColumn get cargaCursoId =>
+      _cargaCursoId ??= _constructCargaCursoId();
+  GeneratedIntColumn _constructCargaCursoId() {
+    return GeneratedIntColumn(
+      'carga_curso_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoPublicacionCalMeta =
+      const VerificationMeta('estadoPublicacionCal');
+  GeneratedIntColumn _estadoPublicacionCal;
+  @override
+  GeneratedIntColumn get estadoPublicacionCal =>
+      _estadoPublicacionCal ??= _constructEstadoPublicacionCal();
+  GeneratedIntColumn _constructEstadoPublicacionCal() {
+    return GeneratedIntColumn(
+      'estado_publicacion_cal',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _rolIdMeta = const VerificationMeta('rolId');
+  GeneratedIntColumn _rolId;
+  @override
+  GeneratedIntColumn get rolId => _rolId ??= _constructRolId();
+  GeneratedIntColumn _constructRolId() {
+    return GeneratedIntColumn(
+      'rol_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _fechaCreacionMeta =
+      const VerificationMeta('fechaCreacion');
+  GeneratedDateTimeColumn _fechaCreacion;
+  @override
+  GeneratedDateTimeColumn get fechaCreacion =>
+      _fechaCreacion ??= _constructFechaCreacion();
+  GeneratedDateTimeColumn _constructFechaCreacion() {
+    return GeneratedDateTimeColumn(
+      'fecha_creacion',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _usuarioAccionIdMeta =
+      const VerificationMeta('usuarioAccionId');
+  GeneratedIntColumn _usuarioAccionId;
+  @override
+  GeneratedIntColumn get usuarioAccionId =>
+      _usuarioAccionId ??= _constructUsuarioAccionId();
+  GeneratedIntColumn _constructUsuarioAccionId() {
+    return GeneratedIntColumn(
+      'usuario_accion_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _fechaAccionMeta =
+      const VerificationMeta('fechaAccion');
+  GeneratedDateTimeColumn _fechaAccion;
+  @override
+  GeneratedDateTimeColumn get fechaAccion =>
+      _fechaAccion ??= _constructFechaAccion();
+  GeneratedDateTimeColumn _constructFechaAccion() {
+    return GeneratedDateTimeColumn(
+      'fecha_accion',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        calendarioId,
+        nombre,
+        descripcion,
+        estado,
+        entidadId,
+        georeferenciaId,
+        nUsuario,
+        cargo,
+        usuarioId,
+        cargaAcademicaId,
+        cargaCursoId,
+        estadoPublicacionCal,
+        rolId,
+        fechaCreacion,
+        usuarioAccionId,
+        fechaAccion
+      ];
+  @override
+  $CalendarioTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'calendario';
+  @override
+  final String actualTableName = 'calendario';
+  @override
+  VerificationContext validateIntegrity(Insertable<CalendarioData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('calendario_id')) {
+      context.handle(
+          _calendarioIdMeta,
+          calendarioId.isAcceptableOrUnknown(
+              data['calendario_id'], _calendarioIdMeta));
+    } else if (isInserting) {
+      context.missing(_calendarioIdMeta);
+    }
+    if (data.containsKey('nombre')) {
+      context.handle(_nombreMeta,
+          nombre.isAcceptableOrUnknown(data['nombre'], _nombreMeta));
+    }
+    if (data.containsKey('descripcion')) {
+      context.handle(
+          _descripcionMeta,
+          descripcion.isAcceptableOrUnknown(
+              data['descripcion'], _descripcionMeta));
+    }
+    if (data.containsKey('estado')) {
+      context.handle(_estadoMeta,
+          estado.isAcceptableOrUnknown(data['estado'], _estadoMeta));
+    }
+    if (data.containsKey('entidad_id')) {
+      context.handle(_entidadIdMeta,
+          entidadId.isAcceptableOrUnknown(data['entidad_id'], _entidadIdMeta));
+    }
+    if (data.containsKey('georeferencia_id')) {
+      context.handle(
+          _georeferenciaIdMeta,
+          georeferenciaId.isAcceptableOrUnknown(
+              data['georeferencia_id'], _georeferenciaIdMeta));
+    }
+    if (data.containsKey('n_usuario')) {
+      context.handle(_nUsuarioMeta,
+          nUsuario.isAcceptableOrUnknown(data['n_usuario'], _nUsuarioMeta));
+    }
+    if (data.containsKey('cargo')) {
+      context.handle(
+          _cargoMeta, cargo.isAcceptableOrUnknown(data['cargo'], _cargoMeta));
+    }
+    if (data.containsKey('usuario_id')) {
+      context.handle(_usuarioIdMeta,
+          usuarioId.isAcceptableOrUnknown(data['usuario_id'], _usuarioIdMeta));
+    }
+    if (data.containsKey('carga_academica_id')) {
+      context.handle(
+          _cargaAcademicaIdMeta,
+          cargaAcademicaId.isAcceptableOrUnknown(
+              data['carga_academica_id'], _cargaAcademicaIdMeta));
+    }
+    if (data.containsKey('carga_curso_id')) {
+      context.handle(
+          _cargaCursoIdMeta,
+          cargaCursoId.isAcceptableOrUnknown(
+              data['carga_curso_id'], _cargaCursoIdMeta));
+    }
+    if (data.containsKey('estado_publicacion_cal')) {
+      context.handle(
+          _estadoPublicacionCalMeta,
+          estadoPublicacionCal.isAcceptableOrUnknown(
+              data['estado_publicacion_cal'], _estadoPublicacionCalMeta));
+    }
+    if (data.containsKey('rol_id')) {
+      context.handle(
+          _rolIdMeta, rolId.isAcceptableOrUnknown(data['rol_id'], _rolIdMeta));
+    }
+    if (data.containsKey('fecha_creacion')) {
+      context.handle(
+          _fechaCreacionMeta,
+          fechaCreacion.isAcceptableOrUnknown(
+              data['fecha_creacion'], _fechaCreacionMeta));
+    }
+    if (data.containsKey('usuario_accion_id')) {
+      context.handle(
+          _usuarioAccionIdMeta,
+          usuarioAccionId.isAcceptableOrUnknown(
+              data['usuario_accion_id'], _usuarioAccionIdMeta));
+    }
+    if (data.containsKey('fecha_accion')) {
+      context.handle(
+          _fechaAccionMeta,
+          fechaAccion.isAcceptableOrUnknown(
+              data['fecha_accion'], _fechaAccionMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {calendarioId};
+  @override
+  CalendarioData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return CalendarioData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $CalendarioTable createAlias(String alias) {
+    return $CalendarioTable(_db, alias);
+  }
+}
+
 abstract class _$AppDataBase extends GeneratedDatabase {
   _$AppDataBase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $PersonaTable _persona;
@@ -13603,6 +15596,10 @@ abstract class _$AppDataBase extends GeneratedDatabase {
   $WebConfigsTable get webConfigs => _webConfigs ??= $WebConfigsTable(this);
   $TareaCursoTable _tareaCurso;
   $TareaCursoTable get tareaCurso => _tareaCurso ??= $TareaCursoTable(this);
+  $EventoTable _evento;
+  $EventoTable get evento => _evento ??= $EventoTable(this);
+  $CalendarioTable _calendario;
+  $CalendarioTable get calendario => _calendario ??= $CalendarioTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
@@ -13627,6 +15624,8 @@ abstract class _$AppDataBase extends GeneratedDatabase {
         silaboEvento,
         rubroEvalDesempenio,
         webConfigs,
-        tareaCurso
+        tareaCurso,
+        evento,
+        calendario
       ];
 }

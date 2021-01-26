@@ -7,8 +7,6 @@ class PortalAlumnoPresenter extends Presenter{
   Function getSesionUsuarioOnComplete;
   Function getSesionUsuarioOnError;
 
-
-
   PortalAlumnoPresenter(usuarioConfiRepo):getSessionUsuarioCase = GetSessionUsuarioCase(usuarioConfiRepo);
 
   @override
@@ -28,7 +26,6 @@ class PortalAlumnoPresenter extends Presenter{
 
 class _GetSessionUsuarioCase extends Observer<GetSessionUsuarioCaseResponse>{
   final PortalAlumnoPresenter presenter;
-
   _GetSessionUsuarioCase(this.presenter);
 
   @override

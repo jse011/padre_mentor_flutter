@@ -11,6 +11,9 @@ import 'package:padre_mentor/src/app/page/eventos_agenda/evento_agenda_controlle
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/app/widgets/animation_view.dart';
 import 'package:padre_mentor/src/app/widgets/menu_item_view.dart';
+import 'package:padre_mentor/src/data/repositories/moor/data_usuario_configuracion_respository.dart';
+import 'package:padre_mentor/src/device/repositories/http/device_http_datos_repository.dart';
+import 'package:padre_mentor/src/domain/entities/tipo_evento_ui.dart';
 import 'package:shimmer/shimmer.dart';
 
 class EventoAgendaView extends View{
@@ -25,13 +28,12 @@ class EventoAgendaView extends View{
 
 class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaController> with TickerProviderStateMixin{
 
-  _EventoAgendaViewState() : super(EventoAgendaController());
+  _EventoAgendaViewState() : super(EventoAgendaController(DataUsuarioAndRepository(), DeviceHttpDatosRepositorio()));
 
   Animation<double> topBarAnimation;
 
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
-  List<String> _list = ['a','b','v','s','a','a','b',];
 
   @override
   void initState() {
@@ -89,7 +91,44 @@ class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaCon
     ),
   );
 
-  Widget chip(String label, Color color) {
+  Widget chip(TipoEventoUi tipo) {
+    Color color;
+    IconData icono;
+    switch(tipo.tipo){
+      case EventoIconoEnumUI.DEFAULT:
+        color = Color(0xFF00BCD4);
+        icono = Icons.ac_unit_rounded;
+        break;
+      case EventoIconoEnumUI.EVENTO:
+        color = Color(0xFF4CAF50);
+        icono = Icons.ac_unit_rounded;
+        break;
+      case EventoIconoEnumUI.NOTICIA:
+        color = Color(0xFF03A9F4);
+        icono = Icons.ac_unit_rounded;
+        break;
+      case EventoIconoEnumUI.ACTIVIDAD:
+        color = Color(0xFFFF9800);
+        icono = Icons.ac_unit_rounded;
+        break;
+      case EventoIconoEnumUI.TAREA:
+        color = Color(0xFFE91E63);
+        icono = Icons.ac_unit_rounded;
+        break;
+      case EventoIconoEnumUI.CITA:
+        color = Color(0xFF0BCD4);
+        icono = Icons.ac_unit_rounded;
+        break;
+      case EventoIconoEnumUI.AGENDA:
+        color = Color(0xFFAD3FF8);
+        icono = Icons.ac_unit_rounded;
+        break;
+      case EventoIconoEnumUI.TODOS:
+        color = Color(0xFF00BCD4);
+        icono = Icons.ac_unit_rounded;
+        break;
+    }
+
     return Container(
       //margin: const EdgeInsets.only(top: 0, left: 8, right: 8, bottom: 0),
       height: 65,
@@ -122,11 +161,11 @@ class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaCon
           child: Stack(
             alignment: AlignmentDirectional.center,
             children: <Widget>[
-              Image.asset("assets/fitness_app/area1.png", width: 60,),
+              Icon(icono,size: 60, color: AppTheme.white,),
               Positioned(
                   bottom: 6,
                   width: 80,
-                  child: Text(label, textAlign: TextAlign.center , style: TextStyle(color: AppTheme.white, fontSize: 12))
+                  child: Text(tipo.nombre, textAlign: TextAlign.center , style: TextStyle(color: AppTheme.white, fontSize: 12))
               ),
             ],
           ),
@@ -247,25 +286,23 @@ class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaCon
                         curve:
                         Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
                     animationController: widget.animationController,
-                    child:  Container(
-                      padding: EdgeInsets.only(top: 70 + MediaQuery.of(context).padding.top, right: 0, left: 0),
-                      child: Wrap(
-                        spacing: 10.0,
-                        runSpacing: 6.0,
-                        direction: Axis.horizontal,
-                        alignment: WrapAlignment.center,
-                        children: <Widget>[
-                          chip('Evento', Color(0xFFc40233)),
-                          chip('Noticia', Color(0xFF007f5c)),
-                          chip('Actividades', Color(0xFF5f65d3)),
-                          chip('Tareas', Color(0xFF19ca21)),
-                          chip('Cita', Color(0xFF60230b)),
-                          chip('Agenda Escolar', Color(0xFFc40233)),
-                          chip('Todos', Color(0xFF007f5c)),
-                          //chipEspacio()
-                        ],
-                      ),
-                    ),
+                    child: ControlledWidgetBuilder<EventoAgendaController>(
+                        builder: (context, controller) {
+                          return Container(
+                            padding: EdgeInsets.only(top: 70 + MediaQuery.of(context).padding.top, right: 0, left: 0),
+                            child: Wrap(
+                              spacing: 10.0,
+                              runSpacing: 6.0,
+                              direction: Axis.horizontal,
+                              alignment: WrapAlignment.center,
+                              children: <Widget>[
+                                for(var item in controller.tipoEventoList)
+                                  chip(item),
+                                //chipEspacio()
+                              ],
+                            ),
+                          );
+                        }),
                   ),
                 ),
               )

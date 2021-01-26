@@ -31,7 +31,7 @@ class ProgramaEducativoView extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 0, bottom: 0),
                         child: Container(
-                          height: 84,
+                          height: 75,
                           decoration: BoxDecoration(
                             color: AppTheme.white,
                             borderRadius: BorderRadius.only(
@@ -101,7 +101,7 @@ class ProgramaEducativoView extends StatelessWidget {
                                                 style: TextStyle(
                                                   fontFamily:
                                                   AppTheme.fontName,
-                                                  fontSize: 16,
+                                                  fontSize: 14,
                                                   letterSpacing: 0.0,
                                                   color:
                                                   AppTheme.colorPrimary,
@@ -120,7 +120,7 @@ class ProgramaEducativoView extends StatelessWidget {
                                                 style: TextStyle(
                                                   fontFamily: AppTheme.fontName,
                                                   fontWeight: FontWeight.w400,
-                                                  fontSize: 12,
+                                                  fontSize: 10,
                                                   letterSpacing: 0.0,
                                                   color: AppTheme.textGrey
                                                       .withOpacity(0.7),
