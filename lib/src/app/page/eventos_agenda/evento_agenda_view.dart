@@ -91,7 +91,7 @@ class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaCon
     ),
   );
 
-  Widget chip(TipoEventoUi tipo) {
+  Widget chip(TipoEventoUi tipo, Function onClick) {
     Color color;
     IconData icono;
     switch(tipo.tipo){
@@ -116,7 +116,7 @@ class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaCon
         icono = Icons.ac_unit_rounded;
         break;
       case EventoIconoEnumUI.CITA:
-        color = Color(0xFF0BCD4);
+        color = Color(0xFF00BCD4);
         icono = Icons.ac_unit_rounded;
         break;
       case EventoIconoEnumUI.AGENDA:
@@ -134,7 +134,7 @@ class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaCon
       height: 65,
       width: 80,
       decoration: BoxDecoration(
-        color: color,
+        color: color.withOpacity(tipo.toogle??false?1:0.5),
         borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(8.0),
             bottomLeft: Radius.circular(8.0),
@@ -156,17 +156,24 @@ class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaCon
           borderRadius: const BorderRadius.all(Radius.circular(8.0)),
           splashColor: AppTheme.nearlyDarkBlue.withOpacity(0.2),
           onTap: () {
-
+            onClick(tipo);
           },
           child: Stack(
             alignment: AlignmentDirectional.center,
             children: <Widget>[
-              Icon(icono,size: 60, color: AppTheme.white,),
               Positioned(
-                  bottom: 6,
-                  width: 80,
-                  child: Text(tipo.nombre, textAlign: TextAlign.center , style: TextStyle(color: AppTheme.white, fontSize: 12))
+                  top:8,
+                  child: Icon(icono,size: 40, color: AppTheme.white,)
               ),
+              Positioned(
+                  bottom: 4,
+                  width: 80,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 8),
+                    child: Text(tipo.nombre, textAlign: TextAlign.center , style: TextStyle(color: AppTheme.white, fontSize: 10)),
+                  )
+              ),
+
             ],
           ),
         ),
@@ -297,7 +304,9 @@ class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaCon
                               alignment: WrapAlignment.center,
                               children: <Widget>[
                                 for(var item in controller.tipoEventoList)
-                                  chip(item),
+                                  chip(item, (tipoEvento){
+                                    controller.onSelectedTipoEvento(tipoEvento);
+                                  }),
                                 //chipEspacio()
                               ],
                             ),

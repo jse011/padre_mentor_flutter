@@ -5,7 +5,6 @@ import 'package:padre_mentor/src/domain/usecases/get_evento_agenda.dart';
 import 'package:padre_mentor/src/domain/usecases/get_usuario_usecase.dart';
 
 class EventoAgendaPresenter extends Presenter{
-  TipoEventoUi selectedTipoEventoUi;
 
   GetSessionUsuarioCase getSessionUsuarioCase;
   Function getSesionUsuarioOnNext, getSesionUsuarioOnComplete, getSesionUsuarioOnError;
@@ -33,12 +32,12 @@ class EventoAgendaPresenter extends Presenter{
     getSessionUsuarioCase.dispose();
   }
 
-  void onChangeUsuario(UsuarioUi usuarioUi) {
+  void onChangeUsuario(UsuarioUi usuarioUi, TipoEventoUi selectedTipoEventoUi) {
     List<int> hijosIdList = [];
     for(var hijo in usuarioUi.hijos){
       hijosIdList.add(hijo.personaId);
     }
-    getEventoAgenda(usuarioUi.id, selectedTipoEventoUi!=null? selectedTipoEventoUi.id: 0, hijosIdList);
+    getEventoAgenda(usuarioUi.id, selectedTipoEventoUi!=null?selectedTipoEventoUi.id:0, hijosIdList);
   }
 
 }
@@ -90,7 +89,7 @@ class _GetSessionUsuarioCase extends Observer<GetSessionUsuarioCaseResponse>{
   void onNext(GetSessionUsuarioCaseResponse response) {
     assert(presenter.getSesionUsuarioOnNext != null);
     print("_GetSessionUsuarioCase onNext");
-    presenter.onChangeUsuario(response.usurio);
+    presenter.getSesionUsuarioOnNext(response.usurio);
   }
 
 }

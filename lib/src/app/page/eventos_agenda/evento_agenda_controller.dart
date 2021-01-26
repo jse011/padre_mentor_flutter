@@ -8,6 +8,8 @@ import 'package:padre_mentor/src/domain/entities/usuario_ui.dart';
 class EventoAgendaController extends Controller{
   List<TipoEventoUi> _tipoEventoList = [];
   List<TipoEventoUi> get tipoEventoList => _tipoEventoList;
+  TipoEventoUi _selectedTipoEventoUi;
+  TipoEventoUi get selectedTipoEventoUi => _selectedTipoEventoUi;
 
   HijosUi hijoSelected =  HijosUi(foto: "https://i.ytimg.com/vi/f6n0aIvRxc0/hqdefault.jpg");
   EventoAgendaPresenter presenter;
@@ -16,7 +18,7 @@ class EventoAgendaController extends Controller{
 
   @override
   void initListeners() {
-    presenter.getSesionUsuarioOnNext = (UsuarioUi user) {
+    presenter.getSesionUsuarioOnNext = (UsuarioUi usuarioUi) {
       /*
       _programaEducativoList = user.programaEducativoUiList;
       if(!programaEducativoList.isEmpty){
@@ -37,6 +39,7 @@ class EventoAgendaController extends Controller{
       _hijoList = user.hijos;*/
 
       //refreshUI(); // Refreshes the UI manually
+      presenter.onChangeUsuario(usuarioUi, _selectedTipoEventoUi);
     };
 
     presenter.getSesionUsuarioOnComplete = () {
@@ -58,12 +61,36 @@ class EventoAgendaController extends Controller{
     presenter.getEventoAgendaOnNext = (List<TipoEventoUi> tipoEvantoList, List<EventoUi> eventoList) {
       print('evento next');
       _tipoEventoList = tipoEvantoList;
+      if(_selectedTipoEventoUi==null){
+        for(TipoEventoUi tipoEventoUi in tipoEventoList){
+          if(tipoEventoUi.id == 0){
+            tipoEventoUi.toogle = true;
+            _selectedTipoEventoUi = tipoEventoUi;
+          }
+        }
+      }else{
+        for(TipoEventoUi tipoEventoUi in tipoEventoList){
+          if(_selectedTipoEventoUi.id == tipoEventoUi.id){
+            tipoEventoUi.toogle = true;
+            _selectedTipoEventoUi = tipoEventoUi;
+          }
+        }
+      }
+
+      refreshUI();
     };
   }
 
   @override
   void onInitState() {
     presenter.onInitState();
+  }
+
+  void onSelectedTipoEvento(TipoEventoUi tipoEvento) {
+    _selectedTipoEventoUi = tipoEvento;
+    for(var item in _tipoEventoList)item.toogle = false;
+    tipoEvento.toogle = true;
+    refreshUI();
   }
 
 }
