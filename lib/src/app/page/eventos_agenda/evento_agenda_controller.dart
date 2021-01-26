@@ -7,6 +7,8 @@ import 'package:padre_mentor/src/domain/entities/usuario_ui.dart';
 
 class EventoAgendaController extends Controller{
   List<TipoEventoUi> _tipoEventoList = [];
+
+  UsuarioUi _usuarioUi;
   List<TipoEventoUi> get tipoEventoList => _tipoEventoList;
   TipoEventoUi _selectedTipoEventoUi;
   TipoEventoUi get selectedTipoEventoUi => _selectedTipoEventoUi;
@@ -39,6 +41,7 @@ class EventoAgendaController extends Controller{
       _hijoList = user.hijos;*/
 
       //refreshUI(); // Refreshes the UI manually
+      _usuarioUi = usuarioUi;
       presenter.onChangeUsuario(usuarioUi, _selectedTipoEventoUi);
     };
 
@@ -90,6 +93,7 @@ class EventoAgendaController extends Controller{
     _selectedTipoEventoUi = tipoEvento;
     for(var item in _tipoEventoList)item.toogle = false;
     tipoEvento.toogle = true;
+    presenter.onChangeUsuario(_usuarioUi, selectedTipoEventoUi);
     refreshUI();
   }
 

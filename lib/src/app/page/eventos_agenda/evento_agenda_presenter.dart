@@ -33,6 +33,7 @@ class EventoAgendaPresenter extends Presenter{
   }
 
   void onChangeUsuario(UsuarioUi usuarioUi, TipoEventoUi selectedTipoEventoUi) {
+    if(usuarioUi==null)return;
     List<int> hijosIdList = [];
     for(var hijo in usuarioUi.hijos){
       hijosIdList.add(hijo.personaId);
