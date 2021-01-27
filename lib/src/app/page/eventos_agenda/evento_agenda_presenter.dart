@@ -76,7 +76,7 @@ class _GetEventoAgendaCase extends Observer<GetEvaluacionCaseResponse>{
   @override
   void onNext(GetEvaluacionCaseResponse response) {
     assert(presenter.getEventoAgendaOnNext != null);
-    presenter.getEventoAgendaOnNext(response.tipoEventoUiList, response.eventoUiList, response.sinConexion);
+    presenter.getEventoAgendaOnNext(response.tipoEventoUiList, response.eventoUiList, response.sinConexion, response.datosOffline);
   }
 
 }

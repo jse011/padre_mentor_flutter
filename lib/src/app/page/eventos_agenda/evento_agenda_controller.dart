@@ -70,11 +70,16 @@ class EventoAgendaController extends Controller{
       _sinConexion = "!Oops! Al parecer ocurrió un error involuntario.";
       refreshUI();
     };
-    presenter.getEventoAgendaOnNext = (List<TipoEventoUi> tipoEvantoList, List<EventoUi> eventoList, bool sinConexion) {
+    presenter.getEventoAgendaOnNext = (List<TipoEventoUi> tipoEvantoList, List<EventoUi> eventoList, bool sinConexion, bool datosOffline) {
       print('evento next');
-      _tipoEventoList = tipoEvantoList;
-      _eventoUilIst = eventoList;
-      _sinConexion = sinConexion?"No hay Conexión a Internet...":null;
+      if(datosOffline){
+        _tipoEventoList = tipoEvantoList;
+        refreshUI();
+      }else{
+        _tipoEventoList = tipoEvantoList;
+        _eventoUilIst = eventoList;
+        _sinConexion = sinConexion?"No hay Conexión a Internet...":null;
+      }
     };
   }
 

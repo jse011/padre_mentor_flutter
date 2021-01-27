@@ -20,40 +20,54 @@ class GetEventoAgenda extends UseCase<GetEvaluacionCaseResponse, GetEventoAgenda
     final controller = StreamController<GetEvaluacionCaseResponse>();
     logger.finest('Hola Jse');
     try {
-      bool hayConexion = await checkConexRepository.hayConexcion();
-      if(hayConexion){
-        Map<String, dynamic> eventoAgenda = await httpRepository.getEventoAgenda(params.usuarioId, params.tipoEventoId);
-        await repository.saveEventoAgenda(eventoAgenda, params.usuarioId, params.tipoEventoId);
-      }
-
       List<TipoEventoUi> tiposUiList = await repository.getTiposEvento();
-      List<EventoUi> eventoUIList = await repository.getEventosAgenda(params.usuarioId, params.tipoEventoId, params.hijoIdList);
 
-      for(var eventosUi in eventoUIList){
-        DateTime fechaEntrega =  eventosUi.fecha;
-        if(fechaEntrega!=null && fechaEntrega.millisecondsSinceEpoch>912402000000){
-          switch (eventosUi.tipoEventoUi.tipo){
-            case EventoIconoEnumUI.EVENTO:
-              //tipo += eventosUi.getFechaEvento() > 0 ?" " + :"";
-              eventosUi.nombreFecha = AppTools.tiempoFechaCreacion(eventosUi.fecha);
-              break;
-            case EventoIconoEnumUI.NOTICIA:
-              eventosUi.nombreFecha = AppTools.getFechaDiaMesAnho(eventosUi.fecha);
-              break;
-            default:
-              eventosUi.nombreFecha = AppTools.tiempoFechaCreacion(eventosUi.fecha);
-              break;
-          }
-        }else{
-          eventosUi.nombreFecha = "";
+      controller.add(GetEvaluacionCaseResponse(tiposUiList, [], false, false));
+
+      Future<String> executeServidor() async{
+        bool hayConexion = await checkConexRepository.hayConexcion();
+        if(hayConexion){
+          Map<String, dynamic> eventoAgenda = await httpRepository.getEventoAgenda(params.usuarioId, params.tipoEventoId);
+          await repository.saveEventoAgenda(eventoAgenda, params.usuarioId, params.tipoEventoId);
         }
+
+        tiposUiList = await repository.getTiposEvento();
+        List<EventoUi> eventoUIList = await repository.getEventosAgenda(params.usuarioId, params.tipoEventoId, params.hijoIdList);
+
+        for(var eventosUi in eventoUIList){
+          DateTime fechaEntrega =  eventosUi.fecha;
+          if(fechaEntrega!=null && fechaEntrega.millisecondsSinceEpoch>912402000000){
+            switch (eventosUi.tipoEventoUi.tipo){
+              case EventoIconoEnumUI.EVENTO:
+              //tipo += eventosUi.getFechaEvento() > 0 ?" " + :"";
+                eventosUi.nombreFecha = AppTools.tiempoFechaCreacion(eventosUi.fecha);
+                break;
+              case EventoIconoEnumUI.NOTICIA:
+                eventosUi.nombreFecha = AppTools.getFechaDiaMesAnho(eventosUi.fecha);
+                break;
+              default:
+                eventosUi.nombreFecha = AppTools.tiempoFechaCreacion(eventosUi.fecha);
+                break;
+            }
+          }else{
+            eventosUi.nombreFecha = "";
+          }
+        }
+
+
+        controller.add(GetEvaluacionCaseResponse(tiposUiList, eventoUIList, !hayConexion, false));
       }
 
+      executeServidor().whenComplete((){
+        logger.finest('EventoAgenda successful.');
+        controller.close();
+      }).catchError((e) {
+        print("Got error: ${e.error}");     // Finally, callback fires.
+        throw Exception(e);              // Future completes with 42.
+      }).timeout(const Duration (seconds:60),onTimeout : () {
+        throw Exception("GetEventoAgenda timeout 60 seconds");
+      });
 
-      controller.add(GetEvaluacionCaseResponse(tiposUiList, eventoUIList, !hayConexion));
-
-    logger.finest('EventoAgenda successful.');
-    controller.close();
     } catch (e) {
     logger.severe('EventoAgenda unsuccessful: '+e.toString());
     // Trigger .onError
@@ -79,8 +93,9 @@ class GetEventoAgendaParams {
 
 class GetEvaluacionCaseResponse {
   List<TipoEventoUi> tipoEventoUiList;
+  bool datosOffline;
   List<EventoUi> eventoUiList;
   bool sinConexion;
 
-  GetEvaluacionCaseResponse(this.tipoEventoUiList, this.eventoUiList, this.sinConexion);
+  GetEvaluacionCaseResponse(this.tipoEventoUiList, this.eventoUiList, this.sinConexion, this.datosOffline);
 }
