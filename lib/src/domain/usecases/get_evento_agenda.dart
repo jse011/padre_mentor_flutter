@@ -18,21 +18,28 @@ class GetEventoAgenda extends UseCase<GetEvaluacionCaseResponse, GetEventoAgenda
   @override
   Future<Stream<GetEvaluacionCaseResponse>> buildUseCaseStream(GetEventoAgendaParams params) async{
     final controller = StreamController<GetEvaluacionCaseResponse>();
-    logger.finest('Hola Jse');
     try {
+      //printTime();
       List<TipoEventoUi> tiposUiList = await repository.getTiposEvento();
-
+      for(TipoEventoUi tipoEventoUi in tiposUiList)tipoEventoUi.disable = false;
       controller.add(GetEvaluacionCaseResponse(tiposUiList, [], false, false));
-
+      //printTime();
+      print("EventoAgenda executeServidor init");
       Future<String> executeServidor() async{
-        bool hayConexion = await checkConexRepository.hayConexcion();
-        if(hayConexion){
-          Map<String, dynamic> eventoAgenda = await httpRepository.getEventoAgenda(params.usuarioId, params.tipoEventoId);
-          await repository.saveEventoAgenda(eventoAgenda, params.usuarioId, params.tipoEventoId);
+        //printTime();
+        Map<String, dynamic> eventoAgenda = await httpRepository.getEventoAgenda(params.usuarioId, params.tipoEventoId);
+        bool errorServidor = eventoAgenda==null;
+        if(!errorServidor){
+          //printTime();
+          await repository.saveEventoAgenda(eventoAgenda, params.usuarioId, params.tipoEventoId, params.hijoIdList);
+          //printTime();
         }
 
-        tiposUiList = await repository.getTiposEvento();
+        List<TipoEventoUi> tiposUiList = await repository.getTiposEvento();
+        //printTime();
+        for(TipoEventoUi tipoEventoUi in tiposUiList)tipoEventoUi.disable = false;
         List<EventoUi> eventoUIList = await repository.getEventosAgenda(params.usuarioId, params.tipoEventoId, params.hijoIdList);
+        //printTime();
 
         for(var eventosUi in eventoUIList){
           DateTime fechaEntrega =  eventosUi.fecha;
@@ -54,14 +61,12 @@ class GetEventoAgenda extends UseCase<GetEvaluacionCaseResponse, GetEventoAgenda
           }
         }
 
-
-        controller.add(GetEvaluacionCaseResponse(tiposUiList, eventoUIList, !hayConexion, false));
+        controller.add(GetEvaluacionCaseResponse(tiposUiList, eventoUIList, errorServidor, false));
+        controller.close();
       }
 
-      executeServidor().whenComplete((){
-        logger.finest('EventoAgenda successful.');
-        controller.close();
-      }).catchError((e) {
+      executeServidor().catchError((e) {
+        controller.addError(e);
         print("Got error: ${e.error}");     // Finally, callback fires.
         throw Exception(e);              // Future completes with 42.
       }).timeout(const Duration (seconds:60),onTimeout : () {
@@ -77,8 +82,10 @@ class GetEventoAgenda extends UseCase<GetEvaluacionCaseResponse, GetEventoAgenda
     return controller.stream;
   }
 
-
-
+  /*static void  printTime(){
+    DateTime now = DateTime.now();
+    print("GetEventoAgenda Hola Jse timer: " + now.hour.toString() + ":" + now.minute.toString() + ":" + now.second.toString()+" "+ now.millisecond.toString());
+  }*/
 
 }
 
@@ -95,7 +102,7 @@ class GetEvaluacionCaseResponse {
   List<TipoEventoUi> tipoEventoUiList;
   bool datosOffline;
   List<EventoUi> eventoUiList;
-  bool sinConexion;
+  bool errorServidor;
 
-  GetEvaluacionCaseResponse(this.tipoEventoUiList, this.eventoUiList, this.sinConexion, this.datosOffline);
+  GetEvaluacionCaseResponse(this.tipoEventoUiList, this.eventoUiList, this.errorServidor, this.datosOffline);
 }

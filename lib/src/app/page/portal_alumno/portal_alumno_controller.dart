@@ -10,8 +10,8 @@ class PortalAlumnoController extends Controller{
   HijosUi _hijoSelected;
 
   var _selectedTipoEventoUi;
-  String _sinConexion = null;
-  String get sinConexion => _sinConexion;
+  String _msgConexion = null;
+  String get msgConexion => _msgConexion;
   List<EventoUi> _eventoUilIst = [];
   List<EventoUi> get eventoUiList => _eventoUilIst;
   bool _isLoading = false;
@@ -35,7 +35,7 @@ class PortalAlumnoController extends Controller{
       _programaEducativoList = user.programaEducativoUiList;
      _programaEducativoSelected = user.programaEducativoUiSelected;
      _hijoSelected = user.hijoSelected;
-      print('User retrieved : ' + _hijoSelected.nombre);
+      //print('User retrieved : ' + _hijoSelected.nombre);
       _hijoList = user.hijos;
       //SelectedPageProgramaEducativo();
       refreshUI(); // Refreshes the UI manually
@@ -59,13 +59,14 @@ class PortalAlumnoController extends Controller{
       print('evento error');
       _eventoUilIst = [];
       hideProgress();
-      _sinConexion = "!Oops! Al parecer ocurrió un error involuntario.";
+      _msgConexion = "No hay Conexión a Internet...";
       refreshUI();
     };
-    presenter.getEventoActualesOnNext = (List<EventoUi> eventoList, bool sinConexion) {
+    presenter.getEventoActualesOnNext = (List<EventoUi> eventoList, bool errorServidor) {
       print('evento next');
       _eventoUilIst = eventoList;
-      _sinConexion = sinConexion?"No hay Conexión a Internet...":null;
+      _msgConexion = errorServidor?"!Oops! Al parecer ocurrió un error involuntario.":null;
+      refreshUI(); //
     };
 
   }

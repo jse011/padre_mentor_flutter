@@ -3,6 +3,7 @@ import 'package:padre_mentor/src/data/helpers/serelizable/rest_api_response.dart
 import 'package:padre_mentor/src/data/repositories/moor/model/parametros_disenio.dart';
 import 'package:padre_mentor/src/data/repositories/moor/tools/serializable_convert.dart';
 import 'package:padre_mentor/src/domain/entities/calendario_periodio_ui.dart';
+import 'package:padre_mentor/src/domain/entities/contacto_ui.dart';
 import 'package:padre_mentor/src/domain/entities/contrato_ui_ui.dart';
 import 'package:padre_mentor/src/domain/entities/curso_boleta_ui.dart';
 import 'package:padre_mentor/src/domain/entities/curso_ui.dart';
@@ -458,6 +459,28 @@ class DataCursoRepository extends CursoRepository{
 
 
       return tareaCursoUiList;
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<List<ContactoUi>> getContactos(int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId) {
+    // TODO: implement getContactos
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> saveContactos(Map<String, dynamic> datosTareaEvalaucion) {
+    AppDataBase SQL = AppDataBase();
+    try{
+      await SQL.batch((batch) async {
+        // functions in a batch don't have to be awaited - just
+        // await the whole batch afterwards.
+        //rubroEvalList.add(SerializableConvert.converSerializeRubroEvalDesempenio(item));
+        batch.insertAll(SQL.tareaCurso, SerializableConvert.converListSerializeTareaCurso(datosTareaEvalaucion["contactos"]), mode: InsertMode.insertOrReplace );
+
+      });
     }catch(e){
       throw Exception(e);
     }

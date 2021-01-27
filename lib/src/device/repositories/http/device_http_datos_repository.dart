@@ -135,13 +135,39 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
       if(body.containsKey("Successful")&&body.containsKey("Value")){
         return body["Value"];
       }else{
-        throw Exception('Failed to load evaluaciones 1');
+        return null;
       }
 
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      throw Exception('Failed to load evaluaciones 0');
+      throw Exception('Failed to load agenda 0');
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> getContacto(int usuarioId) async{
+    Map<String, dynamic> parameters = Map<String, dynamic>();
+    parameters["vint_UsuarioId"] = usuarioId;
+    final response = await http.post(url, body: getBody("getEventoAgendaFlutter",parameters));
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      Map<String,dynamic> body = json.decode(response.body);
+      if(body.containsKey("Successful")&&body.containsKey("Value")){
+         body["Value"];
+        Map<String, dynamic> salida = new  Map<String, dynamic>();
+         List<dynamic> lista = body["Value"];
+        salida["contactos"] = lista;
+        return salida;
+      }else{
+        return null;
+      }
+
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load agenda 0');
     }
   }
 

@@ -10,7 +10,7 @@ import 'package:padre_mentor/src/domain/entities/usuario_ui.dart';
 import 'package:padre_mentor/src/domain/repositories/usuario_configuarion_repository.dart';
 import 'package:padre_mentor/src/domain/tools/app_tools.dart';
 
-class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
+class DataUsuarioAndRepository /*extends UsuarioAndConfiguracionRepository*/{
   static const TAG = 'DataUsuarioAndRepository';
   // sigleton
   static final DataUsuarioAndRepository _instance = DataUsuarioAndRepository._internal();

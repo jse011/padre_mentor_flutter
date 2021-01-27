@@ -595,4 +595,38 @@ class SerializableConvert{
     return items;
   }
 
+  static ContactoData converSerializeContacto(Map<String,dynamic> model){
+    ContactoSerializable serial = ContactoSerializable.fromJson(model);
+    return ContactoData(
+    personaId: serial.personaId,
+    nombres: serial.nombres,
+    apellidoPaterno: serial.apellidoPaterno,
+    apellidoMaterno: serial.apellidoMaterno,
+    ocupacion: serial.ocupacion,
+    estadoId: serial.estadoId,
+    telefono: serial.telefono,
+    celular: serial.celular,
+    fechaNac: serial.fechaNac,
+    correo: serial.correo,
+    genero: serial.genero,
+    estadoCivil: serial.estadoCivil,
+    numDoc: serial.numDoc,
+    foto: serial.foto,
+    nombreTipo: serial.nombreTipo,
+    tipo: serial.tipo,
+    companieroId: serial.companieroId,
+    hijoRelacionId: serial.hijoRelacionId,
+    relacion: serial.relacion,
+    cargaCursoId: serial.cargaCursoId
+    );
+  }
+
+  static List<ContactoData> converListSerializeContacto(dynamic model){
+    List<ContactoData> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeContacto(item));
+    }
+    return items;
+  }
 }

@@ -753,3 +753,53 @@ class CalendarioSerializable{
 
   Map<String, dynamic> toJson() => _$CalendarioSerializableToJson(this);
 }
+
+@JsonSerializable()
+class ContactoSerializable {
+  int personaId;
+  String nombres;
+  String apellidoPaterno;
+  String apellidoMaterno;
+  String ocupacion;
+  int estadoId;
+  String telefono;
+  String celular;
+  String fechaNac;
+  String correo;
+  String genero;
+  String estadoCivil;
+  String numDoc;
+  String foto;
+  String nombreTipo;
+  int tipo;
+  int companieroId;
+  int hijoRelacionId;
+  String relacion;
+  int cargaCursoId;
+
+  ContactoSerializable(
+      {this.personaId,
+      this.nombres,
+      this.apellidoPaterno,
+      this.apellidoMaterno,
+      this.ocupacion,
+      this.estadoId,
+      this.telefono,
+      this.celular,
+      this.fechaNac,
+      this.correo,
+      this.genero,
+      this.estadoCivil,
+      this.numDoc,
+      this.foto,
+      this.nombreTipo,
+      this.tipo,
+      this.companieroId,
+      this.hijoRelacionId,
+      this.relacion,
+      this.cargaCursoId});
+
+  factory ContactoSerializable.fromJson(Map<String, dynamic> json) => _$ContactoSerializableFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ContactoSerializableToJson(this);
+}

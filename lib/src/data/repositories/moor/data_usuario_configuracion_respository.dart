@@ -95,7 +95,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
 
         SessionUserData sessionUserData = await (SQL.selectSingle(SQL.sessionUser)).getSingle();
         int hijoIdSelected = sessionUserData != null?sessionUserData.hijoIdSelect : 0;
-        if(hijoIdSelected > 0){
+        if(hijoIdSelected!=null && hijoIdSelected > 0){
           usuarioUi.hijoSelected = usuarioUi.hijos.firstWhere((element) => element.personaId == hijoIdSelected, orElse: () => usuarioUi.hijos.first);
           var rowSessionUsuarioPrograma = SQL.selectSingle(SQL.sessionUserHijo)..where((tbl) => tbl.hijoId.equals(hijoIdSelected));
           rowSessionUsuarioPrograma.where((tbl) => tbl.selected.equals(true));
@@ -213,21 +213,64 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
   }
 
   @override
-  Future<void> saveEventoAgenda(Map<String, dynamic> eventoAgenda, int usuarioId, int tipoEventoId) async{
+  Future<void> saveEventoAgenda(Map<String, dynamic> eventoAgenda, int usuarioId, int tipoEventoId, List<int> hijoIdList) async{
     AppDataBase SQL = AppDataBase();
     try{
-      await SQL.batch((batch) async {
-        // functions in a batch don't have to be awaited - just
-        // await the whole batch afterwards.
+      print("saveEventoAgenda tipoEventoId : "+tipoEventoId.toString());
+      await SQL.transaction(() async {
 
-        if(eventoAgenda.containsKey("eventos")){
-          batch.insertAll(SQL.evento, SerializableConvert.converListSerializeEvento(eventoAgenda["eventos"]), mode: InsertMode.insertOrReplace );
+        List<CalendarioData> calendarioDataList = [];
+        var queryCalendario = SQL.select(SQL.calendario).join([
+          innerJoin(SQL.evento,SQL.calendario.calendarioId.equalsExp(SQL.evento.calendarioId))
+        ]);
+
+        queryCalendario.where(SQL.evento.usuarioReceptorId.equals(usuarioId));
+        if(tipoEventoId > 0){
+          queryCalendario.where(SQL.evento.tipoEventoId.equals(tipoEventoId));
         }
+
+        //queryCalendario.groupBy([SQL.calendario.calendarioId]);
+        var rows = await queryCalendario.get();
+        print("saveEventoAgenda cantidad : "+rows.length.toString());
+        for (var row in rows) {
+          CalendarioData calendarioData = row.readTable(SQL.calendario);
+          EventoData eventoData = row.readTable(SQL.evento);
+          if(hijoIdList != null && hijoIdList.isNotEmpty && eventoData.eventoHijoId > 0){
+            int id = hijoIdList.firstWhere((hijoId) => hijoId == eventoData.eventoHijoId, orElse:()=> -1);
+            if(id!=-1)continue;
+          }
+          await (SQL.delete(SQL.evento).delete(eventoData));
+          if(calendarioDataList.firstWhere((element) => element.calendarioId == calendarioData.calendarioId, orElse: () => null) == null){
+            calendarioDataList.add(calendarioData);
+          }
+        }
+
+        for(CalendarioData calendarioData in calendarioDataList){
+          List<EventoData> eventoDataList = await (SQL.select(SQL.evento)..where((tbl) => tbl.calendarioId.equals(calendarioData.calendarioId))).get();
+          if(eventoDataList==null||eventoDataList.isEmpty){
+            await (SQL.delete(SQL.calendario).delete(calendarioData));
+          }
+        }
+
+      });
+
+
+      await SQL.batch((batch) async {
+
+        batch.deleteWhere(SQL.tipos, (row) => const Constant(true));
+
+        //
+        print("saveEventoAgenda tipoEventoId : "+tipoEventoId.toString());
+
 
         if(eventoAgenda.containsKey("calendarios")){
           //personaSerelizable.addAll(datosInicioPadre["usuariosrelacionados"]);
           //database.personaDao.insertAllTodo(SerializableConvert.converListSerializePersona(datosInicioPadre["personas"]));
           batch.insertAll(SQL.calendario, SerializableConvert.converListSerializeCalendario(eventoAgenda["calendarios"]), mode: InsertMode.insertOrReplace);
+        }
+
+        if(eventoAgenda.containsKey("eventos")){
+          batch.insertAll(SQL.evento, SerializableConvert.converListSerializeEvento(eventoAgenda["eventos"]), mode: InsertMode.insertOrReplace );
         }
 
         if(eventoAgenda.containsKey("tipos")){
@@ -307,17 +350,20 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
         innerJoin(SQL.calendario, SQL.evento.calendarioId.equalsExp(SQL.calendario.calendarioId)),
       ]);
       query.where(SQL.evento.usuarioReceptorId.equals(padreId));
-
+      print("getEventosAgenda tipoEventoId : "+tipoEventoId.toString());
       if(tipoEventoId>0){
         query.where(SQL.evento.tipoEventoId.equals(tipoEventoId));
       }
+      //else{
+        //query.where(SQL.evento.tipoEventoId.equals(529));
+      //}
 
       var rows = await query.get();
       for(var item in  rows){
         EventoData eventoData = item.readTable(SQL.evento);
         CalendarioData calendarioData = item.readTable(SQL.calendario);
         if(hijos != null && hijos.isNotEmpty && eventoData.eventoHijoId > 0){
-            int id = hijos.firstWhere((element) => hijos == eventoData.eventoHijoId, orElse:()=> -1);
+            int id = hijos.firstWhere((hijoId) => hijoId == eventoData.eventoHijoId, orElse:()=> -1);
             if(id!=-1)continue;
         }
         EventoUi eventoUi = new EventoUi();
@@ -406,6 +452,85 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
         }
         await SQL.into(SQL.sessionUserHijo).insert(sessionUserHijoData, mode: InsertMode.insertOrReplace);
       });
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<List<EventoUi>> getTopEventosAgenda(int padreId, int tipoEventoId, List<int> hijos) async {
+
+    AppDataBase SQL = AppDataBase();
+    try{
+
+      List<EventoUi> eventoUiList = [];
+      var query = SQL.select(SQL.evento).join([
+        innerJoin(SQL.calendario, SQL.evento.calendarioId.equalsExp(SQL.calendario.calendarioId)),
+      ]);
+      query.where(SQL.evento.usuarioReceptorId.equals(padreId));
+      if(tipoEventoId>0){
+        query.where(SQL.evento.tipoEventoId.equals(tipoEventoId));
+      }
+
+      var rows = await query.get();
+      for(var item in  rows){
+        EventoData eventoData = item.readTable(SQL.evento);
+        CalendarioData calendarioData = item.readTable(SQL.calendario);
+        if(hijos != null && hijos.isNotEmpty && eventoData.eventoHijoId > 0){
+          int id = hijos.firstWhere((element) => hijos == eventoData.eventoHijoId, orElse:()=> -1);
+          if(id!=-1)continue;
+        }
+        EventoUi eventoUi = new EventoUi();
+        eventoUi.id = eventoData.eventoId;
+        eventoUi.nombreEntidad = eventoData.nombreEntidad;
+        eventoUi.fotoEntidad = eventoData.fotoEntidad;
+        eventoUi.cantLike =  eventoData.likeCount;
+        eventoUi.titulo = eventoData.titulo;
+        eventoUi.descripcion = eventoData.descripcion;
+        eventoUi.fecha =  eventoData.fechaEvento!=null?AppTools.convertDateTimePtBR(eventoData.fechaEvento, eventoData.horaEvento):null;
+        eventoUi.foto = eventoData.pathImagen;
+        eventoUi.tipoEventoUi = TipoEventoUi();
+        eventoUi.tipoEventoUi.id = eventoData.tipoEventoId;
+        eventoUi.tipoEventoUi.nombre = eventoData.tipoEventoNombre;
+        eventoUi.rolEmisor = calendarioData.cargo;
+        eventoUi.nombreEmisor = calendarioData.nUsuario;
+
+        switch(eventoUi.tipoEventoUi.id){
+          case 526:
+            eventoUi.tipoEventoUi.tipo = EventoIconoEnumUI.EVENTO;
+            break;
+          case 528:
+            eventoUi.tipoEventoUi.tipo = EventoIconoEnumUI.ACTIVIDAD;
+            break;
+          case 530:
+            eventoUi.tipoEventoUi.tipo = EventoIconoEnumUI.CITA;
+            break;
+          case 529:
+            eventoUi.tipoEventoUi.tipo = EventoIconoEnumUI.TAREA;
+            break;
+          case 527:
+            eventoUi.tipoEventoUi.tipo = EventoIconoEnumUI.NOTICIA;
+            break;
+          case 620:
+            eventoUi.tipoEventoUi.tipo = EventoIconoEnumUI.AGENDA;
+            break;
+          default:
+            eventoUi.tipoEventoUi.tipo = EventoIconoEnumUI.DEFAULT;
+            break;
+        }
+        eventoUiList.add(eventoUi);
+      }
+
+      eventoUiList.sort((a, b) => a.getFecha().compareTo(b.getFecha()));
+      int count = 0;
+      int max = 10;
+      List<EventoUi> limitList = [];
+      for(EventoUi eventoUi in eventoUiList){
+        count++;
+        if(count == max)break;
+        limitList.add(eventoUi);
+      }
+      return eventoUiList;
     }catch(e){
       throw Exception(e);
     }

@@ -58,12 +58,13 @@ class WorkoutView extends StatelessWidget {
                       ),
                       child: Opacity(
                         opacity: 0.6,
-                        child: FancyShimmerImage(
+                        child: foto!=null?FancyShimmerImage(
                           boxFit: BoxFit.cover,
                           imageUrl: foto??'',
                           width: MediaQuery.of(context).size.width,
                           errorWidget: Icon(Icons.warning_amber_rounded, color: AppTheme.white, size: 105,),
-                        ),
+                        ):
+                              Container(),
                       ),
                     ),
                     Padding(
@@ -112,7 +113,7 @@ class WorkoutView extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 4),
                                     child: Icon(
-                                      Icons.timer,
+                                      Icons.perm_contact_calendar,
                                       color: AppTheme.white,
                                       size: 16,
                                     ),

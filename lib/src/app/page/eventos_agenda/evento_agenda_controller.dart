@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:padre_mentor/src/app/page/eventos_agenda/evento_agenda_presenter.dart';
 import 'package:padre_mentor/src/domain/entities/evento_ui.dart';
@@ -9,8 +11,10 @@ class EventoAgendaController extends Controller{
   UsuarioUi _usuarioUi;
   List<TipoEventoUi> _tipoEventoList = [];
 
-  String _sinConexion = null;
-  String get sinConexion => _sinConexion;
+  String _msgConexion = null;
+
+  Timer selectedTipoEventoTimer;
+  String get msgConexion => _msgConexion;
   List<TipoEventoUi> get tipoEventoList => _tipoEventoList;
   TipoEventoUi _selectedTipoEventoUi;
   TipoEventoUi get selectedTipoEventoUi => _selectedTipoEventoUi;
@@ -29,13 +33,15 @@ class EventoAgendaController extends Controller{
   void initListeners() {
     presenter.getSesionUsuarioOnNext = (UsuarioUi usuarioUi) {
       _hijoSelected = usuarioUi.hijoSelected;
-      refreshUI(); // Refreshes the UI manually
+      //refreshUI(); // Refreshes the UI manually
       _usuarioUi = usuarioUi;
-      presenter.onChangeUsuario(usuarioUi, _selectedTipoEventoUi);
+      refreshUI();
     };
 
     presenter.getSesionUsuarioOnComplete = () {
       print('User retrieved');
+      print("GetEventoAgenda getSesionUsuarioOnComplete");
+      presenter.onChangeUsuario(_usuarioUi, _selectedTipoEventoUi);
     };
 
     // On error, show a snackbar, remove the user, and refresh the UI
@@ -45,6 +51,32 @@ class EventoAgendaController extends Controller{
     };
 
     presenter.getEventoAgendaOnComplete = () {
+      print('Could on Complete.');
+    };
+    presenter.getEventoAgendaOnError = (e) {
+      print('evento error');
+      if(tipoEventoList!=null){
+        for(TipoEventoUi tipoEventoUi in tipoEventoList){
+          tipoEventoUi.toogle = false;
+        }
+      }
+
+      _eventoUilIst = [];
+      hideProgress();
+      _msgConexion = "No hay Conexión a Internet...";
+      refreshUI();
+    };
+    presenter.getEventoAgendaOnNext = (List<TipoEventoUi> tipoEvantoList, List<EventoUi> eventoList, bool errorServidor, bool datosOffline) {
+
+      if(datosOffline){
+        _tipoEventoList = tipoEvantoList;
+      }else{
+        _tipoEventoList = tipoEvantoList;
+        _eventoUilIst = eventoList;
+        _msgConexion = errorServidor? "!Oops! Al parecer ocurrió un error involuntario.":null;
+        hideProgress();
+      }
+
       if(_selectedTipoEventoUi==null){
         for(TipoEventoUi tipoEventoUi in tipoEventoList){
           if(tipoEventoUi.id == 0){
@@ -60,26 +92,9 @@ class EventoAgendaController extends Controller{
           }
         }
       }
-      hideProgress();
-      refreshUI();
-    };
-    presenter.getEventoAgendaOnError = (e) {
-      print('evento error');
-      _eventoUilIst = [];
-      hideProgress();
-      _sinConexion = "!Oops! Al parecer ocurrió un error involuntario.";
-      refreshUI();
-    };
-    presenter.getEventoAgendaOnNext = (List<TipoEventoUi> tipoEvantoList, List<EventoUi> eventoList, bool sinConexion, bool datosOffline) {
+
       print('evento next');
-      if(datosOffline){
-        _tipoEventoList = tipoEvantoList;
-        refreshUI();
-      }else{
-        _tipoEventoList = tipoEvantoList;
-        _eventoUilIst = eventoList;
-        _sinConexion = sinConexion?"No hay Conexión a Internet...":null;
-      }
+      refreshUI();
     };
   }
 
@@ -89,13 +104,26 @@ class EventoAgendaController extends Controller{
     presenter.onInitState();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    if(selectedTipoEventoTimer!=null)selectedTipoEventoTimer.cancel();
+
+  }
+
   void onSelectedTipoEvento(TipoEventoUi tipoEvento) {
+    if(tipoEvento.disable)return;
     showProgress();
     _selectedTipoEventoUi = tipoEvento;
     for(var item in _tipoEventoList)item.toogle = false;
     tipoEvento.toogle = true;
-    presenter.onChangeUsuario(_usuarioUi, selectedTipoEventoUi);
     refreshUI();
+    if(selectedTipoEventoTimer!=null)selectedTipoEventoTimer.cancel();
+    selectedTipoEventoTimer = Timer(Duration(milliseconds: 1000), () {
+      print("GetEventoAgenda onSelectedTipoEvento");
+      presenter.onChangeUsuario(_usuarioUi, selectedTipoEventoUi);
+    });
+
   }
 
   void showProgress(){
@@ -117,6 +145,7 @@ class EventoAgendaController extends Controller{
         }
     }
     presenter.onChagenHijo(_hijoSelected);
+    print("GetEventoAgenda onChagenHijo");
     presenter.onChangeUsuario(_usuarioUi, selectedTipoEventoUi);
     refreshUI();
   }

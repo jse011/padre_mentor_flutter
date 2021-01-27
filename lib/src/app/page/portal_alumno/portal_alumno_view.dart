@@ -287,6 +287,14 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                                     break;
                                 }
 
+                                String foto;
+                                if (item.tipoEventoUi.tipo == EventoIconoEnumUI.NOTICIA ||
+                                    item.tipoEventoUi.tipo == EventoIconoEnumUI.EVENTO || (item.tipoEventoUi.tipo == EventoIconoEnumUI.AGENDA && item.foto!=null&&item.foto.isNotEmpty)){
+                                    foto = item.foto;
+                                }else{
+                                  foto = null;
+                                }
+
                                 return  WorkoutView(
                                   animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
                                       parent: widget.animationController,
@@ -296,7 +304,7 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                                   titulo1: item.nombreEmisor,
                                   titulo2: item.titulo,
                                   subTitulo: item.rolEmisor,
-                                  foto: item.foto,
+                                  foto: foto,
                                   colors1: Colors.black,
                                   colors2: color,
                                 );

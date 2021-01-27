@@ -749,3 +749,53 @@ Map<String, dynamic> _$CalendarioSerializableToJson(
       'usuarioAccionId': instance.usuarioAccionId,
       'fechaAccion': instance.fechaAccion,
     };
+
+ContactoSerializable _$ContactoSerializableFromJson(Map<String, dynamic> json) {
+  return ContactoSerializable(
+    personaId: json['personaId'] as int,
+    nombres: json['nombres'] as String,
+    apellidoPaterno: json['apellidoPaterno'] as String,
+    apellidoMaterno: json['apellidoMaterno'] as String,
+    ocupacion: json['ocupacion'] as String,
+    estadoId: json['estadoId'] as int,
+    telefono: json['telefono'] as String,
+    celular: json['celular'] as String,
+    fechaNac: json['fechaNac'] as String,
+    correo: json['correo'] as String,
+    genero: json['genero'] as String,
+    estadoCivil: json['estadoCivil'] as String,
+    numDoc: json['numDoc'] as String,
+    foto: json['foto'] as String,
+    nombreTipo: json['nombreTipo'] as String,
+    tipo: json['tipo'] as int,
+    companieroId: json['companieroId'] as int,
+    hijoRelacionId: json['hijoRelacionId'] as int,
+    relacion: json['relacion'] as String,
+    cargaCursoId: json['cargaCursoId'] as int,
+  );
+}
+
+Map<String, dynamic> _$ContactoSerializableToJson(
+        ContactoSerializable instance) =>
+    <String, dynamic>{
+      'personaId': instance.personaId,
+      'nombres': instance.nombres,
+      'apellidoPaterno': instance.apellidoPaterno,
+      'apellidoMaterno': instance.apellidoMaterno,
+      'ocupacion': instance.ocupacion,
+      'estadoId': instance.estadoId,
+      'telefono': instance.telefono,
+      'celular': instance.celular,
+      'fechaNac': instance.fechaNac,
+      'correo': instance.correo,
+      'genero': instance.genero,
+      'estadoCivil': instance.estadoCivil,
+      'numDoc': instance.numDoc,
+      'foto': instance.foto,
+      'nombreTipo': instance.nombreTipo,
+      'tipo': instance.tipo,
+      'companieroId': instance.companieroId,
+      'hijoRelacionId': instance.hijoRelacionId,
+      'relacion': instance.relacion,
+      'cargaCursoId': instance.cargaCursoId,
+    };

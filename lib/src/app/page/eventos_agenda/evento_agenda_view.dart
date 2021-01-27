@@ -91,7 +91,7 @@ class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaCon
           getAppBarUI(),
           ControlledWidgetBuilder<EventoAgendaController>(
               builder: (context, controller){
-                if(controller.sinConexion!=null ? true:false){
+                if(controller.msgConexion!=null ? true:false){
                   return Positioned(
                     bottom: 100.0,
                     right: 1,
@@ -108,7 +108,7 @@ class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaCon
                             ),
                             child: Padding(
                               padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
-                              child: Text(controller.sinConexion, style: TextStyle(color: AppTheme.white),),
+                              child: Text(controller.msgConexion, style: TextStyle(color: AppTheme.white),),
                             ),
                           )
                         ],

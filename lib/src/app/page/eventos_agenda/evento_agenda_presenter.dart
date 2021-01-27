@@ -26,6 +26,7 @@ class EventoAgendaPresenter extends Presenter{
   }
 
   void onInitState() {
+    print("GetEventoAgenda onInitState");
     getDatosGenerales();
   }
 
@@ -76,7 +77,7 @@ class _GetEventoAgendaCase extends Observer<GetEvaluacionCaseResponse>{
   @override
   void onNext(GetEvaluacionCaseResponse response) {
     assert(presenter.getEventoAgendaOnNext != null);
-    presenter.getEventoAgendaOnNext(response.tipoEventoUiList, response.eventoUiList, response.sinConexion, response.datosOffline);
+    presenter.getEventoAgendaOnNext(response.tipoEventoUiList, response.eventoUiList, response.errorServidor, response.datosOffline);
   }
 
 }

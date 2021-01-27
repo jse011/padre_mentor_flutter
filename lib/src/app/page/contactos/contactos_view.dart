@@ -219,9 +219,271 @@ class _ContactosViewState extends ViewState<ContactosView, ContactosController>{
                   Expanded(
                     child: TabBarView(
                       children: [
-                        Icon(Icons.directions_car),
-                        Icon(Icons.directions_transit),
-                        Icon(Icons.directions_bike),
+                        CustomScrollView(
+                            slivers:[
+                              SliverList(
+                                delegate: SliverChildListDelegate([
+                                  Container(
+                                    padding: const EdgeInsets.only(left: 16, right: 0, top: 8, bottom: 8),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                            padding: const EdgeInsets.only(left: 0, right: 5, top: 0),
+                                            child: Text("A", style: TextStyle( color: AppTheme.lightText, fontSize: 14, fontWeight: FontWeight.w700),),
+                                        ),
+                                        Expanded(
+                                            child: Container(
+                                              color: AppTheme.lightText,
+                                              height: 1,
+                                            )
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.only(left: 24, right: 0, top: 8, bottom: 8),
+                                          child: Row(
+                                            children: [
+                                              CachedNetworkImage(
+                                                  height: 60,
+                                                  width: 60,
+                                                  placeholder: (context, url) => CircularProgressIndicator(),
+                                                  imageUrl: "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
+                                                  imageBuilder: (context, imageProvider) =>
+                                                      Container(
+
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                                                            image: DecorationImage(
+                                                              image: imageProvider,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          )
+                                                      )
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(left: 16, right: 0, top: 0, bottom: 0),
+                                                child: Text("Acero Josue", maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 16, color: AppTheme.lightText, fontWeight: FontWeight.w500),),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 60,
+                                          color: Color(0xFFF6F6F6),
+                                          padding: const EdgeInsets.only(left:  40, right: 28),
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                  child: Material(
+                                                    color: Colors.transparent,
+                                                    child: InkWell(
+                                                      focusColor: Colors.transparent,
+                                                      highlightColor: Colors.transparent,
+                                                      hoverColor: Colors.transparent,
+                                                      borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                                      splashColor: AppTheme.colorPrimary.withOpacity(0.2),
+                                                      onTap: () {
+
+                                                      },
+                                                      child: Container(
+                                                        child: Column(
+                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          children: [
+                                                            Icon(Icons.call, size: 24, color: Color(0xFF6FBD53),),
+                                                            Text("Llamar", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                              ),
+                                              Expanded(
+                                                  child: Container(
+                                                    child: Material(
+                                                      color: Colors.transparent,
+                                                      child: InkWell(
+                                                        focusColor: Colors.transparent,
+                                                        highlightColor: Colors.transparent,
+                                                        hoverColor: Colors.transparent,
+                                                        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                                        splashColor: AppTheme.colorPrimary.withOpacity(0.2),
+                                                        onTap: () {
+
+                                                        },
+                                                        child: Column(
+                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          children: [
+                                                            Icon(Icons.call, size: 24, color: Color(0xFF6FBD53),),
+                                                            Text("Apoderado", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500, ),),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                              ),
+                                              Expanded(
+                                                  child: Material(
+                                                    color: Colors.transparent,
+                                                    child: InkWell(
+                                                      focusColor: Colors.transparent,
+                                                      highlightColor: Colors.transparent,
+                                                      hoverColor: Colors.transparent,
+                                                      borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                                      splashColor: AppTheme.colorPrimary.withOpacity(0.2),
+                                                      onTap: () {
+
+                                                      },
+                                                      child: Container(
+                                                        child: Column(
+                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          children: [
+                                                            Icon(Icons.insert_comment_outlined, size: 24, color: Color(0XFF52B1D3),),
+                                                            Text("Mensaje", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                              ),
+                                              Expanded(
+                                                  child: Material(
+                                                    color: Colors.transparent,
+                                                    child: InkWell(
+                                                      focusColor: Colors.transparent,
+                                                      highlightColor: Colors.transparent,
+                                                      hoverColor: Colors.transparent,
+                                                      borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                                      splashColor: AppTheme.colorPrimary.withOpacity(0.2),
+                                                      onTap: () {
+
+                                                      },
+                                                      child: Container(
+                                                        child: Column(
+                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          children: [
+                                                            Icon(Icons.supervised_user_circle_outlined, size: 24, color: Color(0xFF929292),),
+                                                            Text("Información", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.only(left: 24, right: 0, top: 8, bottom: 8),
+                                          child: Row(
+                                            children: [
+                                              CachedNetworkImage(
+                                                  height: 60,
+                                                  width: 60,
+                                                  placeholder: (context, url) => CircularProgressIndicator(),
+                                                  imageUrl: "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
+                                                  imageBuilder: (context, imageProvider) =>
+                                                      Container(
+
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                                                            image: DecorationImage(
+                                                              image: imageProvider,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          )
+                                                      )
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(left: 16, right: 0, top: 0, bottom: 0),
+                                                child: Text("Acero Josue", maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 16, color: AppTheme.lightText, fontWeight: FontWeight.w500),),
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.only(left: 24, right: 0, top: 8, bottom: 8),
+                                          child: Row(
+                                            children: [
+                                              CachedNetworkImage(
+                                                  height: 60,
+                                                  width: 60,
+                                                  placeholder: (context, url) => CircularProgressIndicator(),
+                                                  imageUrl: "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
+                                                  imageBuilder: (context, imageProvider) =>
+                                                      Container(
+
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                                                            image: DecorationImage(
+                                                              image: imageProvider,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          )
+                                                      )
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(left: 16, right: 0, top: 0, bottom: 0),
+                                                child: Text("Acero Josue", maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 16, color: AppTheme.lightText, fontWeight: FontWeight.w500),),
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ]),
+                              ),
+                            ]
+                        ),
+                        CustomScrollView(
+                            slivers:[
+                              SliverList(
+                                delegate: SliverChildListDelegate([
+                                  Icon(Icons.directions_transit),
+                                ]),
+                              ),
+                            ]
+                        ),
+                        CustomScrollView(
+                            slivers:[
+                              SliverList(
+                                delegate: SliverChildListDelegate([
+                                  Icon(Icons.directions_car),
+                                ]),
+                              ),
+                              SliverList(
+                                delegate: SliverChildListDelegate([
+                                  Icon(Icons.directions_transit),
+                                ]),
+                              ),
+                              SliverList(
+                                delegate: SliverChildListDelegate([
+                                  Icon(Icons.directions_bike),
+                                ]),
+                              ),
+                            ]
+                        ),
                       ],
                     ),
                   )

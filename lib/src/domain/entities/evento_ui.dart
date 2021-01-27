@@ -14,4 +14,8 @@ class EventoUi{
   String foto;
   TipoEventoUi tipoEventoUi;
   int cantLike;
+
+  DateTime getFecha(){
+    return this.fecha == null?DateTime(1900):this.fecha;
+  }
 }

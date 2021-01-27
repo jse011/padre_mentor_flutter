@@ -43,6 +43,7 @@ dependencies:
   flutter_inappwebview: ^4.0.0+4
   fancy_shimmer_image: ^1.2.0
   data_connection_checker: ^0.3.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

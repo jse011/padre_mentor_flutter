@@ -3,6 +3,7 @@ class TipoEventoUi{
   String nombre;
   EventoIconoEnumUI tipo;
   bool toogle;
+  bool disable;
 }
 
 enum EventoIconoEnumUI{

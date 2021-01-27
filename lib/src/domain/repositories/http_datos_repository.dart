@@ -4,5 +4,5 @@ abstract class HttpDatosRepository {
   Future<Map<String, dynamic>> getEvaluacionesPorCurso(int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId);
   Future<Map<String, dynamic>> getTareaPorCurso(int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId);
   Future<Map<String, dynamic>> getEventoAgenda(int usuarioId, int tipoEventoId);
-
+  Future<Map<String, dynamic>> getContacto(int usuarioId);
 }

@@ -15880,6 +15880,1067 @@ class $SessionUserHijoTable extends SessionUserHijo
   }
 }
 
+class ContactoData extends DataClass implements Insertable<ContactoData> {
+  final int personaId;
+  final String nombres;
+  final String apellidoPaterno;
+  final String apellidoMaterno;
+  final String ocupacion;
+  final int estadoId;
+  final String telefono;
+  final String celular;
+  final String fechaNac;
+  final String correo;
+  final String genero;
+  final String estadoCivil;
+  final String numDoc;
+  final String foto;
+  final String nombreTipo;
+  final int tipo;
+  final int companieroId;
+  final int hijoRelacionId;
+  final String relacion;
+  final int cargaCursoId;
+  ContactoData(
+      {@required this.personaId,
+      this.nombres,
+      this.apellidoPaterno,
+      this.apellidoMaterno,
+      this.ocupacion,
+      this.estadoId,
+      this.telefono,
+      this.celular,
+      this.fechaNac,
+      this.correo,
+      this.genero,
+      this.estadoCivil,
+      this.numDoc,
+      this.foto,
+      this.nombreTipo,
+      this.tipo,
+      this.companieroId,
+      @required this.hijoRelacionId,
+      this.relacion,
+      this.cargaCursoId});
+  factory ContactoData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return ContactoData(
+      personaId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}persona_id']),
+      nombres:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}nombres']),
+      apellidoPaterno: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}apellido_paterno']),
+      apellidoMaterno: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}apellido_materno']),
+      ocupacion: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}ocupacion']),
+      estadoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}estado_id']),
+      telefono: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}telefono']),
+      celular:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}celular']),
+      fechaNac: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}fecha_nac']),
+      correo:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}correo']),
+      genero:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}genero']),
+      estadoCivil: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}estado_civil']),
+      numDoc:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}num_doc']),
+      foto: stringType.mapFromDatabaseResponse(data['${effectivePrefix}foto']),
+      nombreTipo: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}nombre_tipo']),
+      tipo: intType.mapFromDatabaseResponse(data['${effectivePrefix}tipo']),
+      companieroId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}companiero_id']),
+      hijoRelacionId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}hijo_relacion_id']),
+      relacion: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}relacion']),
+      cargaCursoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}carga_curso_id']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || personaId != null) {
+      map['persona_id'] = Variable<int>(personaId);
+    }
+    if (!nullToAbsent || nombres != null) {
+      map['nombres'] = Variable<String>(nombres);
+    }
+    if (!nullToAbsent || apellidoPaterno != null) {
+      map['apellido_paterno'] = Variable<String>(apellidoPaterno);
+    }
+    if (!nullToAbsent || apellidoMaterno != null) {
+      map['apellido_materno'] = Variable<String>(apellidoMaterno);
+    }
+    if (!nullToAbsent || ocupacion != null) {
+      map['ocupacion'] = Variable<String>(ocupacion);
+    }
+    if (!nullToAbsent || estadoId != null) {
+      map['estado_id'] = Variable<int>(estadoId);
+    }
+    if (!nullToAbsent || telefono != null) {
+      map['telefono'] = Variable<String>(telefono);
+    }
+    if (!nullToAbsent || celular != null) {
+      map['celular'] = Variable<String>(celular);
+    }
+    if (!nullToAbsent || fechaNac != null) {
+      map['fecha_nac'] = Variable<String>(fechaNac);
+    }
+    if (!nullToAbsent || correo != null) {
+      map['correo'] = Variable<String>(correo);
+    }
+    if (!nullToAbsent || genero != null) {
+      map['genero'] = Variable<String>(genero);
+    }
+    if (!nullToAbsent || estadoCivil != null) {
+      map['estado_civil'] = Variable<String>(estadoCivil);
+    }
+    if (!nullToAbsent || numDoc != null) {
+      map['num_doc'] = Variable<String>(numDoc);
+    }
+    if (!nullToAbsent || foto != null) {
+      map['foto'] = Variable<String>(foto);
+    }
+    if (!nullToAbsent || nombreTipo != null) {
+      map['nombre_tipo'] = Variable<String>(nombreTipo);
+    }
+    if (!nullToAbsent || tipo != null) {
+      map['tipo'] = Variable<int>(tipo);
+    }
+    if (!nullToAbsent || companieroId != null) {
+      map['companiero_id'] = Variable<int>(companieroId);
+    }
+    if (!nullToAbsent || hijoRelacionId != null) {
+      map['hijo_relacion_id'] = Variable<int>(hijoRelacionId);
+    }
+    if (!nullToAbsent || relacion != null) {
+      map['relacion'] = Variable<String>(relacion);
+    }
+    if (!nullToAbsent || cargaCursoId != null) {
+      map['carga_curso_id'] = Variable<int>(cargaCursoId);
+    }
+    return map;
+  }
+
+  ContactoCompanion toCompanion(bool nullToAbsent) {
+    return ContactoCompanion(
+      personaId: personaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(personaId),
+      nombres: nombres == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nombres),
+      apellidoPaterno: apellidoPaterno == null && nullToAbsent
+          ? const Value.absent()
+          : Value(apellidoPaterno),
+      apellidoMaterno: apellidoMaterno == null && nullToAbsent
+          ? const Value.absent()
+          : Value(apellidoMaterno),
+      ocupacion: ocupacion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ocupacion),
+      estadoId: estadoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadoId),
+      telefono: telefono == null && nullToAbsent
+          ? const Value.absent()
+          : Value(telefono),
+      celular: celular == null && nullToAbsent
+          ? const Value.absent()
+          : Value(celular),
+      fechaNac: fechaNac == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fechaNac),
+      correo:
+          correo == null && nullToAbsent ? const Value.absent() : Value(correo),
+      genero:
+          genero == null && nullToAbsent ? const Value.absent() : Value(genero),
+      estadoCivil: estadoCivil == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadoCivil),
+      numDoc:
+          numDoc == null && nullToAbsent ? const Value.absent() : Value(numDoc),
+      foto: foto == null && nullToAbsent ? const Value.absent() : Value(foto),
+      nombreTipo: nombreTipo == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nombreTipo),
+      tipo: tipo == null && nullToAbsent ? const Value.absent() : Value(tipo),
+      companieroId: companieroId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(companieroId),
+      hijoRelacionId: hijoRelacionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(hijoRelacionId),
+      relacion: relacion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(relacion),
+      cargaCursoId: cargaCursoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cargaCursoId),
+    );
+  }
+
+  factory ContactoData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return ContactoData(
+      personaId: serializer.fromJson<int>(json['personaId']),
+      nombres: serializer.fromJson<String>(json['nombres']),
+      apellidoPaterno: serializer.fromJson<String>(json['apellidoPaterno']),
+      apellidoMaterno: serializer.fromJson<String>(json['apellidoMaterno']),
+      ocupacion: serializer.fromJson<String>(json['ocupacion']),
+      estadoId: serializer.fromJson<int>(json['estadoId']),
+      telefono: serializer.fromJson<String>(json['telefono']),
+      celular: serializer.fromJson<String>(json['celular']),
+      fechaNac: serializer.fromJson<String>(json['fechaNac']),
+      correo: serializer.fromJson<String>(json['correo']),
+      genero: serializer.fromJson<String>(json['genero']),
+      estadoCivil: serializer.fromJson<String>(json['estadoCivil']),
+      numDoc: serializer.fromJson<String>(json['numDoc']),
+      foto: serializer.fromJson<String>(json['foto']),
+      nombreTipo: serializer.fromJson<String>(json['nombreTipo']),
+      tipo: serializer.fromJson<int>(json['tipo']),
+      companieroId: serializer.fromJson<int>(json['companieroId']),
+      hijoRelacionId: serializer.fromJson<int>(json['hijoRelacionId']),
+      relacion: serializer.fromJson<String>(json['relacion']),
+      cargaCursoId: serializer.fromJson<int>(json['cargaCursoId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'personaId': serializer.toJson<int>(personaId),
+      'nombres': serializer.toJson<String>(nombres),
+      'apellidoPaterno': serializer.toJson<String>(apellidoPaterno),
+      'apellidoMaterno': serializer.toJson<String>(apellidoMaterno),
+      'ocupacion': serializer.toJson<String>(ocupacion),
+      'estadoId': serializer.toJson<int>(estadoId),
+      'telefono': serializer.toJson<String>(telefono),
+      'celular': serializer.toJson<String>(celular),
+      'fechaNac': serializer.toJson<String>(fechaNac),
+      'correo': serializer.toJson<String>(correo),
+      'genero': serializer.toJson<String>(genero),
+      'estadoCivil': serializer.toJson<String>(estadoCivil),
+      'numDoc': serializer.toJson<String>(numDoc),
+      'foto': serializer.toJson<String>(foto),
+      'nombreTipo': serializer.toJson<String>(nombreTipo),
+      'tipo': serializer.toJson<int>(tipo),
+      'companieroId': serializer.toJson<int>(companieroId),
+      'hijoRelacionId': serializer.toJson<int>(hijoRelacionId),
+      'relacion': serializer.toJson<String>(relacion),
+      'cargaCursoId': serializer.toJson<int>(cargaCursoId),
+    };
+  }
+
+  ContactoData copyWith(
+          {int personaId,
+          String nombres,
+          String apellidoPaterno,
+          String apellidoMaterno,
+          String ocupacion,
+          int estadoId,
+          String telefono,
+          String celular,
+          String fechaNac,
+          String correo,
+          String genero,
+          String estadoCivil,
+          String numDoc,
+          String foto,
+          String nombreTipo,
+          int tipo,
+          int companieroId,
+          int hijoRelacionId,
+          String relacion,
+          int cargaCursoId}) =>
+      ContactoData(
+        personaId: personaId ?? this.personaId,
+        nombres: nombres ?? this.nombres,
+        apellidoPaterno: apellidoPaterno ?? this.apellidoPaterno,
+        apellidoMaterno: apellidoMaterno ?? this.apellidoMaterno,
+        ocupacion: ocupacion ?? this.ocupacion,
+        estadoId: estadoId ?? this.estadoId,
+        telefono: telefono ?? this.telefono,
+        celular: celular ?? this.celular,
+        fechaNac: fechaNac ?? this.fechaNac,
+        correo: correo ?? this.correo,
+        genero: genero ?? this.genero,
+        estadoCivil: estadoCivil ?? this.estadoCivil,
+        numDoc: numDoc ?? this.numDoc,
+        foto: foto ?? this.foto,
+        nombreTipo: nombreTipo ?? this.nombreTipo,
+        tipo: tipo ?? this.tipo,
+        companieroId: companieroId ?? this.companieroId,
+        hijoRelacionId: hijoRelacionId ?? this.hijoRelacionId,
+        relacion: relacion ?? this.relacion,
+        cargaCursoId: cargaCursoId ?? this.cargaCursoId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('ContactoData(')
+          ..write('personaId: $personaId, ')
+          ..write('nombres: $nombres, ')
+          ..write('apellidoPaterno: $apellidoPaterno, ')
+          ..write('apellidoMaterno: $apellidoMaterno, ')
+          ..write('ocupacion: $ocupacion, ')
+          ..write('estadoId: $estadoId, ')
+          ..write('telefono: $telefono, ')
+          ..write('celular: $celular, ')
+          ..write('fechaNac: $fechaNac, ')
+          ..write('correo: $correo, ')
+          ..write('genero: $genero, ')
+          ..write('estadoCivil: $estadoCivil, ')
+          ..write('numDoc: $numDoc, ')
+          ..write('foto: $foto, ')
+          ..write('nombreTipo: $nombreTipo, ')
+          ..write('tipo: $tipo, ')
+          ..write('companieroId: $companieroId, ')
+          ..write('hijoRelacionId: $hijoRelacionId, ')
+          ..write('relacion: $relacion, ')
+          ..write('cargaCursoId: $cargaCursoId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      personaId.hashCode,
+      $mrjc(
+          nombres.hashCode,
+          $mrjc(
+              apellidoPaterno.hashCode,
+              $mrjc(
+                  apellidoMaterno.hashCode,
+                  $mrjc(
+                      ocupacion.hashCode,
+                      $mrjc(
+                          estadoId.hashCode,
+                          $mrjc(
+                              telefono.hashCode,
+                              $mrjc(
+                                  celular.hashCode,
+                                  $mrjc(
+                                      fechaNac.hashCode,
+                                      $mrjc(
+                                          correo.hashCode,
+                                          $mrjc(
+                                              genero.hashCode,
+                                              $mrjc(
+                                                  estadoCivil.hashCode,
+                                                  $mrjc(
+                                                      numDoc.hashCode,
+                                                      $mrjc(
+                                                          foto.hashCode,
+                                                          $mrjc(
+                                                              nombreTipo
+                                                                  .hashCode,
+                                                              $mrjc(
+                                                                  tipo.hashCode,
+                                                                  $mrjc(
+                                                                      companieroId
+                                                                          .hashCode,
+                                                                      $mrjc(
+                                                                          hijoRelacionId
+                                                                              .hashCode,
+                                                                          $mrjc(
+                                                                              relacion.hashCode,
+                                                                              cargaCursoId.hashCode))))))))))))))))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is ContactoData &&
+          other.personaId == this.personaId &&
+          other.nombres == this.nombres &&
+          other.apellidoPaterno == this.apellidoPaterno &&
+          other.apellidoMaterno == this.apellidoMaterno &&
+          other.ocupacion == this.ocupacion &&
+          other.estadoId == this.estadoId &&
+          other.telefono == this.telefono &&
+          other.celular == this.celular &&
+          other.fechaNac == this.fechaNac &&
+          other.correo == this.correo &&
+          other.genero == this.genero &&
+          other.estadoCivil == this.estadoCivil &&
+          other.numDoc == this.numDoc &&
+          other.foto == this.foto &&
+          other.nombreTipo == this.nombreTipo &&
+          other.tipo == this.tipo &&
+          other.companieroId == this.companieroId &&
+          other.hijoRelacionId == this.hijoRelacionId &&
+          other.relacion == this.relacion &&
+          other.cargaCursoId == this.cargaCursoId);
+}
+
+class ContactoCompanion extends UpdateCompanion<ContactoData> {
+  final Value<int> personaId;
+  final Value<String> nombres;
+  final Value<String> apellidoPaterno;
+  final Value<String> apellidoMaterno;
+  final Value<String> ocupacion;
+  final Value<int> estadoId;
+  final Value<String> telefono;
+  final Value<String> celular;
+  final Value<String> fechaNac;
+  final Value<String> correo;
+  final Value<String> genero;
+  final Value<String> estadoCivil;
+  final Value<String> numDoc;
+  final Value<String> foto;
+  final Value<String> nombreTipo;
+  final Value<int> tipo;
+  final Value<int> companieroId;
+  final Value<int> hijoRelacionId;
+  final Value<String> relacion;
+  final Value<int> cargaCursoId;
+  const ContactoCompanion({
+    this.personaId = const Value.absent(),
+    this.nombres = const Value.absent(),
+    this.apellidoPaterno = const Value.absent(),
+    this.apellidoMaterno = const Value.absent(),
+    this.ocupacion = const Value.absent(),
+    this.estadoId = const Value.absent(),
+    this.telefono = const Value.absent(),
+    this.celular = const Value.absent(),
+    this.fechaNac = const Value.absent(),
+    this.correo = const Value.absent(),
+    this.genero = const Value.absent(),
+    this.estadoCivil = const Value.absent(),
+    this.numDoc = const Value.absent(),
+    this.foto = const Value.absent(),
+    this.nombreTipo = const Value.absent(),
+    this.tipo = const Value.absent(),
+    this.companieroId = const Value.absent(),
+    this.hijoRelacionId = const Value.absent(),
+    this.relacion = const Value.absent(),
+    this.cargaCursoId = const Value.absent(),
+  });
+  ContactoCompanion.insert({
+    @required int personaId,
+    this.nombres = const Value.absent(),
+    this.apellidoPaterno = const Value.absent(),
+    this.apellidoMaterno = const Value.absent(),
+    this.ocupacion = const Value.absent(),
+    this.estadoId = const Value.absent(),
+    this.telefono = const Value.absent(),
+    this.celular = const Value.absent(),
+    this.fechaNac = const Value.absent(),
+    this.correo = const Value.absent(),
+    this.genero = const Value.absent(),
+    this.estadoCivil = const Value.absent(),
+    this.numDoc = const Value.absent(),
+    this.foto = const Value.absent(),
+    this.nombreTipo = const Value.absent(),
+    this.tipo = const Value.absent(),
+    this.companieroId = const Value.absent(),
+    @required int hijoRelacionId,
+    this.relacion = const Value.absent(),
+    this.cargaCursoId = const Value.absent(),
+  })  : personaId = Value(personaId),
+        hijoRelacionId = Value(hijoRelacionId);
+  static Insertable<ContactoData> custom({
+    Expression<int> personaId,
+    Expression<String> nombres,
+    Expression<String> apellidoPaterno,
+    Expression<String> apellidoMaterno,
+    Expression<String> ocupacion,
+    Expression<int> estadoId,
+    Expression<String> telefono,
+    Expression<String> celular,
+    Expression<String> fechaNac,
+    Expression<String> correo,
+    Expression<String> genero,
+    Expression<String> estadoCivil,
+    Expression<String> numDoc,
+    Expression<String> foto,
+    Expression<String> nombreTipo,
+    Expression<int> tipo,
+    Expression<int> companieroId,
+    Expression<int> hijoRelacionId,
+    Expression<String> relacion,
+    Expression<int> cargaCursoId,
+  }) {
+    return RawValuesInsertable({
+      if (personaId != null) 'persona_id': personaId,
+      if (nombres != null) 'nombres': nombres,
+      if (apellidoPaterno != null) 'apellido_paterno': apellidoPaterno,
+      if (apellidoMaterno != null) 'apellido_materno': apellidoMaterno,
+      if (ocupacion != null) 'ocupacion': ocupacion,
+      if (estadoId != null) 'estado_id': estadoId,
+      if (telefono != null) 'telefono': telefono,
+      if (celular != null) 'celular': celular,
+      if (fechaNac != null) 'fecha_nac': fechaNac,
+      if (correo != null) 'correo': correo,
+      if (genero != null) 'genero': genero,
+      if (estadoCivil != null) 'estado_civil': estadoCivil,
+      if (numDoc != null) 'num_doc': numDoc,
+      if (foto != null) 'foto': foto,
+      if (nombreTipo != null) 'nombre_tipo': nombreTipo,
+      if (tipo != null) 'tipo': tipo,
+      if (companieroId != null) 'companiero_id': companieroId,
+      if (hijoRelacionId != null) 'hijo_relacion_id': hijoRelacionId,
+      if (relacion != null) 'relacion': relacion,
+      if (cargaCursoId != null) 'carga_curso_id': cargaCursoId,
+    });
+  }
+
+  ContactoCompanion copyWith(
+      {Value<int> personaId,
+      Value<String> nombres,
+      Value<String> apellidoPaterno,
+      Value<String> apellidoMaterno,
+      Value<String> ocupacion,
+      Value<int> estadoId,
+      Value<String> telefono,
+      Value<String> celular,
+      Value<String> fechaNac,
+      Value<String> correo,
+      Value<String> genero,
+      Value<String> estadoCivil,
+      Value<String> numDoc,
+      Value<String> foto,
+      Value<String> nombreTipo,
+      Value<int> tipo,
+      Value<int> companieroId,
+      Value<int> hijoRelacionId,
+      Value<String> relacion,
+      Value<int> cargaCursoId}) {
+    return ContactoCompanion(
+      personaId: personaId ?? this.personaId,
+      nombres: nombres ?? this.nombres,
+      apellidoPaterno: apellidoPaterno ?? this.apellidoPaterno,
+      apellidoMaterno: apellidoMaterno ?? this.apellidoMaterno,
+      ocupacion: ocupacion ?? this.ocupacion,
+      estadoId: estadoId ?? this.estadoId,
+      telefono: telefono ?? this.telefono,
+      celular: celular ?? this.celular,
+      fechaNac: fechaNac ?? this.fechaNac,
+      correo: correo ?? this.correo,
+      genero: genero ?? this.genero,
+      estadoCivil: estadoCivil ?? this.estadoCivil,
+      numDoc: numDoc ?? this.numDoc,
+      foto: foto ?? this.foto,
+      nombreTipo: nombreTipo ?? this.nombreTipo,
+      tipo: tipo ?? this.tipo,
+      companieroId: companieroId ?? this.companieroId,
+      hijoRelacionId: hijoRelacionId ?? this.hijoRelacionId,
+      relacion: relacion ?? this.relacion,
+      cargaCursoId: cargaCursoId ?? this.cargaCursoId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (personaId.present) {
+      map['persona_id'] = Variable<int>(personaId.value);
+    }
+    if (nombres.present) {
+      map['nombres'] = Variable<String>(nombres.value);
+    }
+    if (apellidoPaterno.present) {
+      map['apellido_paterno'] = Variable<String>(apellidoPaterno.value);
+    }
+    if (apellidoMaterno.present) {
+      map['apellido_materno'] = Variable<String>(apellidoMaterno.value);
+    }
+    if (ocupacion.present) {
+      map['ocupacion'] = Variable<String>(ocupacion.value);
+    }
+    if (estadoId.present) {
+      map['estado_id'] = Variable<int>(estadoId.value);
+    }
+    if (telefono.present) {
+      map['telefono'] = Variable<String>(telefono.value);
+    }
+    if (celular.present) {
+      map['celular'] = Variable<String>(celular.value);
+    }
+    if (fechaNac.present) {
+      map['fecha_nac'] = Variable<String>(fechaNac.value);
+    }
+    if (correo.present) {
+      map['correo'] = Variable<String>(correo.value);
+    }
+    if (genero.present) {
+      map['genero'] = Variable<String>(genero.value);
+    }
+    if (estadoCivil.present) {
+      map['estado_civil'] = Variable<String>(estadoCivil.value);
+    }
+    if (numDoc.present) {
+      map['num_doc'] = Variable<String>(numDoc.value);
+    }
+    if (foto.present) {
+      map['foto'] = Variable<String>(foto.value);
+    }
+    if (nombreTipo.present) {
+      map['nombre_tipo'] = Variable<String>(nombreTipo.value);
+    }
+    if (tipo.present) {
+      map['tipo'] = Variable<int>(tipo.value);
+    }
+    if (companieroId.present) {
+      map['companiero_id'] = Variable<int>(companieroId.value);
+    }
+    if (hijoRelacionId.present) {
+      map['hijo_relacion_id'] = Variable<int>(hijoRelacionId.value);
+    }
+    if (relacion.present) {
+      map['relacion'] = Variable<String>(relacion.value);
+    }
+    if (cargaCursoId.present) {
+      map['carga_curso_id'] = Variable<int>(cargaCursoId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ContactoCompanion(')
+          ..write('personaId: $personaId, ')
+          ..write('nombres: $nombres, ')
+          ..write('apellidoPaterno: $apellidoPaterno, ')
+          ..write('apellidoMaterno: $apellidoMaterno, ')
+          ..write('ocupacion: $ocupacion, ')
+          ..write('estadoId: $estadoId, ')
+          ..write('telefono: $telefono, ')
+          ..write('celular: $celular, ')
+          ..write('fechaNac: $fechaNac, ')
+          ..write('correo: $correo, ')
+          ..write('genero: $genero, ')
+          ..write('estadoCivil: $estadoCivil, ')
+          ..write('numDoc: $numDoc, ')
+          ..write('foto: $foto, ')
+          ..write('nombreTipo: $nombreTipo, ')
+          ..write('tipo: $tipo, ')
+          ..write('companieroId: $companieroId, ')
+          ..write('hijoRelacionId: $hijoRelacionId, ')
+          ..write('relacion: $relacion, ')
+          ..write('cargaCursoId: $cargaCursoId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ContactoTable extends Contacto
+    with TableInfo<$ContactoTable, ContactoData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $ContactoTable(this._db, [this._alias]);
+  final VerificationMeta _personaIdMeta = const VerificationMeta('personaId');
+  GeneratedIntColumn _personaId;
+  @override
+  GeneratedIntColumn get personaId => _personaId ??= _constructPersonaId();
+  GeneratedIntColumn _constructPersonaId() {
+    return GeneratedIntColumn(
+      'persona_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _nombresMeta = const VerificationMeta('nombres');
+  GeneratedTextColumn _nombres;
+  @override
+  GeneratedTextColumn get nombres => _nombres ??= _constructNombres();
+  GeneratedTextColumn _constructNombres() {
+    return GeneratedTextColumn(
+      'nombres',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _apellidoPaternoMeta =
+      const VerificationMeta('apellidoPaterno');
+  GeneratedTextColumn _apellidoPaterno;
+  @override
+  GeneratedTextColumn get apellidoPaterno =>
+      _apellidoPaterno ??= _constructApellidoPaterno();
+  GeneratedTextColumn _constructApellidoPaterno() {
+    return GeneratedTextColumn(
+      'apellido_paterno',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _apellidoMaternoMeta =
+      const VerificationMeta('apellidoMaterno');
+  GeneratedTextColumn _apellidoMaterno;
+  @override
+  GeneratedTextColumn get apellidoMaterno =>
+      _apellidoMaterno ??= _constructApellidoMaterno();
+  GeneratedTextColumn _constructApellidoMaterno() {
+    return GeneratedTextColumn(
+      'apellido_materno',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _ocupacionMeta = const VerificationMeta('ocupacion');
+  GeneratedTextColumn _ocupacion;
+  @override
+  GeneratedTextColumn get ocupacion => _ocupacion ??= _constructOcupacion();
+  GeneratedTextColumn _constructOcupacion() {
+    return GeneratedTextColumn(
+      'ocupacion',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoIdMeta = const VerificationMeta('estadoId');
+  GeneratedIntColumn _estadoId;
+  @override
+  GeneratedIntColumn get estadoId => _estadoId ??= _constructEstadoId();
+  GeneratedIntColumn _constructEstadoId() {
+    return GeneratedIntColumn(
+      'estado_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _telefonoMeta = const VerificationMeta('telefono');
+  GeneratedTextColumn _telefono;
+  @override
+  GeneratedTextColumn get telefono => _telefono ??= _constructTelefono();
+  GeneratedTextColumn _constructTelefono() {
+    return GeneratedTextColumn(
+      'telefono',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _celularMeta = const VerificationMeta('celular');
+  GeneratedTextColumn _celular;
+  @override
+  GeneratedTextColumn get celular => _celular ??= _constructCelular();
+  GeneratedTextColumn _constructCelular() {
+    return GeneratedTextColumn(
+      'celular',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _fechaNacMeta = const VerificationMeta('fechaNac');
+  GeneratedTextColumn _fechaNac;
+  @override
+  GeneratedTextColumn get fechaNac => _fechaNac ??= _constructFechaNac();
+  GeneratedTextColumn _constructFechaNac() {
+    return GeneratedTextColumn(
+      'fecha_nac',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _correoMeta = const VerificationMeta('correo');
+  GeneratedTextColumn _correo;
+  @override
+  GeneratedTextColumn get correo => _correo ??= _constructCorreo();
+  GeneratedTextColumn _constructCorreo() {
+    return GeneratedTextColumn(
+      'correo',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _generoMeta = const VerificationMeta('genero');
+  GeneratedTextColumn _genero;
+  @override
+  GeneratedTextColumn get genero => _genero ??= _constructGenero();
+  GeneratedTextColumn _constructGenero() {
+    return GeneratedTextColumn(
+      'genero',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoCivilMeta =
+      const VerificationMeta('estadoCivil');
+  GeneratedTextColumn _estadoCivil;
+  @override
+  GeneratedTextColumn get estadoCivil =>
+      _estadoCivil ??= _constructEstadoCivil();
+  GeneratedTextColumn _constructEstadoCivil() {
+    return GeneratedTextColumn(
+      'estado_civil',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _numDocMeta = const VerificationMeta('numDoc');
+  GeneratedTextColumn _numDoc;
+  @override
+  GeneratedTextColumn get numDoc => _numDoc ??= _constructNumDoc();
+  GeneratedTextColumn _constructNumDoc() {
+    return GeneratedTextColumn(
+      'num_doc',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _fotoMeta = const VerificationMeta('foto');
+  GeneratedTextColumn _foto;
+  @override
+  GeneratedTextColumn get foto => _foto ??= _constructFoto();
+  GeneratedTextColumn _constructFoto() {
+    return GeneratedTextColumn(
+      'foto',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _nombreTipoMeta = const VerificationMeta('nombreTipo');
+  GeneratedTextColumn _nombreTipo;
+  @override
+  GeneratedTextColumn get nombreTipo => _nombreTipo ??= _constructNombreTipo();
+  GeneratedTextColumn _constructNombreTipo() {
+    return GeneratedTextColumn(
+      'nombre_tipo',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoMeta = const VerificationMeta('tipo');
+  GeneratedIntColumn _tipo;
+  @override
+  GeneratedIntColumn get tipo => _tipo ??= _constructTipo();
+  GeneratedIntColumn _constructTipo() {
+    return GeneratedIntColumn(
+      'tipo',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _companieroIdMeta =
+      const VerificationMeta('companieroId');
+  GeneratedIntColumn _companieroId;
+  @override
+  GeneratedIntColumn get companieroId =>
+      _companieroId ??= _constructCompanieroId();
+  GeneratedIntColumn _constructCompanieroId() {
+    return GeneratedIntColumn(
+      'companiero_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _hijoRelacionIdMeta =
+      const VerificationMeta('hijoRelacionId');
+  GeneratedIntColumn _hijoRelacionId;
+  @override
+  GeneratedIntColumn get hijoRelacionId =>
+      _hijoRelacionId ??= _constructHijoRelacionId();
+  GeneratedIntColumn _constructHijoRelacionId() {
+    return GeneratedIntColumn(
+      'hijo_relacion_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _relacionMeta = const VerificationMeta('relacion');
+  GeneratedTextColumn _relacion;
+  @override
+  GeneratedTextColumn get relacion => _relacion ??= _constructRelacion();
+  GeneratedTextColumn _constructRelacion() {
+    return GeneratedTextColumn(
+      'relacion',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _cargaCursoIdMeta =
+      const VerificationMeta('cargaCursoId');
+  GeneratedIntColumn _cargaCursoId;
+  @override
+  GeneratedIntColumn get cargaCursoId =>
+      _cargaCursoId ??= _constructCargaCursoId();
+  GeneratedIntColumn _constructCargaCursoId() {
+    return GeneratedIntColumn(
+      'carga_curso_id',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        personaId,
+        nombres,
+        apellidoPaterno,
+        apellidoMaterno,
+        ocupacion,
+        estadoId,
+        telefono,
+        celular,
+        fechaNac,
+        correo,
+        genero,
+        estadoCivil,
+        numDoc,
+        foto,
+        nombreTipo,
+        tipo,
+        companieroId,
+        hijoRelacionId,
+        relacion,
+        cargaCursoId
+      ];
+  @override
+  $ContactoTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'contacto';
+  @override
+  final String actualTableName = 'contacto';
+  @override
+  VerificationContext validateIntegrity(Insertable<ContactoData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('persona_id')) {
+      context.handle(_personaIdMeta,
+          personaId.isAcceptableOrUnknown(data['persona_id'], _personaIdMeta));
+    } else if (isInserting) {
+      context.missing(_personaIdMeta);
+    }
+    if (data.containsKey('nombres')) {
+      context.handle(_nombresMeta,
+          nombres.isAcceptableOrUnknown(data['nombres'], _nombresMeta));
+    }
+    if (data.containsKey('apellido_paterno')) {
+      context.handle(
+          _apellidoPaternoMeta,
+          apellidoPaterno.isAcceptableOrUnknown(
+              data['apellido_paterno'], _apellidoPaternoMeta));
+    }
+    if (data.containsKey('apellido_materno')) {
+      context.handle(
+          _apellidoMaternoMeta,
+          apellidoMaterno.isAcceptableOrUnknown(
+              data['apellido_materno'], _apellidoMaternoMeta));
+    }
+    if (data.containsKey('ocupacion')) {
+      context.handle(_ocupacionMeta,
+          ocupacion.isAcceptableOrUnknown(data['ocupacion'], _ocupacionMeta));
+    }
+    if (data.containsKey('estado_id')) {
+      context.handle(_estadoIdMeta,
+          estadoId.isAcceptableOrUnknown(data['estado_id'], _estadoIdMeta));
+    }
+    if (data.containsKey('telefono')) {
+      context.handle(_telefonoMeta,
+          telefono.isAcceptableOrUnknown(data['telefono'], _telefonoMeta));
+    }
+    if (data.containsKey('celular')) {
+      context.handle(_celularMeta,
+          celular.isAcceptableOrUnknown(data['celular'], _celularMeta));
+    }
+    if (data.containsKey('fecha_nac')) {
+      context.handle(_fechaNacMeta,
+          fechaNac.isAcceptableOrUnknown(data['fecha_nac'], _fechaNacMeta));
+    }
+    if (data.containsKey('correo')) {
+      context.handle(_correoMeta,
+          correo.isAcceptableOrUnknown(data['correo'], _correoMeta));
+    }
+    if (data.containsKey('genero')) {
+      context.handle(_generoMeta,
+          genero.isAcceptableOrUnknown(data['genero'], _generoMeta));
+    }
+    if (data.containsKey('estado_civil')) {
+      context.handle(
+          _estadoCivilMeta,
+          estadoCivil.isAcceptableOrUnknown(
+              data['estado_civil'], _estadoCivilMeta));
+    }
+    if (data.containsKey('num_doc')) {
+      context.handle(_numDocMeta,
+          numDoc.isAcceptableOrUnknown(data['num_doc'], _numDocMeta));
+    }
+    if (data.containsKey('foto')) {
+      context.handle(
+          _fotoMeta, foto.isAcceptableOrUnknown(data['foto'], _fotoMeta));
+    }
+    if (data.containsKey('nombre_tipo')) {
+      context.handle(
+          _nombreTipoMeta,
+          nombreTipo.isAcceptableOrUnknown(
+              data['nombre_tipo'], _nombreTipoMeta));
+    }
+    if (data.containsKey('tipo')) {
+      context.handle(
+          _tipoMeta, tipo.isAcceptableOrUnknown(data['tipo'], _tipoMeta));
+    }
+    if (data.containsKey('companiero_id')) {
+      context.handle(
+          _companieroIdMeta,
+          companieroId.isAcceptableOrUnknown(
+              data['companiero_id'], _companieroIdMeta));
+    }
+    if (data.containsKey('hijo_relacion_id')) {
+      context.handle(
+          _hijoRelacionIdMeta,
+          hijoRelacionId.isAcceptableOrUnknown(
+              data['hijo_relacion_id'], _hijoRelacionIdMeta));
+    } else if (isInserting) {
+      context.missing(_hijoRelacionIdMeta);
+    }
+    if (data.containsKey('relacion')) {
+      context.handle(_relacionMeta,
+          relacion.isAcceptableOrUnknown(data['relacion'], _relacionMeta));
+    }
+    if (data.containsKey('carga_curso_id')) {
+      context.handle(
+          _cargaCursoIdMeta,
+          cargaCursoId.isAcceptableOrUnknown(
+              data['carga_curso_id'], _cargaCursoIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {personaId, hijoRelacionId};
+  @override
+  ContactoData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return ContactoData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $ContactoTable createAlias(String alias) {
+    return $ContactoTable(_db, alias);
+  }
+}
+
 abstract class _$AppDataBase extends GeneratedDatabase {
   _$AppDataBase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $PersonaTable _persona;
@@ -15940,6 +17001,8 @@ abstract class _$AppDataBase extends GeneratedDatabase {
   $SessionUserHijoTable _sessionUserHijo;
   $SessionUserHijoTable get sessionUserHijo =>
       _sessionUserHijo ??= $SessionUserHijoTable(this);
+  $ContactoTable _contacto;
+  $ContactoTable get contacto => _contacto ??= $ContactoTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
@@ -15967,6 +17030,7 @@ abstract class _$AppDataBase extends GeneratedDatabase {
         tareaCurso,
         evento,
         calendario,
-        sessionUserHijo
+        sessionUserHijo,
+        contacto
       ];
 }
