@@ -6,41 +6,30 @@ import 'package:padre_mentor/src/domain/entities/tipo_evento_ui.dart';
 import 'package:padre_mentor/src/domain/entities/usuario_ui.dart';
 
 class EventoAgendaController extends Controller{
+  UsuarioUi _usuarioUi;
   List<TipoEventoUi> _tipoEventoList = [];
 
-  UsuarioUi _usuarioUi;
+  String _sinConexion = null;
+  String get sinConexion => _sinConexion;
   List<TipoEventoUi> get tipoEventoList => _tipoEventoList;
   TipoEventoUi _selectedTipoEventoUi;
   TipoEventoUi get selectedTipoEventoUi => _selectedTipoEventoUi;
+  List<EventoUi> _eventoUilIst = [];
+  List<EventoUi> get eventoUiList => _eventoUilIst;
+  bool _isLoading = false;
+  get isLoading => _isLoading;
 
-  HijosUi hijoSelected =  HijosUi(foto: "https://i.ytimg.com/vi/f6n0aIvRxc0/hqdefault.jpg");
+  HijosUi get hijoSelected => _hijoSelected;
+  HijosUi _hijoSelected = null;
   EventoAgendaPresenter presenter;
 
-  EventoAgendaController(usuarioRepo, httpRepo):this.presenter = new EventoAgendaPresenter(usuarioRepo, httpRepo);
+  EventoAgendaController(checkConext, usuarioRepo, httpRepo):this.presenter = new EventoAgendaPresenter(checkConext, usuarioRepo, httpRepo);
 
   @override
   void initListeners() {
     presenter.getSesionUsuarioOnNext = (UsuarioUi usuarioUi) {
-      /*
-      _programaEducativoList = user.programaEducativoUiList;
-      if(!programaEducativoList.isEmpty){
-        _programaEducativoSelected = programaEducativoList.first;
-      }
-
-      if(!user.hijos.isEmpty){
-        if(_programaEducativoSelected != null){
-          for(var item in user.hijos){
-            if(item.personaId == _programaEducativoSelected.hijoId){
-              _hijoSelected = item;
-            }
-          }
-        }
-        if(_hijoSelected==null) _hijoSelected = user.hijos.first;
-      }
-
-      _hijoList = user.hijos;*/
-
-      //refreshUI(); // Refreshes the UI manually
+      _hijoSelected = usuarioUi.hijoSelected;
+      refreshUI(); // Refreshes the UI manually
       _usuarioUi = usuarioUi;
       presenter.onChangeUsuario(usuarioUi, _selectedTipoEventoUi);
     };
@@ -56,14 +45,6 @@ class EventoAgendaController extends Controller{
     };
 
     presenter.getEventoAgendaOnComplete = () {
-      print('evento complete');
-    };
-    presenter.getEventoAgendaOnError = (e) {
-      print('evento error');
-    };
-    presenter.getEventoAgendaOnNext = (List<TipoEventoUi> tipoEvantoList, List<EventoUi> eventoList) {
-      print('evento next');
-      _tipoEventoList = tipoEvantoList;
       if(_selectedTipoEventoUi==null){
         for(TipoEventoUi tipoEventoUi in tipoEventoList){
           if(tipoEventoUi.id == 0){
@@ -79,20 +60,58 @@ class EventoAgendaController extends Controller{
           }
         }
       }
-
+      hideProgress();
       refreshUI();
+    };
+    presenter.getEventoAgendaOnError = (e) {
+      print('evento error');
+      _eventoUilIst = [];
+      hideProgress();
+      _sinConexion = "!Oops! Al parecer ocurrió un error involuntario.";
+      refreshUI();
+    };
+    presenter.getEventoAgendaOnNext = (List<TipoEventoUi> tipoEvantoList, List<EventoUi> eventoList, bool sinConexion) {
+      print('evento next');
+      _tipoEventoList = tipoEvantoList;
+      _eventoUilIst = eventoList;
+      _sinConexion = sinConexion?"No hay Conexión a Internet...":null;
     };
   }
 
   @override
   void onInitState() {
+    showProgress();
     presenter.onInitState();
   }
 
   void onSelectedTipoEvento(TipoEventoUi tipoEvento) {
+    showProgress();
     _selectedTipoEventoUi = tipoEvento;
     for(var item in _tipoEventoList)item.toogle = false;
     tipoEvento.toogle = true;
+    presenter.onChangeUsuario(_usuarioUi, selectedTipoEventoUi);
+    refreshUI();
+  }
+
+  void showProgress(){
+    _isLoading = true;
+  }
+
+  void hideProgress(){
+    _isLoading = false;
+  }
+
+  void onChagenHijo() {
+    showProgress();
+    if(_usuarioUi.hijos!=null&&_usuarioUi.hijoSelected!=null){
+        int position = _usuarioUi.hijos.indexWhere((element) => element.personaId == _hijoSelected.personaId);
+        if(position == _usuarioUi.hijos.length-1){
+          _hijoSelected =_usuarioUi.hijos[0];
+        }else{
+          _hijoSelected =_usuarioUi.hijos[position+1];
+        }
+    }
+    presenter.onChagenHijo(_hijoSelected);
     presenter.onChangeUsuario(_usuarioUi, selectedTipoEventoUi);
     refreshUI();
   }

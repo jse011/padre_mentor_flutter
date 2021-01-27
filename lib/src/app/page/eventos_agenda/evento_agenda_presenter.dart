@@ -1,8 +1,10 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:padre_mentor/src/domain/entities/hijos_ui.dart';
 import 'package:padre_mentor/src/domain/entities/tipo_evento_ui.dart';
 import 'package:padre_mentor/src/domain/entities/usuario_ui.dart';
 import 'package:padre_mentor/src/domain/usecases/get_evento_agenda.dart';
 import 'package:padre_mentor/src/domain/usecases/get_usuario_usecase.dart';
+import 'package:padre_mentor/src/domain/usecases/update_session_usuario.dart';
 
 class EventoAgendaPresenter extends Presenter{
 
@@ -11,8 +13,9 @@ class EventoAgendaPresenter extends Presenter{
 
   GetEventoAgenda _getEventoAgenda;
   Function getEventoAgendaOnNext, getEventoAgendaOnComplete, getEventoAgendaOnError;
+  UpdateSession updateSession;
 
-  EventoAgendaPresenter(usuarioRepo, httpRepo): this._getEventoAgenda = GetEventoAgenda(usuarioRepo, httpRepo), this.getSessionUsuarioCase = GetSessionUsuarioCase(usuarioRepo);
+  EventoAgendaPresenter(checkConext, usuarioRepo, httpRepo): this._getEventoAgenda = GetEventoAgenda(checkConext ,usuarioRepo, httpRepo), this.getSessionUsuarioCase = GetSessionUsuarioCase(usuarioRepo), updateSession = UpdateSession(usuarioRepo);
 
   void getEventoAgenda(int usuarioId, int tipoEventoId, List<int> hijoIdList){
     _getEventoAgenda.execute(_GetEventoAgendaCase(this), GetEventoAgendaParams(usuarioId, tipoEventoId, hijoIdList));
@@ -30,15 +33,25 @@ class EventoAgendaPresenter extends Presenter{
   void dispose() {
     _getEventoAgenda.dispose();
     getSessionUsuarioCase.dispose();
+    updateSession.dispose();
   }
 
   void onChangeUsuario(UsuarioUi usuarioUi, TipoEventoUi selectedTipoEventoUi) {
     if(usuarioUi==null)return;
     List<int> hijosIdList = [];
-    for(var hijo in usuarioUi.hijos){
+    /*for(var hijo in usuarioUi.hijos){
       hijosIdList.add(hijo.personaId);
+    }*/
+    if(usuarioUi.hijoSelected!=null){
+      hijosIdList.add(usuarioUi.hijoSelected.personaId);
     }
     getEventoAgenda(usuarioUi.id, selectedTipoEventoUi!=null?selectedTipoEventoUi.id:0, hijosIdList);
+  }
+
+  void onChagenHijo(HijosUi hijoSelected) {
+    if(hijoSelected!=null){
+      updateSession.execute(_UpdateSessionCase(this), UpdateSessionParams(hijoSelectedId: hijoSelected.personaId));
+    }
   }
 
 }
@@ -63,7 +76,7 @@ class _GetEventoAgendaCase extends Observer<GetEvaluacionCaseResponse>{
   @override
   void onNext(GetEvaluacionCaseResponse response) {
     assert(presenter.getEventoAgendaOnNext != null);
-    presenter.getEventoAgendaOnNext(response.tipoEventoUiList, response.eventoUiList);
+    presenter.getEventoAgendaOnNext(response.tipoEventoUiList, response.eventoUiList, response.sinConexion);
   }
 
 }
@@ -91,6 +104,27 @@ class _GetSessionUsuarioCase extends Observer<GetSessionUsuarioCaseResponse>{
     assert(presenter.getSesionUsuarioOnNext != null);
     print("_GetSessionUsuarioCase onNext");
     presenter.getSesionUsuarioOnNext(response.usurio);
+  }
+
+}
+
+class _UpdateSessionCase extends Observer<UpdateSessionResponse>{
+  final EventoAgendaPresenter presenter;
+  _UpdateSessionCase(this.presenter);
+
+  @override
+  void onComplete() {
+
+  }
+
+  @override
+  void onError(e) {
+
+  }
+
+  @override
+  void onNext(UpdateSessionResponse response) {
+
   }
 
 }

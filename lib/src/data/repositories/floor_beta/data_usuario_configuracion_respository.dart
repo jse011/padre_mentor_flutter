@@ -61,7 +61,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
   }
 
   @override
-  Future<void> saveEventoAgenda(Map<String, dynamic> eventoAgenda) {
+  Future<void> saveEventoAgenda(Map<String, dynamic> eventoAgenda, int usuarioId, int tipoEventoId) {
     // TODO: implement saveEventoAgenda
     throw UnimplementedError();
   }
@@ -78,6 +78,17 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
     throw UnimplementedError();
   }
 
+  @override
+  Future<void> updateSessionHijoSelected(int hijoSelectedId) {
+    // TODO: implement updateSessionHijoSelected
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> updateSessionProgramaEduSelected(int programaEduSelectedId, int hijoSelectedId) {
+    // TODO: implement updateSessionProgramaEduSelected
+    throw UnimplementedError();
+  }
 
 
 

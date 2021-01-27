@@ -1,3 +1,4 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:padre_mentor/src/app/utils/hex_color.dart';
 
@@ -6,8 +7,13 @@ import '../utils/app_theme.dart';
 class WorkoutView extends StatelessWidget {
   final AnimationController animationController;
   final Animation animation;
-
-  const WorkoutView({Key key, this.animationController, this.animation})
+  final String titulo1;
+  final String titulo2;
+  final String subTitulo;
+  final String foto;
+  final Color colors1;
+  final Color colors2;
+  const WorkoutView({Key key, this.animationController, this.animation, this.titulo1, this.titulo2, this.subTitulo, this.foto, this.colors1, this.colors2 })
       : super(key: key);
 
   @override
@@ -26,8 +32,8 @@ class WorkoutView extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [
-                    AppTheme.nearlyDarkBlue,
-                    HexColor("#6F56E8")
+                    colors1??AppTheme.nearlyDarkBlue,
+                    colors2??HexColor("#6F56E8")
                   ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(8.0),
@@ -41,97 +47,122 @@ class WorkoutView extends StatelessWidget {
                         blurRadius: 10.0),
                   ],
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'Next workout',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontFamily: AppTheme.fontName,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 14,
-                          letterSpacing: 0.0,
-                          color: AppTheme.white,
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8.0),
+                          bottomLeft: Radius.circular(8.0),
+                          bottomRight: Radius.circular(8.0),
+                          topRight: Radius.circular(68.0)
+                      ),
+                      child: Opacity(
+                        opacity: 0.6,
+                        child: FancyShimmerImage(
+                          boxFit: BoxFit.cover,
+                          imageUrl: foto??'',
+                          width: MediaQuery.of(context).size.width,
+                          errorWidget: Icon(Icons.warning_amber_rounded, color: AppTheme.white, size: 105,),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          'Legs Toning and\nGlutes Workout at Home',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontFamily: AppTheme.fontName,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 20,
-                            letterSpacing: 0.0,
-                            color: AppTheme.white,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            titulo1??'',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontFamily: AppTheme.fontName,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 14,
+                              letterSpacing: 0.0,
+                              color: AppTheme.white,
+                            ),
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 32,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 4),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(left: 4),
-                              child: Icon(
-                                Icons.timer,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Text(
+                              titulo2??'',
+                              textAlign: TextAlign.left,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontFamily: AppTheme.fontName,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 20,
+                                letterSpacing: 0.0,
                                 color: AppTheme.white,
-                                size: 16,
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 4.0),
-                              child: Text(
-                                '68 min',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontFamily: AppTheme.fontName,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14,
-                                  letterSpacing: 0.0,
-                                  color: AppTheme.white,
+                          ),
+                          SizedBox(
+                            height: 32,
+                          ),
+                          Expanded(child: Container(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 4),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4),
+                                    child: Icon(
+                                      Icons.timer,
+                                      color: AppTheme.white,
+                                      size: 16,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4.0),
+                                    child: Text(
+                                      subTitulo??'',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: AppTheme.fontName,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                        letterSpacing: 0.0,
+                                        color: AppTheme.white,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(),
+                                  ),
+                                  /*Container(
+                                decoration: BoxDecoration(
+                                  color: AppTheme.nearlyWhite,
+                                  shape: BoxShape.circle,
+                                  boxShadow: <BoxShadow>[
+                                    BoxShadow(
+                                        color: AppTheme.nearlyBlack
+                                            .withOpacity(0.4),
+                                        offset: Offset(8.0, 8.0),
+                                        blurRadius: 8.0),
+                                  ],
                                 ),
-                              ),
-                            ),
-                            Expanded(
-                              child: SizedBox(),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: AppTheme.nearlyWhite,
-                                shape: BoxShape.circle,
-                                boxShadow: <BoxShadow>[
-                                  BoxShadow(
-                                      color: AppTheme.nearlyBlack
-                                          .withOpacity(0.4),
-                                      offset: Offset(8.0, 8.0),
-                                      blurRadius: 8.0),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(0.0),
+                                  child: Icon(
+                                    Icons.arrow_right,
+                                    color: HexColor("#6F56E8"),
+                                    size: 44,
+                                  ),
+                                ),
+                              )*/
                                 ],
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(0.0),
-                                child: Icon(
-                                  Icons.arrow_right,
-                                  color: HexColor("#6F56E8"),
-                                  size: 44,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                            ),
+                          ))
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

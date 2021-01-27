@@ -1,5 +1,6 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:padre_mentor/src/app/page/portal_alumno/portal_alumno_presenter.dart';
+import 'package:padre_mentor/src/domain/entities/evento_ui.dart';
 import 'package:padre_mentor/src/domain/entities/hijos_ui.dart';
 import 'package:padre_mentor/src/domain/entities/programa_educativo_ui.dart';
 import 'package:padre_mentor/src/domain/entities/usuario_ui.dart';
@@ -7,6 +8,15 @@ import 'package:padre_mentor/src/domain/entities/usuario_ui.dart';
 class PortalAlumnoController extends Controller{
   static const String TAG = "PortalAlumnoController";
   HijosUi _hijoSelected;
+
+  var _selectedTipoEventoUi;
+  String _sinConexion = null;
+  String get sinConexion => _sinConexion;
+  List<EventoUi> _eventoUilIst = [];
+  List<EventoUi> get eventoUiList => _eventoUilIst;
+  bool _isLoading = false;
+  get isLoading => _isLoading;
+
   HijosUi get hijoSelected => _hijoSelected;
   List<HijosUi> _hijoList = [];
   List<ProgramaEducativoUi> _programaEducativoList = [];
@@ -15,7 +25,7 @@ class PortalAlumnoController extends Controller{
   ProgramaEducativoUi get programaEducativoSelected => _programaEducativoSelected;
   PortalAlumnoPresenter presenter;
 
-  PortalAlumnoController(usuarioConfiRepo):this.presenter = PortalAlumnoPresenter(usuarioConfiRepo)
+  PortalAlumnoController(checkConexRepo, httpRepository, usuarioConfiRepo):this.presenter = PortalAlumnoPresenter(checkConexRepo, httpRepository, usuarioConfiRepo)
   ,super();
 
   @override
@@ -23,23 +33,13 @@ class PortalAlumnoController extends Controller{
     presenter.getSesionUsuarioOnNext = (UsuarioUi user) {
 
       _programaEducativoList = user.programaEducativoUiList;
-      if(!programaEducativoList.isEmpty){
-        _programaEducativoSelected = programaEducativoList.first;
-      }
-      if(!user.hijos.isEmpty){
-        if(_programaEducativoSelected != null){
-            for(var item in user.hijos){
-                if(item.personaId == _programaEducativoSelected.hijoId){
-                  _hijoSelected = item;
-                }
-            }
-        }
-        if(_hijoSelected==null) _hijoSelected = user.hijos.first;
-      }
-
+     _programaEducativoSelected = user.programaEducativoUiSelected;
+     _hijoSelected = user.hijoSelected;
+      print('User retrieved : ' + _hijoSelected.nombre);
       _hijoList = user.hijos;
-
+      //SelectedPageProgramaEducativo();
       refreshUI(); // Refreshes the UI manually
+      presenter.onChangeUsuario(user, _selectedTipoEventoUi);
     };
 
     presenter.getSesionUsuarioOnComplete = () {
@@ -52,6 +52,21 @@ class PortalAlumnoController extends Controller{
       refreshUI(); // Refreshes the UI manually
     };
 
+    presenter.getEventoActualesOnComplete = () {
+      refreshUI();
+    };
+    presenter.getEventoActualesOnError = (e) {
+      print('evento error');
+      _eventoUilIst = [];
+      hideProgress();
+      _sinConexion = "!Oops! Al parecer ocurrió un error involuntario.";
+      refreshUI();
+    };
+    presenter.getEventoActualesOnNext = (List<EventoUi> eventoList, bool sinConexion) {
+      print('evento next');
+      _eventoUilIst = eventoList;
+      _sinConexion = sinConexion?"No hay Conexión a Internet...":null;
+    };
 
   }
 
@@ -65,10 +80,16 @@ class PortalAlumnoController extends Controller{
     for(var hijo in _hijoList){
         if(hijo.personaId == _programaEducativoSelected.hijoId){
           _hijoSelected = hijo;
-          print(TAG+" _hijoSelected "+_hijoSelected.nombre);
         }
     }
+    presenter.onSaveProgramaUsuario(_programaEducativoSelected);
     refreshUI();
   }
+  void showProgress(){
+    _isLoading = true;
+  }
 
+  void hideProgress(){
+    _isLoading = false;
+  }
 }

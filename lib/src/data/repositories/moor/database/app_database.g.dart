@@ -1250,7 +1250,8 @@ class $UsuarioTable extends Usuario with TableInfo<$UsuarioTable, UsuarioData> {
 
 class SessionUserData extends DataClass implements Insertable<SessionUserData> {
   final int userId;
-  SessionUserData({@required this.userId});
+  final int hijoIdSelect;
+  SessionUserData({@required this.userId, this.hijoIdSelect});
   factory SessionUserData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
@@ -1259,6 +1260,8 @@ class SessionUserData extends DataClass implements Insertable<SessionUserData> {
     return SessionUserData(
       userId:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}user_id']),
+      hijoIdSelect: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}hijo_id_select']),
     );
   }
   @override
@@ -1267,6 +1270,9 @@ class SessionUserData extends DataClass implements Insertable<SessionUserData> {
     if (!nullToAbsent || userId != null) {
       map['user_id'] = Variable<int>(userId);
     }
+    if (!nullToAbsent || hijoIdSelect != null) {
+      map['hijo_id_select'] = Variable<int>(hijoIdSelect);
+    }
     return map;
   }
 
@@ -1274,6 +1280,9 @@ class SessionUserData extends DataClass implements Insertable<SessionUserData> {
     return SessionUserCompanion(
       userId:
           userId == null && nullToAbsent ? const Value.absent() : Value(userId),
+      hijoIdSelect: hijoIdSelect == null && nullToAbsent
+          ? const Value.absent()
+          : Value(hijoIdSelect),
     );
   }
 
@@ -1282,6 +1291,7 @@ class SessionUserData extends DataClass implements Insertable<SessionUserData> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return SessionUserData(
       userId: serializer.fromJson<int>(json['userId']),
+      hijoIdSelect: serializer.fromJson<int>(json['hijoIdSelect']),
     );
   }
   @override
@@ -1289,47 +1299,58 @@ class SessionUserData extends DataClass implements Insertable<SessionUserData> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'userId': serializer.toJson<int>(userId),
+      'hijoIdSelect': serializer.toJson<int>(hijoIdSelect),
     };
   }
 
-  SessionUserData copyWith({int userId}) => SessionUserData(
+  SessionUserData copyWith({int userId, int hijoIdSelect}) => SessionUserData(
         userId: userId ?? this.userId,
+        hijoIdSelect: hijoIdSelect ?? this.hijoIdSelect,
       );
   @override
   String toString() {
     return (StringBuffer('SessionUserData(')
-          ..write('userId: $userId')
+          ..write('userId: $userId, ')
+          ..write('hijoIdSelect: $hijoIdSelect')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => $mrjf(userId.hashCode);
+  int get hashCode => $mrjf($mrjc(userId.hashCode, hijoIdSelect.hashCode));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is SessionUserData && other.userId == this.userId);
+      (other is SessionUserData &&
+          other.userId == this.userId &&
+          other.hijoIdSelect == this.hijoIdSelect);
 }
 
 class SessionUserCompanion extends UpdateCompanion<SessionUserData> {
   final Value<int> userId;
+  final Value<int> hijoIdSelect;
   const SessionUserCompanion({
     this.userId = const Value.absent(),
+    this.hijoIdSelect = const Value.absent(),
   });
   SessionUserCompanion.insert({
     this.userId = const Value.absent(),
+    this.hijoIdSelect = const Value.absent(),
   });
   static Insertable<SessionUserData> custom({
     Expression<int> userId,
+    Expression<int> hijoIdSelect,
   }) {
     return RawValuesInsertable({
       if (userId != null) 'user_id': userId,
+      if (hijoIdSelect != null) 'hijo_id_select': hijoIdSelect,
     });
   }
 
-  SessionUserCompanion copyWith({Value<int> userId}) {
+  SessionUserCompanion copyWith({Value<int> userId, Value<int> hijoIdSelect}) {
     return SessionUserCompanion(
       userId: userId ?? this.userId,
+      hijoIdSelect: hijoIdSelect ?? this.hijoIdSelect,
     );
   }
 
@@ -1339,13 +1360,17 @@ class SessionUserCompanion extends UpdateCompanion<SessionUserData> {
     if (userId.present) {
       map['user_id'] = Variable<int>(userId.value);
     }
+    if (hijoIdSelect.present) {
+      map['hijo_id_select'] = Variable<int>(hijoIdSelect.value);
+    }
     return map;
   }
 
   @override
   String toString() {
     return (StringBuffer('SessionUserCompanion(')
-          ..write('userId: $userId')
+          ..write('userId: $userId, ')
+          ..write('hijoIdSelect: $hijoIdSelect')
           ..write(')'))
         .toString();
   }
@@ -1368,8 +1393,22 @@ class $SessionUserTable extends SessionUser
     );
   }
 
+  final VerificationMeta _hijoIdSelectMeta =
+      const VerificationMeta('hijoIdSelect');
+  GeneratedIntColumn _hijoIdSelect;
   @override
-  List<GeneratedColumn> get $columns => [userId];
+  GeneratedIntColumn get hijoIdSelect =>
+      _hijoIdSelect ??= _constructHijoIdSelect();
+  GeneratedIntColumn _constructHijoIdSelect() {
+    return GeneratedIntColumn(
+      'hijo_id_select',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [userId, hijoIdSelect];
   @override
   $SessionUserTable get asDslTable => this;
   @override
@@ -1384,6 +1423,12 @@ class $SessionUserTable extends SessionUser
     if (data.containsKey('user_id')) {
       context.handle(_userIdMeta,
           userId.isAcceptableOrUnknown(data['user_id'], _userIdMeta));
+    }
+    if (data.containsKey('hijo_id_select')) {
+      context.handle(
+          _hijoIdSelectMeta,
+          hijoIdSelect.isAcceptableOrUnknown(
+              data['hijo_id_select'], _hijoIdSelectMeta));
     }
     return context;
   }
@@ -15543,6 +15588,298 @@ class $CalendarioTable extends Calendario
   }
 }
 
+class SessionUserHijoData extends DataClass
+    implements Insertable<SessionUserHijoData> {
+  final int prograAcademicoId;
+  final int hijoId;
+  final int color;
+  final bool selected;
+  SessionUserHijoData(
+      {@required this.prograAcademicoId,
+      this.hijoId,
+      this.color,
+      this.selected});
+  factory SessionUserHijoData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final boolType = db.typeSystem.forDartType<bool>();
+    return SessionUserHijoData(
+      prograAcademicoId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}progra_academico_id']),
+      hijoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}hijo_id']),
+      color: intType.mapFromDatabaseResponse(data['${effectivePrefix}color']),
+      selected:
+          boolType.mapFromDatabaseResponse(data['${effectivePrefix}selected']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || prograAcademicoId != null) {
+      map['progra_academico_id'] = Variable<int>(prograAcademicoId);
+    }
+    if (!nullToAbsent || hijoId != null) {
+      map['hijo_id'] = Variable<int>(hijoId);
+    }
+    if (!nullToAbsent || color != null) {
+      map['color'] = Variable<int>(color);
+    }
+    if (!nullToAbsent || selected != null) {
+      map['selected'] = Variable<bool>(selected);
+    }
+    return map;
+  }
+
+  SessionUserHijoCompanion toCompanion(bool nullToAbsent) {
+    return SessionUserHijoCompanion(
+      prograAcademicoId: prograAcademicoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(prograAcademicoId),
+      hijoId:
+          hijoId == null && nullToAbsent ? const Value.absent() : Value(hijoId),
+      color:
+          color == null && nullToAbsent ? const Value.absent() : Value(color),
+      selected: selected == null && nullToAbsent
+          ? const Value.absent()
+          : Value(selected),
+    );
+  }
+
+  factory SessionUserHijoData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return SessionUserHijoData(
+      prograAcademicoId: serializer.fromJson<int>(json['prograAcademicoId']),
+      hijoId: serializer.fromJson<int>(json['hijoId']),
+      color: serializer.fromJson<int>(json['color']),
+      selected: serializer.fromJson<bool>(json['selected']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'prograAcademicoId': serializer.toJson<int>(prograAcademicoId),
+      'hijoId': serializer.toJson<int>(hijoId),
+      'color': serializer.toJson<int>(color),
+      'selected': serializer.toJson<bool>(selected),
+    };
+  }
+
+  SessionUserHijoData copyWith(
+          {int prograAcademicoId, int hijoId, int color, bool selected}) =>
+      SessionUserHijoData(
+        prograAcademicoId: prograAcademicoId ?? this.prograAcademicoId,
+        hijoId: hijoId ?? this.hijoId,
+        color: color ?? this.color,
+        selected: selected ?? this.selected,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('SessionUserHijoData(')
+          ..write('prograAcademicoId: $prograAcademicoId, ')
+          ..write('hijoId: $hijoId, ')
+          ..write('color: $color, ')
+          ..write('selected: $selected')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(prograAcademicoId.hashCode,
+      $mrjc(hijoId.hashCode, $mrjc(color.hashCode, selected.hashCode))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is SessionUserHijoData &&
+          other.prograAcademicoId == this.prograAcademicoId &&
+          other.hijoId == this.hijoId &&
+          other.color == this.color &&
+          other.selected == this.selected);
+}
+
+class SessionUserHijoCompanion extends UpdateCompanion<SessionUserHijoData> {
+  final Value<int> prograAcademicoId;
+  final Value<int> hijoId;
+  final Value<int> color;
+  final Value<bool> selected;
+  const SessionUserHijoCompanion({
+    this.prograAcademicoId = const Value.absent(),
+    this.hijoId = const Value.absent(),
+    this.color = const Value.absent(),
+    this.selected = const Value.absent(),
+  });
+  SessionUserHijoCompanion.insert({
+    this.prograAcademicoId = const Value.absent(),
+    this.hijoId = const Value.absent(),
+    this.color = const Value.absent(),
+    this.selected = const Value.absent(),
+  });
+  static Insertable<SessionUserHijoData> custom({
+    Expression<int> prograAcademicoId,
+    Expression<int> hijoId,
+    Expression<int> color,
+    Expression<bool> selected,
+  }) {
+    return RawValuesInsertable({
+      if (prograAcademicoId != null) 'progra_academico_id': prograAcademicoId,
+      if (hijoId != null) 'hijo_id': hijoId,
+      if (color != null) 'color': color,
+      if (selected != null) 'selected': selected,
+    });
+  }
+
+  SessionUserHijoCompanion copyWith(
+      {Value<int> prograAcademicoId,
+      Value<int> hijoId,
+      Value<int> color,
+      Value<bool> selected}) {
+    return SessionUserHijoCompanion(
+      prograAcademicoId: prograAcademicoId ?? this.prograAcademicoId,
+      hijoId: hijoId ?? this.hijoId,
+      color: color ?? this.color,
+      selected: selected ?? this.selected,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (prograAcademicoId.present) {
+      map['progra_academico_id'] = Variable<int>(prograAcademicoId.value);
+    }
+    if (hijoId.present) {
+      map['hijo_id'] = Variable<int>(hijoId.value);
+    }
+    if (color.present) {
+      map['color'] = Variable<int>(color.value);
+    }
+    if (selected.present) {
+      map['selected'] = Variable<bool>(selected.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SessionUserHijoCompanion(')
+          ..write('prograAcademicoId: $prograAcademicoId, ')
+          ..write('hijoId: $hijoId, ')
+          ..write('color: $color, ')
+          ..write('selected: $selected')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SessionUserHijoTable extends SessionUserHijo
+    with TableInfo<$SessionUserHijoTable, SessionUserHijoData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $SessionUserHijoTable(this._db, [this._alias]);
+  final VerificationMeta _prograAcademicoIdMeta =
+      const VerificationMeta('prograAcademicoId');
+  GeneratedIntColumn _prograAcademicoId;
+  @override
+  GeneratedIntColumn get prograAcademicoId =>
+      _prograAcademicoId ??= _constructPrograAcademicoId();
+  GeneratedIntColumn _constructPrograAcademicoId() {
+    return GeneratedIntColumn(
+      'progra_academico_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _hijoIdMeta = const VerificationMeta('hijoId');
+  GeneratedIntColumn _hijoId;
+  @override
+  GeneratedIntColumn get hijoId => _hijoId ??= _constructHijoId();
+  GeneratedIntColumn _constructHijoId() {
+    return GeneratedIntColumn(
+      'hijo_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _colorMeta = const VerificationMeta('color');
+  GeneratedIntColumn _color;
+  @override
+  GeneratedIntColumn get color => _color ??= _constructColor();
+  GeneratedIntColumn _constructColor() {
+    return GeneratedIntColumn(
+      'color',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _selectedMeta = const VerificationMeta('selected');
+  GeneratedBoolColumn _selected;
+  @override
+  GeneratedBoolColumn get selected => _selected ??= _constructSelected();
+  GeneratedBoolColumn _constructSelected() {
+    return GeneratedBoolColumn(
+      'selected',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns =>
+      [prograAcademicoId, hijoId, color, selected];
+  @override
+  $SessionUserHijoTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'session_user_hijo';
+  @override
+  final String actualTableName = 'session_user_hijo';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<SessionUserHijoData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('progra_academico_id')) {
+      context.handle(
+          _prograAcademicoIdMeta,
+          prograAcademicoId.isAcceptableOrUnknown(
+              data['progra_academico_id'], _prograAcademicoIdMeta));
+    }
+    if (data.containsKey('hijo_id')) {
+      context.handle(_hijoIdMeta,
+          hijoId.isAcceptableOrUnknown(data['hijo_id'], _hijoIdMeta));
+    }
+    if (data.containsKey('color')) {
+      context.handle(
+          _colorMeta, color.isAcceptableOrUnknown(data['color'], _colorMeta));
+    }
+    if (data.containsKey('selected')) {
+      context.handle(_selectedMeta,
+          selected.isAcceptableOrUnknown(data['selected'], _selectedMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {prograAcademicoId};
+  @override
+  SessionUserHijoData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return SessionUserHijoData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $SessionUserHijoTable createAlias(String alias) {
+    return $SessionUserHijoTable(_db, alias);
+  }
+}
+
 abstract class _$AppDataBase extends GeneratedDatabase {
   _$AppDataBase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $PersonaTable _persona;
@@ -15600,6 +15937,9 @@ abstract class _$AppDataBase extends GeneratedDatabase {
   $EventoTable get evento => _evento ??= $EventoTable(this);
   $CalendarioTable _calendario;
   $CalendarioTable get calendario => _calendario ??= $CalendarioTable(this);
+  $SessionUserHijoTable _sessionUserHijo;
+  $SessionUserHijoTable get sessionUserHijo =>
+      _sessionUserHijo ??= $SessionUserHijoTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
@@ -15626,6 +15966,7 @@ abstract class _$AppDataBase extends GeneratedDatabase {
         webConfigs,
         tareaCurso,
         evento,
-        calendario
+        calendario,
+        sessionUserHijo
       ];
 }

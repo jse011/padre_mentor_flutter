@@ -27,6 +27,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
     print("getSessionUsuario" );
     AppDataBase SQL = AppDataBase();
     try{
+
       var query =  await SQL.select(SQL.persona).join([
         innerJoin(SQL.usuario, SQL.usuario.personaId.equalsExp(SQL.persona.personaId))
       ]);
@@ -90,9 +91,23 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
           alumnoId: usuarioData==null ? 0 : usuarioData.usuarioId
         ));
 
+        usuarioUi.programaEducativoUiList = programaEducativoUiList;
+
+        SessionUserData sessionUserData = await (SQL.selectSingle(SQL.sessionUser)).getSingle();
+        int hijoIdSelected = sessionUserData != null?sessionUserData.hijoIdSelect : 0;
+        if(hijoIdSelected > 0){
+          usuarioUi.hijoSelected = usuarioUi.hijos.firstWhere((element) => element.personaId == hijoIdSelected, orElse: () => usuarioUi.hijos.first);
+          var rowSessionUsuarioPrograma = SQL.selectSingle(SQL.sessionUserHijo)..where((tbl) => tbl.hijoId.equals(hijoIdSelected));
+          rowSessionUsuarioPrograma.where((tbl) => tbl.selected.equals(true));
+          SessionUserHijoData sessionUserHijoData = await rowSessionUsuarioPrograma.getSingle();
+          int programaIdSelected = sessionUserHijoData != null?sessionUserHijoData.prograAcademicoId : 0;
+          usuarioUi.programaEducativoUiSelected = usuarioUi.programaEducativoUiList.firstWhere((element) => element.programaId == programaIdSelected, orElse: () => //usuarioUi.programaEducativoUiList.first);
+              usuarioUi.programaEducativoUiList.firstWhere((element) => element.hijoId==hijoIdSelected, orElse: () => usuarioUi.programaEducativoUiList.first));
+        }
+
       });
 
-      usuarioUi.programaEducativoUiList = programaEducativoUiList;
+
 
       return usuarioUi;
     }catch(e){
@@ -198,12 +213,13 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
   }
 
   @override
-  Future<void> saveEventoAgenda(Map<String, dynamic> eventoAgenda) async{
+  Future<void> saveEventoAgenda(Map<String, dynamic> eventoAgenda, int usuarioId, int tipoEventoId) async{
     AppDataBase SQL = AppDataBase();
     try{
       await SQL.batch((batch) async {
         // functions in a batch don't have to be awaited - just
         // await the whole batch afterwards.
+
         if(eventoAgenda.containsKey("eventos")){
           batch.insertAll(SQL.evento, SerializableConvert.converListSerializeEvento(eventoAgenda["eventos"]), mode: InsertMode.insertOrReplace );
         }
@@ -296,13 +312,14 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
         query.where(SQL.evento.tipoEventoId.equals(tipoEventoId));
       }
 
-      if(hijos != null && hijos.isNotEmpty){
-        query.where(SQL.evento.eventoHijoId.isIn(hijos));
-      }
-
       var rows = await query.get();
       for(var item in  rows){
         EventoData eventoData = item.readTable(SQL.evento);
+        CalendarioData calendarioData = item.readTable(SQL.calendario);
+        if(hijos != null && hijos.isNotEmpty && eventoData.eventoHijoId > 0){
+            int id = hijos.firstWhere((element) => hijos == eventoData.eventoHijoId, orElse:()=> -1);
+            if(id!=-1)continue;
+        }
         EventoUi eventoUi = new EventoUi();
         eventoUi.id = eventoData.eventoId;
         eventoUi.nombreEntidad = eventoData.nombreEntidad;
@@ -315,6 +332,9 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
         eventoUi.tipoEventoUi = TipoEventoUi();
         eventoUi.tipoEventoUi.id = eventoData.tipoEventoId;
         eventoUi.tipoEventoUi.nombre = eventoData.tipoEventoNombre;
+        eventoUi.rolEmisor = calendarioData.cargo;
+        eventoUi.nombreEmisor = calendarioData.nUsuario;
+
         switch(eventoUi.tipoEventoUi.id){
           case 526:
             eventoUi.tipoEventoUi.tipo = EventoIconoEnumUI.EVENTO;
@@ -338,8 +358,6 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
             eventoUi.tipoEventoUi.tipo = EventoIconoEnumUI.DEFAULT;
             break;
         }
-        eventoUi.fotoEntidad = eventoData.fotoEntidad;
-        eventoUi.nombreEntidad = eventoData.nombreEntidad;
         eventoUiList.add(eventoUi);
       }
 
@@ -349,5 +367,50 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
       throw Exception(e);
     }
   }
+
+  @override
+  Future<void> updateSessionHijoSelected(int hijoSelectedId) async{
+    AppDataBase SQL = AppDataBase();
+    try{
+      SessionUserData sessionUserData = await(SQL.selectSingle(SQL.sessionUser).getSingle());
+      if(sessionUserData!=null){
+        await SQL.update(SQL.sessionUser).replace(sessionUserData.copyWith(hijoIdSelect: hijoSelectedId));
+      }else{
+        await SQL.into(SQL.sessionUser).insert(SessionUserData(userId: 2));
+      }
+
+
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<void> updateSessionProgramaEduSelected(int programaEduSelectedId, int hijoSelectedId) async {
+    print("updateSessionProgramaEduSelected");
+    AppDataBase SQL = AppDataBase();
+    try{
+      List<SessionUserHijoData> sessionUserDataList = await(SQL.select(SQL.sessionUserHijo)..where((tbl) => tbl.hijoId.equals(hijoSelectedId))).get();
+      await SQL.transaction(() async {
+        SessionUserHijoData sessionUserHijoData = null;
+        for (var entity in sessionUserDataList) {
+          await (SQL.update(SQL.sessionUserHijo)..where((e) => e.hijoId.equals(entity.hijoId)))
+              .write(entity.copyWith(selected: false));
+          if(programaEduSelectedId == entity.prograAcademicoId){
+            sessionUserHijoData = entity;
+          }
+        }
+
+        if(sessionUserHijoData == null){
+          sessionUserHijoData = SessionUserHijoData(prograAcademicoId: programaEduSelectedId, hijoId: hijoSelectedId, selected: true);
+        }
+        await SQL.into(SQL.sessionUserHijo).insert(sessionUserHijoData, mode: InsertMode.insertOrReplace);
+      });
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+
 
 }

@@ -7,6 +7,8 @@ class UsuarioUi {
   String foto;
   List<HijosUi> hijos;
   List<ProgramaEducativoUi> programaEducativoUiList;
+  HijosUi hijoSelected;
+  ProgramaEducativoUi programaEducativoUiSelected;
 
   UsuarioUi({this.id, this.nombre, this.foto, this.hijos, this.programaEducativoUiList});
 }

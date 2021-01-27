@@ -21,16 +21,19 @@ import 'package:padre_mentor/src/app/widgets/running_view.dart';
 import 'package:padre_mentor/src/app/widgets/title_view.dart';
 import 'package:padre_mentor/src/app/widgets/workout_view.dart';
 import 'package:padre_mentor/src/data/repositories/moor/data_usuario_configuracion_respository.dart';
+import 'package:padre_mentor/src/device/repositories/check_conexion/device_conex_provider.dart';
+import 'package:padre_mentor/src/device/repositories/http/device_http_datos_repository.dart';
+import 'package:padre_mentor/src/domain/entities/tipo_evento_ui.dart';
 
 class PortalAlumnoView extends View{
   final AnimationController animationController;
-
+  final CarouselController buttonCarouselController = CarouselController();
   PortalAlumnoView({this.animationController});
   //const PortalAlumnoView({Key key, this.animationController}) : super(key: key);
 
   @override
   _PortalAlumnoState createState() =>
-      _PortalAlumnoState();
+      _PortalAlumnoState(this.buttonCarouselController);
 
 }
 
@@ -40,13 +43,12 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
 
   List<Widget> listViews = <Widget>[];
   final ScrollController scrollController = ScrollController();
+
   double topBarOpacity = 0.0;
 
   int _currentIndex;
 
-  _PortalAlumnoState() :  super(PortalAlumnoController(DataUsuarioAndRepository())){
-
-  }
+  _PortalAlumnoState(buttonCarouselController) :  super(PortalAlumnoController(DeviceCheckConexRepository(), DeviceHttpDatosRepositorio(), DataUsuarioAndRepository()));
 
   @override
   void initState() {
@@ -207,7 +209,6 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
   List<int> list = [1,2,3,4,5];
   int countView = 11;
   Widget getMainListViewUI() {
-
     return Container(
         padding: EdgeInsets.only(
           top: AppBar().preferredSize.height +
@@ -217,18 +218,90 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
         ),
       child: ControlledWidgetBuilder<PortalAlumnoController>(
           builder: (context, controller) {
+            int pagePosition = 0;
+            if(controller.programaEducativoList!=null&&controller.programaEducativoSelected!=null){
+              pagePosition = controller.programaEducativoList.indexWhere((element) => controller.programaEducativoSelected.programaId == element.programaId);
+
+
+            }else{
+              pagePosition = 0;
+            }
+
+
             return  CustomScrollView(
               controller: scrollController,
               slivers: <Widget>[
                 SliverList(
                     delegate: SliverChildListDelegate(
                       [
-                       WorkoutView(
-                          animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-                              parent: widget.animationController,
-                              curve:
-                              Interval((1 / countView) * 2, 1.0, curve: Curves.fastOutSlowIn))),
-                          animationController: widget.animationController,
+                        AnimationView(
+                            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                parent: widget.animationController,
+                                curve:
+                                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                            animationController: widget.animationController,
+                            child:  controller.programaEducativoList.length==0? Container(height: 100.0):
+                            CarouselSlider(
+                              options: CarouselOptions(
+                                height: 220.0,
+                                autoPlay: true,
+                                autoPlayInterval: Duration(seconds: 10),
+                                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                                autoPlayCurve: Curves.fastOutSlowIn,
+                                pauseAutoPlayOnTouch: true,
+                                //initialPage: pagePosition,
+                                aspectRatio: 2.0,
+                                viewportFraction: 1,
+                                onPageChanged: (index, reason) {
+                                  //_currentIndex = index;
+                                  //controller.onSelectedProgramaSelected(controller.programaEducativoList[index]);
+                                },
+                              ),
+                              items:controller.eventoUiList.map((item){
+
+                                Color color;
+                                switch(item.tipoEventoUi.tipo){
+                                  case EventoIconoEnumUI.DEFAULT:
+                                    color = Color(0xFF00BCD4);
+                                    break;
+                                  case EventoIconoEnumUI.EVENTO:
+                                    color = Color(0xFF4CAF50);
+                                    break;
+                                  case EventoIconoEnumUI.NOTICIA:
+                                    color = Color(0xFF03A9F4);
+                                    break;
+                                  case EventoIconoEnumUI.ACTIVIDAD:
+                                    color = Color(0xFFFF9800);
+                                    break;
+                                  case EventoIconoEnumUI.TAREA:
+                                    color = Color(0xFFE91E63);
+                                    break;
+                                  case EventoIconoEnumUI.CITA:
+                                    color = Color(0xFF00BCD4);
+                                    break;
+                                  case EventoIconoEnumUI.AGENDA:
+                                    color = Color(0xFFAD3FF8);
+                                    break;
+                                  case EventoIconoEnumUI.TODOS:
+                                    color = Color(0xFF00BCD4);
+                                    break;
+                                }
+
+                                return  WorkoutView(
+                                  animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                      parent: widget.animationController,
+                                      curve:
+                                      Interval((1 / countView) * 2, 1.0, curve: Curves.fastOutSlowIn))),
+                                  animationController: widget.animationController,
+                                  titulo1: item.nombreEmisor,
+                                  titulo2: item.titulo,
+                                  subTitulo: item.rolEmisor,
+                                  foto: item.foto,
+                                  colors1: Colors.black,
+                                  colors2: color,
+                                );
+                              }).toList(),
+                            )
                         ),
                         TitleView(
                           titleTxt: 'Programa Educativo',
@@ -245,22 +318,24 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                               curve:
                               Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
                           animationController: widget.animationController,
-                          child: CarouselSlider(
-                              options: CarouselOptions(
-                                height: 100.0,
-                                autoPlay: false,
-                                autoPlayInterval: Duration(seconds: 3),
-                                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                                autoPlayCurve: Curves.fastOutSlowIn,
-                                pauseAutoPlayOnTouch: true,
-                                aspectRatio: 2.0,
-                                onPageChanged: (index, reason) {
-                                  _currentIndex = index;
-                                  controller.onSelectedProgramaSelected(controller.programaEducativoList[index]);
-                                },
-                              ),
-                              items:controller.programaEducativoList.map((item) => ProgramaEducativoView(titulo: item.nombrePrograma, subTitulo: "Año "+item.nombreAnioAcademico+"\n"+item.nombreHijo, foto: item.fotoHijo,)).toList(),
-                          ),
+                          child:  controller.programaEducativoList.length==0? Container(height: 100.0):
+                          CarouselSlider(
+                            options: CarouselOptions(
+                              height: 100.0,
+                              autoPlay: false,
+                              autoPlayInterval: Duration(seconds: 3),
+                              autoPlayAnimationDuration: Duration(milliseconds: 800),
+                              autoPlayCurve: Curves.fastOutSlowIn,
+                              pauseAutoPlayOnTouch: true,
+                              initialPage: pagePosition,
+                              aspectRatio: 2.0,
+                              onPageChanged: (index, reason) {
+                                _currentIndex = index;
+                                controller.onSelectedProgramaSelected(controller.programaEducativoList[index]);
+                              },
+                            ),
+                            items:controller.programaEducativoList.map((item) => ProgramaEducativoView(titulo: item.nombrePrograma, subTitulo: "Año "+item.nombreAnioAcademico+"\n"+item.nombreHijo, foto: item.fotoHijo,)).toList(),
+                          )
                         )
 
                       ],
