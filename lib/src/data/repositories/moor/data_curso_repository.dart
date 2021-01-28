@@ -465,20 +465,62 @@ class DataCursoRepository extends CursoRepository{
   }
 
   @override
-  Future<List<ContactoUi>> getContactos(int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId) {
-    // TODO: implement getContactos
-    throw UnimplementedError();
+  Future<List<ContactoUi>> getContactos(List<int> hijoIdList) async{
+    AppDataBase SQL = AppDataBase();
+    try{
+
+      List<ContactoUi> contactoUiList = [];
+      //List<ContactoData> contactosDataList  = await (SQL.select(SQL.contacto)..where((tbl) => tbl.companieroId.isIn(hijoIdList))).get();
+      final padre = SQL.alias(SQL.contacto, 'padre');
+
+
+      var query = SQL.select(SQL.contacto).join([
+        leftOuterJoin(padre, padre.hijoRelacionId.equalsExp(SQL.contacto.personaId))
+      ]);
+
+      //query.where(SQL.contacto.companieroId.isIn(hijoIdList));
+      var rows = await query.get();
+
+      for(var row  in rows){
+        ContactoData alumnoData = row.readTable(SQL.contacto);
+        ContactoData padreData = row.readTable(padre);
+        ContactoUi contactoUi = contactoUiList.firstWhere((element) => element.personaId == alumnoData.personaId, orElse: () => null);
+        if(contactoUi == null){
+          contactoUi = new ContactoUi();
+          contactoUi.personaId = alumnoData.personaId;
+          contactoUi.relacionList = [];
+        }
+        contactoUi.foto = alumnoData.foto;
+        contactoUi.nombre = '${AppTools.capitalize(alumnoData.nombres)} ${AppTools.capitalize(alumnoData.apellidoPaterno)} ${AppTools.capitalize(alumnoData.apellidoMaterno)}';
+        if(padreData!=null){
+          ContactoUi padreUi = new ContactoUi();
+          padreUi.personaId = padreData.personaId;
+          contactoUi.relacionList.add(padreUi);
+        }
+
+        contactoUiList.add(contactoUi);
+
+      }
+      print("getContactos: "+contactoUiList.length.toString());
+      return contactoUiList;
+
+    }catch(e){
+      throw Exception(e);
+    }
+
+
   }
 
   @override
-  Future<void> saveContactos(Map<String, dynamic> datosTareaEvalaucion) {
+  Future<void> saveContactos(Map<String, dynamic> datosTareaEvalaucion) async{
     AppDataBase SQL = AppDataBase();
     try{
       await SQL.batch((batch) async {
         // functions in a batch don't have to be awaited - just
         // await the whole batch afterwards.
         //rubroEvalList.add(SerializableConvert.converSerializeRubroEvalDesempenio(item));
-        batch.insertAll(SQL.tareaCurso, SerializableConvert.converListSerializeTareaCurso(datosTareaEvalaucion["contactos"]), mode: InsertMode.insertOrReplace );
+        batch.deleteWhere(SQL.contacto, (row) => const Constant(true));
+        batch.insertAll(SQL.contacto, SerializableConvert.converListSerializeContacto(datosTareaEvalaucion["contactos"]), mode: InsertMode.insertOrReplace );
 
       });
     }catch(e){

@@ -1,28 +1,38 @@
 import 'dart:async';
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:padre_mentor/src/domain/entities/contacto_ui.dart';
+import 'package:padre_mentor/src/domain/repositories/curso_repository.dart';
+import 'package:padre_mentor/src/domain/repositories/http_datos_repository.dart';
 
 import 'get_eventos_top.dart';
 
 class GetContactos extends UseCase<GetContactosCaseResponse, GetContactosCaseParams> {
+  CursoRepository repository;
+  HttpDatosRepository httpRepository;
+
+
+  GetContactos(this.repository, this.httpRepository);
+
   @override
   Future<Stream<GetContactosCaseResponse>> buildUseCaseStream(GetContactosCaseParams params) async{
     final controller = StreamController<GetContactosCaseResponse>();
 
     try {
 
-      List<EventoUi> eventoUIList = await repository.getTopEventosAgenda(params.usuarioId, params.tipoEventoId, params.hijoIdList);
-      eventoSuccess(eventoUIList);
-      controller.add(GetEventoActualesResponse( eventoUIList, false, true));
+      List<ContactoUi> contactoUIList = await repository.getContactos(params.hijoIdList);
+
+
+      controller.add(GetContactosCaseResponse(agregarCabecera(contactoUIList), [], []));
 
       Future<String> executeServidor() async{
-        Map<String, dynamic> eventoAgenda = await httpRepository.getEventoAgenda(params.usuarioId, params.tipoEventoId);
-        bool errorServidor = eventoAgenda==null;
+        Map<String, dynamic> contactoServidor = await httpRepository.getContacto(params.usuarioId);
+        bool errorServidor = contactoServidor==null;
         if(!errorServidor){
-          await repository.saveEventoAgenda(eventoAgenda, params.usuarioId, params.tipoEventoId, params.hijoIdList);
+          await repository.saveContactos(contactoServidor);
         }
-        eventoUIList = await repository.getTopEventosAgenda(params.usuarioId, params.tipoEventoId, params.hijoIdList);
-        controller.add(GetEventoActualesResponse(eventoUIList, errorServidor, false));
+        contactoUIList = await repository.getContactos(params.hijoIdList);
+        controller.add(GetContactosCaseResponse(agregarCabecera(contactoUIList), [], []));
         logger.finest('EventoAgenda successful.');
         controller.close();
       }
@@ -46,16 +56,39 @@ class GetContactos extends UseCase<GetContactosCaseResponse, GetContactosCasePar
 
   }
 
+  List<dynamic> agregarCabecera(List<ContactoUi> contactoUiList){
+    List<dynamic> list = [];
+    contactoUiList.sort((a1, a2){
+      String nombre1 = a1.nombre!=null?a1.nombre:" ";
+      String nombre2 = a2.nombre!=null?a2.nombre:" ";
+      return nombre1.compareTo(nombre2);
+
+    });
+    for(ContactoUi contactoUi in contactoUiList){
+      String letra = contactoUi.nombre!=null&&contactoUi.nombre.length>0?contactoUi.nombre[0]:" ";
+      String cabecera = list.firstWhere((element)=>element==letra, orElse: ()=> null);
+      if(cabecera==null)list.add(letra);
+      list.add(contactoUi);
+    }
+
+    return list;
+  }
+
 }
 
 class GetContactosCaseParams {
   final int usuarioId;
-  GetContactosCaseParams(this.usuarioId);
+  final List<int> hijoIdList;
+
+  GetContactosCaseParams(this.usuarioId, this.hijoIdList);
 }
 
 /// Wrapping response inside an object makes it easier to change later
 class GetContactosCaseResponse {
-  List<dynamic> rubroEvaluacionList;
+  List<dynamic> alumnosList;
+  List<dynamic> docentesList;
+  List<dynamic> directivosList;
 
-  GetContactosCaseResponse(this.rubroEvaluacionList);
+  GetContactosCaseResponse(
+      this.alumnosList, this.docentesList, this.directivosList);
 }

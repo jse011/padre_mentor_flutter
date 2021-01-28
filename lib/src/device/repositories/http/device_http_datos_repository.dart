@@ -149,7 +149,7 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
   Future<Map<String, dynamic>> getContacto(int usuarioId) async{
     Map<String, dynamic> parameters = Map<String, dynamic>();
     parameters["vint_UsuarioId"] = usuarioId;
-    final response = await http.post(url, body: getBody("getEventoAgendaFlutter",parameters));
+    final response = await http.post(url, body: getBody("getContactoFlutter",parameters));
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.

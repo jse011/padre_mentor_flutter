@@ -15,5 +15,5 @@ abstract class CursoRepository{
   Future<void> saveTareaEvaluaciones(Map<String, dynamic> datosTareaEvalaucion);
   Future<List<TareaEvaluacionCursoUi>> getTareaEvaluacionPorCurso(int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId);
   Future<void> saveContactos(Map<String, dynamic> datosTareaEvalaucion);
-  Future<List<ContactoUi>> getContactos(int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId);
+  Future<List<ContactoUi>> getContactos(List<int> hijoIdList);
 }
