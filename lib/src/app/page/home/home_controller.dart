@@ -36,7 +36,12 @@ class HomeController extends Controller{
       _userioSession = null;
       refreshUI(); // Refreshes the UI manually
     };
+  }
 
+  @override
+  void onInitState() {
+    // TODO: implement onInitState
+    super.onInitState();
     homePresenter.getUserSession();
   }
 
@@ -47,27 +52,25 @@ class HomeController extends Controller{
   }
 
   void onSelectedVistaFeedBack() {
-    _vistaActual = VistaIndex.FeedBack;
+    _vistaActual = VistaIndex.Sugerencia;
     refreshUI(); // Refreshes the UI manually
   }
 
   void onSelectedVistaPrincial() {
     _vistaActual = VistaIndex.Principal;
     refreshUI(); // Refreshes the UI manually
-
   }
 
-  void onSelectedVistaAyuda() {
-    _vistaActual = VistaIndex.Ayuda;
+  void onSelectedVistaEditUsuario() {
+    _vistaActual = VistaIndex.EditarUsuario;
     refreshUI(); // Refreshes the UI manually
-
   }
 
 }
 
 enum VistaIndex {
   Principal,
-  FeedBack,
-  Ayuda,
+  EditarUsuario,
+  Sugerencia,
   SobreNosotros,
 }

@@ -13,7 +13,8 @@ class DrawerUserController extends StatefulWidget {
     this.drawerIsOpen,
     this.screenIndex,
     this.nameUser,
-    this.photoUser
+    this.photoUser,
+    this.correo
   }) : super(key: key);
 
   final double drawerWidth;
@@ -25,6 +26,7 @@ class DrawerUserController extends StatefulWidget {
   final DrawerIndex screenIndex;
   final String nameUser;
   final String photoUser;
+  final String correo;
   @override
   _DrawerUserControllerState createState() => _DrawerUserControllerState();
 }
@@ -109,6 +111,7 @@ class _DrawerUserControllerState extends State<DrawerUserController> with Ticker
                         iconAnimationController: iconAnimationController,
                         nameUser: widget.nameUser,
                         photoUser: widget.photoUser,
+                        correo: widget.correo,
                         callBackIndex: (DrawerIndex indexType) {
                           onDrawerClick();
                           try {

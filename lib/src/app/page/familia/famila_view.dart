@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:padre_mentor/src/app/page/editar_usuario/editar_usuario_router.dart';
 import 'package:padre_mentor/src/app/page/familia/famila_controller.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/app/widgets/animation_view.dart';
@@ -226,7 +227,7 @@ class _FamiliaViewState extends ViewState<FamiliaView, FamiliaController>{
                                              borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                                              splashColor: AppTheme.colorPrimary.withOpacity(0.4),
                                              onTap: () {
-
+                                               Navigator.of(context).push(EditarUsuarioRouter.createRouteEditarUsuario());
                                              },
                                              child:
                                              Container(
@@ -236,7 +237,7 @@ class _FamiliaViewState extends ViewState<FamiliaView, FamiliaController>{
                                                  children: [
                                                    Padding(padding: const EdgeInsets.only(right: 8),
                                                      child: Icon(Icons.edit_road , size: 20,),),
-                                                   Text("EDITAR DATOS USUARIO", style: TextStyle(fontSize: 10),),
+                                                   Text("EDITAR MI PERFIL", style: TextStyle(fontSize: 10),),
                                                  ],
                                                )
                                              ),

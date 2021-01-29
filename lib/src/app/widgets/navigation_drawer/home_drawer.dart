@@ -4,14 +4,14 @@ import 'package:padre_mentor/src/app/utils/app_theme.dart';
 
 
 class HomeDrawer extends StatefulWidget {
-  const HomeDrawer({Key key, this.screenIndex, this.iconAnimationController, this.callBackIndex, this.photoUser, this.nameUser}) : super(key: key);
+  const HomeDrawer({Key key, this.screenIndex, this.iconAnimationController, this.callBackIndex, this.photoUser, this.nameUser, this.correo}) : super(key: key);
 
   final AnimationController iconAnimationController;
   final DrawerIndex screenIndex;
   final Function(DrawerIndex) callBackIndex;
   final String nameUser;
   final String photoUser;
-
+  final String correo;
   @override
   _HomeDrawerState createState() => _HomeDrawerState();
 }
@@ -28,33 +28,33 @@ class _HomeDrawerState extends State<HomeDrawer> {
     drawerList = <DrawerList>[
       DrawerList(
         index: DrawerIndex.HOME,
-        labelName: 'Home',
+        labelName: 'Inicio',
         icon: Icon(Icons.home),
       ),
       DrawerList(
-        index: DrawerIndex.Help,
-        labelName: 'Help',
+        index: DrawerIndex.EDITUSER,
+        labelName: 'Editar mi perfil',
+        icon: Icon(Icons.edit_road),
+      ),
+      DrawerList(
+        index: DrawerIndex.SUGERENCIAS,
+        labelName: 'Sugerencias',
         isAssetsImage: true,
         imageName: 'assets/images/supportIcon.png',
       ),
-      DrawerList(
-        index: DrawerIndex.FeedBack,
-        labelName: 'FeedBack',
-        icon: Icon(Icons.help),
-      ),
-      DrawerList(
+      /*DrawerList(
         index: DrawerIndex.Invite,
         labelName: 'Invite Friend',
         icon: Icon(Icons.group),
-      ),
-      DrawerList(
+      ),*/
+      /*DrawerList(
         index: DrawerIndex.Share,
         labelName: 'Rate the app',
         icon: Icon(Icons.share),
-      ),
+      ),*/
       DrawerList(
-        index: DrawerIndex.About,
-        labelName: 'About Us',
+        index: DrawerIndex.ABAOUT,
+        labelName: 'Sobre Nosotros',
         icon: Icon(Icons.info),
       ),
     ];
@@ -63,7 +63,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.notWhite.withOpacity(0.5),
+      backgroundColor: AppTheme.notWhite.withOpacity(0.4),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -87,23 +87,38 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                   .animate(CurvedAnimation(parent: widget.iconAnimationController, curve: Curves.fastOutSlowIn))
                                   .value /
                               360),
-                          child: Container(
-                            height: 120,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(color: AppTheme.grey.withOpacity(0.6), offset: const Offset(2.0, 4.0), blurRadius: 8),
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius: const BorderRadius.all(Radius.circular(60.0)),
-                              child: CachedNetworkImage(
-                                placeholder: (context, url) => CircularProgressIndicator(),
-                                imageUrl:
-                                widget.photoUser,
-                                errorWidget: (context, url, error) =>  Icon(Icons.error_outline_rounded, size: 80,),
+                          child: Center(
+
+                            child: Container(
+                              height: 120,
+                              width: 120,
+                              padding: const EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppTheme.white,
+                                boxShadow: <BoxShadow>[
+                                  BoxShadow(color: AppTheme.grey.withOpacity(0.6), offset: const Offset(2.0, 4.0), blurRadius: 8),
+                                ],
                               ),
+                              child: widget.photoUser!=null?
+                              CachedNetworkImage(
+                                placeholder: (context, url) => CircularProgressIndicator(),
+                                imageUrl: widget.photoUser??'',
+                                errorWidget: (context, url, error) =>  Icon(Icons.error_outline_rounded, size: 80,),
+                                imageBuilder: (context, imageProvider) => Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(100)),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                        ),
+                                        boxShadow: <BoxShadow>[
+                                          BoxShadow(color: AppTheme.grey.withOpacity(0.4), offset: const Offset(2.0, 2.0), blurRadius: 6),
+                                        ]
+                                    )
+                                ),
+                              ):
+                              Container(),
                             ),
                           ),
                         ),
@@ -111,13 +126,28 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     },
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 8, left: 4),
-                    child: Text(
-                      widget.nameUser,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: AppTheme.grey,
-                        fontSize: 18,
+                    padding: const EdgeInsets.only(top: 25, left: 0),
+                    child: Center(
+                      child: Text(
+                          widget.nameUser??'',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            color: AppTheme.darkerText,
+                            fontSize: 18,
+                          ),
+                    ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 0, left: 0),
+                    child: Center(
+                      child: Text(
+                        widget.correo??'',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: AppTheme.grey,
+                          fontSize: 14,
+                        ),
                       ),
                     ),
                   ),
@@ -150,7 +180,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
             children: <Widget>[
               ListTile(
                 title: Text(
-                  'Sign Out',
+                  'Cerrar Sessión',
                   style: TextStyle(
                     fontFamily: AppTheme.fontName,
                     fontWeight: FontWeight.w600,
@@ -270,12 +300,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
 enum DrawerIndex {
   HOME,
-  FeedBack,
-  Help,
-  Share,
-  About,
-  Invite,
-  Testing,
+  EDITUSER,
+  SUGERENCIAS,
+  ABAOUT
 }
 
 class DrawerList {

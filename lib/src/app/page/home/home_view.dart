@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:padre_mentor/src/app/page/editar_usuario/editar_usuario_view.dart';
 import 'package:padre_mentor/src/app/page/menu/feedback_screen.dart';
 import 'package:padre_mentor/src/app/page/menu/help_screen.dart';
 import 'package:padre_mentor/src/app/page/menu/home_screen.dart';
@@ -53,36 +54,27 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
 
                 return DrawerUserController(
                   photoUser: controller.usuario == null ? '' : '${controller.usuario.foto}',
-                  nameUser: controller.usuario == null ? '' : '${controller.usuario.nombre}',
+                  nameUser: controller.usuario == null ? '' : '${controller.usuario.nombreSimple}',
+                  correo: controller.usuario == null ? '' : '${controller.usuario.correo}',
                   screenIndex: _drawerIndex,
                   drawerWidth: MediaQuery
                       .of(context)
                       .size
-                      .width * 0.75,
+                      .width * 0.70,
                   onDrawerCall: (DrawerIndex drawerIndexdata) {
 
                     switch(drawerIndexdata){
                       case DrawerIndex.HOME:
                         controller.onSelectedVistaPrincial();
                         break;
-                      case DrawerIndex.Help:
-                        controller.onSelectedVistaAyuda();
+                      case DrawerIndex.EDITUSER:
+                        controller.onSelectedVistaEditUsuario();
                         break;
-                      case DrawerIndex.Share:
-                      // TODO: Handle this case.
-                        break;
-                      case DrawerIndex.About:
-                      // TODO: Handle this case.
-                        controller.onSelectedVistaAbout();
-                        break;
-                      case DrawerIndex.Invite:
-                      // TODO: Handle this case.
-                        break;
-                      case DrawerIndex.Testing:
-                      // TODO: Handle this case.
-                        break;
-                      case DrawerIndex.FeedBack:
+                      case DrawerIndex.SUGERENCIAS:
                         controller.onSelectedVistaFeedBack();
+                        break;
+                      case DrawerIndex.ABAOUT:
+                        controller.onSelectedVistaAbout();
                         break;
                     }
                     //callback from drawer for replace screen as user need with passing DrawerIndex(Enum index)
@@ -103,17 +95,17 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
         _screenView = MyHomePage();
         _drawerIndex = DrawerIndex.HOME;
         break;
-      case VistaIndex.FeedBack:
-        _screenView = FeedbackScreen();
-        _drawerIndex = DrawerIndex.FeedBack;
+      case VistaIndex.EditarUsuario:
+        _screenView = EditarUsuarioView();
+        _drawerIndex = DrawerIndex.EDITUSER;
         break;
-      case VistaIndex.Ayuda:
+      case VistaIndex.Sugerencia:
         _screenView = HelpScreen();
-        _drawerIndex = DrawerIndex.Help;
+        _drawerIndex = DrawerIndex.SUGERENCIAS;
         break;
       case VistaIndex.SobreNosotros:
         _screenView = InviteFriend();
-        _drawerIndex = DrawerIndex.About;
+        _drawerIndex = DrawerIndex.ABAOUT;
         break;
     }
   }

@@ -7,6 +7,7 @@ import 'familia_ui.dart';
 class UsuarioUi {
   int id;
   String nombre;
+  String nombreSimple;
   String foto;
   List<HijosUi> hijos;
   List<ProgramaEducativoUi> programaEducativoUiList;
@@ -16,5 +17,5 @@ class UsuarioUi {
   String correo;
   String fechaNacimiento;
   List<FamiliaUi> familiaUiList = [];
-  UsuarioUi({this.id, this.nombre, this.foto, this.hijos, this.programaEducativoUiList, this.celular, this.correo, this.fechaNacimiento, this.familiaUiList});
+  UsuarioUi({this.id, this.nombre, this.foto, this.hijos, this.programaEducativoUiList, this.celular, this.correo, this.fechaNacimiento, this.familiaUiList, this.nombreSimple});
 }

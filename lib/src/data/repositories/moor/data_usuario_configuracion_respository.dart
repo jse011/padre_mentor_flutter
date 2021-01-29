@@ -94,7 +94,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
       UsuarioUi usuarioUi = UsuarioUi(id: personaData == null ? 0 : personaData.personaId ,
           nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}',
           foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}',
-          hijos: hijos, correo: personaData.correo, celular: personaData.celular??personaData.telefono??"", fechaNacimiento: fechaNacimientoPadre, familiaUiList: familiaUiList);
+          hijos: hijos, correo: personaData.correo, celular: personaData.celular??personaData.telefono??"", fechaNacimiento: fechaNacimientoPadre, familiaUiList: familiaUiList, nombreSimple: AppTools.capitalize(personaData.nombres));
 
 
 
