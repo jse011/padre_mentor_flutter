@@ -1311,30 +1311,28 @@ class _EditarUsuarioViewState extends ViewState<EditarUsuarioView, EditarUsuario
                             ),
                             ControlledWidgetBuilder<EditarUsuarioController>(
                               builder: (context, controller) {
-                                if(false){
-                                  return Padding(
-                                    padding: EdgeInsets.fromLTRB (00.0, 00.0, 00.0, 00.0),
-                                  );
-                                }else{
-                                  return CachedNetworkImage(
-                                      placeholder: (context, url) => CircularProgressIndicator(),
-                                      imageUrl: "https://assets.materialup.com/uploads/02e220fc-be67-4f79-ad45-6a8719be00d5/preview.jpg",
-                                      imageBuilder: (context, imageProvider) => Container(
-                                          height: 45 + 6 - 6 * topBarOpacity,
-                                          width: 45 + 6 - 6 * topBarOpacity,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.all(Radius.circular(50)),
-                                              image: DecorationImage(
-                                                image: imageProvider,
-                                                fit: BoxFit.cover,
-                                              ),
-                                              boxShadow: <BoxShadow>[
-                                                BoxShadow(color: AppTheme.grey.withOpacity(0.4), offset: const Offset(2.0, 2.0), blurRadius: 6),
-                                              ]
-                                          )
-                                      )
-                                  );
-                                }
+                                return Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    focusColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                    splashColor: AppTheme.colorPrimary.withOpacity(0.4),
+                                    onTap: () {
+
+                                    },
+                                    child:
+                                    Container(
+                                        padding: const EdgeInsets.only(top: 8, left: 8, bottom: 8, right: 8),
+                                        child: Row(
+                                          children: [
+                                            Text("Guardar", style: TextStyle(fontSize: 16, color: AppTheme.colorAccent, fontWeight: FontWeight.w700),),
+                                          ],
+                                        )
+                                    ),
+                                  ),
+                                );
                               },
                             )
                           ],
