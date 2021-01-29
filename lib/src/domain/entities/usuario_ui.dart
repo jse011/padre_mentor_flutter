@@ -1,5 +1,8 @@
+import 'package:padre_mentor/src/domain/entities/contacto_ui.dart';
 import 'package:padre_mentor/src/domain/entities/hijos_ui.dart';
 import 'package:padre_mentor/src/domain/entities/programa_educativo_ui.dart';
+
+import 'familia_ui.dart';
 
 class UsuarioUi {
   int id;
@@ -9,6 +12,9 @@ class UsuarioUi {
   List<ProgramaEducativoUi> programaEducativoUiList;
   HijosUi hijoSelected;
   ProgramaEducativoUi programaEducativoUiSelected;
-
-  UsuarioUi({this.id, this.nombre, this.foto, this.hijos, this.programaEducativoUiList});
+  String celular;
+  String correo;
+  String fechaNacimiento;
+  List<FamiliaUi> familiaUiList = [];
+  UsuarioUi({this.id, this.nombre, this.foto, this.hijos, this.programaEducativoUiList, this.celular, this.correo, this.fechaNacimiento, this.familiaUiList});
 }

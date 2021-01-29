@@ -8,6 +8,9 @@ import 'package:padre_mentor/src/app/page/familia/famila_controller.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/app/widgets/animation_view.dart';
 import 'package:padre_mentor/src/app/widgets/custom_expansion_tile.dart';
+import 'package:padre_mentor/src/data/repositories/moor/data_usuario_configuracion_respository.dart';
+import 'package:padre_mentor/src/domain/entities/familia_ui.dart';
+import 'package:padre_mentor/src/domain/entities/hijos_ui.dart';
 
 class FamiliaView extends View{
 
@@ -27,7 +30,7 @@ class _FamiliaViewState extends ViewState<FamiliaView, FamiliaController>{
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
 
-  _FamiliaViewState() : super(FamiliaController());
+  _FamiliaViewState() : super(FamiliaController(DataUsuarioAndRepository()));
 
 
   @override
@@ -143,34 +146,7 @@ class _FamiliaViewState extends ViewState<FamiliaView, FamiliaController>{
                                 ),
                               ),
                             ),
-                            ControlledWidgetBuilder<FamiliaController>(
-                              builder: (context, controller) {
-                                if(controller.hijoSelected==null){
-                                  return Padding(
-                                    padding: EdgeInsets.fromLTRB (00.0, 00.0, 00.0, 00.0),
-                                  );
-                                }else{
-                                  return CachedNetworkImage(
-                                      placeholder: (context, url) => CircularProgressIndicator(),
-                                      imageUrl:controller.hijoSelected == null ? '' : '${controller.hijoSelected.foto}',
-                                      imageBuilder: (context, imageProvider) => Container(
-                                          height: 50,
-                                          width: 50,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.all(Radius.circular(50)),
-                                              image: DecorationImage(
-                                                image: imageProvider,
-                                                fit: BoxFit.cover,
-                                              ),
-                                              boxShadow: <BoxShadow>[
-                                                BoxShadow(color: AppTheme.grey.withOpacity(0.4), offset: const Offset(2.0, 2.0), blurRadius: 6),
-                                              ]
-                                          )
-                                      )
-                                  );
-                                }
-                              },
-                            )
+
                           ],
                         ),
                       )
@@ -215,7 +191,7 @@ class _FamiliaViewState extends ViewState<FamiliaView, FamiliaController>{
                                 padding: const EdgeInsets.only(left: 48, top: 16),
                                 child: CachedNetworkImage(
                                     placeholder: (context, url) => CircularProgressIndicator(),
-                                    imageUrl:controller.hijoSelected == null ? '' : '${controller.hijoSelected.foto}',
+                                    imageUrl: '${controller.usuarioUi?.foto??''}',
                                     imageBuilder: (context, imageProvider) => Container(
                                         height: 80,
                                         width: 80,
@@ -239,11 +215,32 @@ class _FamiliaViewState extends ViewState<FamiliaView, FamiliaController>{
                                      children: [
                                        Container(
                                          padding: const EdgeInsets.only(top: 24, left: 8, right: 24),
-                                         child: Text("Pablo Iso Matias Venabente ", maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 18),),
+                                         child: Text(controller.usuarioUi?.nombre??'', maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 18),),
                                        ),
-                                       Padding(
-                                         padding: const EdgeInsets.only(top: 8, left: 8),
-                                         child: Text("EDITAR DATOS USUARIO", style: TextStyle(fontSize: 10),),
+                                       Material(
+                                         color: Colors.transparent,
+                                         child: InkWell(
+                                             focusColor: Colors.transparent,
+                                             highlightColor: Colors.transparent,
+                                             hoverColor: Colors.transparent,
+                                             borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                             splashColor: AppTheme.colorPrimary.withOpacity(0.4),
+                                             onTap: () {
+
+                                             },
+                                             child:
+                                             Container(
+                                               padding: const EdgeInsets.only(top: 8, left: 8, bottom: 8, right: 8),
+                                               width: 180,
+                                               child: Row(
+                                                 children: [
+                                                   Padding(padding: const EdgeInsets.only(right: 8),
+                                                     child: Icon(Icons.edit_road , size: 20,),),
+                                                   Text("EDITAR DATOS USUARIO", style: TextStyle(fontSize: 10),),
+                                                 ],
+                                               )
+                                             ),
+                                         ),
                                        ),
                                      ],
                                    ),
@@ -265,7 +262,7 @@ class _FamiliaViewState extends ViewState<FamiliaView, FamiliaController>{
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 48, top: 8, right: 24),
-                            child: Text("47 años (19 de noviembre 1970)", style: TextStyle(fontSize: 16)),
+                            child: Text(controller.usuarioUi?.fechaNacimiento??'', style: TextStyle(fontSize: 16)),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 48, top: 16, right: 24),
@@ -287,7 +284,7 @@ class _FamiliaViewState extends ViewState<FamiliaView, FamiliaController>{
                                        ),
                                        Padding(
                                          padding: const EdgeInsets.only( top: 8),
-                                         child: Text("986994366", style: TextStyle(fontSize: 16)),
+                                         child: Text(controller.usuarioUi?.celular??'', style: TextStyle(fontSize: 16)),
                                        ),
                                      ],
                                    )
@@ -303,7 +300,7 @@ class _FamiliaViewState extends ViewState<FamiliaView, FamiliaController>{
                                        ),
                                        Padding(
                                          padding: const EdgeInsets.only( top: 8),
-                                         child: Text("Jsefao011@Gmail.com", style: TextStyle(fontSize: 16)),
+                                         child: Text(controller.usuarioUi?.correo??'', style: TextStyle(fontSize: 16)),
                                        ),
                                      ],
                                    )
@@ -323,315 +320,240 @@ class _FamiliaViewState extends ViewState<FamiliaView, FamiliaController>{
                       )
                   ),
                   SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index){
+                                HijosUi hijoUi = controller.hijosUiList[index];
+                                return  Container(
+                                  padding: const EdgeInsets.only(left: 36, top: 8, right: 24),
+                                  child: Theme(
+                                    data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                                    child: CustomExpansionTile(
+                                      expandedItem: widget._expanded,
+                                      key: Key(hijoUi?.personaId.toString()??''),
+                                      title: Container(
+                                          margin: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+                                          padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(hijoUi?.nombre??'', maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 16, color: AppTheme.darkerText, fontWeight: FontWeight.w400),),
+                                              Text("Hijo", maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 12, color: AppTheme.lightText.withOpacity(0.9), fontWeight: FontWeight.w400),),
+                                            ],
+                                          )
+
+
+                                      ),
+                                      /*trailing: Container(
+                                  height: 10,
+                                  width: 10,
+                                ),*/
+                                      leading: CachedNetworkImage(
+                                          height: 50,
+                                          width: 50,
+                                          placeholder: (context, url) => CircularProgressIndicator(),
+                                          imageUrl: hijoUi?.foto??'',
+                                          imageBuilder: (context, imageProvider) =>
+                                              Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                                                    image: DecorationImage(
+                                                      image: imageProvider,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  )
+                                              )
+                                      ),
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 14, top: 8, right: 0),
+                                          child: Text("INFORMACIÓN BÁSICA", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.colorAccent)),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 14, top: 8, right: 24),
+                                          child: Text("EDAD", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 14, top: 8, right: 24),
+                                          child: Text(hijoUi?.fechaNacimiento??'', style: TextStyle(fontSize: 16)),
+                                        ),
+
+                                        Container(
+                                          padding: const EdgeInsets.only(top: 4, left: 14,  right: 24),
+                                          child:  Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                  flex: 4,
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets.only( top: 8),
+                                                        child: Text("TELEFONO", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets.only( top: 8),
+                                                        child: Text(hijoUi?.celular != null && hijoUi?.celular.isNotEmpty ? hijoUi?.celular: 'Sin telefono', style: TextStyle(fontSize: 16)),
+                                                      ),
+                                                    ],
+                                                  )
+                                              ),
+                                              Expanded(
+                                                  flex: 6,
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(top: 8),
+                                                        child: Text("CORREO", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets.only( top: 8),
+                                                        child: Text(hijoUi?.correo != null && hijoUi?.correo.isNotEmpty? hijoUi?.correo : 'Sin correo', style: TextStyle(fontSize: 16)),
+                                                      ),
+                                                    ],
+                                                  )
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 14, top: 16, right: 24),
+                                          child: Divider(
+                                            color: AppTheme.grey.withOpacity(0.4),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                          },
+                        childCount: controller.hijosUiList.length
+                      )
+                  ),
+                  SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index){
+                            FamiliaUi familiaUi = controller.familiaUiList[index];
+                            return  Container(
+                              padding: const EdgeInsets.only(left: 36, top: 8, right: 24),
+                              child: Theme(
+                                data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                                child: CustomExpansionTile(
+                                  expandedItem: widget._expanded,
+                                  key: Key(familiaUi?.personaId.toString()??''),
+                                  title: Container(
+                                      margin: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+                                      padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(familiaUi?.nombre??'', maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 16, color: AppTheme.darkerText, fontWeight: FontWeight.w400),),
+                                          Text(familiaUi?.relacion??'', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 12, color: AppTheme.lightText.withOpacity(0.9), fontWeight: FontWeight.w400),),
+                                        ],
+                                      )
+
+
+                                  ),
+                                  /*trailing: Container(
+                                  height: 10,
+                                  width: 10,
+                                ),*/
+                                  leading: CachedNetworkImage(
+                                      height: 50,
+                                      width: 50,
+                                      placeholder: (context, url) => CircularProgressIndicator(),
+                                      imageUrl: familiaUi?.foto??'',
+                                      imageBuilder: (context, imageProvider) =>
+                                          Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(Radius.circular(50)),
+                                                image: DecorationImage(
+                                                  image: imageProvider,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              )
+                                          )
+                                  ),
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 14, top: 8, right: 0),
+                                      child: Text("INFORMACIÓN BÁSICA", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.colorAccent)),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 14, top: 8, right: 24),
+                                      child: Text("EDAD", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 14, top: 8, right: 24),
+                                      child: Text(familiaUi?.fechaNacimiento??'', style: TextStyle(fontSize: 16)),
+                                    ),
+
+                                    Container(
+                                      padding: const EdgeInsets.only(top: 4, left: 14,  right: 24),
+                                      child:  Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                              flex: 4,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.only( top: 8),
+                                                    child: Text("TELEFONO", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only( top: 8),
+                                                    child: Text(familiaUi?.celular != null && familiaUi?.celular.isNotEmpty ? familiaUi?.celular: 'Sin telefono', style: TextStyle(fontSize: 16)),
+                                                  ),
+                                                ],
+                                              )
+                                          ),
+                                          Expanded(
+                                              flex: 6,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(top: 8),
+                                                    child: Text("CORREO", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only( top: 8),
+                                                    child: Text(familiaUi?.correo != null && familiaUi?.correo.isNotEmpty? familiaUi?.correo : 'Sin correo', style: TextStyle(fontSize: 16)),
+                                                  ),
+                                                ],
+                                              )
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 14, top: 16, right: 24),
+                                      child: Divider(
+                                        color: AppTheme.grey.withOpacity(0.4),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                          childCount: controller.familiaUiList.length
+                      )
+                  ),
+                  SliverList(
                       delegate: SliverChildListDelegate(
                           [
                             Container(
-                              padding: const EdgeInsets.only(left: 36, top: 8, right: 24),
-                              child: Theme(
-                                data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-                                child: CustomExpansionTile(
-                                  expandedItem: widget._expanded,
-                                  key: Key("1"),
-                                  title: Container(
-                                    margin: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
-                                    padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Jose Francisco Arias Orexano", maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 14, color: AppTheme.darkerText, fontWeight: FontWeight.w500),),
-                                        Text("Hijo", maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 14, color: AppTheme.lightText.withOpacity(0.9), fontWeight: FontWeight.w500),),
-                                      ],
-                                    )
-
-
-                                  ),
-                                  /*trailing: Container(
-                                  height: 10,
-                                  width: 10,
-                                ),*/
-                                  leading: CachedNetworkImage(
-                                      height: 50,
-                                      width: 50,
-                                      placeholder: (context, url) => CircularProgressIndicator(),
-                                      imageUrl: 'https://lh3.googleusercontent.com/proxy/jb3iEWldSzCvd0ZbjdZukO_gibiTJKZyb25IEwpusK4zQRa8ilZ1c1Ys4jqLcyEUx3D3Cyc4dfJGfauzZQbSWthoqCN-8XFWBmA6hKf7csXcfCozP93EKAKOViXX_jzSgff9-jqHJFrxGDadqWSMFQRuI2s5R2JgpVA',
-                                      imageBuilder: (context, imageProvider) =>
-                                          Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.all(Radius.circular(50)),
-                                                image: DecorationImage(
-                                                  image: imageProvider,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              )
-                                          )
-                                  ),
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 14, top: 8, right: 0),
-                                      child: Text("INFORMACIÓN BÁSICA", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.colorAccent)),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 14, top: 8, right: 24),
-                                      child: Text("EDAD", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 14, top: 8, right: 24),
-                                      child: Text("47 años (19 de noviembre 1970)", style: TextStyle(fontSize: 16)),
-                                    ),
-                                    Container(
-                                      padding: const EdgeInsets.only(left: 14,  right: 24),
-                                      child:  Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                              flex: 4,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets.only( top: 8),
-                                                    child: Text("TELEFONO", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only( top: 8),
-                                                    child: Text("986994366", style: TextStyle(fontSize: 16)),
-                                                  ),
-                                                ],
-                                              )
-                                          ),
-                                          Expanded(
-                                              flex: 6,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(top: 8),
-                                                    child: Text("CORREO", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only( top: 8),
-                                                    child: Text("Jsefao011@Gmail.com", style: TextStyle(fontSize: 16)),
-                                                  ),
-                                                ],
-                                              )
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 48, top: 16, right: 24),
-                                      child: Divider(),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.only(left: 36, top: 8, right: 24),
-                              child: Theme(
-                                data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-                                child: CustomExpansionTile(
-                                  expandedItem: widget._expanded,
-                                  key: Key("2"),
-                                  title: Container(
-                                      margin: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
-                                      padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("Jose Francisco Arias Orexano", maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 14, color: AppTheme.darkerText, fontWeight: FontWeight.w500),),
-                                          Text("Hijo", maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 14, color: AppTheme.lightText.withOpacity(0.9), fontWeight: FontWeight.w500),),
-                                        ],
-                                      )
-
-
-                                  ),
-                                  /*trailing: Container(
-                                  height: 10,
-                                  width: 10,
-                                ),*/
-                                  leading: CachedNetworkImage(
-                                      height: 50,
-                                      width: 50,
-                                      placeholder: (context, url) => CircularProgressIndicator(),
-                                      imageUrl: 'https://lh3.googleusercontent.com/proxy/jb3iEWldSzCvd0ZbjdZukO_gibiTJKZyb25IEwpusK4zQRa8ilZ1c1Ys4jqLcyEUx3D3Cyc4dfJGfauzZQbSWthoqCN-8XFWBmA6hKf7csXcfCozP93EKAKOViXX_jzSgff9-jqHJFrxGDadqWSMFQRuI2s5R2JgpVA',
-                                      imageBuilder: (context, imageProvider) =>
-                                          Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.all(Radius.circular(50)),
-                                                image: DecorationImage(
-                                                  image: imageProvider,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              )
-                                          )
-                                  ),
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 14, top: 8, right: 0),
-                                      child: Text("INFORMACIÓN BÁSICA", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.colorAccent)),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 14, top: 8, right: 24),
-                                      child: Text("EDAD", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 14, top: 8, right: 24),
-                                      child: Text("47 años (19 de noviembre 1970)", style: TextStyle(fontSize: 16)),
-                                    ),
-                                    Container(
-                                      padding: const EdgeInsets.only(left: 14,  right: 24),
-                                      child:  Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                              flex: 4,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets.only( top: 8),
-                                                    child: Text("TELEFONO", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only( top: 8),
-                                                    child: Text("986994366", style: TextStyle(fontSize: 16)),
-                                                  ),
-                                                ],
-                                              )
-                                          ),
-                                          Expanded(
-                                              flex: 6,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(top: 8),
-                                                    child: Text("CORREO", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only( top: 8),
-                                                    child: Text("Jsefao011@Gmail.com", style: TextStyle(fontSize: 16)),
-                                                  ),
-                                                ],
-                                              )
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 48, top: 16, right: 24),
-                                      child: Divider(),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.only(left: 36, top: 8, right: 24),
-                              child: Theme(
-                                data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-                                child: CustomExpansionTile(
-                                  expandedItem: widget._expanded,
-                                  key: Key("3"),
-                                  title: Container(
-                                      margin: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
-                                      padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("Jose Francisco Arias Orexano", maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 14, color: AppTheme.darkerText, fontWeight: FontWeight.w500),),
-                                          Text("Padre", maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 14, color: AppTheme.lightText.withOpacity(0.9), fontWeight: FontWeight.w500),),
-                                        ],
-                                      )
-
-
-                                  ),
-                                  /*trailing: Container(
-                                  height: 10,
-                                  width: 10,
-                                ),*/
-                                  leading: CachedNetworkImage(
-                                      height: 50,
-                                      width: 50,
-                                      placeholder: (context, url) => CircularProgressIndicator(),
-                                      imageUrl: 'https://lh3.googleusercontent.com/proxy/jb3iEWldSzCvd0ZbjdZukO_gibiTJKZyb25IEwpusK4zQRa8ilZ1c1Ys4jqLcyEUx3D3Cyc4dfJGfauzZQbSWthoqCN-8XFWBmA6hKf7csXcfCozP93EKAKOViXX_jzSgff9-jqHJFrxGDadqWSMFQRuI2s5R2JgpVA',
-                                      imageBuilder: (context, imageProvider) =>
-                                          Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.all(Radius.circular(50)),
-                                                image: DecorationImage(
-                                                  image: imageProvider,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              )
-                                          )
-                                  ),
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 14, top: 8, right: 0),
-                                      child: Text("INFORMACIÓN BÁSICA", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.colorAccent)),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 14, top: 8, right: 24),
-                                      child: Text("EDAD", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 14, top: 8, right: 24),
-                                      child: Text("47 años (19 de noviembre 1970)", style: TextStyle(fontSize: 16)),
-                                    ),
-                                    Container(
-                                      padding: const EdgeInsets.only(left: 14,  right: 24),
-                                      child:  Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                              flex: 4,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets.only( top: 8),
-                                                    child: Text("TELEFONO", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only( top: 8),
-                                                    child: Text("986994366", style: TextStyle(fontSize: 16)),
-                                                  ),
-                                                ],
-                                              )
-                                          ),
-                                          Expanded(
-                                              flex: 6,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(top: 8),
-                                                    child: Text("CORREO", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only( top: 8),
-                                                    child: Text("Jsefao011@Gmail.com", style: TextStyle(fontSize: 16)),
-                                                  ),
-                                                ],
-                                              )
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 48, top: 16, right: 24),
-                                      child: Divider(),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ])),
+                              height: 50,
+                            )
+                          ]
+                      )
+                  )
                 ],
               );
             })

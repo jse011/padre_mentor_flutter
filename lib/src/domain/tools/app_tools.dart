@@ -129,4 +129,30 @@ class AppTools {
     return DateFormat("d MMM yyyy").format(fecha);
   }
 
+   static int calcularEdad(DateTime fecha) {
+     DateTime hoy = DateTime.now();
+     DateTime cumpleanos = fecha??DateTime(1900);
+    var edad = hoy.year - cumpleanos.year;
+    var m = hoy.month - cumpleanos.month;
+
+    if (m < 0 || (m == 0 && hoy.day < cumpleanos.day)) {
+    edad--;
+    }
+
+    return edad;
+  }
+
+  static String f_fecha_anio_mes_letras(DateTime timesTamp) {
+    String mstr_fecha = "";
+    timesTamp = timesTamp??DateTime(1900);
+    var vobj_Meses = ["enero", "febrero", "marzo", "abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+    int year = timesTamp.year;
+    int month = timesTamp.month; // Jan = 0, dec = 11
+    int dayOfMonth = timesTamp.day;
+    int dayOfWeek = timesTamp.weekday;
+    mstr_fecha = dayOfMonth.toString() +" de "+ vobj_Meses[month-1] + " " + timesTamp.year.toString();
+    //47 años (19 de noviembre 1970)
+    return mstr_fecha;
+  }
 }

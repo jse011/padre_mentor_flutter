@@ -4,7 +4,9 @@ import 'package:padre_mentor/src/data/repositories/moor/model/persona.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/programas_educativo.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/silabo_evento.dart';
 import 'package:padre_mentor/src/data/repositories/moor/tools/serializable_convert.dart';
+import 'package:padre_mentor/src/domain/entities/contacto_ui.dart';
 import 'package:padre_mentor/src/domain/entities/evento_ui.dart';
+import 'package:padre_mentor/src/domain/entities/familia_ui.dart';
 import 'package:padre_mentor/src/domain/entities/hijos_ui.dart';
 import 'package:padre_mentor/src/domain/entities/programa_educativo_ui.dart';
 import 'package:padre_mentor/src/domain/entities/tipo_evento_ui.dart';
@@ -41,15 +43,60 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
       queryRelaciones.where(SQL.relaciones.personaVinculadaId.equals(personaData.personaId));
       var rowRelaciones = await queryRelaciones.get();
       List<HijosUi> hijos = [];
+      List<int> hijosIdList = [];
       await Future.forEach(rowRelaciones, (hijo) async{
         PersonaData personaData = hijo.readTable(SQL.persona);
+        hijosIdList.add(personaData.personaId);
+        String fechaNacimientoHijo = "";
+        if(personaData.fechaNac!=null&&personaData.fechaNac.isNotEmpty){
+          DateTime fecPad = AppTools.convertDateTimePtBR(personaData?.fechaNac, null);
+          fechaNacimientoHijo = "${AppTools.calcularEdad(fecPad)} años (${AppTools.f_fecha_anio_mes_letras(fecPad)})";
+        }
+
         UsuarioData usuarioData = await (SQL.select(SQL.usuario)..where((tbl) => tbl.personaId.equals(personaData.personaId))).getSingle();
-        hijos.add(HijosUi(usuarioId: usuarioData==null ? 0 : usuarioData.usuarioId, personaId: personaData.personaId, nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}', foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}',documento: personaData.numDoc));
+        hijos.add(HijosUi(usuarioId: usuarioData==null ? 0 : usuarioData.usuarioId, personaId: personaData.personaId, nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}', foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}',documento: personaData.numDoc, celular: personaData.celular??personaData.telefono??'', correo: personaData.correo, fechaNacimiento: fechaNacimientoHijo));
       });
+      String fechaNacimientoPadre = "";
+      if(personaData.fechaNac!=null&&personaData.fechaNac.isNotEmpty){
+        DateTime fecPad = AppTools.convertDateTimePtBR(personaData?.fechaNac, null);
+        fechaNacimientoPadre = "${AppTools.calcularEdad(fecPad)} años (${AppTools.f_fecha_anio_mes_letras(fecPad)})";
+
+      }
+
+
+
+
+      List<FamiliaUi> familiaUiList = [];
+
+      var queryFamiliare =  await SQL.select(SQL.persona).join([
+        innerJoin(SQL.relaciones, SQL.relaciones.personaVinculadaId.equalsExp(SQL.persona.personaId)),
+        //innerJoin(SQL.tipos, SQL.tipos.tipoId.equalsExp(SQL.relaciones.tipoId))
+      ]);
+
+      queryFamiliare.where(SQL.relaciones.personaPrincipalId.isIn(hijosIdList));
+      queryFamiliare.where(SQL.persona.personaId.isNotIn([personaData.personaId]));
+      queryFamiliare.groupBy([SQL.persona.personaId]);
+      var rowFamiliares = await queryFamiliare.get();
+      await Future.forEach(rowFamiliares, (familia) async{
+        PersonaData personaData = familia.readTable(SQL.persona);
+        //Tipo relacion = familia.readTable(SQL.relaciones);
+
+        hijosIdList.add(personaData.personaId);
+        String fechaNacimientoHijo = "";
+        if(personaData.fechaNac!=null&&personaData.fechaNac.isNotEmpty){
+          DateTime fecPad = AppTools.convertDateTimePtBR(personaData?.fechaNac, null);
+          fechaNacimientoHijo = "${AppTools.calcularEdad(fecPad)} años (${AppTools.f_fecha_anio_mes_letras(fecPad)})";
+        }
+
+        familiaUiList.add(FamiliaUi(personaId: personaData.personaId, nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}', foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}',documento: personaData.numDoc, celular: personaData.celular??personaData.telefono??'', correo: personaData.correo, fechaNacimiento: fechaNacimientoHijo, relacion: "Familiar"));
+      });
+
       UsuarioUi usuarioUi = UsuarioUi(id: personaData == null ? 0 : personaData.personaId ,
           nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}',
           foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}',
-          hijos: hijos);
+          hijos: hijos, correo: personaData.correo, celular: personaData.celular??personaData.telefono??"", fechaNacimiento: fechaNacimientoPadre, familiaUiList: familiaUiList);
+
+
 
       /*
       * Obtner el Programa de los Alumnos
@@ -205,7 +252,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
 
       PersonaData personaData = await (SQL.selectSingle(SQL.persona)..where((tbl) => tbl.personaId.equals(alumnoId))).getSingle();
       UsuarioData usuarioData = await (SQL.select(SQL.usuario)..where((tbl) => tbl.personaId.equals(alumnoId))).getSingle();
-      return HijosUi(usuarioId: usuarioData==null ? 0 : usuarioData.usuarioId, personaId: personaData.personaId, nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}', foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}', documento: personaData.numDoc);
+      return HijosUi(usuarioId: usuarioData==null ? 0 : usuarioData.usuarioId, personaId: personaData.personaId, nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}', foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}',documento: personaData.numDoc, celular: personaData.celular??personaData.telefono??'', correo: personaData.correo, fechaNacimiento: personaData.fechaNac);
 
     }catch(e){
       throw Exception(e);
