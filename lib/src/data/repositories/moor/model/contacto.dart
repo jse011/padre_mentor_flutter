@@ -16,12 +16,12 @@ class Contacto extends Table{
   TextColumn get numDoc => text().nullable()();
   TextColumn get foto => text().nullable()();
   TextColumn get nombreTipo => text().nullable()();
-  IntColumn get tipo => integer().nullable()();
+  IntColumn get tipo => integer()();
   IntColumn get companieroId => integer().nullable()();
   IntColumn get hijoRelacionId => integer()();
   TextColumn get relacion => text().nullable()();
-  IntColumn get cargaCursoId => integer().nullable()();
+  IntColumn get cargaCursoId => integer()();
 
   @override
-  Set<Column> get primaryKey => {personaId, hijoRelacionId};
+  Set<Column> get primaryKey => {personaId, hijoRelacionId, tipo, cargaCursoId};
 }

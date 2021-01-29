@@ -26,11 +26,12 @@ class ContactosPresenter extends Presenter{
   }
 
   void getContactos(UsuarioUi usuarioUi){
-    if(usuarioUi!=null&&usuarioUi.hijos!=null){
+    if(usuarioUi!=null&&usuarioUi.hijoSelected!=null){
       List<int> hijosIdList = [];
-      for(var hijo in usuarioUi.hijos){
+      /*for(var hijo in usuarioUi.hijos){
         hijosIdList.add(hijo.personaId);
-      }
+      }*/
+      hijosIdList.add(usuarioUi.hijoSelected.personaId);
       _getContactos.execute(_GetContactosCase(this), GetContactosCaseParams(usuarioUi.id, hijosIdList));
     }
   }

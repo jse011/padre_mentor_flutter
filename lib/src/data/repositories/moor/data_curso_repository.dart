@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:padre_mentor/src/data/helpers/serelizable/rest_api_response.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/parametros_disenio.dart';
@@ -76,7 +77,7 @@ class DataCursoRepository extends CursoRepository{
         calendarioPeriodoUI.selected = true;
         //#endregion
       }
-
+      print("getCalendarioPerios count:" + calendarioPeriodoList.length.toString() );
       return calendarioPeriodoList;
     }catch(e){
       throw Exception(e);
@@ -120,6 +121,8 @@ class DataCursoRepository extends CursoRepository{
       *  PRE_MATRICULA = 189, MATRICULA = 190
       *  VALOR_NUMERICO = 410, SELECTOR_NUMERICO = 411, SELECTOR_VALORES = 412, SELECTOR_ICONOS = 409, VALOR_ASISTENCIA= 474
       * */
+
+      if(calendarioPeridoId==0)return [];
 
       var _queryAreaBoleta =  await SQL.select(SQL.areasBoleta)..where((tbl) => tbl.calendarioPeriodoId.equals(calendarioPeridoId));
       _queryAreaBoleta.where((tbl) => tbl.seccionId.equals(seccionId));
@@ -472,35 +475,49 @@ class DataCursoRepository extends CursoRepository{
       List<ContactoUi> contactoUiList = [];
       //List<ContactoData> contactosDataList  = await (SQL.select(SQL.contacto)..where((tbl) => tbl.companieroId.isIn(hijoIdList))).get();
       final padre = SQL.alias(SQL.contacto, 'padre');
-
+      final apoderado = SQL.alias(SQL.contacto, 'apoderado');
 
       var query = SQL.select(SQL.contacto).join([
-        leftOuterJoin(padre, padre.hijoRelacionId.equalsExp(SQL.contacto.personaId))
+        leftOuterJoin(padre, padre.hijoRelacionId.equalsExp(SQL.contacto.personaId)),
+        leftOuterJoin(apoderado, apoderado.hijoRelacionId.equalsExp(SQL.contacto.personaId))
       ]);
 
-      //query.where(SQL.contacto.companieroId.isIn(hijoIdList));
+      query.where(SQL.contacto.companieroId.isIn(hijoIdList));
+      query.groupBy([SQL.contacto.personaId,SQL.contacto.hijoRelacionId, SQL.contacto.tipo]);
       var rows = await query.get();
 
       for(var row  in rows){
-        ContactoData alumnoData = row.readTable(SQL.contacto);
+        ContactoData contactoData = row.readTable(SQL.contacto);
         ContactoData padreData = row.readTable(padre);
-        ContactoUi contactoUi = contactoUiList.firstWhere((element) => element.personaId == alumnoData.personaId, orElse: () => null);
+        ContactoData apoderadoData = row.readTable(padre);
+        ContactoUi contactoUi = contactoUiList.firstWhere((element) => element.personaId == contactoData.personaId && element.tipo == contactoData.tipo, orElse: () => null);
         if(contactoUi == null){
           contactoUi = new ContactoUi();
-          contactoUi.personaId = alumnoData.personaId;
+          contactoUi.personaId = contactoData.personaId;
           contactoUi.relacionList = [];
+          contactoUi.foto = contactoData.foto;
+          contactoUi.nombre = '${AppTools.capitalize(contactoData.nombres)} ${AppTools.capitalize(contactoData.apellidoPaterno)} ${AppTools.capitalize(contactoData.apellidoMaterno)}';
+          contactoUi.relacion = contactoData.relacion;
+          contactoUi.telfono = contactoData.celular!=null?contactoData.celular: contactoData.telefono??"";
+
         }
-        contactoUi.foto = alumnoData.foto;
-        contactoUi.nombre = '${AppTools.capitalize(alumnoData.nombres)} ${AppTools.capitalize(alumnoData.apellidoPaterno)} ${AppTools.capitalize(alumnoData.apellidoMaterno)}';
+
         if(padreData!=null){
           ContactoUi padreUi = new ContactoUi();
           padreUi.personaId = padreData.personaId;
+          padreUi.relacion = padreData.relacion;
           contactoUi.relacionList.add(padreUi);
         }
 
+        if(apoderadoData!=null){
+          contactoUi.apoderadoTelfono = apoderadoData.celular!=null?apoderadoData.celular: apoderadoData.telefono??"";
+        }
+
+        contactoUi.tipo = contactoData.tipo;
         contactoUiList.add(contactoUi);
 
       }
+
       print("getContactos: "+contactoUiList.length.toString());
       return contactoUiList;
 

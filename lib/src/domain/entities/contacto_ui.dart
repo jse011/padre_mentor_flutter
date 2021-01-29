@@ -5,4 +5,14 @@ class ContactoUi {
   String foto;
 
   String nombre;
+
+  bool toogle;
+
+  int tipo;
+
+  String relacion;
+
+  String telfono;
+
+  String apoderadoTelfono;
 }

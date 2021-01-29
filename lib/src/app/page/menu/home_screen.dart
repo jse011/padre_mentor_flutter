@@ -5,6 +5,7 @@ import 'package:padre_mentor/bottom_navigation_view/bottom_bar_view.dart';
 import 'package:padre_mentor/model/tabIcon_data.dart';
 import 'package:padre_mentor/src/app/page/contactos/contactos_view.dart';
 import 'package:padre_mentor/src/app/page/eventos_agenda/evento_agenda_view.dart';
+import 'package:padre_mentor/src/app/page/familia/famila_view.dart';
 import 'package:padre_mentor/src/app/page/portal_alumno/portal_alumno_screen.dart';
 import 'package:padre_mentor/src/app/page/portal_alumno/portal_alumno_view.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
@@ -95,7 +96,7 @@ class _MyHomePage extends State<MyHomePage>
                       EventoAgendaView(animationController: animationController);
                 });
               });
-            } else if (index == 1 || index == 3) {
+            } else if (index == 1) {
               animationController.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;
@@ -112,6 +113,16 @@ class _MyHomePage extends State<MyHomePage>
                 }
                 setState(() {
                   tabBody = ContactosView(animationController: animationController,);
+                });
+              });
+
+            }else if(index == 3){
+              animationController.reverse().then<dynamic>((data) {
+                if (!mounted) {
+                  return;
+                }
+                setState(() {
+                  tabBody = FamiliaView(animationController: animationController,);
                 });
               });
 

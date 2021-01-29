@@ -6,6 +6,8 @@ import 'hex_color.dart';
 class AppTheme{
   AppTheme._();
 
+  static const onTapDelay = 300;// to see at least the start of the ripple
+
   static const Color notWhite = Color(0xFFEDF0F2);
   static const Color nearlyWhite = Color(0xFFFAFAFA);
   //static const Color white = Color(0xFFFFFFFF);

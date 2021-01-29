@@ -23,7 +23,7 @@ class GetContactos extends UseCase<GetContactosCaseResponse, GetContactosCasePar
       List<ContactoUi> contactoUIList = await repository.getContactos(params.hijoIdList);
 
 
-      controller.add(GetContactosCaseResponse(agregarCabecera(contactoUIList), [], []));
+      controller.add(GetContactosCaseResponse(agregarCabecera(contactoUIList, 1), agregarCabecera(contactoUIList, 3), agregarCabecera(contactoUIList, 4)));
 
       Future<String> executeServidor() async{
         Map<String, dynamic> contactoServidor = await httpRepository.getContacto(params.usuarioId);
@@ -32,7 +32,7 @@ class GetContactos extends UseCase<GetContactosCaseResponse, GetContactosCasePar
           await repository.saveContactos(contactoServidor);
         }
         contactoUIList = await repository.getContactos(params.hijoIdList);
-        controller.add(GetContactosCaseResponse(agregarCabecera(contactoUIList), [], []));
+        controller.add(GetContactosCaseResponse(agregarCabecera(contactoUIList, 1), agregarCabecera(contactoUIList, 3), agregarCabecera(contactoUIList, 4)));
         logger.finest('EventoAgenda successful.');
         controller.close();
       }
@@ -56,7 +56,7 @@ class GetContactos extends UseCase<GetContactosCaseResponse, GetContactosCasePar
 
   }
 
-  List<dynamic> agregarCabecera(List<ContactoUi> contactoUiList){
+  List<dynamic> agregarCabecera(List<ContactoUi> contactoUiList, int tipo){
     List<dynamic> list = [];
     contactoUiList.sort((a1, a2){
       String nombre1 = a1.nombre!=null?a1.nombre:" ";
@@ -65,12 +65,13 @@ class GetContactos extends UseCase<GetContactosCaseResponse, GetContactosCasePar
 
     });
     for(ContactoUi contactoUi in contactoUiList){
-      String letra = contactoUi.nombre!=null&&contactoUi.nombre.length>0?contactoUi.nombre[0]:" ";
-      String cabecera = list.firstWhere((element)=>element==letra, orElse: ()=> null);
-      if(cabecera==null)list.add(letra);
-      list.add(contactoUi);
+      if(tipo == contactoUi.tipo){
+        String letra = contactoUi.nombre!=null&&contactoUi.nombre.length>0?contactoUi.nombre[0]:" ";
+        String cabecera = list.firstWhere((element)=>element==letra, orElse: ()=> null);
+        if(cabecera==null)list.add(letra);
+        list.add(contactoUi);
+      }
     }
-
     return list;
   }
 

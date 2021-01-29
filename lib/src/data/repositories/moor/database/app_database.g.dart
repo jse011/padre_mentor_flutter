@@ -15917,11 +15917,11 @@ class ContactoData extends DataClass implements Insertable<ContactoData> {
       this.numDoc,
       this.foto,
       this.nombreTipo,
-      this.tipo,
+      @required this.tipo,
       this.companieroId,
       @required this.hijoRelacionId,
       this.relacion,
-      this.cargaCursoId});
+      @required this.cargaCursoId});
   factory ContactoData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -16343,13 +16343,15 @@ class ContactoCompanion extends UpdateCompanion<ContactoData> {
     this.numDoc = const Value.absent(),
     this.foto = const Value.absent(),
     this.nombreTipo = const Value.absent(),
-    this.tipo = const Value.absent(),
+    @required int tipo,
     this.companieroId = const Value.absent(),
     @required int hijoRelacionId,
     this.relacion = const Value.absent(),
-    this.cargaCursoId = const Value.absent(),
+    @required int cargaCursoId,
   })  : personaId = Value(personaId),
-        hijoRelacionId = Value(hijoRelacionId);
+        tipo = Value(tipo),
+        hijoRelacionId = Value(hijoRelacionId),
+        cargaCursoId = Value(cargaCursoId);
   static Insertable<ContactoData> custom({
     Expression<int> personaId,
     Expression<String> nombres,
@@ -16734,7 +16736,7 @@ class $ContactoTable extends Contacto
     return GeneratedIntColumn(
       'tipo',
       $tableName,
-      true,
+      false,
     );
   }
 
@@ -16788,7 +16790,7 @@ class $ContactoTable extends Contacto
     return GeneratedIntColumn(
       'carga_curso_id',
       $tableName,
-      true,
+      false,
     );
   }
 
@@ -16899,6 +16901,8 @@ class $ContactoTable extends Contacto
     if (data.containsKey('tipo')) {
       context.handle(
           _tipoMeta, tipo.isAcceptableOrUnknown(data['tipo'], _tipoMeta));
+    } else if (isInserting) {
+      context.missing(_tipoMeta);
     }
     if (data.containsKey('companiero_id')) {
       context.handle(
@@ -16923,12 +16927,15 @@ class $ContactoTable extends Contacto
           _cargaCursoIdMeta,
           cargaCursoId.isAcceptableOrUnknown(
               data['carga_curso_id'], _cargaCursoIdMeta));
+    } else if (isInserting) {
+      context.missing(_cargaCursoIdMeta);
     }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {personaId, hijoRelacionId};
+  Set<GeneratedColumn> get $primaryKey =>
+      {personaId, hijoRelacionId, tipo, cargaCursoId};
   @override
   ContactoData map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;

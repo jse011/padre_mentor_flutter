@@ -251,17 +251,22 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
             await (SQL.delete(SQL.calendario).delete(calendarioData));
           }
         }
+        var query = SQL.select(SQL.tipos)..where((tbl) => tbl.concepto.equals("TipoEvento"));
+        query.where((tbl) => tbl.objeto.equals("T_CE_MOV_EVENTOS"));
+        /*EVENTO=526, ACTIVIDAD=528, CITA=530, TAREA=529, NOTICIA=527, AGENDA = 620;
+        * */
+        List<Tipo> tipos =  await query.get();
+        for(Tipo tipo in tipos){
+          await (SQL.delete(SQL.tipos).delete(tipo));
+        }
 
       });
 
 
       await SQL.batch((batch) async {
 
-        batch.deleteWhere(SQL.tipos, (row) => const Constant(true));
-
         //
         print("saveEventoAgenda tipoEventoId : "+tipoEventoId.toString());
-
 
         if(eventoAgenda.containsKey("calendarios")){
           //personaSerelizable.addAll(datosInicioPadre["usuariosrelacionados"]);
