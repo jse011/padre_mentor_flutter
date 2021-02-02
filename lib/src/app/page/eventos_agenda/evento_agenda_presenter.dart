@@ -46,7 +46,7 @@ class EventoAgendaPresenter extends Presenter{
     if(usuarioUi.hijoSelected!=null){
       hijosIdList.add(usuarioUi.hijoSelected.personaId);
     }
-    getEventoAgenda(usuarioUi.id, selectedTipoEventoUi!=null?selectedTipoEventoUi.id:0, hijosIdList);
+    getEventoAgenda(usuarioUi.personaId, selectedTipoEventoUi!=null?selectedTipoEventoUi.id:0, hijosIdList);
   }
 
   void onChagenHijo(HijosUi hijoSelected) {

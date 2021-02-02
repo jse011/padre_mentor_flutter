@@ -6,6 +6,7 @@ class LoginController extends Controller{
   bool _ocultarContrasenia = true;
   String _mensaje = null;
   String _usuario = "";
+  bool _correoValidate = false;
   String get usuario => _usuario;
   String _password = "";
   String get password => _password;
@@ -33,10 +34,9 @@ class LoginController extends Controller{
 
   @override
   void initListeners() {
-    presenter.loginOnNext = (LoginUi loginUi, bool errorServidor){
+    presenter.loginOnNextValidate = (LoginUi loginUi, bool errorServidor){
       _loginUi = loginUi;
-      print("LoginController: "+_loginUi.toString());
-      print("saveDatosServidor _loginUi: "+_loginUi.toString());
+
       _mensaje = null;
       if(errorServidor){
         _mensaje = "!Oops! Al parecer ocurrió un error involuntario.";
@@ -65,6 +65,23 @@ class LoginController extends Controller{
       refreshUI();
     };
 
+    presenter.loginOnNextDatos = (bool errorServidor, bool rolValidado){
+      if(errorServidor){
+        _mensaje = "!Oops! Al parecer ocurrió un error involuntario.";
+        //_typeView = LoginTypeView.USUARIO;
+        _progressData = false;
+      }else{
+        if(rolValidado){
+          _dismis = true;
+        }else{
+          _progressData = false;
+          _mensaje = "Usuario sin acceso";
+        }
+      }
+
+      refreshUI();
+    };
+
     presenter.loginOnComplete = (){
 
 
@@ -73,6 +90,7 @@ class LoginController extends Controller{
     presenter.loginOnError = (e){
       _loginUi = null;
       _progress = false;
+      _progressData = false;
       _mensaje = "No hay Conexión a Internet...";
       refreshUI();
     };
@@ -95,10 +113,72 @@ class LoginController extends Controller{
   }
 
   void onClickInciarSesion() {
-    _progress = true;
-    refreshUI();
-    presenter.login(_usuario, _password, _dni, _correo);
+    if(_typeView == LoginTypeView.USUARIO){
+      if(_vailidarUsuario()){
+        _mensaje = "Ingresar usuario";
+        refreshUI();
+        return;
+      }
+      if(_vailidarPassword()!=null){
+        _mensaje = _vailidarPassword();
+        refreshUI();
+        return;
+      }
+      _progress = true;
+      refreshUI();
+      presenter.login(_usuario, _password, "", "");
+    }else if(_typeView == LoginTypeView.DNI){
+      if(_vailidarDNI()){
+        _mensaje = "Documento Incorrecto";
+        refreshUI();
+        return;
+      }
+      _progress = true;
+      refreshUI();
+      presenter.login(_usuario, _password, _dni, "");
 
+    }else if(_typeView == LoginTypeView.CORREO){
+      if(_vailidarCorreo()!=null){
+        _mensaje = _vailidarCorreo();
+        refreshUI();
+        return;
+      }
+      _progress = true;
+      refreshUI();
+      presenter.login(_usuario, _password, _dni, _correo);
+    }
+
+  }
+
+  bool _vailidarUsuario(){
+    return _usuario==null||_usuario.isEmpty;
+  }
+
+  String _vailidarPassword(){
+    //return _password==null || _password.length < 3;
+    String mensaje = null;
+    if(_password==null||_password.isEmpty){
+      mensaje = "Ingresar contraseña";
+    }else if( _password.length < 3){
+      mensaje = "Contraseña demasiado corta";
+    }
+
+    return mensaje;
+  }
+
+  bool _vailidarDNI(){
+    return _dni==null||_dni.isEmpty;
+  }
+
+  String _vailidarCorreo(){
+    String mensaje = null;
+    if(_dni==null||_dni.isEmpty){
+      mensaje = "Ingresar su correo electrónico";
+    }else if(!_correoValidate){
+      mensaje = "Correo electrónico incorrecto";
+    }
+
+    return mensaje;
   }
 
   void onChangeUsuario(String str) {
@@ -119,6 +199,10 @@ class LoginController extends Controller{
 
   void successMsg() {
     _mensaje = null;
+  }
+
+  void onValidatorCorreo(bool validate) {
+    _correoValidate = validate;
   }
 
 }

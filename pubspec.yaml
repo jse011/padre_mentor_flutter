@@ -48,6 +48,7 @@ dependencies:
   fluttertoast: ^7.1.6
   email_validator: ^1.0.0
   lottie: ^0.7.0+1
+  ars_progress_dialog: ^0.1.2
 
 dev_dependencies:
   flutter_test:

@@ -10,16 +10,14 @@ class HomePresenter extends Presenter{
   Function getUserOnError;
   Function validarUsuarioOnError, validarUsuarioOnComplete;
   final GetSessionUsuarioCase getUsuarioUseCase;
-  final SyncDatosInicioPadre syncDatosInicioPadre;
   ValidarUsuario _validarUsuario;
   CerrarCesion _cerrarCesion;
   Function cerrarCesionOnError, cerrarCesionOnComplete;
 
-  HomePresenter(usuarioConfigRepo, httpDatosRepo) : getUsuarioUseCase = GetSessionUsuarioCase(usuarioConfigRepo), syncDatosInicioPadre = SyncDatosInicioPadre(httpDatosRepo, usuarioConfigRepo), _validarUsuario = ValidarUsuario(usuarioConfigRepo), _cerrarCesion = CerrarCesion(usuarioConfigRepo);
+  HomePresenter(usuarioConfigRepo, httpDatosRepo) : getUsuarioUseCase = GetSessionUsuarioCase(usuarioConfigRepo), _validarUsuario = ValidarUsuario(usuarioConfigRepo), _cerrarCesion = CerrarCesion(usuarioConfigRepo);
 
   @override
   void dispose() {
-    syncDatosInicioPadre.dispose();
     getUsuarioUseCase.dispose();
     _cerrarCesion.dispose();
   }
@@ -62,28 +60,6 @@ class _GetSessionUsuarioCase extends Observer<GetSessionUsuarioCaseResponse>{
   void onNext(GetSessionUsuarioCaseResponse response) {
     assert(presenter.getUserOnNext != null);
     presenter.getUserOnNext(response.usurio);
-  }
-
-}
-
-class _SyncDatosInicioPadreCase extends Observer<SyncDatosInicioPadreResponse>{
-  final HomePresenter presenter;
-
-  _SyncDatosInicioPadreCase(this.presenter);
-
-  @override
-  void onComplete() {
-
-  }
-
-  @override
-  void onError(e) {
-
-  }
-
-  @override
-  void onNext(SyncDatosInicioPadreResponse response) {
-
   }
 
 }

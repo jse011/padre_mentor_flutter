@@ -161,7 +161,7 @@ class _LoginViewState extends ViewState<LoginView, LoginController>{
                             padding: const EdgeInsets.only(top: 16, right: 24, left: 24),
                             child: TextFormField(
                               key: Key("Usuario"),
-                              maxLength: 50,
+                              maxLength: 25,
                               autofocus: true,
                               autovalidateMode: AutovalidateMode.disabled,
                               validator: (val) => '' ,
@@ -241,7 +241,7 @@ class _LoginViewState extends ViewState<LoginView, LoginController>{
                             padding: const EdgeInsets.only(top: 16, right: 24, left: 24),
                             child: TextFormField(
                               key: Key("Password"),
-                              maxLength: 50,
+                              maxLength: 25,
                               autofocus: false,
                               autovalidateMode: AutovalidateMode.onUserInteraction,
                               textAlign: TextAlign.start,
@@ -421,7 +421,10 @@ class _LoginViewState extends ViewState<LoginView, LoginController>{
                               ),
                               initialValue: controller.correo??"",
                               autovalidateMode: AutovalidateMode.onUserInteraction,
-                              validator: (val) => EmailValidator.validate(val) ? null : "Correo inválido",
+                              validator: (val) {
+                                controller.onValidatorCorreo(EmailValidator.validate(val));
+                                return EmailValidator.validate(val) ? null : "Correo inválido";
+                              },
                               //controller: accountController,
                               keyboardType: TextInputType.text,
                               textInputAction: TextInputAction.next,

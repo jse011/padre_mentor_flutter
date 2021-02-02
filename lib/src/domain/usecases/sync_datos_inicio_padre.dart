@@ -15,7 +15,9 @@ class SyncDatosInicioPadre extends UseCase<SyncDatosInicioPadreResponse,SyncDato
     final controller = StreamController<SyncDatosInicioPadreResponse>();
     logger.finest('Hola Jse');
     try {
-      await datosrepository.saveDatosGlobales(await repository.getDatosInicioPadre(params.usuarioId));
+      int usuarioId = await datosrepository.getSessionUsuarioId();
+      String urlServidorLocal = await datosrepository.getSessionUsuarioUrlServidor();
+      await datosrepository.saveDatosGlobales(await repository.getDatosInicioPadre(urlServidorLocal, usuarioId));
       controller.add(SyncDatosInicioPadreResponse());
       logger.finest('SyncDatosInicioPadre successful.');
       controller.close();

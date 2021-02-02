@@ -4,6 +4,7 @@ import 'package:padre_mentor/src/data/repositories/moor/database/app_database.da
 import 'package:padre_mentor/src/data/repositories/moor/model/persona.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/programas_educativo.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/silabo_evento.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/usuario_rol_georeferencia.dart';
 import 'package:padre_mentor/src/data/repositories/moor/tools/serializable_convert.dart';
 import 'package:padre_mentor/src/domain/entities/contacto_ui.dart';
 import 'package:padre_mentor/src/domain/entities/evento_ui.dart';
@@ -32,10 +33,12 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
     AppDataBase SQL = AppDataBase();
     try{
 
+      int usuarioId = await getSessionUsuarioId();
+
       var query =  await SQL.select(SQL.persona).join([
         innerJoin(SQL.usuario, SQL.usuario.personaId.equalsExp(SQL.persona.personaId))
       ]);
-      query.where(SQL.usuario.usuarioId.equals(2));
+      query.where(SQL.usuario.usuarioId.equals(usuarioId));
       var resultRow = await query.getSingle();
       PersonaData personaData = resultRow.readTable(SQL.persona);
 
@@ -56,7 +59,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
         }
 
         UsuarioData usuarioData = await (SQL.select(SQL.usuario)..where((tbl) => tbl.personaId.equals(personaData.personaId))).getSingle();
-        hijos.add(HijosUi(usuarioId: usuarioData==null ? 0 : usuarioData.usuarioId, personaId: personaData.personaId, nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}', foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}',documento: personaData.numDoc, celular: personaData.celular??personaData.telefono??'', correo: personaData.correo, fechaNacimiento: fechaNacimientoHijo));
+        hijos.add(HijosUi(usuarioId: usuarioData==null ? 0 : usuarioData.usuarioId, personaId: personaData.personaId, nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}', foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}',documento: personaData.numDoc, celular: personaData.celular??personaData.telefono??'', correo: personaData.correo, fechaNacimiento: fechaNacimientoHijo, fechaNacimiento2:  personaData.fechaNac));
       });
       String fechaNacimientoPadre = "";
       if(personaData.fechaNac!=null&&personaData.fechaNac.isNotEmpty){
@@ -64,9 +67,6 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
         fechaNacimientoPadre = "${AppTools.calcularEdad(fecPad)} años (${AppTools.f_fecha_anio_mes_letras(fecPad)})";
 
       }
-
-
-
 
       List<FamiliaUi> familiaUiList = [];
 
@@ -90,13 +90,13 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
           fechaNacimientoHijo = "${AppTools.calcularEdad(fecPad)} años (${AppTools.f_fecha_anio_mes_letras(fecPad)})";
         }
 
-        familiaUiList.add(FamiliaUi(personaId: personaData.personaId, nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}', foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}',documento: personaData.numDoc, celular: personaData.celular??personaData.telefono??'', correo: personaData.correo, fechaNacimiento: fechaNacimientoHijo, relacion: "Familiar"));
+        familiaUiList.add(FamiliaUi(personaId: personaData.personaId, nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}', foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}',documento: personaData.numDoc, celular: personaData.celular??personaData.telefono??'', correo: personaData.correo, fechaNacimiento: fechaNacimientoHijo, relacion: "Familiar", fechaNacimiento2: personaData.fechaNac));
       });
 
-      UsuarioUi usuarioUi = UsuarioUi(id: personaData == null ? 0 : personaData.personaId ,
+      UsuarioUi usuarioUi = UsuarioUi(personaId: personaData == null ? 0 : personaData.personaId ,
           nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}',
           foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}',
-          hijos: hijos, correo: personaData.correo, celular: personaData.celular??personaData.telefono??"", fechaNacimiento: fechaNacimientoPadre, familiaUiList: familiaUiList, nombreSimple: AppTools.capitalize(personaData.nombres));
+          hijos: hijos, correo: personaData.correo, celular: personaData.celular??personaData.telefono??"", fechaNacimiento: fechaNacimientoPadre, familiaUiList: familiaUiList, nombreSimple: AppTools.capitalize(personaData.nombres), fechaNacimiento2: personaData.fechaNac);
 
 
 
@@ -144,15 +144,30 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
 
         SessionUserData sessionUserData = await (SQL.selectSingle(SQL.sessionUser)).getSingle();
         int hijoIdSelected = sessionUserData != null?sessionUserData.hijoIdSelect : 0;
-        if(hijoIdSelected!=null && hijoIdSelected > 0){
-          usuarioUi.hijoSelected = usuarioUi.hijos.firstWhere((element) => element.personaId == hijoIdSelected, orElse: () => usuarioUi.hijos.first);
-          var rowSessionUsuarioPrograma = SQL.selectSingle(SQL.sessionUserHijo)..where((tbl) => tbl.hijoId.equals(hijoIdSelected));
-          rowSessionUsuarioPrograma.where((tbl) => tbl.selected.equals(true));
-          SessionUserHijoData sessionUserHijoData = await rowSessionUsuarioPrograma.getSingle();
-          int programaIdSelected = sessionUserHijoData != null?sessionUserHijoData.prograAcademicoId : 0;
-          usuarioUi.programaEducativoUiSelected = usuarioUi.programaEducativoUiList.firstWhere((element) => element.programaId == programaIdSelected, orElse: () => //usuarioUi.programaEducativoUiList.first);
-              usuarioUi.programaEducativoUiList.firstWhere((element) => element.hijoId==hijoIdSelected, orElse: () => usuarioUi.programaEducativoUiList.first));
+
+        if(hijoIdSelected==null || hijoIdSelected == 0){
+          if(usuarioUi.hijos!=null&&usuarioUi.hijos.isNotEmpty){
+            hijoIdSelected = usuarioUi.hijos.first.personaId;
+            await SQL.update(SQL.sessionUser).replace(sessionUserData.copyWith(hijoIdSelect: hijoIdSelected));
+          }
         }
+
+        if(hijoIdSelected!=null && hijoIdSelected > 0){
+          if(usuarioUi.hijos!=null&&usuarioUi.hijos.isNotEmpty){
+
+            usuarioUi.hijoSelected = usuarioUi.hijos.firstWhere((element) => element.personaId == hijoIdSelected, orElse: () => usuarioUi.hijos.first);
+            var rowSessionUsuarioPrograma = SQL.selectSingle(SQL.sessionUserHijo)..where((tbl) => tbl.hijoId.equals(hijoIdSelected));
+            rowSessionUsuarioPrograma.where((tbl) => tbl.selected.equals(true));
+            SessionUserHijoData sessionUserHijoData = await rowSessionUsuarioPrograma.getSingle();
+            int programaIdSelected = sessionUserHijoData != null?sessionUserHijoData.prograAcademicoId : 0;
+            usuarioUi.programaEducativoUiSelected = usuarioUi.programaEducativoUiList.firstWhere((element) => element.programaId == programaIdSelected, orElse: () => //usuarioUi.programaEducativoUiList.first);
+            usuarioUi.programaEducativoUiList.firstWhere((element) => element.hijoId==hijoIdSelected, orElse: () => usuarioUi.programaEducativoUiList.first));
+          }
+        }
+
+
+
+
 
       });
 
@@ -254,7 +269,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
 
       PersonaData personaData = await (SQL.selectSingle(SQL.persona)..where((tbl) => tbl.personaId.equals(alumnoId))).getSingle();
       UsuarioData usuarioData = await (SQL.select(SQL.usuario)..where((tbl) => tbl.personaId.equals(alumnoId))).getSingle();
-      return HijosUi(usuarioId: usuarioData==null ? 0 : usuarioData.usuarioId, personaId: personaData.personaId, nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}', foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}',documento: personaData.numDoc, celular: personaData.celular??personaData.telefono??'', correo: personaData.correo, fechaNacimiento: personaData.fechaNac);
+      return HijosUi(usuarioId: usuarioData==null ? 0 : usuarioData.usuarioId, personaId: personaData.personaId, nombre: personaData == null ? '' : '${AppTools.capitalize(personaData.nombres)} ${AppTools.capitalize(personaData.apellidoPaterno)} ${AppTools.capitalize(personaData.apellidoMaterno)}', foto: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}',documento: personaData.numDoc, celular: personaData.celular??personaData.telefono??'', correo: personaData.correo, fechaNacimiento: "", fechaNacimiento2: personaData.fechaNac);
 
     }catch(e){
       throw Exception(e);
@@ -475,11 +490,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
       SessionUserData sessionUserData = await(SQL.selectSingle(SQL.sessionUser).getSingle());
       if(sessionUserData!=null){
         await SQL.update(SQL.sessionUser).replace(sessionUserData.copyWith(hijoIdSelect: hijoSelectedId));
-      }else{
-        await SQL.into(SQL.sessionUser).insert(SessionUserData(userId: 2));
       }
-
-
     }catch(e){
       throw Exception(e);
     }
@@ -597,7 +608,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
 
       SessionUserData sessionUserData = await (SQL.select(SQL.sessionUser)).getSingle();//El ORM genera error si hay dos registros
       //Solo deve haber una registro de session user data
-      return sessionUserData!=null;
+      return sessionUserData!=null&&sessionUserData.complete;
     }catch(e){
       throw Exception(e);
     }
@@ -609,16 +620,14 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
     try{
       LoginUi loginUi;
       AdminServiceSerializable serviceSerializable = AdminServiceSerializable.fromJson(datosServidor);
-      print("saveDatosServidor UsuarioId: "+serviceSerializable.UsuarioId.toString());
-      print("saveDatosServidor UsuarioExternoId: "+serviceSerializable.UsuarioExternoId.toString());
+
       if(serviceSerializable.UsuarioId==-1){
         loginUi = LoginUi.INVALIDO;
       }else{
         if(serviceSerializable.UsuarioExternoId>0){
           loginUi = LoginUi.SUCCESS;
-
           SessionUserData sessionUserData = SessionUserData(userId: serviceSerializable.UsuarioExternoId, urlServerLocal: serviceSerializable.UrlServiceMovil);
-          SQL.into(SQL.sessionUser).insert(sessionUserData, mode: InsertMode.insertOrReplace);
+          await SQL.into(SQL.sessionUser).insert(sessionUserData, mode: InsertMode.insertOrReplace);
         }else{
           loginUi = LoginUi.DUPLICADO;
         }
@@ -640,7 +649,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
   }
 
   @override
-  Future<bool> saveUsuario(Map<String, dynamic> datosUsuario) async{
+  Future<void> saveUsuario(Map<String, dynamic> datosUsuario) async{
     AppDataBase SQL = AppDataBase();
     try{
       await SQL.batch((batch) async {
@@ -664,11 +673,96 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
           //personaSerelizable.addAll(datosInicioPadre["usuariosrelacionados"]);
           batch.insertAll(SQL.usuarioRolGeoreferencia, SerializableConvert.converListSerializeUsuarioRolGeoreferencia(datosUsuario["usuarioRolGeoreferencias"]), mode: InsertMode.insertOrReplace);
         }
-
       });
     }catch(e){
       throw Exception(e);
     }
+  }
+
+  @override
+  Future<int> getSessionUsuarioId() async {
+    AppDataBase SQL = AppDataBase();
+    try{
+    SessionUserData sessionUserData =  await SQL.selectSingle(SQL.sessionUser).getSingle();
+    return sessionUserData?.userId??0;
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<bool> validarRol(int usuarioId) async{
+    AppDataBase SQL = AppDataBase();
+    try{
+      var query = SQL.selectSingle(SQL.usuarioRolGeoreferencia)..where((tbl) => tbl.usuarioId.equals(usuarioId));
+      query.where((tbl) => tbl.rolId.equals(5));
+      UsuarioRolGeoreferenciaData usuarioRolGeoreferenciaData = await query.getSingle();
+      return usuarioRolGeoreferenciaData!=null;
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<void> destroyBaseDatos() async{
+    AppDataBase SQL = AppDataBase();
+    try{
+      await SQL.transaction(() async {
+        // you only need this if you've manually enabled foreign keys
+        // await customStatement('PRAGMA foreign_keys = OFF');
+        for (final table in SQL.allTables) {
+          await SQL.delete(table).go();
+        }
+      });
+    }catch(e){
+      throw Exception(e);
+    }
+
+  }
+
+  @override
+  Future<String> getSessionUsuarioUrlServidor() async{
+    AppDataBase SQL = AppDataBase();
+    try{
+      SessionUserData sessionUserData =  await SQL.selectSingle(SQL.sessionUser).getSingle();
+      return sessionUserData?.urlServerLocal??"";
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<void> updateUsuarioSuccessData(int usuarioId) async{
+    AppDataBase SQL = AppDataBase();
+    try{
+      SessionUserData sessionUserData = await(SQL.selectSingle(SQL.sessionUser).getSingle());
+      if(sessionUserData!=null){
+        await SQL.update(SQL.sessionUser).replace(sessionUserData.copyWith(complete: true));
+      }
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  @override
+  List<dynamic> getJsonUpdatePersonas(UsuarioUi usuarioUi, List<HijosUi> hijosUiList, List<FamiliaUi> familiaUiList) {
+   List<dynamic> personaSerialList = [];
+   if(usuarioUi.change??false){
+     PersonaSerial personaSerial = PersonaSerial(personaId: usuarioUi.personaId, correo: usuarioUi.correo, celular: usuarioUi.celular);
+     personaSerialList.add(personaSerial.toJson());
+   }
+
+   for(HijosUi hijosUi in hijosUiList??[]){
+     PersonaSerial personaSerial = PersonaSerial(personaId: hijosUi.personaId, correo: hijosUi.correo, celular: hijosUi.celular);
+     personaSerialList.add(personaSerial.toJson());
+   }
+
+   for(FamiliaUi familiaUi in familiaUiList??[]){
+     PersonaSerial personaSerial = PersonaSerial(personaId: familiaUi.personaId, correo: familiaUi.correo, celular: familiaUi.celular);
+     personaSerialList.add(personaSerial.toJson());
+   }
+
+   return personaSerialList;
   }
 
 

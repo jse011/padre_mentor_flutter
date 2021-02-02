@@ -5,7 +5,7 @@ import 'package:padre_mentor/src/domain/entities/programa_educativo_ui.dart';
 import 'familia_ui.dart';
 
 class UsuarioUi {
-  int id;
+  int personaId;
   String nombre;
   String nombreSimple;
   String foto;
@@ -16,6 +16,9 @@ class UsuarioUi {
   String celular;
   String correo;
   String fechaNacimiento;
+  String fechaNacimiento2;
   List<FamiliaUi> familiaUiList = [];
-  UsuarioUi({this.id, this.nombre, this.foto, this.hijos, this.programaEducativoUiList, this.celular, this.correo, this.fechaNacimiento, this.familiaUiList, this.nombreSimple});
+  bool change;
+
+  UsuarioUi({this.personaId, this.nombre, this.foto, this.hijos, this.programaEducativoUiList, this.celular, this.correo, this.fechaNacimiento, this.familiaUiList, this.nombreSimple, this.fechaNacimiento2});
 }

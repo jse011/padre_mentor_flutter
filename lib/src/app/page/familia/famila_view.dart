@@ -4,12 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:padre_mentor/src/app/page/editar_usuario/editar_usuario_router.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:padre_mentor/src/app/page/editar_usuario/editar_usuario_view.dart';
 import 'package:padre_mentor/src/app/page/familia/famila_controller.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/app/widgets/animation_view.dart';
 import 'package:padre_mentor/src/app/widgets/custom_expansion_tile.dart';
 import 'package:padre_mentor/src/data/repositories/moor/data_usuario_configuracion_respository.dart';
+import 'package:padre_mentor/src/device/repositories/http/device_http_datos_repository.dart';
 import 'package:padre_mentor/src/domain/entities/familia_ui.dart';
 import 'package:padre_mentor/src/domain/entities/hijos_ui.dart';
 
@@ -31,7 +33,7 @@ class _FamiliaViewState extends ViewState<FamiliaView, FamiliaController>{
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
 
-  _FamiliaViewState() : super(FamiliaController(DataUsuarioAndRepository()));
+  _FamiliaViewState() : super(FamiliaController(DeviceHttpDatosRepositorio(), DataUsuarioAndRepository()));
 
 
   @override
@@ -227,7 +229,7 @@ class _FamiliaViewState extends ViewState<FamiliaView, FamiliaController>{
                                              borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                                              splashColor: AppTheme.colorPrimary.withOpacity(0.4),
                                              onTap: () {
-                                               Navigator.of(context).push(EditarUsuarioRouter.createRouteEditarUsuario());
+                                               _navigateAndDisplaySelection(context, controller);
                                              },
                                              child:
                                              Container(
@@ -558,6 +560,30 @@ class _FamiliaViewState extends ViewState<FamiliaView, FamiliaController>{
                 ],
               );
             })
+    );
+  }
+
+  // A method that launches the SelectionScreen and awaits the result from
+  // Navigator.pop.
+  _navigateAndDisplaySelection(BuildContext context, FamiliaController controller) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    bool change = await Navigator.push(
+      context,
+        MaterialPageRoute(builder: (context) => EditarUsuarioView(cabecera: true,))
+    );
+
+    // After the Selection Screen returns a result, hide any previous snackbars
+    // and show the new result.
+    if(change!=null && change){
+      controller.onChangeFamilia();
+    }
+
+    Fluttertoast.showToast(
+      msg: "EditarUsuarioRouter change: " +change?.toString(),
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
     );
   }
 }

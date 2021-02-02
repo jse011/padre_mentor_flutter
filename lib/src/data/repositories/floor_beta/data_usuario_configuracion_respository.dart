@@ -29,7 +29,7 @@ class DataUsuarioAndRepository /*extends UsuarioAndConfiguracionRepository*/{
     SessionUser sessionUser = await sessionDao.getSessionUser();
     Persona persona = await personaDao.getUsuario(2);
 
-    UsuarioUi usuarioUi = UsuarioUi(id: 2, nombre: persona == null ? '' : '${AppTools.capitalize(persona.nombres)} ${AppTools.capitalize(persona.apellidoPaterno)} ${AppTools.capitalize(persona.apellidoMaterno)}', foto: persona.foto, nombreSimple: AppTools.capitalize(persona.nombres));
+    UsuarioUi usuarioUi = UsuarioUi(personaId: 2, nombre: persona == null ? '' : '${AppTools.capitalize(persona.nombres)} ${AppTools.capitalize(persona.apellidoPaterno)} ${AppTools.capitalize(persona.apellidoMaterno)}', foto: persona.foto, nombreSimple: AppTools.capitalize(persona.nombres));
     return usuarioUi;
   }
 

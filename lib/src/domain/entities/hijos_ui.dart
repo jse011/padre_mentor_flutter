@@ -7,6 +7,8 @@ class HijosUi {
   String celular;
   String correo;
   String fechaNacimiento;
+  String fechaNacimiento2;
+  bool change;
 
-  HijosUi({this.usuarioId, this.personaId, this.nombre, this.foto, this.documento, this.celular, this.correo, this.fechaNacimiento});
+  HijosUi({this.usuarioId, this.personaId, this.nombre, this.foto, this.documento, this.celular, this.correo, this.fechaNacimiento, this.fechaNacimiento2});
 }

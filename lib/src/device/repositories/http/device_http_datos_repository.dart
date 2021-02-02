@@ -1,5 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:padre_mentor/src/domain/entities/familia_ui.dart';
+import 'package:padre_mentor/src/domain/entities/hijos_ui.dart';
+import 'package:padre_mentor/src/domain/entities/usuario_ui.dart';
 import 'package:padre_mentor/src/domain/repositories/http_datos_repository.dart';
 
 class DeviceHttpDatosRepositorio extends HttpDatosRepository{
@@ -17,10 +20,10 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
   }
 
   @override
-  Future<Map<String, dynamic>> getDatosInicioPadre(int usuarioId) async {
+  Future<Map<String, dynamic>> getDatosInicioPadre(String urlServidor, int usuarioId) async {
     Map<String, dynamic> parameters = Map<String, dynamic>();
     parameters["vint_UsuarioId"] = usuarioId;
-    final response = await http.post(url, body: getBody("flst_getDatosInicioFlutter",parameters));
+    final response = await http.post(urlServidor, body: getBody("flst_getDatosInicioFlutter",parameters));
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
@@ -205,10 +208,10 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
   }
 
   @override
-  Future<Map<String, dynamic>> getUsuario(int usuarioId) async{
+  Future<Map<String, dynamic>> getUsuario(String urlServidor, int usuarioId) async{
     Map<String, dynamic> parameters = Map<String, dynamic>();
     parameters["UsuarioId"] = usuarioId;
-    final response = await http.post(url, body: getBody("fobj_ObtenerUsuario_By_Id",parameters));
+    final response = await http.post(urlServidor, body: getBody("fobj_ObtenerUsuario_By_Id",parameters));
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
@@ -226,6 +229,32 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
       throw Exception('Failed to load agenda 0');
     }
   }
+
+  @override
+  Future<List<dynamic>> updateFamilia(String urlServidor, int usuarioId, List<dynamic> jsonPersonas) async {
+    Map<String, dynamic> parameters = Map<String, dynamic>();
+    parameters["usuarioId"] = usuarioId;
+    parameters["list_personas"] = jsonPersonas;
+
+    final response = await http.post(urlServidor, body: getBody("fupd_PersonaPadre",parameters));
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      Map<String,dynamic> body = json.decode(response.body);
+      if(body.containsKey("Successful")&&body.containsKey("Value")){
+
+        return body["Value"];
+      }else{
+        return null;
+      }
+
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load agenda 0');
+    }
+  }
+
 
 
 

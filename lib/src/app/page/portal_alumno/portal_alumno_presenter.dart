@@ -52,7 +52,7 @@ class PortalAlumnoPresenter extends Presenter{
     /*if(usuarioUi.hijoSelected!=null){
       hijosIdList.add(usuarioUi.hijoSelected.personaId);
     }*/
-    getEventoActuales(usuarioUi.id, selectedTipoEventoUi!=null?selectedTipoEventoUi.id:0, hijosIdList);
+    getEventoActuales(usuarioUi.personaId, selectedTipoEventoUi!=null?selectedTipoEventoUi.personaId:0, hijosIdList);
   }
 
 }

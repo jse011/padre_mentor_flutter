@@ -15,13 +15,18 @@ class FamiliaController extends Controller{
   List<FamiliaUi> _familiaUiList = [];
   List<FamiliaUi> get familiaUiList => _familiaUiList;
 
-  FamiliaController(UsuarioConfRepo):presenter = FamiliaPresenter(UsuarioConfRepo);
+  FamiliaController(httpRepo, UsuarioConfRepo):presenter = FamiliaPresenter(httpRepo, UsuarioConfRepo);
 @override
   void onInitState() {
-
     super.onInitState();
     presenter.onInitState();
   }
+
+  @override
+  void onResumed() {
+    presenter.onInitState();
+  }
+
   @override
   void initListeners() {
     presenter.getSesionUsuarioOnNext = (UsuarioUi usuarioUi) {
@@ -40,6 +45,10 @@ class FamiliaController extends Controller{
       print('Could not retrieve user.');
       refreshUI(); // Refreshes the UI manually
     };
+  }
+
+  void onChangeFamilia(){
+    presenter.updateFamilia(usuarioUi, hijosUiList, familiaUiList);
   }
 
 

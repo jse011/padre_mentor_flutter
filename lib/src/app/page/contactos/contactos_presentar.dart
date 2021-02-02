@@ -32,7 +32,7 @@ class ContactosPresenter extends Presenter{
         hijosIdList.add(hijo.personaId);
       }*/
       hijosIdList.add(usuarioUi.hijoSelected.personaId);
-      _getContactos.execute(_GetContactosCase(this), GetContactosCaseParams(usuarioUi.id, hijosIdList));
+      _getContactos.execute(_GetContactosCase(this), GetContactosCaseParams(usuarioUi.personaId, hijosIdList));
     }
   }
 

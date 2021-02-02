@@ -23,7 +23,6 @@ class HomeController extends Controller{
   // this is called automatically by the parent class
   void initListeners() {
     homePresenter.getUserOnNext = (UsuarioUi user) {
-      print(user.nombre.toString());
       _userioSession = user;
       refreshUI(); // Refreshes the UI manually
     };

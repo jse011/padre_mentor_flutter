@@ -6,7 +6,9 @@ class FamiliaUi {
   String celular;
   String correo;
   String fechaNacimiento;
+  String fechaNacimiento2;
   String relacion;
+  bool change;
 
-  FamiliaUi({this.personaId, this.nombre, this.foto, this.documento, this.celular, this.correo, this.fechaNacimiento, this.relacion});
+  FamiliaUi({this.personaId, this.nombre, this.foto, this.documento, this.celular, this.correo, this.fechaNacimiento, this.relacion, this.fechaNacimiento2});
 }

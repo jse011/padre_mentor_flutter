@@ -1252,14 +1252,19 @@ class SessionUserData extends DataClass implements Insertable<SessionUserData> {
   final int userId;
   final int hijoIdSelect;
   final String urlServerLocal;
+  final bool complete;
   SessionUserData(
-      {@required this.userId, this.hijoIdSelect, this.urlServerLocal});
+      {@required this.userId,
+      this.hijoIdSelect,
+      this.urlServerLocal,
+      this.complete});
   factory SessionUserData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
+    final boolType = db.typeSystem.forDartType<bool>();
     return SessionUserData(
       userId:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}user_id']),
@@ -1267,6 +1272,8 @@ class SessionUserData extends DataClass implements Insertable<SessionUserData> {
           .mapFromDatabaseResponse(data['${effectivePrefix}hijo_id_select']),
       urlServerLocal: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}url_server_local']),
+      complete:
+          boolType.mapFromDatabaseResponse(data['${effectivePrefix}complete']),
     );
   }
   @override
@@ -1281,6 +1288,9 @@ class SessionUserData extends DataClass implements Insertable<SessionUserData> {
     if (!nullToAbsent || urlServerLocal != null) {
       map['url_server_local'] = Variable<String>(urlServerLocal);
     }
+    if (!nullToAbsent || complete != null) {
+      map['complete'] = Variable<bool>(complete);
+    }
     return map;
   }
 
@@ -1294,6 +1304,9 @@ class SessionUserData extends DataClass implements Insertable<SessionUserData> {
       urlServerLocal: urlServerLocal == null && nullToAbsent
           ? const Value.absent()
           : Value(urlServerLocal),
+      complete: complete == null && nullToAbsent
+          ? const Value.absent()
+          : Value(complete),
     );
   }
 
@@ -1304,6 +1317,7 @@ class SessionUserData extends DataClass implements Insertable<SessionUserData> {
       userId: serializer.fromJson<int>(json['userId']),
       hijoIdSelect: serializer.fromJson<int>(json['hijoIdSelect']),
       urlServerLocal: serializer.fromJson<String>(json['urlServerLocal']),
+      complete: serializer.fromJson<bool>(json['complete']),
     );
   }
   @override
@@ -1313,72 +1327,88 @@ class SessionUserData extends DataClass implements Insertable<SessionUserData> {
       'userId': serializer.toJson<int>(userId),
       'hijoIdSelect': serializer.toJson<int>(hijoIdSelect),
       'urlServerLocal': serializer.toJson<String>(urlServerLocal),
+      'complete': serializer.toJson<bool>(complete),
     };
   }
 
   SessionUserData copyWith(
-          {int userId, int hijoIdSelect, String urlServerLocal}) =>
+          {int userId,
+          int hijoIdSelect,
+          String urlServerLocal,
+          bool complete}) =>
       SessionUserData(
         userId: userId ?? this.userId,
         hijoIdSelect: hijoIdSelect ?? this.hijoIdSelect,
         urlServerLocal: urlServerLocal ?? this.urlServerLocal,
+        complete: complete ?? this.complete,
       );
   @override
   String toString() {
     return (StringBuffer('SessionUserData(')
           ..write('userId: $userId, ')
           ..write('hijoIdSelect: $hijoIdSelect, ')
-          ..write('urlServerLocal: $urlServerLocal')
+          ..write('urlServerLocal: $urlServerLocal, ')
+          ..write('complete: $complete')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => $mrjf($mrjc(
-      userId.hashCode, $mrjc(hijoIdSelect.hashCode, urlServerLocal.hashCode)));
+      userId.hashCode,
+      $mrjc(hijoIdSelect.hashCode,
+          $mrjc(urlServerLocal.hashCode, complete.hashCode))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is SessionUserData &&
           other.userId == this.userId &&
           other.hijoIdSelect == this.hijoIdSelect &&
-          other.urlServerLocal == this.urlServerLocal);
+          other.urlServerLocal == this.urlServerLocal &&
+          other.complete == this.complete);
 }
 
 class SessionUserCompanion extends UpdateCompanion<SessionUserData> {
   final Value<int> userId;
   final Value<int> hijoIdSelect;
   final Value<String> urlServerLocal;
+  final Value<bool> complete;
   const SessionUserCompanion({
     this.userId = const Value.absent(),
     this.hijoIdSelect = const Value.absent(),
     this.urlServerLocal = const Value.absent(),
+    this.complete = const Value.absent(),
   });
   SessionUserCompanion.insert({
     this.userId = const Value.absent(),
     this.hijoIdSelect = const Value.absent(),
     this.urlServerLocal = const Value.absent(),
+    this.complete = const Value.absent(),
   });
   static Insertable<SessionUserData> custom({
     Expression<int> userId,
     Expression<int> hijoIdSelect,
     Expression<String> urlServerLocal,
+    Expression<bool> complete,
   }) {
     return RawValuesInsertable({
       if (userId != null) 'user_id': userId,
       if (hijoIdSelect != null) 'hijo_id_select': hijoIdSelect,
       if (urlServerLocal != null) 'url_server_local': urlServerLocal,
+      if (complete != null) 'complete': complete,
     });
   }
 
   SessionUserCompanion copyWith(
       {Value<int> userId,
       Value<int> hijoIdSelect,
-      Value<String> urlServerLocal}) {
+      Value<String> urlServerLocal,
+      Value<bool> complete}) {
     return SessionUserCompanion(
       userId: userId ?? this.userId,
       hijoIdSelect: hijoIdSelect ?? this.hijoIdSelect,
       urlServerLocal: urlServerLocal ?? this.urlServerLocal,
+      complete: complete ?? this.complete,
     );
   }
 
@@ -1394,6 +1424,9 @@ class SessionUserCompanion extends UpdateCompanion<SessionUserData> {
     if (urlServerLocal.present) {
       map['url_server_local'] = Variable<String>(urlServerLocal.value);
     }
+    if (complete.present) {
+      map['complete'] = Variable<bool>(complete.value);
+    }
     return map;
   }
 
@@ -1402,7 +1435,8 @@ class SessionUserCompanion extends UpdateCompanion<SessionUserData> {
     return (StringBuffer('SessionUserCompanion(')
           ..write('userId: $userId, ')
           ..write('hijoIdSelect: $hijoIdSelect, ')
-          ..write('urlServerLocal: $urlServerLocal')
+          ..write('urlServerLocal: $urlServerLocal, ')
+          ..write('complete: $complete')
           ..write(')'))
         .toString();
   }
@@ -1453,8 +1487,21 @@ class $SessionUserTable extends SessionUser
     );
   }
 
+  final VerificationMeta _completeMeta = const VerificationMeta('complete');
+  GeneratedBoolColumn _complete;
   @override
-  List<GeneratedColumn> get $columns => [userId, hijoIdSelect, urlServerLocal];
+  GeneratedBoolColumn get complete => _complete ??= _constructComplete();
+  GeneratedBoolColumn _constructComplete() {
+    return GeneratedBoolColumn(
+      'complete',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns =>
+      [userId, hijoIdSelect, urlServerLocal, complete];
   @override
   $SessionUserTable get asDslTable => this;
   @override
@@ -1481,6 +1528,10 @@ class $SessionUserTable extends SessionUser
           _urlServerLocalMeta,
           urlServerLocal.isAcceptableOrUnknown(
               data['url_server_local'], _urlServerLocalMeta));
+    }
+    if (data.containsKey('complete')) {
+      context.handle(_completeMeta,
+          complete.isAcceptableOrUnknown(data['complete'], _completeMeta));
     }
     return context;
   }
