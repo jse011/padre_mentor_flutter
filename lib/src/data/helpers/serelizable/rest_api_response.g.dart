@@ -799,3 +799,121 @@ Map<String, dynamic> _$ContactoSerializableToJson(
       'relacion': instance.relacion,
       'cargaCursoId': instance.cargaCursoId,
     };
+
+AdminServiceSerializable _$AdminServiceSerializableFromJson(
+    Map<String, dynamic> json) {
+  return AdminServiceSerializable(
+    UsuarioId: json['UsuarioId'] as int,
+    Estado: json['Estado'] as bool,
+    EntidadId: json['EntidadId'] as int,
+    UsuarioExternoId: json['UsuarioExternoId'] as int,
+    UsuarioCreadorId: json['UsuarioCreadorId'] as int,
+    UsuarioAccionId: json['UsuarioAccionId'] as int,
+    Opcion: json['Opcion'] as int,
+    Cantidad: json['Cantidad'] as int,
+    UrlServiceMovil: json['UrlServiceMovil'] as String,
+  );
+}
+
+Map<String, dynamic> _$AdminServiceSerializableToJson(
+        AdminServiceSerializable instance) =>
+    <String, dynamic>{
+      'UsuarioId': instance.UsuarioId,
+      'Estado': instance.Estado,
+      'EntidadId': instance.EntidadId,
+      'UsuarioExternoId': instance.UsuarioExternoId,
+      'UsuarioCreadorId': instance.UsuarioCreadorId,
+      'UsuarioAccionId': instance.UsuarioAccionId,
+      'Opcion': instance.Opcion,
+      'Cantidad': instance.Cantidad,
+      'UrlServiceMovil': instance.UrlServiceMovil,
+    };
+
+EntidadSerializable _$EntidadSerializableFromJson(Map<String, dynamic> json) {
+  return EntidadSerializable(
+    entidadId: json['entidadId'] as int,
+    tipoId: json['tipoId'] as int,
+    parentId: json['parentId'] as int,
+    nombre: json['nombre'] as String,
+    ruc: json['ruc'] as String,
+    site: json['site'] as String,
+    telefono: json['telefono'] as String,
+    correo: json['correo'] as String,
+    foto: json['foto'] as String,
+    estadoId: json['estadoId'] as int,
+  );
+}
+
+Map<String, dynamic> _$EntidadSerializableToJson(
+        EntidadSerializable instance) =>
+    <String, dynamic>{
+      'entidadId': instance.entidadId,
+      'tipoId': instance.tipoId,
+      'parentId': instance.parentId,
+      'nombre': instance.nombre,
+      'ruc': instance.ruc,
+      'site': instance.site,
+      'telefono': instance.telefono,
+      'correo': instance.correo,
+      'foto': instance.foto,
+      'estadoId': instance.estadoId,
+    };
+
+GeoreferenciaSerializable _$GeoreferenciaSerializableFromJson(
+    Map<String, dynamic> json) {
+  return GeoreferenciaSerializable(
+    georeferenciaId: json['georeferenciaId'] as int,
+    nombre: json['nombre'] as String,
+    entidadId: json['entidadId'] as int,
+    alias: json['alias'] as String,
+    estadoId: json['estadoId'] as int,
+  );
+}
+
+Map<String, dynamic> _$GeoreferenciaSerializableToJson(
+        GeoreferenciaSerializable instance) =>
+    <String, dynamic>{
+      'georeferenciaId': instance.georeferenciaId,
+      'nombre': instance.nombre,
+      'entidadId': instance.entidadId,
+      'alias': instance.alias,
+      'estadoId': instance.estadoId,
+    };
+
+RolSerializable _$RolSerializableFromJson(Map<String, dynamic> json) {
+  return RolSerializable(
+    rolId: json['rolId'] as int,
+    nombre: json['nombre'] as String,
+    parentId: json['parentId'] as int,
+    estado: json['estado'] as bool,
+  );
+}
+
+Map<String, dynamic> _$RolSerializableToJson(RolSerializable instance) =>
+    <String, dynamic>{
+      'rolId': instance.rolId,
+      'nombre': instance.nombre,
+      'parentId': instance.parentId,
+      'estado': instance.estado,
+    };
+
+UsuarioRolGeoreferenciaSerializable
+    _$UsuarioRolGeoreferenciaSerializableFromJson(Map<String, dynamic> json) {
+  return UsuarioRolGeoreferenciaSerializable(
+    usuarioRolGeoreferenciaId: json['usuarioRolGeoreferenciaId'] as int,
+    usuarioId: json['usuarioId'] as int,
+    rolId: json['rolId'] as int,
+    geoReferenciaId: json['geoReferenciaId'] as int,
+    entidadId: json['entidadId'] as int,
+  );
+}
+
+Map<String, dynamic> _$UsuarioRolGeoreferenciaSerializableToJson(
+        UsuarioRolGeoreferenciaSerializable instance) =>
+    <String, dynamic>{
+      'usuarioRolGeoreferenciaId': instance.usuarioRolGeoreferenciaId,
+      'usuarioId': instance.usuarioId,
+      'rolId': instance.rolId,
+      'geoReferenciaId': instance.geoReferenciaId,
+      'entidadId': instance.entidadId,
+    };

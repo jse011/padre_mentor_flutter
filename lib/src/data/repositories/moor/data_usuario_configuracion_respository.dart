@@ -1,4 +1,5 @@
 import 'package:moor_flutter/moor_flutter.dart';
+import 'package:padre_mentor/src/data/helpers/serelizable/rest_api_response.dart';
 import 'package:padre_mentor/src/data/repositories/moor/database/app_database.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/persona.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/programas_educativo.dart';
@@ -8,6 +9,7 @@ import 'package:padre_mentor/src/domain/entities/contacto_ui.dart';
 import 'package:padre_mentor/src/domain/entities/evento_ui.dart';
 import 'package:padre_mentor/src/domain/entities/familia_ui.dart';
 import 'package:padre_mentor/src/domain/entities/hijos_ui.dart';
+import 'package:padre_mentor/src/domain/entities/login_ui.dart';
 import 'package:padre_mentor/src/domain/entities/programa_educativo_ui.dart';
 import 'package:padre_mentor/src/domain/entities/tipo_evento_ui.dart';
 import 'package:padre_mentor/src/domain/entities/usuario_ui.dart';
@@ -583,6 +585,87 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
         limitList.add(eventoUi);
       }
       return eventoUiList;
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<bool> validarUsuario() async{
+    AppDataBase SQL = AppDataBase();
+    try{
+
+      SessionUserData sessionUserData = await (SQL.select(SQL.sessionUser)).getSingle();//El ORM genera error si hay dos registros
+      //Solo deve haber una registro de session user data
+      return sessionUserData!=null;
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<LoginUi> saveDatosServidor(Map<String, dynamic> datosServidor) async {
+    AppDataBase SQL = AppDataBase();
+    try{
+      LoginUi loginUi;
+      AdminServiceSerializable serviceSerializable = AdminServiceSerializable.fromJson(datosServidor);
+      print("saveDatosServidor UsuarioId: "+serviceSerializable.UsuarioId.toString());
+      print("saveDatosServidor UsuarioExternoId: "+serviceSerializable.UsuarioExternoId.toString());
+      if(serviceSerializable.UsuarioId==-1){
+        loginUi = LoginUi.INVALIDO;
+      }else{
+        if(serviceSerializable.UsuarioExternoId>0){
+          loginUi = LoginUi.SUCCESS;
+
+          SessionUserData sessionUserData = SessionUserData(userId: serviceSerializable.UsuarioExternoId, urlServerLocal: serviceSerializable.UrlServiceMovil);
+          SQL.into(SQL.sessionUser).insert(sessionUserData, mode: InsertMode.insertOrReplace);
+        }else{
+          loginUi = LoginUi.DUPLICADO;
+        }
+      }
+      return loginUi;
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<bool> cerrarCesion() async{
+    AppDataBase SQL = AppDataBase();
+    try{
+      return await SQL.delete(SQL.sessionUser).go()>0;
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<bool> saveUsuario(Map<String, dynamic> datosUsuario) async{
+    AppDataBase SQL = AppDataBase();
+    try{
+      await SQL.batch((batch) async {
+
+        if(datosUsuario.containsKey("entidades")){
+          //personaSerelizable.addAll(datosInicioPadre["usuariosrelacionados"]);
+          //database.personaDao.insertAllTodo(SerializableConvert.converListSerializePersona(datosInicioPadre["personas"]));
+          batch.insertAll(SQL.entidad, SerializableConvert.converListSerializeEntidad(datosUsuario["entidades"]), mode: InsertMode.insertOrReplace);
+        }
+
+        if(datosUsuario.containsKey("georeferencias")){
+          batch.insertAll(SQL.georeferencia, SerializableConvert.converListSerializeGeoreferencia(datosUsuario["georeferencias"]), mode: InsertMode.insertOrReplace );
+        }
+
+        if(datosUsuario.containsKey("roles")){
+          //personaSerelizable.addAll(datosInicioPadre["usuariosrelacionados"]);
+          batch.insertAll(SQL.rol, SerializableConvert.converListSerializeRol(datosUsuario["roles"]), mode: InsertMode.insertOrReplace);
+        }
+
+        if(datosUsuario.containsKey("usuarioRolGeoreferencias")){
+          //personaSerelizable.addAll(datosInicioPadre["usuariosrelacionados"]);
+          batch.insertAll(SQL.usuarioRolGeoreferencia, SerializableConvert.converListSerializeUsuarioRolGeoreferencia(datosUsuario["usuarioRolGeoreferencias"]), mode: InsertMode.insertOrReplace);
+        }
+
+      });
     }catch(e){
       throw Exception(e);
     }

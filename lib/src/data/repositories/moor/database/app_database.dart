@@ -8,7 +8,9 @@ import 'package:padre_mentor/src/data/repositories/moor/model/carga_cursos.dart'
 import 'package:padre_mentor/src/data/repositories/moor/model/contacto.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/contrato.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/detalle_contrato_acad.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/entidad.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/evento.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/georeferencia.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/notas_calendario_boleta.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/parametros_disenio.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/persona.dart';
@@ -16,6 +18,7 @@ import 'package:padre_mentor/src/data/repositories/moor/model/plan_cursos.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/plan_estudios.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/programas_educativo.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/relaciones.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/rol.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/rubro_eval_desempenio.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/session_user.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/session_user_hijo_programa.dart';
@@ -23,12 +26,13 @@ import 'package:padre_mentor/src/data/repositories/moor/model/silabo_evento.dart
 import 'package:padre_mentor/src/data/repositories/moor/model/tarea_curso.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/tipos.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/usuario.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/usuario_rol_georeferencia.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/web_configs.dart';
 
 part 'app_database.g.dart';
 
 @UseMoor(tables: [Persona, Usuario, SessionUser, Relaciones, AnioAcademicoAlumno, ProgramasEducativo, PlanEstudio, PlanCursos, CargaCurso, DetalleContratoAcad, Contrato, CalendarioAcademico, CalendarioPeriodo, Tipos,
-                  AreasBoleta, NotasCalendarioBoleta, ParametrosDisenio, SilaboEvento, RubroEvalDesempenio, WebConfigs, TareaCurso, Evento, Calendario, SessionUserHijo, Contacto])
+                  AreasBoleta, NotasCalendarioBoleta, ParametrosDisenio, SilaboEvento, RubroEvalDesempenio, WebConfigs, TareaCurso, Evento, Calendario, SessionUserHijo, Contacto, Entidad, Georeferencia, Rol, UsuarioRolGeoreferencia])
 class AppDataBase extends _$AppDataBase{
 
   @override

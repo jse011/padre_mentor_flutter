@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:padre_mentor/src/app/page/home/home_view.dart';
+import 'package:padre_mentor/src/app/page/login/login_view.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 
 
@@ -38,6 +39,10 @@ class MyApp2 extends StatelessWidget{
       ),
       //home: MyHomePage(),
       home:  HomePage(),
+      routes: <String, WidgetBuilder> {
+        '/login': (BuildContext context) => LoginView(),
+        '/home' : (BuildContext context) => HomePage(),
+      },
     );
   }
 }

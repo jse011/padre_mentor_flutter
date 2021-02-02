@@ -155,7 +155,7 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
       // then parse the JSON.
       Map<String,dynamic> body = json.decode(response.body);
       if(body.containsKey("Successful")&&body.containsKey("Value")){
-         body["Value"];
+
         Map<String, dynamic> salida = new  Map<String, dynamic>();
          List<dynamic> lista = body["Value"];
         salida["contactos"] = lista;
@@ -170,6 +170,64 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
       throw Exception('Failed to load agenda 0');
     }
   }
+
+  @override
+  Future<Map<String, dynamic>> getUsuarioExterno(int opcion, String usuario, String password, String correo, String dni) async{
+    String urlServidor = "http://admin.consultoraestrategia.com/ServiceAdmin/Service/ServiceAdmin.ashx";
+
+    Map<String, dynamic> obj_usuario = Map<String, dynamic>();
+    obj_usuario["Opcion"] = opcion;
+    obj_usuario["Usuario"] = usuario;
+    obj_usuario["Passwordd"] = password;
+    obj_usuario["Correo"] = correo;
+    obj_usuario["NumDoc"] = dni;
+
+    Map<String, dynamic>  parameters = Map<String, dynamic>();
+    parameters["vobj_Usuario"] = obj_usuario;
+
+
+    final response = await http.post(urlServidor, body: getBody("f_BuscarUsuarioCent",parameters));
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      Map<String,dynamic> body = json.decode(response.body);
+      if(body.containsKey("Successful")&&body.containsKey("Value")){
+        return body["Value"];;
+      }else{
+        return null;
+      }
+
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load agenda 0');
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> getUsuario(int usuarioId) async{
+    Map<String, dynamic> parameters = Map<String, dynamic>();
+    parameters["UsuarioId"] = usuarioId;
+    final response = await http.post(url, body: getBody("fobj_ObtenerUsuario_By_Id",parameters));
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      Map<String,dynamic> body = json.decode(response.body);
+      if(body.containsKey("Successful")&&body.containsKey("Value")){
+
+        return body["Value"];
+      }else{
+        return null;
+      }
+
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load agenda 0');
+    }
+  }
+
+
 
 
 }

@@ -629,4 +629,89 @@ class SerializableConvert{
     }
     return items;
   }
+
+
+  static EntidadData converSerializeEntidad(Map<String,dynamic> model){
+    EntidadSerializable serial = EntidadSerializable.fromJson(model);
+    return EntidadData(
+       entidadId: serial.entidadId,
+       tipoId: serial.tipoId,
+       parentId: serial.parentId,
+       nombre: serial.nombre,
+       ruc: serial.ruc,
+       site: serial.site,
+       telefono: serial.telefono,
+       correo: serial.correo,
+       foto: serial.foto,
+       estadoId: serial.entidadId
+    );
+  }
+
+  static List<EntidadData> converListSerializeEntidad(dynamic model){
+    List<EntidadData> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeEntidad(item));
+    }
+    return items;
+  }
+
+  static GeoreferenciaData converSerializeGeoreferencia(Map<String,dynamic> model){
+    GeoreferenciaSerializable serial = GeoreferenciaSerializable.fromJson(model);
+    return GeoreferenciaData(
+       georeferenciaId: serial.georeferenciaId,
+       nombre: serial.nombre,
+       entidadId: serial.entidadId,
+       geoAlias: serial.alias,
+       estadoId: serial.estadoId
+    );
+  }
+
+  static List<GeoreferenciaData> converListSerializeGeoreferencia(dynamic model){
+    List<GeoreferenciaData> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeGeoreferencia(item));
+    }
+    return items;
+  }
+
+  static RolData converSerializeRol(Map<String,dynamic> model){
+    RolSerializable serial = RolSerializable.fromJson(model);
+    return RolData(
+       rolId: serial.rolId,
+        nombre: serial.nombre,
+        parentId: serial.parentId,
+        estado: serial.estado
+    );
+  }
+
+  static List<RolData> converListSerializeRol(dynamic model){
+    List<RolData> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeRol(item));
+    }
+    return items;
+  }
+
+  static UsuarioRolGeoreferenciaData converSerializeUsuarioRolGeoreferencia(Map<String,dynamic> model){
+    UsuarioRolGeoreferenciaSerializable serial = UsuarioRolGeoreferenciaSerializable.fromJson(model);
+    return UsuarioRolGeoreferenciaData(
+       usuarioRolGeoreferenciaId: serial.usuarioRolGeoreferenciaId,
+       usuarioId: serial.usuarioId,
+       rolId: serial.rolId,
+       geoReferenciaId: serial.geoReferenciaId,
+       entidadId: serial.entidadId
+    );
+  }
+
+  static List<UsuarioRolGeoreferenciaData> converListSerializeUsuarioRolGeoreferencia(dynamic model){
+    List<UsuarioRolGeoreferenciaData> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeUsuarioRolGeoreferencia(item));
+    }
+    return items;
+  }
 }

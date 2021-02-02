@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:padre_mentor/src/app/page/editar_usuario/editar_usuario_view.dart';
+import 'package:padre_mentor/src/app/page/login/login_router.dart';
 import 'package:padre_mentor/src/app/page/menu/feedback_screen.dart';
 import 'package:padre_mentor/src/app/page/menu/help_screen.dart';
 import 'package:padre_mentor/src/app/page/menu/home_screen.dart';
@@ -50,39 +52,51 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
             ),*/
             body: ControlledWidgetBuilder<HomeController>(
               builder: (context, controller) {
-                changeIndex(controller.vistaActual);
+                if(controller.showLoggin == 0){
+                  return Container();
+                }else if(controller.showLoggin == 1){
+                  SchedulerBinding.instance.addPostFrameCallback((_) {
+                    // fetch data
+                    LoginRouter.createRouteLogin(context);
+                  });
 
-                return DrawerUserController(
-                  photoUser: controller.usuario == null ? '' : '${controller.usuario.foto}',
-                  nameUser: controller.usuario == null ? '' : '${controller.usuario.nombreSimple}',
-                  correo: controller.usuario == null ? '' : '${controller.usuario.correo}',
-                  screenIndex: _drawerIndex,
-                  drawerWidth: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.70,
-                  onDrawerCall: (DrawerIndex drawerIndexdata) {
+                  return Container();
+                }else{
+                  changeIndex(controller.vistaActual);
+                  return DrawerUserController(
+                    photoUser: controller.usuario == null ? '' : '${controller.usuario.foto}',
+                    nameUser: controller.usuario == null ? '' : '${controller.usuario.nombreSimple}',
+                    correo: controller.usuario == null ? '' : '${controller.usuario.correo}',
+                    screenIndex: _drawerIndex,
+                    screenView: _screenView,
+                    drawerWidth: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.70,
+                      onDrawerCall: (DrawerIndex drawerIndexdata) {
 
-                    switch(drawerIndexdata){
-                      case DrawerIndex.HOME:
-                        controller.onSelectedVistaPrincial();
-                        break;
-                      case DrawerIndex.EDITUSER:
-                        controller.onSelectedVistaEditUsuario();
-                        break;
-                      case DrawerIndex.SUGERENCIAS:
-                        controller.onSelectedVistaFeedBack();
-                        break;
-                      case DrawerIndex.ABAOUT:
-                        controller.onSelectedVistaAbout();
-                        break;
-                    }
-                    //callback from drawer for replace screen as user need with passing DrawerIndex(Enum index)
-                  },
-                  screenView: _screenView,
-                  //we replace screen view as we need on navigate starting screens like MyHomePage, HelpScreen, FeedbackScreen, etc...
-                );
-              },
+                        switch(drawerIndexdata){
+                          case DrawerIndex.HOME:
+                            controller.onSelectedVistaPrincial();
+                            break;
+                          case DrawerIndex.EDITUSER:
+                            controller.onSelectedVistaEditUsuario();
+                            break;
+                          case DrawerIndex.SUGERENCIAS:
+                            controller.onSelectedVistaFeedBack();
+                            break;
+                          case DrawerIndex.ABAOUT:
+                            controller.onSelectedVistaAbout();
+                            break;
+                        }
+
+                      },
+                    onClickCerrarCession: (){
+                      controller.onClickCerrarCession();
+                    },
+                  );
+                }
+              }
             ),
           ),
         ),

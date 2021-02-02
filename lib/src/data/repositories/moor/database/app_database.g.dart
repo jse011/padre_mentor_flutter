@@ -1251,17 +1251,22 @@ class $UsuarioTable extends Usuario with TableInfo<$UsuarioTable, UsuarioData> {
 class SessionUserData extends DataClass implements Insertable<SessionUserData> {
   final int userId;
   final int hijoIdSelect;
-  SessionUserData({@required this.userId, this.hijoIdSelect});
+  final String urlServerLocal;
+  SessionUserData(
+      {@required this.userId, this.hijoIdSelect, this.urlServerLocal});
   factory SessionUserData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
     return SessionUserData(
       userId:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}user_id']),
       hijoIdSelect: intType
           .mapFromDatabaseResponse(data['${effectivePrefix}hijo_id_select']),
+      urlServerLocal: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}url_server_local']),
     );
   }
   @override
@@ -1273,6 +1278,9 @@ class SessionUserData extends DataClass implements Insertable<SessionUserData> {
     if (!nullToAbsent || hijoIdSelect != null) {
       map['hijo_id_select'] = Variable<int>(hijoIdSelect);
     }
+    if (!nullToAbsent || urlServerLocal != null) {
+      map['url_server_local'] = Variable<String>(urlServerLocal);
+    }
     return map;
   }
 
@@ -1283,6 +1291,9 @@ class SessionUserData extends DataClass implements Insertable<SessionUserData> {
       hijoIdSelect: hijoIdSelect == null && nullToAbsent
           ? const Value.absent()
           : Value(hijoIdSelect),
+      urlServerLocal: urlServerLocal == null && nullToAbsent
+          ? const Value.absent()
+          : Value(urlServerLocal),
     );
   }
 
@@ -1292,6 +1303,7 @@ class SessionUserData extends DataClass implements Insertable<SessionUserData> {
     return SessionUserData(
       userId: serializer.fromJson<int>(json['userId']),
       hijoIdSelect: serializer.fromJson<int>(json['hijoIdSelect']),
+      urlServerLocal: serializer.fromJson<String>(json['urlServerLocal']),
     );
   }
   @override
@@ -1300,57 +1312,73 @@ class SessionUserData extends DataClass implements Insertable<SessionUserData> {
     return <String, dynamic>{
       'userId': serializer.toJson<int>(userId),
       'hijoIdSelect': serializer.toJson<int>(hijoIdSelect),
+      'urlServerLocal': serializer.toJson<String>(urlServerLocal),
     };
   }
 
-  SessionUserData copyWith({int userId, int hijoIdSelect}) => SessionUserData(
+  SessionUserData copyWith(
+          {int userId, int hijoIdSelect, String urlServerLocal}) =>
+      SessionUserData(
         userId: userId ?? this.userId,
         hijoIdSelect: hijoIdSelect ?? this.hijoIdSelect,
+        urlServerLocal: urlServerLocal ?? this.urlServerLocal,
       );
   @override
   String toString() {
     return (StringBuffer('SessionUserData(')
           ..write('userId: $userId, ')
-          ..write('hijoIdSelect: $hijoIdSelect')
+          ..write('hijoIdSelect: $hijoIdSelect, ')
+          ..write('urlServerLocal: $urlServerLocal')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(userId.hashCode, hijoIdSelect.hashCode));
+  int get hashCode => $mrjf($mrjc(
+      userId.hashCode, $mrjc(hijoIdSelect.hashCode, urlServerLocal.hashCode)));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is SessionUserData &&
           other.userId == this.userId &&
-          other.hijoIdSelect == this.hijoIdSelect);
+          other.hijoIdSelect == this.hijoIdSelect &&
+          other.urlServerLocal == this.urlServerLocal);
 }
 
 class SessionUserCompanion extends UpdateCompanion<SessionUserData> {
   final Value<int> userId;
   final Value<int> hijoIdSelect;
+  final Value<String> urlServerLocal;
   const SessionUserCompanion({
     this.userId = const Value.absent(),
     this.hijoIdSelect = const Value.absent(),
+    this.urlServerLocal = const Value.absent(),
   });
   SessionUserCompanion.insert({
     this.userId = const Value.absent(),
     this.hijoIdSelect = const Value.absent(),
+    this.urlServerLocal = const Value.absent(),
   });
   static Insertable<SessionUserData> custom({
     Expression<int> userId,
     Expression<int> hijoIdSelect,
+    Expression<String> urlServerLocal,
   }) {
     return RawValuesInsertable({
       if (userId != null) 'user_id': userId,
       if (hijoIdSelect != null) 'hijo_id_select': hijoIdSelect,
+      if (urlServerLocal != null) 'url_server_local': urlServerLocal,
     });
   }
 
-  SessionUserCompanion copyWith({Value<int> userId, Value<int> hijoIdSelect}) {
+  SessionUserCompanion copyWith(
+      {Value<int> userId,
+      Value<int> hijoIdSelect,
+      Value<String> urlServerLocal}) {
     return SessionUserCompanion(
       userId: userId ?? this.userId,
       hijoIdSelect: hijoIdSelect ?? this.hijoIdSelect,
+      urlServerLocal: urlServerLocal ?? this.urlServerLocal,
     );
   }
 
@@ -1363,6 +1391,9 @@ class SessionUserCompanion extends UpdateCompanion<SessionUserData> {
     if (hijoIdSelect.present) {
       map['hijo_id_select'] = Variable<int>(hijoIdSelect.value);
     }
+    if (urlServerLocal.present) {
+      map['url_server_local'] = Variable<String>(urlServerLocal.value);
+    }
     return map;
   }
 
@@ -1370,7 +1401,8 @@ class SessionUserCompanion extends UpdateCompanion<SessionUserData> {
   String toString() {
     return (StringBuffer('SessionUserCompanion(')
           ..write('userId: $userId, ')
-          ..write('hijoIdSelect: $hijoIdSelect')
+          ..write('hijoIdSelect: $hijoIdSelect, ')
+          ..write('urlServerLocal: $urlServerLocal')
           ..write(')'))
         .toString();
   }
@@ -1407,8 +1439,22 @@ class $SessionUserTable extends SessionUser
     );
   }
 
+  final VerificationMeta _urlServerLocalMeta =
+      const VerificationMeta('urlServerLocal');
+  GeneratedTextColumn _urlServerLocal;
   @override
-  List<GeneratedColumn> get $columns => [userId, hijoIdSelect];
+  GeneratedTextColumn get urlServerLocal =>
+      _urlServerLocal ??= _constructUrlServerLocal();
+  GeneratedTextColumn _constructUrlServerLocal() {
+    return GeneratedTextColumn(
+      'url_server_local',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [userId, hijoIdSelect, urlServerLocal];
   @override
   $SessionUserTable get asDslTable => this;
   @override
@@ -1429,6 +1475,12 @@ class $SessionUserTable extends SessionUser
           _hijoIdSelectMeta,
           hijoIdSelect.isAcceptableOrUnknown(
               data['hijo_id_select'], _hijoIdSelectMeta));
+    }
+    if (data.containsKey('url_server_local')) {
+      context.handle(
+          _urlServerLocalMeta,
+          urlServerLocal.isAcceptableOrUnknown(
+              data['url_server_local'], _urlServerLocalMeta));
     }
     return context;
   }
@@ -16948,6 +17000,1547 @@ class $ContactoTable extends Contacto
   }
 }
 
+class EntidadData extends DataClass implements Insertable<EntidadData> {
+  final int entidadId;
+  final int tipoId;
+  final int parentId;
+  final String nombre;
+  final String ruc;
+  final String site;
+  final String telefono;
+  final String correo;
+  final String foto;
+  final int estadoId;
+  EntidadData(
+      {@required this.entidadId,
+      this.tipoId,
+      this.parentId,
+      this.nombre,
+      this.ruc,
+      this.site,
+      this.telefono,
+      this.correo,
+      this.foto,
+      this.estadoId});
+  factory EntidadData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return EntidadData(
+      entidadId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}entidad_id']),
+      tipoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}tipo_id']),
+      parentId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}parent_id']),
+      nombre:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}nombre']),
+      ruc: stringType.mapFromDatabaseResponse(data['${effectivePrefix}ruc']),
+      site: stringType.mapFromDatabaseResponse(data['${effectivePrefix}site']),
+      telefono: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}telefono']),
+      correo:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}correo']),
+      foto: stringType.mapFromDatabaseResponse(data['${effectivePrefix}foto']),
+      estadoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}estado_id']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || entidadId != null) {
+      map['entidad_id'] = Variable<int>(entidadId);
+    }
+    if (!nullToAbsent || tipoId != null) {
+      map['tipo_id'] = Variable<int>(tipoId);
+    }
+    if (!nullToAbsent || parentId != null) {
+      map['parent_id'] = Variable<int>(parentId);
+    }
+    if (!nullToAbsent || nombre != null) {
+      map['nombre'] = Variable<String>(nombre);
+    }
+    if (!nullToAbsent || ruc != null) {
+      map['ruc'] = Variable<String>(ruc);
+    }
+    if (!nullToAbsent || site != null) {
+      map['site'] = Variable<String>(site);
+    }
+    if (!nullToAbsent || telefono != null) {
+      map['telefono'] = Variable<String>(telefono);
+    }
+    if (!nullToAbsent || correo != null) {
+      map['correo'] = Variable<String>(correo);
+    }
+    if (!nullToAbsent || foto != null) {
+      map['foto'] = Variable<String>(foto);
+    }
+    if (!nullToAbsent || estadoId != null) {
+      map['estado_id'] = Variable<int>(estadoId);
+    }
+    return map;
+  }
+
+  EntidadCompanion toCompanion(bool nullToAbsent) {
+    return EntidadCompanion(
+      entidadId: entidadId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(entidadId),
+      tipoId:
+          tipoId == null && nullToAbsent ? const Value.absent() : Value(tipoId),
+      parentId: parentId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parentId),
+      nombre:
+          nombre == null && nullToAbsent ? const Value.absent() : Value(nombre),
+      ruc: ruc == null && nullToAbsent ? const Value.absent() : Value(ruc),
+      site: site == null && nullToAbsent ? const Value.absent() : Value(site),
+      telefono: telefono == null && nullToAbsent
+          ? const Value.absent()
+          : Value(telefono),
+      correo:
+          correo == null && nullToAbsent ? const Value.absent() : Value(correo),
+      foto: foto == null && nullToAbsent ? const Value.absent() : Value(foto),
+      estadoId: estadoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadoId),
+    );
+  }
+
+  factory EntidadData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return EntidadData(
+      entidadId: serializer.fromJson<int>(json['entidadId']),
+      tipoId: serializer.fromJson<int>(json['tipoId']),
+      parentId: serializer.fromJson<int>(json['parentId']),
+      nombre: serializer.fromJson<String>(json['nombre']),
+      ruc: serializer.fromJson<String>(json['ruc']),
+      site: serializer.fromJson<String>(json['site']),
+      telefono: serializer.fromJson<String>(json['telefono']),
+      correo: serializer.fromJson<String>(json['correo']),
+      foto: serializer.fromJson<String>(json['foto']),
+      estadoId: serializer.fromJson<int>(json['estadoId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'entidadId': serializer.toJson<int>(entidadId),
+      'tipoId': serializer.toJson<int>(tipoId),
+      'parentId': serializer.toJson<int>(parentId),
+      'nombre': serializer.toJson<String>(nombre),
+      'ruc': serializer.toJson<String>(ruc),
+      'site': serializer.toJson<String>(site),
+      'telefono': serializer.toJson<String>(telefono),
+      'correo': serializer.toJson<String>(correo),
+      'foto': serializer.toJson<String>(foto),
+      'estadoId': serializer.toJson<int>(estadoId),
+    };
+  }
+
+  EntidadData copyWith(
+          {int entidadId,
+          int tipoId,
+          int parentId,
+          String nombre,
+          String ruc,
+          String site,
+          String telefono,
+          String correo,
+          String foto,
+          int estadoId}) =>
+      EntidadData(
+        entidadId: entidadId ?? this.entidadId,
+        tipoId: tipoId ?? this.tipoId,
+        parentId: parentId ?? this.parentId,
+        nombre: nombre ?? this.nombre,
+        ruc: ruc ?? this.ruc,
+        site: site ?? this.site,
+        telefono: telefono ?? this.telefono,
+        correo: correo ?? this.correo,
+        foto: foto ?? this.foto,
+        estadoId: estadoId ?? this.estadoId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('EntidadData(')
+          ..write('entidadId: $entidadId, ')
+          ..write('tipoId: $tipoId, ')
+          ..write('parentId: $parentId, ')
+          ..write('nombre: $nombre, ')
+          ..write('ruc: $ruc, ')
+          ..write('site: $site, ')
+          ..write('telefono: $telefono, ')
+          ..write('correo: $correo, ')
+          ..write('foto: $foto, ')
+          ..write('estadoId: $estadoId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      entidadId.hashCode,
+      $mrjc(
+          tipoId.hashCode,
+          $mrjc(
+              parentId.hashCode,
+              $mrjc(
+                  nombre.hashCode,
+                  $mrjc(
+                      ruc.hashCode,
+                      $mrjc(
+                          site.hashCode,
+                          $mrjc(
+                              telefono.hashCode,
+                              $mrjc(
+                                  correo.hashCode,
+                                  $mrjc(foto.hashCode,
+                                      estadoId.hashCode))))))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is EntidadData &&
+          other.entidadId == this.entidadId &&
+          other.tipoId == this.tipoId &&
+          other.parentId == this.parentId &&
+          other.nombre == this.nombre &&
+          other.ruc == this.ruc &&
+          other.site == this.site &&
+          other.telefono == this.telefono &&
+          other.correo == this.correo &&
+          other.foto == this.foto &&
+          other.estadoId == this.estadoId);
+}
+
+class EntidadCompanion extends UpdateCompanion<EntidadData> {
+  final Value<int> entidadId;
+  final Value<int> tipoId;
+  final Value<int> parentId;
+  final Value<String> nombre;
+  final Value<String> ruc;
+  final Value<String> site;
+  final Value<String> telefono;
+  final Value<String> correo;
+  final Value<String> foto;
+  final Value<int> estadoId;
+  const EntidadCompanion({
+    this.entidadId = const Value.absent(),
+    this.tipoId = const Value.absent(),
+    this.parentId = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.ruc = const Value.absent(),
+    this.site = const Value.absent(),
+    this.telefono = const Value.absent(),
+    this.correo = const Value.absent(),
+    this.foto = const Value.absent(),
+    this.estadoId = const Value.absent(),
+  });
+  EntidadCompanion.insert({
+    this.entidadId = const Value.absent(),
+    this.tipoId = const Value.absent(),
+    this.parentId = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.ruc = const Value.absent(),
+    this.site = const Value.absent(),
+    this.telefono = const Value.absent(),
+    this.correo = const Value.absent(),
+    this.foto = const Value.absent(),
+    this.estadoId = const Value.absent(),
+  });
+  static Insertable<EntidadData> custom({
+    Expression<int> entidadId,
+    Expression<int> tipoId,
+    Expression<int> parentId,
+    Expression<String> nombre,
+    Expression<String> ruc,
+    Expression<String> site,
+    Expression<String> telefono,
+    Expression<String> correo,
+    Expression<String> foto,
+    Expression<int> estadoId,
+  }) {
+    return RawValuesInsertable({
+      if (entidadId != null) 'entidad_id': entidadId,
+      if (tipoId != null) 'tipo_id': tipoId,
+      if (parentId != null) 'parent_id': parentId,
+      if (nombre != null) 'nombre': nombre,
+      if (ruc != null) 'ruc': ruc,
+      if (site != null) 'site': site,
+      if (telefono != null) 'telefono': telefono,
+      if (correo != null) 'correo': correo,
+      if (foto != null) 'foto': foto,
+      if (estadoId != null) 'estado_id': estadoId,
+    });
+  }
+
+  EntidadCompanion copyWith(
+      {Value<int> entidadId,
+      Value<int> tipoId,
+      Value<int> parentId,
+      Value<String> nombre,
+      Value<String> ruc,
+      Value<String> site,
+      Value<String> telefono,
+      Value<String> correo,
+      Value<String> foto,
+      Value<int> estadoId}) {
+    return EntidadCompanion(
+      entidadId: entidadId ?? this.entidadId,
+      tipoId: tipoId ?? this.tipoId,
+      parentId: parentId ?? this.parentId,
+      nombre: nombre ?? this.nombre,
+      ruc: ruc ?? this.ruc,
+      site: site ?? this.site,
+      telefono: telefono ?? this.telefono,
+      correo: correo ?? this.correo,
+      foto: foto ?? this.foto,
+      estadoId: estadoId ?? this.estadoId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (entidadId.present) {
+      map['entidad_id'] = Variable<int>(entidadId.value);
+    }
+    if (tipoId.present) {
+      map['tipo_id'] = Variable<int>(tipoId.value);
+    }
+    if (parentId.present) {
+      map['parent_id'] = Variable<int>(parentId.value);
+    }
+    if (nombre.present) {
+      map['nombre'] = Variable<String>(nombre.value);
+    }
+    if (ruc.present) {
+      map['ruc'] = Variable<String>(ruc.value);
+    }
+    if (site.present) {
+      map['site'] = Variable<String>(site.value);
+    }
+    if (telefono.present) {
+      map['telefono'] = Variable<String>(telefono.value);
+    }
+    if (correo.present) {
+      map['correo'] = Variable<String>(correo.value);
+    }
+    if (foto.present) {
+      map['foto'] = Variable<String>(foto.value);
+    }
+    if (estadoId.present) {
+      map['estado_id'] = Variable<int>(estadoId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('EntidadCompanion(')
+          ..write('entidadId: $entidadId, ')
+          ..write('tipoId: $tipoId, ')
+          ..write('parentId: $parentId, ')
+          ..write('nombre: $nombre, ')
+          ..write('ruc: $ruc, ')
+          ..write('site: $site, ')
+          ..write('telefono: $telefono, ')
+          ..write('correo: $correo, ')
+          ..write('foto: $foto, ')
+          ..write('estadoId: $estadoId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $EntidadTable extends Entidad with TableInfo<$EntidadTable, EntidadData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $EntidadTable(this._db, [this._alias]);
+  final VerificationMeta _entidadIdMeta = const VerificationMeta('entidadId');
+  GeneratedIntColumn _entidadId;
+  @override
+  GeneratedIntColumn get entidadId => _entidadId ??= _constructEntidadId();
+  GeneratedIntColumn _constructEntidadId() {
+    return GeneratedIntColumn(
+      'entidad_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _tipoIdMeta = const VerificationMeta('tipoId');
+  GeneratedIntColumn _tipoId;
+  @override
+  GeneratedIntColumn get tipoId => _tipoId ??= _constructTipoId();
+  GeneratedIntColumn _constructTipoId() {
+    return GeneratedIntColumn(
+      'tipo_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _parentIdMeta = const VerificationMeta('parentId');
+  GeneratedIntColumn _parentId;
+  @override
+  GeneratedIntColumn get parentId => _parentId ??= _constructParentId();
+  GeneratedIntColumn _constructParentId() {
+    return GeneratedIntColumn(
+      'parent_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _nombreMeta = const VerificationMeta('nombre');
+  GeneratedTextColumn _nombre;
+  @override
+  GeneratedTextColumn get nombre => _nombre ??= _constructNombre();
+  GeneratedTextColumn _constructNombre() {
+    return GeneratedTextColumn(
+      'nombre',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _rucMeta = const VerificationMeta('ruc');
+  GeneratedTextColumn _ruc;
+  @override
+  GeneratedTextColumn get ruc => _ruc ??= _constructRuc();
+  GeneratedTextColumn _constructRuc() {
+    return GeneratedTextColumn(
+      'ruc',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _siteMeta = const VerificationMeta('site');
+  GeneratedTextColumn _site;
+  @override
+  GeneratedTextColumn get site => _site ??= _constructSite();
+  GeneratedTextColumn _constructSite() {
+    return GeneratedTextColumn(
+      'site',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _telefonoMeta = const VerificationMeta('telefono');
+  GeneratedTextColumn _telefono;
+  @override
+  GeneratedTextColumn get telefono => _telefono ??= _constructTelefono();
+  GeneratedTextColumn _constructTelefono() {
+    return GeneratedTextColumn(
+      'telefono',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _correoMeta = const VerificationMeta('correo');
+  GeneratedTextColumn _correo;
+  @override
+  GeneratedTextColumn get correo => _correo ??= _constructCorreo();
+  GeneratedTextColumn _constructCorreo() {
+    return GeneratedTextColumn(
+      'correo',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _fotoMeta = const VerificationMeta('foto');
+  GeneratedTextColumn _foto;
+  @override
+  GeneratedTextColumn get foto => _foto ??= _constructFoto();
+  GeneratedTextColumn _constructFoto() {
+    return GeneratedTextColumn(
+      'foto',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoIdMeta = const VerificationMeta('estadoId');
+  GeneratedIntColumn _estadoId;
+  @override
+  GeneratedIntColumn get estadoId => _estadoId ??= _constructEstadoId();
+  GeneratedIntColumn _constructEstadoId() {
+    return GeneratedIntColumn(
+      'estado_id',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        entidadId,
+        tipoId,
+        parentId,
+        nombre,
+        ruc,
+        site,
+        telefono,
+        correo,
+        foto,
+        estadoId
+      ];
+  @override
+  $EntidadTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'entidad';
+  @override
+  final String actualTableName = 'entidad';
+  @override
+  VerificationContext validateIntegrity(Insertable<EntidadData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('entidad_id')) {
+      context.handle(_entidadIdMeta,
+          entidadId.isAcceptableOrUnknown(data['entidad_id'], _entidadIdMeta));
+    }
+    if (data.containsKey('tipo_id')) {
+      context.handle(_tipoIdMeta,
+          tipoId.isAcceptableOrUnknown(data['tipo_id'], _tipoIdMeta));
+    }
+    if (data.containsKey('parent_id')) {
+      context.handle(_parentIdMeta,
+          parentId.isAcceptableOrUnknown(data['parent_id'], _parentIdMeta));
+    }
+    if (data.containsKey('nombre')) {
+      context.handle(_nombreMeta,
+          nombre.isAcceptableOrUnknown(data['nombre'], _nombreMeta));
+    }
+    if (data.containsKey('ruc')) {
+      context.handle(
+          _rucMeta, ruc.isAcceptableOrUnknown(data['ruc'], _rucMeta));
+    }
+    if (data.containsKey('site')) {
+      context.handle(
+          _siteMeta, site.isAcceptableOrUnknown(data['site'], _siteMeta));
+    }
+    if (data.containsKey('telefono')) {
+      context.handle(_telefonoMeta,
+          telefono.isAcceptableOrUnknown(data['telefono'], _telefonoMeta));
+    }
+    if (data.containsKey('correo')) {
+      context.handle(_correoMeta,
+          correo.isAcceptableOrUnknown(data['correo'], _correoMeta));
+    }
+    if (data.containsKey('foto')) {
+      context.handle(
+          _fotoMeta, foto.isAcceptableOrUnknown(data['foto'], _fotoMeta));
+    }
+    if (data.containsKey('estado_id')) {
+      context.handle(_estadoIdMeta,
+          estadoId.isAcceptableOrUnknown(data['estado_id'], _estadoIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {entidadId};
+  @override
+  EntidadData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return EntidadData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $EntidadTable createAlias(String alias) {
+    return $EntidadTable(_db, alias);
+  }
+}
+
+class GeoreferenciaData extends DataClass
+    implements Insertable<GeoreferenciaData> {
+  final int georeferenciaId;
+  final String nombre;
+  final int entidadId;
+  final String geoAlias;
+  final int estadoId;
+  GeoreferenciaData(
+      {@required this.georeferenciaId,
+      this.nombre,
+      this.entidadId,
+      this.geoAlias,
+      this.estadoId});
+  factory GeoreferenciaData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return GeoreferenciaData(
+      georeferenciaId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}georeferencia_id']),
+      nombre:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}nombre']),
+      entidadId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}entidad_id']),
+      geoAlias: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}geo_alias']),
+      estadoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}estado_id']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || georeferenciaId != null) {
+      map['georeferencia_id'] = Variable<int>(georeferenciaId);
+    }
+    if (!nullToAbsent || nombre != null) {
+      map['nombre'] = Variable<String>(nombre);
+    }
+    if (!nullToAbsent || entidadId != null) {
+      map['entidad_id'] = Variable<int>(entidadId);
+    }
+    if (!nullToAbsent || geoAlias != null) {
+      map['geo_alias'] = Variable<String>(geoAlias);
+    }
+    if (!nullToAbsent || estadoId != null) {
+      map['estado_id'] = Variable<int>(estadoId);
+    }
+    return map;
+  }
+
+  GeoreferenciaCompanion toCompanion(bool nullToAbsent) {
+    return GeoreferenciaCompanion(
+      georeferenciaId: georeferenciaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(georeferenciaId),
+      nombre:
+          nombre == null && nullToAbsent ? const Value.absent() : Value(nombre),
+      entidadId: entidadId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(entidadId),
+      geoAlias: geoAlias == null && nullToAbsent
+          ? const Value.absent()
+          : Value(geoAlias),
+      estadoId: estadoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadoId),
+    );
+  }
+
+  factory GeoreferenciaData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return GeoreferenciaData(
+      georeferenciaId: serializer.fromJson<int>(json['georeferenciaId']),
+      nombre: serializer.fromJson<String>(json['nombre']),
+      entidadId: serializer.fromJson<int>(json['entidadId']),
+      geoAlias: serializer.fromJson<String>(json['geoAlias']),
+      estadoId: serializer.fromJson<int>(json['estadoId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'georeferenciaId': serializer.toJson<int>(georeferenciaId),
+      'nombre': serializer.toJson<String>(nombre),
+      'entidadId': serializer.toJson<int>(entidadId),
+      'geoAlias': serializer.toJson<String>(geoAlias),
+      'estadoId': serializer.toJson<int>(estadoId),
+    };
+  }
+
+  GeoreferenciaData copyWith(
+          {int georeferenciaId,
+          String nombre,
+          int entidadId,
+          String geoAlias,
+          int estadoId}) =>
+      GeoreferenciaData(
+        georeferenciaId: georeferenciaId ?? this.georeferenciaId,
+        nombre: nombre ?? this.nombre,
+        entidadId: entidadId ?? this.entidadId,
+        geoAlias: geoAlias ?? this.geoAlias,
+        estadoId: estadoId ?? this.estadoId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('GeoreferenciaData(')
+          ..write('georeferenciaId: $georeferenciaId, ')
+          ..write('nombre: $nombre, ')
+          ..write('entidadId: $entidadId, ')
+          ..write('geoAlias: $geoAlias, ')
+          ..write('estadoId: $estadoId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      georeferenciaId.hashCode,
+      $mrjc(
+          nombre.hashCode,
+          $mrjc(entidadId.hashCode,
+              $mrjc(geoAlias.hashCode, estadoId.hashCode)))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is GeoreferenciaData &&
+          other.georeferenciaId == this.georeferenciaId &&
+          other.nombre == this.nombre &&
+          other.entidadId == this.entidadId &&
+          other.geoAlias == this.geoAlias &&
+          other.estadoId == this.estadoId);
+}
+
+class GeoreferenciaCompanion extends UpdateCompanion<GeoreferenciaData> {
+  final Value<int> georeferenciaId;
+  final Value<String> nombre;
+  final Value<int> entidadId;
+  final Value<String> geoAlias;
+  final Value<int> estadoId;
+  const GeoreferenciaCompanion({
+    this.georeferenciaId = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.entidadId = const Value.absent(),
+    this.geoAlias = const Value.absent(),
+    this.estadoId = const Value.absent(),
+  });
+  GeoreferenciaCompanion.insert({
+    this.georeferenciaId = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.entidadId = const Value.absent(),
+    this.geoAlias = const Value.absent(),
+    this.estadoId = const Value.absent(),
+  });
+  static Insertable<GeoreferenciaData> custom({
+    Expression<int> georeferenciaId,
+    Expression<String> nombre,
+    Expression<int> entidadId,
+    Expression<String> geoAlias,
+    Expression<int> estadoId,
+  }) {
+    return RawValuesInsertable({
+      if (georeferenciaId != null) 'georeferencia_id': georeferenciaId,
+      if (nombre != null) 'nombre': nombre,
+      if (entidadId != null) 'entidad_id': entidadId,
+      if (geoAlias != null) 'geo_alias': geoAlias,
+      if (estadoId != null) 'estado_id': estadoId,
+    });
+  }
+
+  GeoreferenciaCompanion copyWith(
+      {Value<int> georeferenciaId,
+      Value<String> nombre,
+      Value<int> entidadId,
+      Value<String> geoAlias,
+      Value<int> estadoId}) {
+    return GeoreferenciaCompanion(
+      georeferenciaId: georeferenciaId ?? this.georeferenciaId,
+      nombre: nombre ?? this.nombre,
+      entidadId: entidadId ?? this.entidadId,
+      geoAlias: geoAlias ?? this.geoAlias,
+      estadoId: estadoId ?? this.estadoId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (georeferenciaId.present) {
+      map['georeferencia_id'] = Variable<int>(georeferenciaId.value);
+    }
+    if (nombre.present) {
+      map['nombre'] = Variable<String>(nombre.value);
+    }
+    if (entidadId.present) {
+      map['entidad_id'] = Variable<int>(entidadId.value);
+    }
+    if (geoAlias.present) {
+      map['geo_alias'] = Variable<String>(geoAlias.value);
+    }
+    if (estadoId.present) {
+      map['estado_id'] = Variable<int>(estadoId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GeoreferenciaCompanion(')
+          ..write('georeferenciaId: $georeferenciaId, ')
+          ..write('nombre: $nombre, ')
+          ..write('entidadId: $entidadId, ')
+          ..write('geoAlias: $geoAlias, ')
+          ..write('estadoId: $estadoId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $GeoreferenciaTable extends Georeferencia
+    with TableInfo<$GeoreferenciaTable, GeoreferenciaData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $GeoreferenciaTable(this._db, [this._alias]);
+  final VerificationMeta _georeferenciaIdMeta =
+      const VerificationMeta('georeferenciaId');
+  GeneratedIntColumn _georeferenciaId;
+  @override
+  GeneratedIntColumn get georeferenciaId =>
+      _georeferenciaId ??= _constructGeoreferenciaId();
+  GeneratedIntColumn _constructGeoreferenciaId() {
+    return GeneratedIntColumn(
+      'georeferencia_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _nombreMeta = const VerificationMeta('nombre');
+  GeneratedTextColumn _nombre;
+  @override
+  GeneratedTextColumn get nombre => _nombre ??= _constructNombre();
+  GeneratedTextColumn _constructNombre() {
+    return GeneratedTextColumn(
+      'nombre',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _entidadIdMeta = const VerificationMeta('entidadId');
+  GeneratedIntColumn _entidadId;
+  @override
+  GeneratedIntColumn get entidadId => _entidadId ??= _constructEntidadId();
+  GeneratedIntColumn _constructEntidadId() {
+    return GeneratedIntColumn(
+      'entidad_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _geoAliasMeta = const VerificationMeta('geoAlias');
+  GeneratedTextColumn _geoAlias;
+  @override
+  GeneratedTextColumn get geoAlias => _geoAlias ??= _constructGeoAlias();
+  GeneratedTextColumn _constructGeoAlias() {
+    return GeneratedTextColumn(
+      'geo_alias',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoIdMeta = const VerificationMeta('estadoId');
+  GeneratedIntColumn _estadoId;
+  @override
+  GeneratedIntColumn get estadoId => _estadoId ??= _constructEstadoId();
+  GeneratedIntColumn _constructEstadoId() {
+    return GeneratedIntColumn(
+      'estado_id',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns =>
+      [georeferenciaId, nombre, entidadId, geoAlias, estadoId];
+  @override
+  $GeoreferenciaTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'georeferencia';
+  @override
+  final String actualTableName = 'georeferencia';
+  @override
+  VerificationContext validateIntegrity(Insertable<GeoreferenciaData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('georeferencia_id')) {
+      context.handle(
+          _georeferenciaIdMeta,
+          georeferenciaId.isAcceptableOrUnknown(
+              data['georeferencia_id'], _georeferenciaIdMeta));
+    }
+    if (data.containsKey('nombre')) {
+      context.handle(_nombreMeta,
+          nombre.isAcceptableOrUnknown(data['nombre'], _nombreMeta));
+    }
+    if (data.containsKey('entidad_id')) {
+      context.handle(_entidadIdMeta,
+          entidadId.isAcceptableOrUnknown(data['entidad_id'], _entidadIdMeta));
+    }
+    if (data.containsKey('geo_alias')) {
+      context.handle(_geoAliasMeta,
+          geoAlias.isAcceptableOrUnknown(data['geo_alias'], _geoAliasMeta));
+    }
+    if (data.containsKey('estado_id')) {
+      context.handle(_estadoIdMeta,
+          estadoId.isAcceptableOrUnknown(data['estado_id'], _estadoIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {georeferenciaId};
+  @override
+  GeoreferenciaData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return GeoreferenciaData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $GeoreferenciaTable createAlias(String alias) {
+    return $GeoreferenciaTable(_db, alias);
+  }
+}
+
+class RolData extends DataClass implements Insertable<RolData> {
+  final int rolId;
+  final String nombre;
+  final int parentId;
+  final bool estado;
+  RolData({@required this.rolId, this.nombre, this.parentId, this.estado});
+  factory RolData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    final boolType = db.typeSystem.forDartType<bool>();
+    return RolData(
+      rolId: intType.mapFromDatabaseResponse(data['${effectivePrefix}rol_id']),
+      nombre:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}nombre']),
+      parentId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}parent_id']),
+      estado:
+          boolType.mapFromDatabaseResponse(data['${effectivePrefix}estado']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || rolId != null) {
+      map['rol_id'] = Variable<int>(rolId);
+    }
+    if (!nullToAbsent || nombre != null) {
+      map['nombre'] = Variable<String>(nombre);
+    }
+    if (!nullToAbsent || parentId != null) {
+      map['parent_id'] = Variable<int>(parentId);
+    }
+    if (!nullToAbsent || estado != null) {
+      map['estado'] = Variable<bool>(estado);
+    }
+    return map;
+  }
+
+  RolCompanion toCompanion(bool nullToAbsent) {
+    return RolCompanion(
+      rolId:
+          rolId == null && nullToAbsent ? const Value.absent() : Value(rolId),
+      nombre:
+          nombre == null && nullToAbsent ? const Value.absent() : Value(nombre),
+      parentId: parentId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parentId),
+      estado:
+          estado == null && nullToAbsent ? const Value.absent() : Value(estado),
+    );
+  }
+
+  factory RolData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return RolData(
+      rolId: serializer.fromJson<int>(json['rolId']),
+      nombre: serializer.fromJson<String>(json['nombre']),
+      parentId: serializer.fromJson<int>(json['parentId']),
+      estado: serializer.fromJson<bool>(json['estado']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'rolId': serializer.toJson<int>(rolId),
+      'nombre': serializer.toJson<String>(nombre),
+      'parentId': serializer.toJson<int>(parentId),
+      'estado': serializer.toJson<bool>(estado),
+    };
+  }
+
+  RolData copyWith({int rolId, String nombre, int parentId, bool estado}) =>
+      RolData(
+        rolId: rolId ?? this.rolId,
+        nombre: nombre ?? this.nombre,
+        parentId: parentId ?? this.parentId,
+        estado: estado ?? this.estado,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('RolData(')
+          ..write('rolId: $rolId, ')
+          ..write('nombre: $nombre, ')
+          ..write('parentId: $parentId, ')
+          ..write('estado: $estado')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(rolId.hashCode,
+      $mrjc(nombre.hashCode, $mrjc(parentId.hashCode, estado.hashCode))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is RolData &&
+          other.rolId == this.rolId &&
+          other.nombre == this.nombre &&
+          other.parentId == this.parentId &&
+          other.estado == this.estado);
+}
+
+class RolCompanion extends UpdateCompanion<RolData> {
+  final Value<int> rolId;
+  final Value<String> nombre;
+  final Value<int> parentId;
+  final Value<bool> estado;
+  const RolCompanion({
+    this.rolId = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.parentId = const Value.absent(),
+    this.estado = const Value.absent(),
+  });
+  RolCompanion.insert({
+    this.rolId = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.parentId = const Value.absent(),
+    this.estado = const Value.absent(),
+  });
+  static Insertable<RolData> custom({
+    Expression<int> rolId,
+    Expression<String> nombre,
+    Expression<int> parentId,
+    Expression<bool> estado,
+  }) {
+    return RawValuesInsertable({
+      if (rolId != null) 'rol_id': rolId,
+      if (nombre != null) 'nombre': nombre,
+      if (parentId != null) 'parent_id': parentId,
+      if (estado != null) 'estado': estado,
+    });
+  }
+
+  RolCompanion copyWith(
+      {Value<int> rolId,
+      Value<String> nombre,
+      Value<int> parentId,
+      Value<bool> estado}) {
+    return RolCompanion(
+      rolId: rolId ?? this.rolId,
+      nombre: nombre ?? this.nombre,
+      parentId: parentId ?? this.parentId,
+      estado: estado ?? this.estado,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (rolId.present) {
+      map['rol_id'] = Variable<int>(rolId.value);
+    }
+    if (nombre.present) {
+      map['nombre'] = Variable<String>(nombre.value);
+    }
+    if (parentId.present) {
+      map['parent_id'] = Variable<int>(parentId.value);
+    }
+    if (estado.present) {
+      map['estado'] = Variable<bool>(estado.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RolCompanion(')
+          ..write('rolId: $rolId, ')
+          ..write('nombre: $nombre, ')
+          ..write('parentId: $parentId, ')
+          ..write('estado: $estado')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $RolTable extends Rol with TableInfo<$RolTable, RolData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $RolTable(this._db, [this._alias]);
+  final VerificationMeta _rolIdMeta = const VerificationMeta('rolId');
+  GeneratedIntColumn _rolId;
+  @override
+  GeneratedIntColumn get rolId => _rolId ??= _constructRolId();
+  GeneratedIntColumn _constructRolId() {
+    return GeneratedIntColumn(
+      'rol_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _nombreMeta = const VerificationMeta('nombre');
+  GeneratedTextColumn _nombre;
+  @override
+  GeneratedTextColumn get nombre => _nombre ??= _constructNombre();
+  GeneratedTextColumn _constructNombre() {
+    return GeneratedTextColumn(
+      'nombre',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _parentIdMeta = const VerificationMeta('parentId');
+  GeneratedIntColumn _parentId;
+  @override
+  GeneratedIntColumn get parentId => _parentId ??= _constructParentId();
+  GeneratedIntColumn _constructParentId() {
+    return GeneratedIntColumn(
+      'parent_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoMeta = const VerificationMeta('estado');
+  GeneratedBoolColumn _estado;
+  @override
+  GeneratedBoolColumn get estado => _estado ??= _constructEstado();
+  GeneratedBoolColumn _constructEstado() {
+    return GeneratedBoolColumn(
+      'estado',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [rolId, nombre, parentId, estado];
+  @override
+  $RolTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'rol';
+  @override
+  final String actualTableName = 'rol';
+  @override
+  VerificationContext validateIntegrity(Insertable<RolData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('rol_id')) {
+      context.handle(
+          _rolIdMeta, rolId.isAcceptableOrUnknown(data['rol_id'], _rolIdMeta));
+    }
+    if (data.containsKey('nombre')) {
+      context.handle(_nombreMeta,
+          nombre.isAcceptableOrUnknown(data['nombre'], _nombreMeta));
+    }
+    if (data.containsKey('parent_id')) {
+      context.handle(_parentIdMeta,
+          parentId.isAcceptableOrUnknown(data['parent_id'], _parentIdMeta));
+    }
+    if (data.containsKey('estado')) {
+      context.handle(_estadoMeta,
+          estado.isAcceptableOrUnknown(data['estado'], _estadoMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {rolId};
+  @override
+  RolData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return RolData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $RolTable createAlias(String alias) {
+    return $RolTable(_db, alias);
+  }
+}
+
+class UsuarioRolGeoreferenciaData extends DataClass
+    implements Insertable<UsuarioRolGeoreferenciaData> {
+  final int usuarioRolGeoreferenciaId;
+  final int usuarioId;
+  final int rolId;
+  final int geoReferenciaId;
+  final int entidadId;
+  UsuarioRolGeoreferenciaData(
+      {@required this.usuarioRolGeoreferenciaId,
+      this.usuarioId,
+      this.rolId,
+      this.geoReferenciaId,
+      this.entidadId});
+  factory UsuarioRolGeoreferenciaData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    return UsuarioRolGeoreferenciaData(
+      usuarioRolGeoreferenciaId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}usuario_rol_georeferencia_id']),
+      usuarioId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}usuario_id']),
+      rolId: intType.mapFromDatabaseResponse(data['${effectivePrefix}rol_id']),
+      geoReferenciaId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}geo_referencia_id']),
+      entidadId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}entidad_id']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || usuarioRolGeoreferenciaId != null) {
+      map['usuario_rol_georeferencia_id'] =
+          Variable<int>(usuarioRolGeoreferenciaId);
+    }
+    if (!nullToAbsent || usuarioId != null) {
+      map['usuario_id'] = Variable<int>(usuarioId);
+    }
+    if (!nullToAbsent || rolId != null) {
+      map['rol_id'] = Variable<int>(rolId);
+    }
+    if (!nullToAbsent || geoReferenciaId != null) {
+      map['geo_referencia_id'] = Variable<int>(geoReferenciaId);
+    }
+    if (!nullToAbsent || entidadId != null) {
+      map['entidad_id'] = Variable<int>(entidadId);
+    }
+    return map;
+  }
+
+  UsuarioRolGeoreferenciaCompanion toCompanion(bool nullToAbsent) {
+    return UsuarioRolGeoreferenciaCompanion(
+      usuarioRolGeoreferenciaId:
+          usuarioRolGeoreferenciaId == null && nullToAbsent
+              ? const Value.absent()
+              : Value(usuarioRolGeoreferenciaId),
+      usuarioId: usuarioId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(usuarioId),
+      rolId:
+          rolId == null && nullToAbsent ? const Value.absent() : Value(rolId),
+      geoReferenciaId: geoReferenciaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(geoReferenciaId),
+      entidadId: entidadId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(entidadId),
+    );
+  }
+
+  factory UsuarioRolGeoreferenciaData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return UsuarioRolGeoreferenciaData(
+      usuarioRolGeoreferenciaId:
+          serializer.fromJson<int>(json['usuarioRolGeoreferenciaId']),
+      usuarioId: serializer.fromJson<int>(json['usuarioId']),
+      rolId: serializer.fromJson<int>(json['rolId']),
+      geoReferenciaId: serializer.fromJson<int>(json['geoReferenciaId']),
+      entidadId: serializer.fromJson<int>(json['entidadId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'usuarioRolGeoreferenciaId':
+          serializer.toJson<int>(usuarioRolGeoreferenciaId),
+      'usuarioId': serializer.toJson<int>(usuarioId),
+      'rolId': serializer.toJson<int>(rolId),
+      'geoReferenciaId': serializer.toJson<int>(geoReferenciaId),
+      'entidadId': serializer.toJson<int>(entidadId),
+    };
+  }
+
+  UsuarioRolGeoreferenciaData copyWith(
+          {int usuarioRolGeoreferenciaId,
+          int usuarioId,
+          int rolId,
+          int geoReferenciaId,
+          int entidadId}) =>
+      UsuarioRolGeoreferenciaData(
+        usuarioRolGeoreferenciaId:
+            usuarioRolGeoreferenciaId ?? this.usuarioRolGeoreferenciaId,
+        usuarioId: usuarioId ?? this.usuarioId,
+        rolId: rolId ?? this.rolId,
+        geoReferenciaId: geoReferenciaId ?? this.geoReferenciaId,
+        entidadId: entidadId ?? this.entidadId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('UsuarioRolGeoreferenciaData(')
+          ..write('usuarioRolGeoreferenciaId: $usuarioRolGeoreferenciaId, ')
+          ..write('usuarioId: $usuarioId, ')
+          ..write('rolId: $rolId, ')
+          ..write('geoReferenciaId: $geoReferenciaId, ')
+          ..write('entidadId: $entidadId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      usuarioRolGeoreferenciaId.hashCode,
+      $mrjc(
+          usuarioId.hashCode,
+          $mrjc(rolId.hashCode,
+              $mrjc(geoReferenciaId.hashCode, entidadId.hashCode)))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is UsuarioRolGeoreferenciaData &&
+          other.usuarioRolGeoreferenciaId == this.usuarioRolGeoreferenciaId &&
+          other.usuarioId == this.usuarioId &&
+          other.rolId == this.rolId &&
+          other.geoReferenciaId == this.geoReferenciaId &&
+          other.entidadId == this.entidadId);
+}
+
+class UsuarioRolGeoreferenciaCompanion
+    extends UpdateCompanion<UsuarioRolGeoreferenciaData> {
+  final Value<int> usuarioRolGeoreferenciaId;
+  final Value<int> usuarioId;
+  final Value<int> rolId;
+  final Value<int> geoReferenciaId;
+  final Value<int> entidadId;
+  const UsuarioRolGeoreferenciaCompanion({
+    this.usuarioRolGeoreferenciaId = const Value.absent(),
+    this.usuarioId = const Value.absent(),
+    this.rolId = const Value.absent(),
+    this.geoReferenciaId = const Value.absent(),
+    this.entidadId = const Value.absent(),
+  });
+  UsuarioRolGeoreferenciaCompanion.insert({
+    this.usuarioRolGeoreferenciaId = const Value.absent(),
+    this.usuarioId = const Value.absent(),
+    this.rolId = const Value.absent(),
+    this.geoReferenciaId = const Value.absent(),
+    this.entidadId = const Value.absent(),
+  });
+  static Insertable<UsuarioRolGeoreferenciaData> custom({
+    Expression<int> usuarioRolGeoreferenciaId,
+    Expression<int> usuarioId,
+    Expression<int> rolId,
+    Expression<int> geoReferenciaId,
+    Expression<int> entidadId,
+  }) {
+    return RawValuesInsertable({
+      if (usuarioRolGeoreferenciaId != null)
+        'usuario_rol_georeferencia_id': usuarioRolGeoreferenciaId,
+      if (usuarioId != null) 'usuario_id': usuarioId,
+      if (rolId != null) 'rol_id': rolId,
+      if (geoReferenciaId != null) 'geo_referencia_id': geoReferenciaId,
+      if (entidadId != null) 'entidad_id': entidadId,
+    });
+  }
+
+  UsuarioRolGeoreferenciaCompanion copyWith(
+      {Value<int> usuarioRolGeoreferenciaId,
+      Value<int> usuarioId,
+      Value<int> rolId,
+      Value<int> geoReferenciaId,
+      Value<int> entidadId}) {
+    return UsuarioRolGeoreferenciaCompanion(
+      usuarioRolGeoreferenciaId:
+          usuarioRolGeoreferenciaId ?? this.usuarioRolGeoreferenciaId,
+      usuarioId: usuarioId ?? this.usuarioId,
+      rolId: rolId ?? this.rolId,
+      geoReferenciaId: geoReferenciaId ?? this.geoReferenciaId,
+      entidadId: entidadId ?? this.entidadId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (usuarioRolGeoreferenciaId.present) {
+      map['usuario_rol_georeferencia_id'] =
+          Variable<int>(usuarioRolGeoreferenciaId.value);
+    }
+    if (usuarioId.present) {
+      map['usuario_id'] = Variable<int>(usuarioId.value);
+    }
+    if (rolId.present) {
+      map['rol_id'] = Variable<int>(rolId.value);
+    }
+    if (geoReferenciaId.present) {
+      map['geo_referencia_id'] = Variable<int>(geoReferenciaId.value);
+    }
+    if (entidadId.present) {
+      map['entidad_id'] = Variable<int>(entidadId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UsuarioRolGeoreferenciaCompanion(')
+          ..write('usuarioRolGeoreferenciaId: $usuarioRolGeoreferenciaId, ')
+          ..write('usuarioId: $usuarioId, ')
+          ..write('rolId: $rolId, ')
+          ..write('geoReferenciaId: $geoReferenciaId, ')
+          ..write('entidadId: $entidadId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $UsuarioRolGeoreferenciaTable extends UsuarioRolGeoreferencia
+    with TableInfo<$UsuarioRolGeoreferenciaTable, UsuarioRolGeoreferenciaData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $UsuarioRolGeoreferenciaTable(this._db, [this._alias]);
+  final VerificationMeta _usuarioRolGeoreferenciaIdMeta =
+      const VerificationMeta('usuarioRolGeoreferenciaId');
+  GeneratedIntColumn _usuarioRolGeoreferenciaId;
+  @override
+  GeneratedIntColumn get usuarioRolGeoreferenciaId =>
+      _usuarioRolGeoreferenciaId ??= _constructUsuarioRolGeoreferenciaId();
+  GeneratedIntColumn _constructUsuarioRolGeoreferenciaId() {
+    return GeneratedIntColumn(
+      'usuario_rol_georeferencia_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _usuarioIdMeta = const VerificationMeta('usuarioId');
+  GeneratedIntColumn _usuarioId;
+  @override
+  GeneratedIntColumn get usuarioId => _usuarioId ??= _constructUsuarioId();
+  GeneratedIntColumn _constructUsuarioId() {
+    return GeneratedIntColumn(
+      'usuario_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _rolIdMeta = const VerificationMeta('rolId');
+  GeneratedIntColumn _rolId;
+  @override
+  GeneratedIntColumn get rolId => _rolId ??= _constructRolId();
+  GeneratedIntColumn _constructRolId() {
+    return GeneratedIntColumn(
+      'rol_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _geoReferenciaIdMeta =
+      const VerificationMeta('geoReferenciaId');
+  GeneratedIntColumn _geoReferenciaId;
+  @override
+  GeneratedIntColumn get geoReferenciaId =>
+      _geoReferenciaId ??= _constructGeoReferenciaId();
+  GeneratedIntColumn _constructGeoReferenciaId() {
+    return GeneratedIntColumn(
+      'geo_referencia_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _entidadIdMeta = const VerificationMeta('entidadId');
+  GeneratedIntColumn _entidadId;
+  @override
+  GeneratedIntColumn get entidadId => _entidadId ??= _constructEntidadId();
+  GeneratedIntColumn _constructEntidadId() {
+    return GeneratedIntColumn(
+      'entidad_id',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns =>
+      [usuarioRolGeoreferenciaId, usuarioId, rolId, geoReferenciaId, entidadId];
+  @override
+  $UsuarioRolGeoreferenciaTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'usuario_rol_georeferencia';
+  @override
+  final String actualTableName = 'usuario_rol_georeferencia';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<UsuarioRolGeoreferenciaData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('usuario_rol_georeferencia_id')) {
+      context.handle(
+          _usuarioRolGeoreferenciaIdMeta,
+          usuarioRolGeoreferenciaId.isAcceptableOrUnknown(
+              data['usuario_rol_georeferencia_id'],
+              _usuarioRolGeoreferenciaIdMeta));
+    }
+    if (data.containsKey('usuario_id')) {
+      context.handle(_usuarioIdMeta,
+          usuarioId.isAcceptableOrUnknown(data['usuario_id'], _usuarioIdMeta));
+    }
+    if (data.containsKey('rol_id')) {
+      context.handle(
+          _rolIdMeta, rolId.isAcceptableOrUnknown(data['rol_id'], _rolIdMeta));
+    }
+    if (data.containsKey('geo_referencia_id')) {
+      context.handle(
+          _geoReferenciaIdMeta,
+          geoReferenciaId.isAcceptableOrUnknown(
+              data['geo_referencia_id'], _geoReferenciaIdMeta));
+    }
+    if (data.containsKey('entidad_id')) {
+      context.handle(_entidadIdMeta,
+          entidadId.isAcceptableOrUnknown(data['entidad_id'], _entidadIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {usuarioRolGeoreferenciaId};
+  @override
+  UsuarioRolGeoreferenciaData map(Map<String, dynamic> data,
+      {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return UsuarioRolGeoreferenciaData.fromData(data, _db,
+        prefix: effectivePrefix);
+  }
+
+  @override
+  $UsuarioRolGeoreferenciaTable createAlias(String alias) {
+    return $UsuarioRolGeoreferenciaTable(_db, alias);
+  }
+}
+
 abstract class _$AppDataBase extends GeneratedDatabase {
   _$AppDataBase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $PersonaTable _persona;
@@ -17010,6 +18603,16 @@ abstract class _$AppDataBase extends GeneratedDatabase {
       _sessionUserHijo ??= $SessionUserHijoTable(this);
   $ContactoTable _contacto;
   $ContactoTable get contacto => _contacto ??= $ContactoTable(this);
+  $EntidadTable _entidad;
+  $EntidadTable get entidad => _entidad ??= $EntidadTable(this);
+  $GeoreferenciaTable _georeferencia;
+  $GeoreferenciaTable get georeferencia =>
+      _georeferencia ??= $GeoreferenciaTable(this);
+  $RolTable _rol;
+  $RolTable get rol => _rol ??= $RolTable(this);
+  $UsuarioRolGeoreferenciaTable _usuarioRolGeoreferencia;
+  $UsuarioRolGeoreferenciaTable get usuarioRolGeoreferencia =>
+      _usuarioRolGeoreferencia ??= $UsuarioRolGeoreferenciaTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
@@ -17038,6 +18641,10 @@ abstract class _$AppDataBase extends GeneratedDatabase {
         evento,
         calendario,
         sessionUserHijo,
-        contacto
+        contacto,
+        entidad,
+        georeferencia,
+        rol,
+        usuarioRolGeoreferencia
       ];
 }

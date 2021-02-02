@@ -34,6 +34,7 @@ class AppTheme{
   static const Color colorShimmer = Color(0xFFDFDFDF);
 
   static const String fontName = 'Roboto';
+  static const String fontGotham = 'Gotham';
 
   static const TextTheme textTheme = TextTheme(
     headline4: display1,

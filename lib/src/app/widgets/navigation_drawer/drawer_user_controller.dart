@@ -14,7 +14,8 @@ class DrawerUserController extends StatefulWidget {
     this.screenIndex,
     this.nameUser,
     this.photoUser,
-    this.correo
+    this.correo,
+    this.onClickCerrarCession
   }) : super(key: key);
 
   final double drawerWidth;
@@ -27,6 +28,7 @@ class DrawerUserController extends StatefulWidget {
   final String nameUser;
   final String photoUser;
   final String correo;
+  final Function onClickCerrarCession;
   @override
   _DrawerUserControllerState createState() => _DrawerUserControllerState();
 }
@@ -118,6 +120,7 @@ class _DrawerUserControllerState extends State<DrawerUserController> with Ticker
                             widget.onDrawerCall(indexType);
                           } catch (e) {}
                         },
+                        onClickCerrarCession: widget.onClickCerrarCession,
                       ),
                     );
                   },

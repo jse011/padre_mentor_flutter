@@ -46,6 +46,8 @@ dependencies:
 #  azlistview: ^1.1.0
   url_launcher: ^5.7.10
   fluttertoast: ^7.1.6
+  email_validator: ^1.0.0
+  lottie: ^0.7.0+1
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +74,7 @@ flutter:
     - assets/images/
     - assets/fitness_app/
     - assets/educar/
+    - assets/lottie/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -96,5 +99,9 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
+  fonts:
+    - family: Gotham
+      fonts:
+        - asset: assets/fonts/gotham.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

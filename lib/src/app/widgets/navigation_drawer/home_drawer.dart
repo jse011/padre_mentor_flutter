@@ -4,7 +4,7 @@ import 'package:padre_mentor/src/app/utils/app_theme.dart';
 
 
 class HomeDrawer extends StatefulWidget {
-  const HomeDrawer({Key key, this.screenIndex, this.iconAnimationController, this.callBackIndex, this.photoUser, this.nameUser, this.correo}) : super(key: key);
+  const HomeDrawer({Key key, this.screenIndex, this.iconAnimationController, this.callBackIndex, this.photoUser, this.nameUser, this.correo, this.onClickCerrarCession}) : super(key: key);
 
   final AnimationController iconAnimationController;
   final DrawerIndex screenIndex;
@@ -12,6 +12,7 @@ class HomeDrawer extends StatefulWidget {
   final String nameUser;
   final String photoUser;
   final String correo;
+  final Function onClickCerrarCession;
   @override
   _HomeDrawerState createState() => _HomeDrawerState();
 }
@@ -193,7 +194,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Icons.power_settings_new,
                   color: Colors.red,
                 ),
-                onTap: () {},
+                onTap: () {
+                  widget.onClickCerrarCession();
+                },
               ),
               SizedBox(
                 height: MediaQuery.of(context).padding.bottom,

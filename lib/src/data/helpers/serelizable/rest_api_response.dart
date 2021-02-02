@@ -3,6 +3,9 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'rest_api_response.g.dart';
 /*
+Mac OS important
+export PATH="$PATH:/Users/edwinrubenpuente/SDKFlutter/flutter/bin"
+
 * One-time code generation
 By running flutter pub run build_runner build in the project root, you generate JSON serialization code for your models whenever they are needed. This triggers a one-time build that goes through the source files, picks the relevant ones, and generates the necessary serialization code for them.
 
@@ -802,4 +805,111 @@ class ContactoSerializable {
   factory ContactoSerializable.fromJson(Map<String, dynamic> json) => _$ContactoSerializableFromJson(json);
 
   Map<String, dynamic> toJson() => _$ContactoSerializableToJson(this);
+}
+
+@JsonSerializable()
+class AdminServiceSerializable {
+  int UsuarioId;
+  bool Estado;
+  int EntidadId;
+  int UsuarioExternoId;
+  int UsuarioCreadorId;
+  int UsuarioAccionId;
+  int Opcion;
+  int Cantidad;
+  String UrlServiceMovil;
+
+  AdminServiceSerializable(
+      {this.UsuarioId,
+      this.Estado,
+      this.EntidadId,
+      this.UsuarioExternoId,
+      this.UsuarioCreadorId,
+      this.UsuarioAccionId,
+      this.Opcion,
+      this.Cantidad,
+      this.UrlServiceMovil});
+
+  factory AdminServiceSerializable.fromJson(Map<String, dynamic> json) => _$AdminServiceSerializableFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AdminServiceSerializableToJson(this);
+}
+
+@JsonSerializable()
+class EntidadSerializable {
+  
+  int entidadId;
+  int tipoId;
+  int parentId;
+  String nombre;
+  String ruc;
+  String site;
+  String telefono;
+  String correo;
+  String foto;
+  int estadoId;
+
+  EntidadSerializable(
+      {this.entidadId,
+      this.tipoId,
+      this.parentId,
+      this.nombre,
+      this.ruc,
+      this.site,
+      this.telefono,
+      this.correo,
+      this.foto,
+      this.estadoId});
+
+  factory EntidadSerializable.fromJson(Map<String, dynamic> json) => _$EntidadSerializableFromJson(json);
+
+  Map<String, dynamic> toJson() => _$EntidadSerializableToJson(this);
+}
+@JsonSerializable()
+class GeoreferenciaSerializable {
+  
+  int georeferenciaId ;
+  String nombre ;
+  int entidadId ;
+  String alias;
+  int estadoId;
+
+  GeoreferenciaSerializable({this.georeferenciaId, this.nombre, this.entidadId, this.alias,
+      this.estadoId});
+
+  factory GeoreferenciaSerializable.fromJson(Map<String, dynamic> json) => _$GeoreferenciaSerializableFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GeoreferenciaSerializableToJson(this);
+}
+
+@JsonSerializable()
+class RolSerializable{
+  int rolId;
+  String nombre;
+  int parentId;
+  bool estado;
+
+  RolSerializable({this.rolId, this.nombre, this.parentId, this.estado});
+  
+
+  factory RolSerializable.fromJson(Map<String, dynamic> json) => _$RolSerializableFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RolSerializableToJson(this);
+}
+
+@JsonSerializable()
+class UsuarioRolGeoreferenciaSerializable{
+  int usuarioRolGeoreferenciaId;
+  int usuarioId;
+  int rolId;
+  int geoReferenciaId;
+  int entidadId;
+
+
+  UsuarioRolGeoreferenciaSerializable({this.usuarioRolGeoreferenciaId,
+      this.usuarioId, this.rolId, this.geoReferenciaId, this.entidadId});
+
+  factory UsuarioRolGeoreferenciaSerializable.fromJson(Map<String, dynamic> json) => _$UsuarioRolGeoreferenciaSerializableFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UsuarioRolGeoreferenciaSerializableToJson(this);
 }

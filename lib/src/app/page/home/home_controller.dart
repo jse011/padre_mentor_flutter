@@ -9,6 +9,8 @@ class HomeController extends Controller{
   VistaIndex _vistaActual;
   UsuarioUi _userioSession;
   UsuarioUi get usuario => _userioSession; // data used by the View
+  int _showLoggin = 0;// 0 cargando, 1 show Loggin, -1 nada
+  int get showLoggin => _showLoggin;
 
   VistaIndex get vistaActual => _vistaActual;
 
@@ -36,13 +38,37 @@ class HomeController extends Controller{
       _userioSession = null;
       refreshUI(); // Refreshes the UI manually
     };
+
+
+    homePresenter.validarUsuarioOnComplete = () {
+      homePresenter.getUserSession();
+      _showLoggin = -1;
+      refreshUI();
+    };
+
+    // On error, show a snackbar, remove the user, and refresh the UI
+    homePresenter.validarUsuarioOnError = (e) {
+      _showLoggin = 1;
+      refreshUI();
+    };
+
+    homePresenter.cerrarCesionOnComplete = (bool success){
+      if(success){
+        _showLoggin = 1;
+        refreshUI();
+      }
+    };
+
+    homePresenter.cerrarCesionOnError = (e){
+
+    };
+
   }
 
   @override
   void onInitState() {
-    // TODO: implement onInitState
+    homePresenter.validarUsuario();
     super.onInitState();
-    homePresenter.getUserSession();
   }
 
   void onSelectedVistaAbout() {
@@ -64,6 +90,10 @@ class HomeController extends Controller{
   void onSelectedVistaEditUsuario() {
     _vistaActual = VistaIndex.EditarUsuario;
     refreshUI(); // Refreshes the UI manually
+  }
+
+  void onClickCerrarCession() {
+    homePresenter.cerrarCesion();
   }
 
 }
