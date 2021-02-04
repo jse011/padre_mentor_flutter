@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:padre_mentor/src/app/page/asistencia/asistencia_router.dart';
 import 'package:padre_mentor/src/app/page/boleta_notas/boleta_notas_router.dart';
 import 'package:padre_mentor/src/app/page/cursos/cursos_router.dart';
 import 'package:padre_mentor/src/app/page/estado_cuenta/estado_cuenta_router.dart';
@@ -406,7 +407,7 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                               onTap: () {
                                 var programaEducativo = controller.programaEducativoSelected;
                                 if(programaEducativo!=null){
-                                  Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
+                                  Navigator.of(context).push(AsistenciaRouter.createRouteAsistencia(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
                                 }
                               },
                             ),

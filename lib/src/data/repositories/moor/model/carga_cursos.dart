@@ -22,7 +22,9 @@ class CargaCurso extends Table{
    IntColumn get  idPlanEstudioVersion => integer().nullable()();
    IntColumn get  CapacidadVacanteP => integer().nullable()();
    IntColumn get  CapacidadVacanteD => integer().nullable()();
-
+   TextColumn get nombreDocente => text().nullable()();
+   IntColumn get personaIdDocente => integer().nullable()();
+   TextColumn get fotoDocente => text().nullable()();
    @override
    Set<Column> get primaryKey => {cargaCursoId};
   

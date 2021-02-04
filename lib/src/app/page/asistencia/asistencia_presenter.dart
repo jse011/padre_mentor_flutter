@@ -1,12 +1,9 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:padre_mentor/src/data/repositories/moor/data_curso_repository.dart';
-import 'package:padre_mentor/src/device/repositories/http/device_http_datos_repository.dart';
 import 'package:padre_mentor/src/domain/entities/calendario_periodio_ui.dart';
-import 'package:padre_mentor/src/domain/repositories/usuario_configuarion_repository.dart';
 import 'package:padre_mentor/src/domain/usecases/get_calendario_periodo.dart';
 import 'package:padre_mentor/src/domain/usecases/get_evaluacion.dart';
 
-class EvaluacionPresenter extends Presenter{
+class AsistenciaPresenter extends Presenter{
   GetCalendarioPerido _getCalendarioPerido;
   Function getCalendarioPeridoOnNext, getCalendarioPeridoOnComplete, getCalendarioPeridoOnError;
   final int alumnoId;
@@ -16,7 +13,7 @@ class EvaluacionPresenter extends Presenter{
   GetEvaluacion _getEvaluacion;
   Function getEvaluacionOnNext, getEvaluacionOnComplete, getEvaluacionOnError;
 
-  EvaluacionPresenter(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, this.fotoAlumno, DataCursoRepository cursoRepo, DeviceHttpDatosRepositorio httpDatosRepo, UsuarioAndConfiguracionRepository usuarioConfigRepo): _getCalendarioPerido = GetCalendarioPerido(cursoRepo), _getEvaluacion = GetEvaluacion(httpDatosRepo, cursoRepo, usuarioConfigRepo), super();
+  AsistenciaPresenter(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, this.fotoAlumno, cursoRepo, httpDatosRepo, usuarioConfigRepo): _getCalendarioPerido = GetCalendarioPerido(cursoRepo), _getEvaluacion = GetEvaluacion(httpDatosRepo, cursoRepo, usuarioConfigRepo), super();
 
   @override
   void dispose() {
@@ -34,7 +31,7 @@ class EvaluacionPresenter extends Presenter{
 }
 
 class _GetCalendarioPeridoCase extends Observer<GetCalendarioPeridoResponse>{
-  final EvaluacionPresenter presenter;
+  final AsistenciaPresenter presenter;
 
   _GetCalendarioPeridoCase(this.presenter);
 
@@ -59,7 +56,7 @@ class _GetCalendarioPeridoCase extends Observer<GetCalendarioPeridoResponse>{
 }
 
 class _GetEvaluacionCase extends Observer<GetEvaluacionCaseResponse>{
-  final EvaluacionPresenter presenter;
+  final AsistenciaPresenter presenter;
 
   _GetEvaluacionCase(this.presenter);
 

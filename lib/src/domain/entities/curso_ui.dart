@@ -9,8 +9,8 @@ class CursoUi {
   String colorCurso3;
   String nombreDocente;
   String apellidosDocente;
-  String docente;
   String salon;
   String imagenCurso;
   String nivelAcademico;
+  String fotoDocente;
 }

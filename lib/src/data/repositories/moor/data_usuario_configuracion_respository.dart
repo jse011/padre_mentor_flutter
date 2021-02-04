@@ -270,6 +270,29 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
          batch.insertAll(SQL.cursos, SerializableConvert.converListSerializeCursos(datosInicioPadre["cursos"]), mode: InsertMode.insertOrReplace);
        }
 
+       if(datosInicioPadre.containsKey("secciones")){
+         batch.deleteWhere(SQL.seccion, (row) => const Constant(true));
+         batch.insertAll(SQL.seccion, SerializableConvert.converListSerializeSeccion(datosInicioPadre["secciones"]), mode: InsertMode.insertOrReplace);
+       }
+       if(datosInicioPadre.containsKey("aulas")){
+         batch.deleteWhere(SQL.aula, (row) => const Constant(true));
+         batch.insertAll(SQL.aula, SerializableConvert.converListSerializeAula(datosInicioPadre["aulas"]), mode: InsertMode.insertOrReplace);
+       }
+       if(datosInicioPadre.containsKey("periodos")){
+         batch.deleteWhere(SQL.periodos, (row) => const Constant(true));
+         batch.insertAll(SQL.periodos, SerializableConvert.converListSerializePeriodos(datosInicioPadre["periodos"]), mode: InsertMode.insertOrReplace);
+       }
+
+       if(datosInicioPadre.containsKey("cargasAcademicas")){
+         batch.deleteWhere(SQL.cargaAcademica, (row) => const Constant(true));
+         batch.insertAll(SQL.cargaAcademica, SerializableConvert.converListSerializeCargaAcademica(datosInicioPadre["cargasAcademicas"]), mode: InsertMode.insertOrReplace);
+       }
+
+       if(datosInicioPadre.containsKey("nivelesAcademicos")){
+         batch.deleteWhere(SQL.nivelAcademico, (row) => const Constant(true));
+         batch.insertAll(SQL.nivelAcademico, SerializableConvert.converListSerializeNivelAcademico(datosInicioPadre["nivelesAcademicos"]), mode: InsertMode.insertOrReplace);
+       }
+
        if(datosInicioPadre.containsKey("bEWebConfigs")){
          batch.deleteWhere(SQL.webConfigs, (row) => const Constant(true));
          batch.insertAll(SQL.webConfigs, SerializableConvert.converListSerializeWebConfigs(datosInicioPadre["bEWebConfigs"]), mode: InsertMode.insertOrReplace);

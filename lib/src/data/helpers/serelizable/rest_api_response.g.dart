@@ -140,7 +140,10 @@ CargaCursosSerial _$CargaCursosSerialFromJson(Map<String, dynamic> json) {
     idPlanEstudioVersion: json['idPlanEstudioVersion'] as int,
     CapacidadVacanteP: json['CapacidadVacanteP'] as int,
     CapacidadVacanteD: json['CapacidadVacanteD'] as int,
-  );
+  )
+    ..nombreDocente = json['nombreDocente'] as String
+    ..personaIdDocente = json['personaIdDocente'] as int
+    ..fotoDocente = json['fotoDocente'] as String;
 }
 
 Map<String, dynamic> _$CargaCursosSerialToJson(CargaCursosSerial instance) =>
@@ -165,6 +168,9 @@ Map<String, dynamic> _$CargaCursosSerialToJson(CargaCursosSerial instance) =>
       'idPlanEstudioVersion': instance.idPlanEstudioVersion,
       'CapacidadVacanteP': instance.CapacidadVacanteP,
       'CapacidadVacanteD': instance.CapacidadVacanteD,
+      'nombreDocente': instance.nombreDocente,
+      'personaIdDocente': instance.personaIdDocente,
+      'fotoDocente': instance.fotoDocente,
     };
 
 ContratoSerial _$ContratoSerialFromJson(Map<String, dynamic> json) {
@@ -967,4 +973,148 @@ Map<String, dynamic> _$CursosSerializableToJson(CursosSerializable instance) =>
       'tipoSubcurso': instance.tipoSubcurso,
       'foto': instance.foto,
       'codigo': instance.codigo,
+    };
+
+SeccionSeraializable _$SeccionSeraializableFromJson(Map<String, dynamic> json) {
+  return SeccionSeraializable(
+    json['seccionId'] as int,
+    json['nombre'] as String,
+    json['descripcion'] as String,
+    json['estado'] as bool,
+    json['georeferenciaId'] as int,
+  );
+}
+
+Map<String, dynamic> _$SeccionSeraializableToJson(
+        SeccionSeraializable instance) =>
+    <String, dynamic>{
+      'seccionId': instance.seccionId,
+      'nombre': instance.nombre,
+      'descripcion': instance.descripcion,
+      'estado': instance.estado,
+      'georeferenciaId': instance.georeferenciaId,
+    };
+
+AulaSeraializable _$AulaSeraializableFromJson(Map<String, dynamic> json) {
+  return AulaSeraializable(
+    json['aulaId'] as int,
+    json['descripcion'] as String,
+    json['numero'] as String,
+    json['capacidad'] as String,
+    json['estado'] as int,
+  );
+}
+
+Map<String, dynamic> _$AulaSeraializableToJson(AulaSeraializable instance) =>
+    <String, dynamic>{
+      'aulaId': instance.aulaId,
+      'descripcion': instance.descripcion,
+      'numero': instance.numero,
+      'capacidad': instance.capacidad,
+      'estado': instance.estado,
+    };
+
+PeriodosSeraializable _$PeriodosSeraializableFromJson(
+    Map<String, dynamic> json) {
+  return PeriodosSeraializable(
+    periodoId: json['periodoId'] as int,
+    nombre: json['nombre'] as String,
+    estadoId: json['estadoId'] as int,
+    alias: json['alias'] as String,
+    fecComienzo: json['fecComienzo'] as String,
+    fecTermino: json['fecTermino'] as String,
+    tipoId: json['tipoId'] as int,
+    superId: json['superId'] as int,
+    geoReferenciaId: json['geoReferenciaId'] as int,
+    organigramaId: json['organigramaId'] as int,
+    entidadId: json['entidadId'] as int,
+    activo: json['activo'] as bool,
+    cicloId: json['cicloId'] as int,
+    docenteId: json['docenteId'] as int,
+    gruponombre: json['gruponombre'] as String,
+    grupoId: json['grupoId'] as int,
+    nivelAcademico: json['nivelAcademico'] as String,
+    nivelAcademicoId: json['nivelAcademicoId'] as int,
+    tutorId: json['tutorId'] as int,
+  );
+}
+
+Map<String, dynamic> _$PeriodosSeraializableToJson(
+        PeriodosSeraializable instance) =>
+    <String, dynamic>{
+      'periodoId': instance.periodoId,
+      'nombre': instance.nombre,
+      'estadoId': instance.estadoId,
+      'alias': instance.alias,
+      'fecComienzo': instance.fecComienzo,
+      'fecTermino': instance.fecTermino,
+      'tipoId': instance.tipoId,
+      'superId': instance.superId,
+      'geoReferenciaId': instance.geoReferenciaId,
+      'organigramaId': instance.organigramaId,
+      'entidadId': instance.entidadId,
+      'activo': instance.activo,
+      'cicloId': instance.cicloId,
+      'docenteId': instance.docenteId,
+      'gruponombre': instance.gruponombre,
+      'grupoId': instance.grupoId,
+      'nivelAcademico': instance.nivelAcademico,
+      'nivelAcademicoId': instance.nivelAcademicoId,
+      'tutorId': instance.tutorId,
+    };
+
+CargaAcademicaSeraializable _$CargaAcademicaSeraializableFromJson(
+    Map<String, dynamic> json) {
+  return CargaAcademicaSeraializable(
+    cargaAcademicaId: json['cargaAcademicaId'] as int,
+    estadoId: json['estadoId'] as int,
+    idAnioAcademico: json['idAnioAcademico'] as int,
+    idPeriodoAcad: json['idPeriodoAcad'] as int,
+    aulaId: json['aulaId'] as int,
+    idGrupo: json['idGrupo'] as int,
+    idPlanEstudio: json['idPlanEstudio'] as int,
+    idPlanEstudioVersion: json['idPlanEstudioVersion'] as int,
+    capacidadVacante: json['capacidadVacante'] as int,
+    capacidadVacanteD: json['capacidadVacanteD'] as int,
+    idEmpleadoTutor: json['idEmpleadoTutor'] as int,
+    seccionId: json['seccionId'] as int,
+    periodoId: json['periodoId'] as int,
+  );
+}
+
+Map<String, dynamic> _$CargaAcademicaSeraializableToJson(
+        CargaAcademicaSeraializable instance) =>
+    <String, dynamic>{
+      'cargaAcademicaId': instance.cargaAcademicaId,
+      'estadoId': instance.estadoId,
+      'idAnioAcademico': instance.idAnioAcademico,
+      'idPeriodoAcad': instance.idPeriodoAcad,
+      'aulaId': instance.aulaId,
+      'idGrupo': instance.idGrupo,
+      'idPlanEstudio': instance.idPlanEstudio,
+      'idPlanEstudioVersion': instance.idPlanEstudioVersion,
+      'capacidadVacante': instance.capacidadVacante,
+      'capacidadVacanteD': instance.capacidadVacanteD,
+      'idEmpleadoTutor': instance.idEmpleadoTutor,
+      'seccionId': instance.seccionId,
+      'periodoId': instance.periodoId,
+    };
+
+NivelAcademicoSeraializable _$NivelAcademicoSeraializableFromJson(
+    Map<String, dynamic> json) {
+  return NivelAcademicoSeraializable(
+    nivelAcadId: json['nivelAcadId'] as int,
+    nombre: json['nombre'] as String,
+    activo: json['activo'] as bool,
+    entidadId: json['entidadId'] as int,
+  );
+}
+
+Map<String, dynamic> _$NivelAcademicoSeraializableToJson(
+        NivelAcademicoSeraializable instance) =>
+    <String, dynamic>{
+      'nivelAcadId': instance.nivelAcadId,
+      'nombre': instance.nombre,
+      'activo': instance.activo,
+      'entidadId': instance.entidadId,
     };

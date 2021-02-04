@@ -287,7 +287,7 @@ class _CursoViewState extends ViewState<CursoView, CursoController> with TickerP
                                                     ),
                                                     CachedNetworkImage(
                                                         placeholder: (context, url) => CircularProgressIndicator(),
-                                                        imageUrl: controller.fotoAlumno,
+                                                        imageUrl: cursoUi.fotoDocente??"",
                                                         imageBuilder: (context, imageProvider) => Container(
                                                             height: 52,
                                                             width: 52,

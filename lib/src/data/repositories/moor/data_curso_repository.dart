@@ -621,6 +621,11 @@ class DataCursoRepository extends CursoRepository{
        innerJoin(SQL.programasEducativo, SQL.planEstudio.programaEduId.equalsExp(SQL.programasEducativo.programaEduId)),
        innerJoin(SQL.silaboEvento, SQL.cargaCurso.cargaCursoId.equalsExp(SQL.silaboEvento.cargaCursoId)),
        innerJoin(SQL.cursos, SQL.cursos.cursoId.equalsExp(SQL.planCursos.cursoId)),
+       innerJoin(SQL.cargaAcademica, SQL.cargaCurso.cargaAcademicaId.equalsExp(SQL.cargaAcademica.cargaAcademicaId)),
+       innerJoin(SQL.aula, SQL.cargaAcademica.aulaId.equalsExp(SQL.aula.aulaId)),
+       innerJoin(SQL.seccion, SQL.cargaAcademica.seccionId.equalsExp(SQL.seccion.seccionId)),
+       innerJoin(SQL.periodos, SQL.cargaAcademica.periodoId.equalsExp(SQL.periodos.periodoId)),
+       innerJoin(SQL.nivelAcademico, SQL.programasEducativo.nivelAcadId.equalsExp(SQL.nivelAcademico.nivelAcadId)),
        leftOuterJoin(SQL.parametrosDisenio, SQL.silaboEvento.parametroDisenioId.equalsExp(SQL.parametrosDisenio.parametroDisenioId))
      ]);
 
@@ -640,16 +645,18 @@ class DataCursoRepository extends CursoRepository{
        Curso curso = data.readTable(SQL.cursos);
        CargaCursoData cargaCursoData = data.readTable(SQL.cargaCurso);
        ParametrosDisenioData parametrosDisenioData = data.readTable(SQL.parametrosDisenio);
+       SeccionData seccionData = data.readTable(SQL.seccion);
+       Periodo periodoData = data.readTable(SQL.periodos);
+       AulaData aulaData = data.readTable(SQL.aula);
+       NivelAcademicoData nivelAcademicoData = data.readTable(SQL.nivelAcademico);
+
        cursoUi.nombre = curso?.nombre;
-       if(cargaCursoData.complejo == null||cargaCursoData.complejo == 0){
-         cursoUi.docente = "Arias Orezano, Jose";
-       }else {
-         cursoUi.docente = "Arias Orezano, Jose";
-       }
-       cursoUi.seccion = "grado B";
-       cursoUi.grado = "3 ";
-       cursoUi.nivelAcademico = "Primaria";
-       cursoUi.salon = "Salon: AS-05";
+       cursoUi.nombreDocente = AppTools.capitalize(cargaCursoData.nombreDocente);
+       cursoUi.fotoDocente = cargaCursoData.fotoDocente;
+       cursoUi.seccion = seccionData.nombre;
+       cursoUi.grado = periodoData.aliasPeriodo;
+       cursoUi.nivelAcademico = nivelAcademicoData.nombre;
+       cursoUi.salon = aulaData.descripcion+ ": " + aulaData.numero;
 
        if(parametrosDisenioData!=null){
          cursoUi.colorCurso = parametrosDisenioData.color1;

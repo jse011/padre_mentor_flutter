@@ -4,6 +4,7 @@ import 'package:padre_mentor/src/data/repositories/moor/database/app_database.da
 import 'package:padre_mentor/src/data/repositories/moor/model/areas_boleta.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/calendario_acalendario.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/cursos.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/nivel_academico.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/plan_estudios.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/silabo_evento.dart';
 
@@ -118,7 +119,11 @@ class SerializableConvert{
     idPlanEstudio: serial.idPlanEstudio,
     idPlanEstudioVersion: serial.idPlanEstudioVersion,
     CapacidadVacanteP: serial.CapacidadVacanteP,
-    CapacidadVacanteD: serial.CapacidadVacanteD);
+    CapacidadVacanteD: serial.CapacidadVacanteD,
+    nombreDocente: serial.nombreDocente,
+    personaIdDocente: serial.personaIdDocente,
+    fotoDocente: serial.fotoDocente
+    );
   }
 
   static List<CargaCursoData> converListSerializeCargaCurso(dynamic model){
@@ -750,5 +755,121 @@ class SerializableConvert{
         foto: serial.foto,
         codigo: serial.codigo);
     //insert.personaId = Values(1);
+  }
+
+  static List<AulaData> converListSerializeAula(dynamic model){
+    List<AulaData> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeAula(item));
+    }
+    return items;
+  }
+
+  static AulaData converSerializeAula(Map<String,dynamic> model){
+    AulaSeraializable serial = AulaSeraializable.fromJson(model);
+    return AulaData(
+       aulaId: serial.aulaId,
+       descripcion: serial.descripcion,
+       numero: serial.numero,
+       capacidad: serial.capacidad,
+       estado: serial.estado);
+  }
+
+  static List<Periodo> converListSerializePeriodos(dynamic model){
+    List<Periodo> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializePeriodos(item));
+    }
+    return items;
+  }
+
+  static Periodo converSerializePeriodos(Map<String,dynamic> model){
+    PeriodosSeraializable serial = PeriodosSeraializable.fromJson(model);
+    return Periodo(
+       periodoId: serial.periodoId,
+       nombre: serial.nombre,
+       estadoId: serial.estadoId,
+       aliasPeriodo: serial.alias,
+       fecComienzo: serial.fecComienzo,
+       fecTermino: serial.fecTermino,
+       tipoId: serial.tipoId,
+       superId: serial.superId,
+       geoReferenciaId: serial.geoReferenciaId,
+       organigramaId: serial.organigramaId,
+       entidadId: serial.entidadId,
+       activo: serial.activo,
+       cicloId: serial.cicloId,
+       docenteId: serial.docenteId,
+       gruponombre: serial.gruponombre,
+       grupoId: serial.grupoId,
+       nivelAcademico: serial.nivelAcademico,
+       nivelAcademicoId: serial.nivelAcademicoId,
+       tutorId: serial.tutorId);
+  }
+
+  static List<SeccionData> converListSerializeSeccion(dynamic model){
+    List<SeccionData> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeSeccion(item));
+    }
+    return items;
+  }
+
+  static SeccionData converSerializeSeccion(Map<String,dynamic> model){
+    SeccionSeraializable serial = SeccionSeraializable.fromJson(model);
+    return SeccionData(
+       seccionId: serial.seccionId,
+       nombre: serial.nombre,
+       descripcion: serial.descripcion,
+       estado: serial.estado,
+       georeferenciaId: serial.georeferenciaId);
+  }
+
+  static List<CargaAcademicaData> converListSerializeCargaAcademica(dynamic model){
+    List<CargaAcademicaData> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeCargaAcademica(item));
+    }
+    return items;
+  }
+
+  static CargaAcademicaData converSerializeCargaAcademica(Map<String,dynamic> model){
+    CargaAcademicaSeraializable serial = CargaAcademicaSeraializable.fromJson(model);
+    return CargaAcademicaData(
+       cargaAcademicaId: serial.cargaAcademicaId,
+       estadoId: serial.estadoId,
+       idAnioAcademico: serial.idAnioAcademico,
+       idPeriodoAcad: serial.idPeriodoAcad,
+       aulaId: serial.aulaId,
+       idGrupo: serial.idGrupo,
+       idPlanEstudio: serial.idPlanEstudio,
+       idPlanEstudioVersion: serial.idPlanEstudioVersion,
+       capacidadVacante: serial.capacidadVacante,
+       capacidadVacanteD: serial.capacidadVacanteD,
+       idEmpleadoTutor: serial.idEmpleadoTutor,
+       seccionId: serial.seccionId,
+       periodoId: serial.periodoId);
+  }
+
+  static List<NivelAcademicoData> converListSerializeNivelAcademico(dynamic model){
+    List<NivelAcademicoData> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeNivelAcademico(item));
+    }
+    return items;
+  }
+
+  static NivelAcademicoData converSerializeNivelAcademico(Map<String,dynamic> model){
+    NivelAcademicoSeraializable serial = NivelAcademicoSeraializable.fromJson(model);
+    return NivelAcademicoData(
+       nivelAcadId: serial.nivelAcadId,
+        nombre: serial.nombre,
+        activo: serial.activo,
+        entidadId: serial.entidadId);
   }
 }

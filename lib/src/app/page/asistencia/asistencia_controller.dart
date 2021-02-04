@@ -1,13 +1,9 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:padre_mentor/src/app/page/evaluacion/evaluacion_presenter.dart';
-import 'package:padre_mentor/src/device/repositories/http/device_http_datos_repository.dart';
+import 'package:padre_mentor/src/app/page/asistencia/asistencia_presenter.dart';
 import 'package:padre_mentor/src/domain/entities/calendario_periodio_ui.dart';
-import 'package:padre_mentor/src/domain/entities/rubro_evaluacion_ui.dart';
-import 'package:padre_mentor/src/domain/repositories/curso_repository.dart';
-import 'package:padre_mentor/src/domain/repositories/usuario_configuarion_repository.dart';
 
-class EvaluacionController extends Controller{
-  EvaluacionPresenter presenter;
+class AsistenciaController extends Controller{
+  AsistenciaPresenter presenter;
   final int alumnoId;
   final int programaAcademicoId;
   final int anioAcademicoId;
@@ -23,7 +19,7 @@ class EvaluacionController extends Controller{
   String _msgConexion = null;
   String get msgConexion => _msgConexion;
 
-  EvaluacionController(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, this.fotoAlumno, UsuarioAndConfiguracionRepository usuarioConfigRepo, CursoRepository cursoRepo, DeviceHttpDatosRepositorio httpDatosRepo): presenter = EvaluacionPresenter(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno, cursoRepo, httpDatosRepo, usuarioConfigRepo), super();
+  AsistenciaController(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, this.fotoAlumno, usuarioConfigRepo, cursoRepo, httpDatosRepo): presenter = AsistenciaPresenter(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno, cursoRepo, httpDatosRepo, usuarioConfigRepo), super();
 
   @override
   void initListeners() {
