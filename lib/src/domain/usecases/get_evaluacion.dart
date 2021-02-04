@@ -6,6 +6,7 @@ import 'package:padre_mentor/src/domain/entities/curso_ui.dart';
 import 'package:padre_mentor/src/domain/entities/rubro_evaluacion_ui.dart';
 import 'package:padre_mentor/src/domain/repositories/curso_repository.dart';
 import 'package:padre_mentor/src/domain/repositories/http_datos_repository.dart';
+import 'package:padre_mentor/src/domain/repositories/usuario_configuarion_repository.dart';
 
 import 'get_boleta_nota.dart';
 
@@ -13,17 +14,26 @@ class GetEvaluacion extends UseCase<GetEvaluacionCaseResponse, GetEvaluacionCase
 
   final HttpDatosRepository httprepository;
   final CursoRepository repository;
+  final UsuarioAndConfiguracionRepository usuaConfRepository;
 
-  GetEvaluacion(this.httprepository, this.repository);
+  GetEvaluacion(this.httprepository, this.repository, this.usuaConfRepository);
 
   @override
   Future<Stream<GetEvaluacionCaseResponse>> buildUseCaseStream(GetEvaluacionCaseParams params) async{
     final controller = StreamController<GetEvaluacionCaseResponse>();
-    logger.finest('Hola Jse');
+    bool offlineServidor = false;
+    bool errorServidor = false;
+    try{
+      String urlServidorLocal = await usuaConfRepository.getSessionUsuarioUrlServidor();
+      Map<String, dynamic> datosEvaluaciones = await httprepository.getEvaluacionesPorCurso(urlServidorLocal, params.anioAcademicoId, params.programaId, params.calendarioPeridoId, params.alumnoId);
+      errorServidor = datosEvaluaciones==null;
+      if(!errorServidor){
+        await repository.saveEvaluaciones(datosEvaluaciones, params.anioAcademicoId, params.programaId, params.calendarioPeridoId, params.alumnoId);
+      }
+    }catch(e){
+      offlineServidor = true;
+    }
     try {
-
-      Map<String, dynamic> datosEvaluaciones = await httprepository.getEvaluacionesPorCurso(params.anioAcademicoId, params.programaId, params.calendarioPeridoId, params.alumnoId);
-      await repository.saveEvaluaciones(datosEvaluaciones);
       List<dynamic> lista = [];
       List<RubroEvaluacionUi> rubroEvaluacionList = await repository.getEvaluacionesPorCurso(params.anioAcademicoId, params.programaId, params.calendarioPeridoId, params.alumnoId);
 
@@ -36,7 +46,7 @@ class GetEvaluacion extends UseCase<GetEvaluacionCaseResponse, GetEvaluacionCase
         }
         lista.add(rubroEvalItem);
       }
-      controller.add(GetEvaluacionCaseResponse(lista));
+      controller.add(GetEvaluacionCaseResponse(lista, offlineServidor, errorServidor));
     logger.finest('GetEvaluacion successful.');
     controller.close();
     } catch (e) {
@@ -62,7 +72,11 @@ class GetEvaluacionCaseParams {
 
 /// Wrapping response inside an object makes it easier to change later
 class GetEvaluacionCaseResponse {
-    List<dynamic> rubroEvaluacionList;
 
-    GetEvaluacionCaseResponse(this.rubroEvaluacionList);
+    List<dynamic> rubroEvaluacionList;
+    bool offlineServidor;
+    bool errorServidor;
+
+    GetEvaluacionCaseResponse(
+      this.rubroEvaluacionList, this.offlineServidor, this.errorServidor);
 }

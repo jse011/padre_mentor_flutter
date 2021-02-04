@@ -13,7 +13,6 @@ class SyncDatosInicioPadre extends UseCase<SyncDatosInicioPadreResponse,SyncDato
   @override
   Future<Stream<SyncDatosInicioPadreResponse>> buildUseCaseStream(SyncDatosInicioPadreParams params) async{
     final controller = StreamController<SyncDatosInicioPadreResponse>();
-    logger.finest('Hola Jse');
     try {
       int usuarioId = await datosrepository.getSessionUsuarioId();
       String urlServidorLocal = await datosrepository.getSessionUsuarioUrlServidor();
@@ -38,9 +37,7 @@ class SyncDatosInicioPadreResponse {
 }
 
 class SyncDatosInicioPadreParams {
-  final int usuarioId;
-
-  SyncDatosInicioPadreParams(this.usuarioId);
+  SyncDatosInicioPadreParams();
 
 }
 

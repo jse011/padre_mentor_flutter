@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:padre_mentor/src/app/page/boleta_notas/boleta_notas_router.dart';
+import 'package:padre_mentor/src/app/page/cursos/cursos_router.dart';
 import 'package:padre_mentor/src/app/page/estado_cuenta/estado_cuenta_router.dart';
 import 'package:padre_mentor/src/app/page/evaluacion/evaluacion_router.dart';
 import 'package:padre_mentor/src/app/page/portal_alumno/portal_alumno_controller.dart';
@@ -43,7 +44,7 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
 
   List<Widget> listViews = <Widget>[];
   final ScrollController scrollController = ScrollController();
-
+  CarouselController carouselController = CarouselController();
   double topBarOpacity = 0.0;
 
   int _currentIndex;
@@ -319,6 +320,9 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                               curve:
                               Interval((1 / countView) * 0, 1.0, curve: Curves.fastOutSlowIn))),
                           animationController: widget.animationController,
+                          onClick: (){
+                            if(carouselController!=null)carouselController.nextPage();
+                          },
                         ),
                         AnimationView(
                           animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
@@ -328,6 +332,7 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                           animationController: widget.animationController,
                           child:  controller.programaEducativoList.length==0? Container(height: 100.0):
                           CarouselSlider(
+                            carouselController: carouselController,
                             options: CarouselOptions(
                               height: 100.0,
                               autoPlay: false,
@@ -446,7 +451,7 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                               onTap: () {
                                 var programaEducativo = controller.programaEducativoSelected;
                                 if(programaEducativo!=null){
-                                  Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
+                                  Navigator.of(context).push(CursosRouter.createRouteCursosRouter(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
                                 }
                               },
                             ),
@@ -484,9 +489,18 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                           ]
                       )
                   ),
-                )
+                ),
                 //https://www.flaticon.es/packs/online-learning-192?k=1611187904419
+                SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                       Container(
+                         height: 100,
+                       )
 
+                      ],
+                    )
+                ),
               ],
             );
           })

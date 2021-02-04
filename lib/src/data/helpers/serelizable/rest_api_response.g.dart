@@ -917,3 +917,54 @@ Map<String, dynamic> _$UsuarioRolGeoreferenciaSerializableToJson(
       'geoReferenciaId': instance.geoReferenciaId,
       'entidadId': instance.entidadId,
     };
+
+CursosSerializable _$CursosSerializableFromJson(Map<String, dynamic> json) {
+  return CursosSerializable(
+    cursoId: json['cursoId'] as int,
+    nombre: json['nombre'] as String,
+    estadoId: json['estadoId'] as int,
+    descripcion: json['descripcion'] as String,
+    alias: json['alias'] as String,
+    entidadId: json['entidadId'] as int,
+    nivelAcadId: json['nivelAcadId'] as int,
+    tipoCursoId: json['tipoCursoId'] as int,
+    tipoConceptoId: json['tipoConceptoId'] as int,
+    color: json['color'] as String,
+    creditos: json['creditos'] as String,
+    totalHP: json['totalHP'] as String,
+    totalHT: json['totalHT'] as String,
+    notaAprobatoria: json['notaAprobatoria'] as String,
+    sumilla: json['sumilla'] as String,
+    superId: json['superId'] as int,
+    idServicioLaboratorio: json['idServicioLaboratorio'] as int,
+    horasLaboratorio: json['horasLaboratorio'] as int,
+    tipoSubcurso: json['tipoSubcurso'] as bool,
+    foto: json['foto'] as String,
+    codigo: json['codigo'] as String,
+  );
+}
+
+Map<String, dynamic> _$CursosSerializableToJson(CursosSerializable instance) =>
+    <String, dynamic>{
+      'cursoId': instance.cursoId,
+      'nombre': instance.nombre,
+      'estadoId': instance.estadoId,
+      'descripcion': instance.descripcion,
+      'alias': instance.alias,
+      'entidadId': instance.entidadId,
+      'nivelAcadId': instance.nivelAcadId,
+      'tipoCursoId': instance.tipoCursoId,
+      'tipoConceptoId': instance.tipoConceptoId,
+      'color': instance.color,
+      'creditos': instance.creditos,
+      'totalHP': instance.totalHP,
+      'totalHT': instance.totalHT,
+      'notaAprobatoria': instance.notaAprobatoria,
+      'sumilla': instance.sumilla,
+      'superId': instance.superId,
+      'idServicioLaboratorio': instance.idServicioLaboratorio,
+      'horasLaboratorio': instance.horasLaboratorio,
+      'tipoSubcurso': instance.tipoSubcurso,
+      'foto': instance.foto,
+      'codigo': instance.codigo,
+    };

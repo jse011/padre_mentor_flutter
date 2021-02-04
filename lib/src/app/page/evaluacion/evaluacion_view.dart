@@ -3,11 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:padre_mentor/src/app/page/evaluacion/evaluacion_controller.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/app/utils/hex_color.dart';
 import 'package:padre_mentor/src/app/widgets/animation_view.dart';
 import 'package:padre_mentor/src/data/repositories/moor/data_curso_repository.dart';
+import 'package:padre_mentor/src/data/repositories/moor/data_usuario_configuracion_respository.dart';
 import 'package:padre_mentor/src/device/repositories/http/device_http_datos_repository.dart';
 import 'package:padre_mentor/src/domain/entities/curso_ui.dart';
 import 'package:padre_mentor/src/domain/entities/evaluacion_rubro_ui.dart';
@@ -28,7 +30,7 @@ class EvaluacionView extends View{
 }
 
 class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionController> with TickerProviderStateMixin{
-  _EvaluacionViewState(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno) : super(EvaluacionController(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno, DataCursoRepository(), DeviceHttpDatosRepositorio()));
+  _EvaluacionViewState(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno) : super(EvaluacionController(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno, DataUsuarioAndRepository(),DataCursoRepository(), DeviceHttpDatosRepositorio()));
   Animation<double> topBarAnimation;
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
@@ -229,6 +231,16 @@ class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionControlle
                   animationController: animationController,
                   child:  ControlledWidgetBuilder<EvaluacionController>(
                       builder: (context, controller) {
+                        if(controller.msgConexion!=null&&controller.msgConexion.isNotEmpty){
+                          Fluttertoast.showToast(
+                            msg: controller.msgConexion,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                          );
+                          controller.successMsg();
+                        }
+
                         return Stack(
                           children: [
                             CustomScrollView(

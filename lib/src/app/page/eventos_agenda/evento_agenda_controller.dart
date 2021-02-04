@@ -6,6 +6,9 @@ import 'package:padre_mentor/src/domain/entities/evento_ui.dart';
 import 'package:padre_mentor/src/domain/entities/hijos_ui.dart';
 import 'package:padre_mentor/src/domain/entities/tipo_evento_ui.dart';
 import 'package:padre_mentor/src/domain/entities/usuario_ui.dart';
+import 'package:padre_mentor/src/domain/repositories/check_conex_repository.dart';
+import 'package:padre_mentor/src/domain/repositories/http_datos_repository.dart';
+import 'package:padre_mentor/src/domain/repositories/usuario_configuarion_repository.dart';
 
 class EventoAgendaController extends Controller{
   UsuarioUi _usuarioUi;
@@ -27,7 +30,7 @@ class EventoAgendaController extends Controller{
   HijosUi _hijoSelected = null;
   EventoAgendaPresenter presenter;
 
-  EventoAgendaController(checkConext, usuarioRepo, httpRepo):this.presenter = new EventoAgendaPresenter(checkConext, usuarioRepo, httpRepo);
+  EventoAgendaController(CheckConexRepository checkConext, UsuarioAndConfiguracionRepository usuarioRepo, HttpDatosRepository httpRepo):this.presenter = new EventoAgendaPresenter(checkConext, usuarioRepo, httpRepo);
 
   @override
   void initListeners() {
@@ -63,19 +66,16 @@ class EventoAgendaController extends Controller{
 
       _eventoUilIst = [];
       hideProgress();
-      _msgConexion = "No hay Conexión a Internet...";
+      _msgConexion = "!Oops! Al parecer ocurrió un error involuntario.";
       refreshUI();
     };
     presenter.getEventoAgendaOnNext = (List<TipoEventoUi> tipoEvantoList, List<EventoUi> eventoList, bool errorServidor, bool datosOffline) {
 
-      if(datosOffline){
-        _tipoEventoList = tipoEvantoList;
-      }else{
-        _tipoEventoList = tipoEvantoList;
-        _eventoUilIst = eventoList;
-        _msgConexion = errorServidor? "!Oops! Al parecer ocurrió un error involuntario.":null;
-        hideProgress();
-      }
+      _tipoEventoList = tipoEvantoList;
+      _eventoUilIst = eventoList;
+      _msgConexion = errorServidor? "!Oops! Al parecer ocurrió un error involuntario.":null;
+      _msgConexion = datosOffline? "No hay Conexión a Internet...":null;
+      hideProgress();
 
       if(_selectedTipoEventoUi==null){
         for(TipoEventoUi tipoEventoUi in tipoEventoList){

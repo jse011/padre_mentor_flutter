@@ -13,7 +13,7 @@ class EvaluacionPresenter extends Presenter{
   GetEvaluacion _getEvaluacion;
   Function getEvaluacionOnNext, getEvaluacionOnComplete, getEvaluacionOnError;
 
-  EvaluacionPresenter(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, this.fotoAlumno, cursoRepo, httpDatosRepo): _getCalendarioPerido = GetCalendarioPerido(cursoRepo), _getEvaluacion = GetEvaluacion(httpDatosRepo, cursoRepo), super();
+  EvaluacionPresenter(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, this.fotoAlumno, cursoRepo, httpDatosRepo, usuarioConfigRepo): _getCalendarioPerido = GetCalendarioPerido(cursoRepo), _getEvaluacion = GetEvaluacion(httpDatosRepo, cursoRepo, usuarioConfigRepo), super();
 
   @override
   void dispose() {
@@ -75,7 +75,7 @@ class _GetEvaluacionCase extends Observer<GetEvaluacionCaseResponse>{
   @override
   void onNext(GetEvaluacionCaseResponse response) {
     assert(presenter.getEvaluacionOnNext != null);
-    presenter.getEvaluacionOnNext(response.rubroEvaluacionList);
+    presenter.getEvaluacionOnNext(response.rubroEvaluacionList, response.errorServidor, response.offlineServidor);
   }
 
 }

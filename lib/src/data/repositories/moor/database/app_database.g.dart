@@ -16021,8 +16021,8 @@ class ContactoData extends DataClass implements Insertable<ContactoData> {
       this.foto,
       this.nombreTipo,
       @required this.tipo,
-      this.companieroId,
-      @required this.hijoRelacionId,
+      @required this.companieroId,
+      this.hijoRelacionId,
       this.relacion,
       @required this.cargaCursoId});
   factory ContactoData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
@@ -16447,13 +16447,13 @@ class ContactoCompanion extends UpdateCompanion<ContactoData> {
     this.foto = const Value.absent(),
     this.nombreTipo = const Value.absent(),
     @required int tipo,
-    this.companieroId = const Value.absent(),
-    @required int hijoRelacionId,
+    @required int companieroId,
+    this.hijoRelacionId = const Value.absent(),
     this.relacion = const Value.absent(),
     @required int cargaCursoId,
   })  : personaId = Value(personaId),
         tipo = Value(tipo),
-        hijoRelacionId = Value(hijoRelacionId),
+        companieroId = Value(companieroId),
         cargaCursoId = Value(cargaCursoId);
   static Insertable<ContactoData> custom({
     Expression<int> personaId,
@@ -16853,7 +16853,7 @@ class $ContactoTable extends Contacto
     return GeneratedIntColumn(
       'companiero_id',
       $tableName,
-      true,
+      false,
     );
   }
 
@@ -16867,7 +16867,7 @@ class $ContactoTable extends Contacto
     return GeneratedIntColumn(
       'hijo_relacion_id',
       $tableName,
-      false,
+      true,
     );
   }
 
@@ -17012,14 +17012,14 @@ class $ContactoTable extends Contacto
           _companieroIdMeta,
           companieroId.isAcceptableOrUnknown(
               data['companiero_id'], _companieroIdMeta));
+    } else if (isInserting) {
+      context.missing(_companieroIdMeta);
     }
     if (data.containsKey('hijo_relacion_id')) {
       context.handle(
           _hijoRelacionIdMeta,
           hijoRelacionId.isAcceptableOrUnknown(
               data['hijo_relacion_id'], _hijoRelacionIdMeta));
-    } else if (isInserting) {
-      context.missing(_hijoRelacionIdMeta);
     }
     if (data.containsKey('relacion')) {
       context.handle(_relacionMeta,
@@ -17038,7 +17038,7 @@ class $ContactoTable extends Contacto
 
   @override
   Set<GeneratedColumn> get $primaryKey =>
-      {personaId, hijoRelacionId, tipo, cargaCursoId};
+      {personaId, companieroId, tipo, cargaCursoId};
   @override
   ContactoData map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
@@ -18592,6 +18592,1123 @@ class $UsuarioRolGeoreferenciaTable extends UsuarioRolGeoreferencia
   }
 }
 
+class Curso extends DataClass implements Insertable<Curso> {
+  final int cursoId;
+  final String nombre;
+  final int estadoId;
+  final String descripcion;
+  final String cursoAlias;
+  final int entidadId;
+  final int nivelAcadId;
+  final int tipoCursoId;
+  final int tipoConceptoId;
+  final String color;
+  final String creditos;
+  final String totalHP;
+  final String totalHT;
+  final String notaAprobatoria;
+  final String sumilla;
+  final int superId;
+  final int idServicioLaboratorio;
+  final int horasLaboratorio;
+  final bool tipoSubcurso;
+  final String foto;
+  final String codigo;
+  Curso(
+      {@required this.cursoId,
+      this.nombre,
+      this.estadoId,
+      this.descripcion,
+      this.cursoAlias,
+      this.entidadId,
+      this.nivelAcadId,
+      this.tipoCursoId,
+      this.tipoConceptoId,
+      this.color,
+      this.creditos,
+      this.totalHP,
+      this.totalHT,
+      this.notaAprobatoria,
+      this.sumilla,
+      this.superId,
+      this.idServicioLaboratorio,
+      this.horasLaboratorio,
+      this.tipoSubcurso,
+      this.foto,
+      this.codigo});
+  factory Curso.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    final boolType = db.typeSystem.forDartType<bool>();
+    return Curso(
+      cursoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}curso_id']),
+      nombre:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}nombre']),
+      estadoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}estado_id']),
+      descripcion: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}descripcion']),
+      cursoAlias: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}curso_alias']),
+      entidadId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}entidad_id']),
+      nivelAcadId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}nivel_acad_id']),
+      tipoCursoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}tipo_curso_id']),
+      tipoConceptoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}tipo_concepto_id']),
+      color:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}color']),
+      creditos: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}creditos']),
+      totalHP: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}total_h_p']),
+      totalHT: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}total_h_t']),
+      notaAprobatoria: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}nota_aprobatoria']),
+      sumilla:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}sumilla']),
+      superId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}super_id']),
+      idServicioLaboratorio: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}id_servicio_laboratorio']),
+      horasLaboratorio: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}horas_laboratorio']),
+      tipoSubcurso: boolType
+          .mapFromDatabaseResponse(data['${effectivePrefix}tipo_subcurso']),
+      foto: stringType.mapFromDatabaseResponse(data['${effectivePrefix}foto']),
+      codigo:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}codigo']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || cursoId != null) {
+      map['curso_id'] = Variable<int>(cursoId);
+    }
+    if (!nullToAbsent || nombre != null) {
+      map['nombre'] = Variable<String>(nombre);
+    }
+    if (!nullToAbsent || estadoId != null) {
+      map['estado_id'] = Variable<int>(estadoId);
+    }
+    if (!nullToAbsent || descripcion != null) {
+      map['descripcion'] = Variable<String>(descripcion);
+    }
+    if (!nullToAbsent || cursoAlias != null) {
+      map['curso_alias'] = Variable<String>(cursoAlias);
+    }
+    if (!nullToAbsent || entidadId != null) {
+      map['entidad_id'] = Variable<int>(entidadId);
+    }
+    if (!nullToAbsent || nivelAcadId != null) {
+      map['nivel_acad_id'] = Variable<int>(nivelAcadId);
+    }
+    if (!nullToAbsent || tipoCursoId != null) {
+      map['tipo_curso_id'] = Variable<int>(tipoCursoId);
+    }
+    if (!nullToAbsent || tipoConceptoId != null) {
+      map['tipo_concepto_id'] = Variable<int>(tipoConceptoId);
+    }
+    if (!nullToAbsent || color != null) {
+      map['color'] = Variable<String>(color);
+    }
+    if (!nullToAbsent || creditos != null) {
+      map['creditos'] = Variable<String>(creditos);
+    }
+    if (!nullToAbsent || totalHP != null) {
+      map['total_h_p'] = Variable<String>(totalHP);
+    }
+    if (!nullToAbsent || totalHT != null) {
+      map['total_h_t'] = Variable<String>(totalHT);
+    }
+    if (!nullToAbsent || notaAprobatoria != null) {
+      map['nota_aprobatoria'] = Variable<String>(notaAprobatoria);
+    }
+    if (!nullToAbsent || sumilla != null) {
+      map['sumilla'] = Variable<String>(sumilla);
+    }
+    if (!nullToAbsent || superId != null) {
+      map['super_id'] = Variable<int>(superId);
+    }
+    if (!nullToAbsent || idServicioLaboratorio != null) {
+      map['id_servicio_laboratorio'] = Variable<int>(idServicioLaboratorio);
+    }
+    if (!nullToAbsent || horasLaboratorio != null) {
+      map['horas_laboratorio'] = Variable<int>(horasLaboratorio);
+    }
+    if (!nullToAbsent || tipoSubcurso != null) {
+      map['tipo_subcurso'] = Variable<bool>(tipoSubcurso);
+    }
+    if (!nullToAbsent || foto != null) {
+      map['foto'] = Variable<String>(foto);
+    }
+    if (!nullToAbsent || codigo != null) {
+      map['codigo'] = Variable<String>(codigo);
+    }
+    return map;
+  }
+
+  CursosCompanion toCompanion(bool nullToAbsent) {
+    return CursosCompanion(
+      cursoId: cursoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cursoId),
+      nombre:
+          nombre == null && nullToAbsent ? const Value.absent() : Value(nombre),
+      estadoId: estadoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadoId),
+      descripcion: descripcion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(descripcion),
+      cursoAlias: cursoAlias == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cursoAlias),
+      entidadId: entidadId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(entidadId),
+      nivelAcadId: nivelAcadId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nivelAcadId),
+      tipoCursoId: tipoCursoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tipoCursoId),
+      tipoConceptoId: tipoConceptoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tipoConceptoId),
+      color:
+          color == null && nullToAbsent ? const Value.absent() : Value(color),
+      creditos: creditos == null && nullToAbsent
+          ? const Value.absent()
+          : Value(creditos),
+      totalHP: totalHP == null && nullToAbsent
+          ? const Value.absent()
+          : Value(totalHP),
+      totalHT: totalHT == null && nullToAbsent
+          ? const Value.absent()
+          : Value(totalHT),
+      notaAprobatoria: notaAprobatoria == null && nullToAbsent
+          ? const Value.absent()
+          : Value(notaAprobatoria),
+      sumilla: sumilla == null && nullToAbsent
+          ? const Value.absent()
+          : Value(sumilla),
+      superId: superId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(superId),
+      idServicioLaboratorio: idServicioLaboratorio == null && nullToAbsent
+          ? const Value.absent()
+          : Value(idServicioLaboratorio),
+      horasLaboratorio: horasLaboratorio == null && nullToAbsent
+          ? const Value.absent()
+          : Value(horasLaboratorio),
+      tipoSubcurso: tipoSubcurso == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tipoSubcurso),
+      foto: foto == null && nullToAbsent ? const Value.absent() : Value(foto),
+      codigo:
+          codigo == null && nullToAbsent ? const Value.absent() : Value(codigo),
+    );
+  }
+
+  factory Curso.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return Curso(
+      cursoId: serializer.fromJson<int>(json['cursoId']),
+      nombre: serializer.fromJson<String>(json['nombre']),
+      estadoId: serializer.fromJson<int>(json['estadoId']),
+      descripcion: serializer.fromJson<String>(json['descripcion']),
+      cursoAlias: serializer.fromJson<String>(json['cursoAlias']),
+      entidadId: serializer.fromJson<int>(json['entidadId']),
+      nivelAcadId: serializer.fromJson<int>(json['nivelAcadId']),
+      tipoCursoId: serializer.fromJson<int>(json['tipoCursoId']),
+      tipoConceptoId: serializer.fromJson<int>(json['tipoConceptoId']),
+      color: serializer.fromJson<String>(json['color']),
+      creditos: serializer.fromJson<String>(json['creditos']),
+      totalHP: serializer.fromJson<String>(json['totalHP']),
+      totalHT: serializer.fromJson<String>(json['totalHT']),
+      notaAprobatoria: serializer.fromJson<String>(json['notaAprobatoria']),
+      sumilla: serializer.fromJson<String>(json['sumilla']),
+      superId: serializer.fromJson<int>(json['superId']),
+      idServicioLaboratorio:
+          serializer.fromJson<int>(json['idServicioLaboratorio']),
+      horasLaboratorio: serializer.fromJson<int>(json['horasLaboratorio']),
+      tipoSubcurso: serializer.fromJson<bool>(json['tipoSubcurso']),
+      foto: serializer.fromJson<String>(json['foto']),
+      codigo: serializer.fromJson<String>(json['codigo']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'cursoId': serializer.toJson<int>(cursoId),
+      'nombre': serializer.toJson<String>(nombre),
+      'estadoId': serializer.toJson<int>(estadoId),
+      'descripcion': serializer.toJson<String>(descripcion),
+      'cursoAlias': serializer.toJson<String>(cursoAlias),
+      'entidadId': serializer.toJson<int>(entidadId),
+      'nivelAcadId': serializer.toJson<int>(nivelAcadId),
+      'tipoCursoId': serializer.toJson<int>(tipoCursoId),
+      'tipoConceptoId': serializer.toJson<int>(tipoConceptoId),
+      'color': serializer.toJson<String>(color),
+      'creditos': serializer.toJson<String>(creditos),
+      'totalHP': serializer.toJson<String>(totalHP),
+      'totalHT': serializer.toJson<String>(totalHT),
+      'notaAprobatoria': serializer.toJson<String>(notaAprobatoria),
+      'sumilla': serializer.toJson<String>(sumilla),
+      'superId': serializer.toJson<int>(superId),
+      'idServicioLaboratorio': serializer.toJson<int>(idServicioLaboratorio),
+      'horasLaboratorio': serializer.toJson<int>(horasLaboratorio),
+      'tipoSubcurso': serializer.toJson<bool>(tipoSubcurso),
+      'foto': serializer.toJson<String>(foto),
+      'codigo': serializer.toJson<String>(codigo),
+    };
+  }
+
+  Curso copyWith(
+          {int cursoId,
+          String nombre,
+          int estadoId,
+          String descripcion,
+          String cursoAlias,
+          int entidadId,
+          int nivelAcadId,
+          int tipoCursoId,
+          int tipoConceptoId,
+          String color,
+          String creditos,
+          String totalHP,
+          String totalHT,
+          String notaAprobatoria,
+          String sumilla,
+          int superId,
+          int idServicioLaboratorio,
+          int horasLaboratorio,
+          bool tipoSubcurso,
+          String foto,
+          String codigo}) =>
+      Curso(
+        cursoId: cursoId ?? this.cursoId,
+        nombre: nombre ?? this.nombre,
+        estadoId: estadoId ?? this.estadoId,
+        descripcion: descripcion ?? this.descripcion,
+        cursoAlias: cursoAlias ?? this.cursoAlias,
+        entidadId: entidadId ?? this.entidadId,
+        nivelAcadId: nivelAcadId ?? this.nivelAcadId,
+        tipoCursoId: tipoCursoId ?? this.tipoCursoId,
+        tipoConceptoId: tipoConceptoId ?? this.tipoConceptoId,
+        color: color ?? this.color,
+        creditos: creditos ?? this.creditos,
+        totalHP: totalHP ?? this.totalHP,
+        totalHT: totalHT ?? this.totalHT,
+        notaAprobatoria: notaAprobatoria ?? this.notaAprobatoria,
+        sumilla: sumilla ?? this.sumilla,
+        superId: superId ?? this.superId,
+        idServicioLaboratorio:
+            idServicioLaboratorio ?? this.idServicioLaboratorio,
+        horasLaboratorio: horasLaboratorio ?? this.horasLaboratorio,
+        tipoSubcurso: tipoSubcurso ?? this.tipoSubcurso,
+        foto: foto ?? this.foto,
+        codigo: codigo ?? this.codigo,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Curso(')
+          ..write('cursoId: $cursoId, ')
+          ..write('nombre: $nombre, ')
+          ..write('estadoId: $estadoId, ')
+          ..write('descripcion: $descripcion, ')
+          ..write('cursoAlias: $cursoAlias, ')
+          ..write('entidadId: $entidadId, ')
+          ..write('nivelAcadId: $nivelAcadId, ')
+          ..write('tipoCursoId: $tipoCursoId, ')
+          ..write('tipoConceptoId: $tipoConceptoId, ')
+          ..write('color: $color, ')
+          ..write('creditos: $creditos, ')
+          ..write('totalHP: $totalHP, ')
+          ..write('totalHT: $totalHT, ')
+          ..write('notaAprobatoria: $notaAprobatoria, ')
+          ..write('sumilla: $sumilla, ')
+          ..write('superId: $superId, ')
+          ..write('idServicioLaboratorio: $idServicioLaboratorio, ')
+          ..write('horasLaboratorio: $horasLaboratorio, ')
+          ..write('tipoSubcurso: $tipoSubcurso, ')
+          ..write('foto: $foto, ')
+          ..write('codigo: $codigo')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      cursoId.hashCode,
+      $mrjc(
+          nombre.hashCode,
+          $mrjc(
+              estadoId.hashCode,
+              $mrjc(
+                  descripcion.hashCode,
+                  $mrjc(
+                      cursoAlias.hashCode,
+                      $mrjc(
+                          entidadId.hashCode,
+                          $mrjc(
+                              nivelAcadId.hashCode,
+                              $mrjc(
+                                  tipoCursoId.hashCode,
+                                  $mrjc(
+                                      tipoConceptoId.hashCode,
+                                      $mrjc(
+                                          color.hashCode,
+                                          $mrjc(
+                                              creditos.hashCode,
+                                              $mrjc(
+                                                  totalHP.hashCode,
+                                                  $mrjc(
+                                                      totalHT.hashCode,
+                                                      $mrjc(
+                                                          notaAprobatoria
+                                                              .hashCode,
+                                                          $mrjc(
+                                                              sumilla.hashCode,
+                                                              $mrjc(
+                                                                  superId
+                                                                      .hashCode,
+                                                                  $mrjc(
+                                                                      idServicioLaboratorio
+                                                                          .hashCode,
+                                                                      $mrjc(
+                                                                          horasLaboratorio
+                                                                              .hashCode,
+                                                                          $mrjc(
+                                                                              tipoSubcurso.hashCode,
+                                                                              $mrjc(foto.hashCode, codigo.hashCode)))))))))))))))))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is Curso &&
+          other.cursoId == this.cursoId &&
+          other.nombre == this.nombre &&
+          other.estadoId == this.estadoId &&
+          other.descripcion == this.descripcion &&
+          other.cursoAlias == this.cursoAlias &&
+          other.entidadId == this.entidadId &&
+          other.nivelAcadId == this.nivelAcadId &&
+          other.tipoCursoId == this.tipoCursoId &&
+          other.tipoConceptoId == this.tipoConceptoId &&
+          other.color == this.color &&
+          other.creditos == this.creditos &&
+          other.totalHP == this.totalHP &&
+          other.totalHT == this.totalHT &&
+          other.notaAprobatoria == this.notaAprobatoria &&
+          other.sumilla == this.sumilla &&
+          other.superId == this.superId &&
+          other.idServicioLaboratorio == this.idServicioLaboratorio &&
+          other.horasLaboratorio == this.horasLaboratorio &&
+          other.tipoSubcurso == this.tipoSubcurso &&
+          other.foto == this.foto &&
+          other.codigo == this.codigo);
+}
+
+class CursosCompanion extends UpdateCompanion<Curso> {
+  final Value<int> cursoId;
+  final Value<String> nombre;
+  final Value<int> estadoId;
+  final Value<String> descripcion;
+  final Value<String> cursoAlias;
+  final Value<int> entidadId;
+  final Value<int> nivelAcadId;
+  final Value<int> tipoCursoId;
+  final Value<int> tipoConceptoId;
+  final Value<String> color;
+  final Value<String> creditos;
+  final Value<String> totalHP;
+  final Value<String> totalHT;
+  final Value<String> notaAprobatoria;
+  final Value<String> sumilla;
+  final Value<int> superId;
+  final Value<int> idServicioLaboratorio;
+  final Value<int> horasLaboratorio;
+  final Value<bool> tipoSubcurso;
+  final Value<String> foto;
+  final Value<String> codigo;
+  const CursosCompanion({
+    this.cursoId = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.estadoId = const Value.absent(),
+    this.descripcion = const Value.absent(),
+    this.cursoAlias = const Value.absent(),
+    this.entidadId = const Value.absent(),
+    this.nivelAcadId = const Value.absent(),
+    this.tipoCursoId = const Value.absent(),
+    this.tipoConceptoId = const Value.absent(),
+    this.color = const Value.absent(),
+    this.creditos = const Value.absent(),
+    this.totalHP = const Value.absent(),
+    this.totalHT = const Value.absent(),
+    this.notaAprobatoria = const Value.absent(),
+    this.sumilla = const Value.absent(),
+    this.superId = const Value.absent(),
+    this.idServicioLaboratorio = const Value.absent(),
+    this.horasLaboratorio = const Value.absent(),
+    this.tipoSubcurso = const Value.absent(),
+    this.foto = const Value.absent(),
+    this.codigo = const Value.absent(),
+  });
+  CursosCompanion.insert({
+    this.cursoId = const Value.absent(),
+    this.nombre = const Value.absent(),
+    this.estadoId = const Value.absent(),
+    this.descripcion = const Value.absent(),
+    this.cursoAlias = const Value.absent(),
+    this.entidadId = const Value.absent(),
+    this.nivelAcadId = const Value.absent(),
+    this.tipoCursoId = const Value.absent(),
+    this.tipoConceptoId = const Value.absent(),
+    this.color = const Value.absent(),
+    this.creditos = const Value.absent(),
+    this.totalHP = const Value.absent(),
+    this.totalHT = const Value.absent(),
+    this.notaAprobatoria = const Value.absent(),
+    this.sumilla = const Value.absent(),
+    this.superId = const Value.absent(),
+    this.idServicioLaboratorio = const Value.absent(),
+    this.horasLaboratorio = const Value.absent(),
+    this.tipoSubcurso = const Value.absent(),
+    this.foto = const Value.absent(),
+    this.codigo = const Value.absent(),
+  });
+  static Insertable<Curso> custom({
+    Expression<int> cursoId,
+    Expression<String> nombre,
+    Expression<int> estadoId,
+    Expression<String> descripcion,
+    Expression<String> cursoAlias,
+    Expression<int> entidadId,
+    Expression<int> nivelAcadId,
+    Expression<int> tipoCursoId,
+    Expression<int> tipoConceptoId,
+    Expression<String> color,
+    Expression<String> creditos,
+    Expression<String> totalHP,
+    Expression<String> totalHT,
+    Expression<String> notaAprobatoria,
+    Expression<String> sumilla,
+    Expression<int> superId,
+    Expression<int> idServicioLaboratorio,
+    Expression<int> horasLaboratorio,
+    Expression<bool> tipoSubcurso,
+    Expression<String> foto,
+    Expression<String> codigo,
+  }) {
+    return RawValuesInsertable({
+      if (cursoId != null) 'curso_id': cursoId,
+      if (nombre != null) 'nombre': nombre,
+      if (estadoId != null) 'estado_id': estadoId,
+      if (descripcion != null) 'descripcion': descripcion,
+      if (cursoAlias != null) 'curso_alias': cursoAlias,
+      if (entidadId != null) 'entidad_id': entidadId,
+      if (nivelAcadId != null) 'nivel_acad_id': nivelAcadId,
+      if (tipoCursoId != null) 'tipo_curso_id': tipoCursoId,
+      if (tipoConceptoId != null) 'tipo_concepto_id': tipoConceptoId,
+      if (color != null) 'color': color,
+      if (creditos != null) 'creditos': creditos,
+      if (totalHP != null) 'total_h_p': totalHP,
+      if (totalHT != null) 'total_h_t': totalHT,
+      if (notaAprobatoria != null) 'nota_aprobatoria': notaAprobatoria,
+      if (sumilla != null) 'sumilla': sumilla,
+      if (superId != null) 'super_id': superId,
+      if (idServicioLaboratorio != null)
+        'id_servicio_laboratorio': idServicioLaboratorio,
+      if (horasLaboratorio != null) 'horas_laboratorio': horasLaboratorio,
+      if (tipoSubcurso != null) 'tipo_subcurso': tipoSubcurso,
+      if (foto != null) 'foto': foto,
+      if (codigo != null) 'codigo': codigo,
+    });
+  }
+
+  CursosCompanion copyWith(
+      {Value<int> cursoId,
+      Value<String> nombre,
+      Value<int> estadoId,
+      Value<String> descripcion,
+      Value<String> cursoAlias,
+      Value<int> entidadId,
+      Value<int> nivelAcadId,
+      Value<int> tipoCursoId,
+      Value<int> tipoConceptoId,
+      Value<String> color,
+      Value<String> creditos,
+      Value<String> totalHP,
+      Value<String> totalHT,
+      Value<String> notaAprobatoria,
+      Value<String> sumilla,
+      Value<int> superId,
+      Value<int> idServicioLaboratorio,
+      Value<int> horasLaboratorio,
+      Value<bool> tipoSubcurso,
+      Value<String> foto,
+      Value<String> codigo}) {
+    return CursosCompanion(
+      cursoId: cursoId ?? this.cursoId,
+      nombre: nombre ?? this.nombre,
+      estadoId: estadoId ?? this.estadoId,
+      descripcion: descripcion ?? this.descripcion,
+      cursoAlias: cursoAlias ?? this.cursoAlias,
+      entidadId: entidadId ?? this.entidadId,
+      nivelAcadId: nivelAcadId ?? this.nivelAcadId,
+      tipoCursoId: tipoCursoId ?? this.tipoCursoId,
+      tipoConceptoId: tipoConceptoId ?? this.tipoConceptoId,
+      color: color ?? this.color,
+      creditos: creditos ?? this.creditos,
+      totalHP: totalHP ?? this.totalHP,
+      totalHT: totalHT ?? this.totalHT,
+      notaAprobatoria: notaAprobatoria ?? this.notaAprobatoria,
+      sumilla: sumilla ?? this.sumilla,
+      superId: superId ?? this.superId,
+      idServicioLaboratorio:
+          idServicioLaboratorio ?? this.idServicioLaboratorio,
+      horasLaboratorio: horasLaboratorio ?? this.horasLaboratorio,
+      tipoSubcurso: tipoSubcurso ?? this.tipoSubcurso,
+      foto: foto ?? this.foto,
+      codigo: codigo ?? this.codigo,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (cursoId.present) {
+      map['curso_id'] = Variable<int>(cursoId.value);
+    }
+    if (nombre.present) {
+      map['nombre'] = Variable<String>(nombre.value);
+    }
+    if (estadoId.present) {
+      map['estado_id'] = Variable<int>(estadoId.value);
+    }
+    if (descripcion.present) {
+      map['descripcion'] = Variable<String>(descripcion.value);
+    }
+    if (cursoAlias.present) {
+      map['curso_alias'] = Variable<String>(cursoAlias.value);
+    }
+    if (entidadId.present) {
+      map['entidad_id'] = Variable<int>(entidadId.value);
+    }
+    if (nivelAcadId.present) {
+      map['nivel_acad_id'] = Variable<int>(nivelAcadId.value);
+    }
+    if (tipoCursoId.present) {
+      map['tipo_curso_id'] = Variable<int>(tipoCursoId.value);
+    }
+    if (tipoConceptoId.present) {
+      map['tipo_concepto_id'] = Variable<int>(tipoConceptoId.value);
+    }
+    if (color.present) {
+      map['color'] = Variable<String>(color.value);
+    }
+    if (creditos.present) {
+      map['creditos'] = Variable<String>(creditos.value);
+    }
+    if (totalHP.present) {
+      map['total_h_p'] = Variable<String>(totalHP.value);
+    }
+    if (totalHT.present) {
+      map['total_h_t'] = Variable<String>(totalHT.value);
+    }
+    if (notaAprobatoria.present) {
+      map['nota_aprobatoria'] = Variable<String>(notaAprobatoria.value);
+    }
+    if (sumilla.present) {
+      map['sumilla'] = Variable<String>(sumilla.value);
+    }
+    if (superId.present) {
+      map['super_id'] = Variable<int>(superId.value);
+    }
+    if (idServicioLaboratorio.present) {
+      map['id_servicio_laboratorio'] =
+          Variable<int>(idServicioLaboratorio.value);
+    }
+    if (horasLaboratorio.present) {
+      map['horas_laboratorio'] = Variable<int>(horasLaboratorio.value);
+    }
+    if (tipoSubcurso.present) {
+      map['tipo_subcurso'] = Variable<bool>(tipoSubcurso.value);
+    }
+    if (foto.present) {
+      map['foto'] = Variable<String>(foto.value);
+    }
+    if (codigo.present) {
+      map['codigo'] = Variable<String>(codigo.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CursosCompanion(')
+          ..write('cursoId: $cursoId, ')
+          ..write('nombre: $nombre, ')
+          ..write('estadoId: $estadoId, ')
+          ..write('descripcion: $descripcion, ')
+          ..write('cursoAlias: $cursoAlias, ')
+          ..write('entidadId: $entidadId, ')
+          ..write('nivelAcadId: $nivelAcadId, ')
+          ..write('tipoCursoId: $tipoCursoId, ')
+          ..write('tipoConceptoId: $tipoConceptoId, ')
+          ..write('color: $color, ')
+          ..write('creditos: $creditos, ')
+          ..write('totalHP: $totalHP, ')
+          ..write('totalHT: $totalHT, ')
+          ..write('notaAprobatoria: $notaAprobatoria, ')
+          ..write('sumilla: $sumilla, ')
+          ..write('superId: $superId, ')
+          ..write('idServicioLaboratorio: $idServicioLaboratorio, ')
+          ..write('horasLaboratorio: $horasLaboratorio, ')
+          ..write('tipoSubcurso: $tipoSubcurso, ')
+          ..write('foto: $foto, ')
+          ..write('codigo: $codigo')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CursosTable extends Cursos with TableInfo<$CursosTable, Curso> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $CursosTable(this._db, [this._alias]);
+  final VerificationMeta _cursoIdMeta = const VerificationMeta('cursoId');
+  GeneratedIntColumn _cursoId;
+  @override
+  GeneratedIntColumn get cursoId => _cursoId ??= _constructCursoId();
+  GeneratedIntColumn _constructCursoId() {
+    return GeneratedIntColumn(
+      'curso_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _nombreMeta = const VerificationMeta('nombre');
+  GeneratedTextColumn _nombre;
+  @override
+  GeneratedTextColumn get nombre => _nombre ??= _constructNombre();
+  GeneratedTextColumn _constructNombre() {
+    return GeneratedTextColumn(
+      'nombre',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoIdMeta = const VerificationMeta('estadoId');
+  GeneratedIntColumn _estadoId;
+  @override
+  GeneratedIntColumn get estadoId => _estadoId ??= _constructEstadoId();
+  GeneratedIntColumn _constructEstadoId() {
+    return GeneratedIntColumn(
+      'estado_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _descripcionMeta =
+      const VerificationMeta('descripcion');
+  GeneratedTextColumn _descripcion;
+  @override
+  GeneratedTextColumn get descripcion =>
+      _descripcion ??= _constructDescripcion();
+  GeneratedTextColumn _constructDescripcion() {
+    return GeneratedTextColumn(
+      'descripcion',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _cursoAliasMeta = const VerificationMeta('cursoAlias');
+  GeneratedTextColumn _cursoAlias;
+  @override
+  GeneratedTextColumn get cursoAlias => _cursoAlias ??= _constructCursoAlias();
+  GeneratedTextColumn _constructCursoAlias() {
+    return GeneratedTextColumn(
+      'curso_alias',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _entidadIdMeta = const VerificationMeta('entidadId');
+  GeneratedIntColumn _entidadId;
+  @override
+  GeneratedIntColumn get entidadId => _entidadId ??= _constructEntidadId();
+  GeneratedIntColumn _constructEntidadId() {
+    return GeneratedIntColumn(
+      'entidad_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _nivelAcadIdMeta =
+      const VerificationMeta('nivelAcadId');
+  GeneratedIntColumn _nivelAcadId;
+  @override
+  GeneratedIntColumn get nivelAcadId =>
+      _nivelAcadId ??= _constructNivelAcadId();
+  GeneratedIntColumn _constructNivelAcadId() {
+    return GeneratedIntColumn(
+      'nivel_acad_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoCursoIdMeta =
+      const VerificationMeta('tipoCursoId');
+  GeneratedIntColumn _tipoCursoId;
+  @override
+  GeneratedIntColumn get tipoCursoId =>
+      _tipoCursoId ??= _constructTipoCursoId();
+  GeneratedIntColumn _constructTipoCursoId() {
+    return GeneratedIntColumn(
+      'tipo_curso_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoConceptoIdMeta =
+      const VerificationMeta('tipoConceptoId');
+  GeneratedIntColumn _tipoConceptoId;
+  @override
+  GeneratedIntColumn get tipoConceptoId =>
+      _tipoConceptoId ??= _constructTipoConceptoId();
+  GeneratedIntColumn _constructTipoConceptoId() {
+    return GeneratedIntColumn(
+      'tipo_concepto_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _colorMeta = const VerificationMeta('color');
+  GeneratedTextColumn _color;
+  @override
+  GeneratedTextColumn get color => _color ??= _constructColor();
+  GeneratedTextColumn _constructColor() {
+    return GeneratedTextColumn(
+      'color',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _creditosMeta = const VerificationMeta('creditos');
+  GeneratedTextColumn _creditos;
+  @override
+  GeneratedTextColumn get creditos => _creditos ??= _constructCreditos();
+  GeneratedTextColumn _constructCreditos() {
+    return GeneratedTextColumn(
+      'creditos',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _totalHPMeta = const VerificationMeta('totalHP');
+  GeneratedTextColumn _totalHP;
+  @override
+  GeneratedTextColumn get totalHP => _totalHP ??= _constructTotalHP();
+  GeneratedTextColumn _constructTotalHP() {
+    return GeneratedTextColumn(
+      'total_h_p',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _totalHTMeta = const VerificationMeta('totalHT');
+  GeneratedTextColumn _totalHT;
+  @override
+  GeneratedTextColumn get totalHT => _totalHT ??= _constructTotalHT();
+  GeneratedTextColumn _constructTotalHT() {
+    return GeneratedTextColumn(
+      'total_h_t',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _notaAprobatoriaMeta =
+      const VerificationMeta('notaAprobatoria');
+  GeneratedTextColumn _notaAprobatoria;
+  @override
+  GeneratedTextColumn get notaAprobatoria =>
+      _notaAprobatoria ??= _constructNotaAprobatoria();
+  GeneratedTextColumn _constructNotaAprobatoria() {
+    return GeneratedTextColumn(
+      'nota_aprobatoria',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _sumillaMeta = const VerificationMeta('sumilla');
+  GeneratedTextColumn _sumilla;
+  @override
+  GeneratedTextColumn get sumilla => _sumilla ??= _constructSumilla();
+  GeneratedTextColumn _constructSumilla() {
+    return GeneratedTextColumn(
+      'sumilla',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _superIdMeta = const VerificationMeta('superId');
+  GeneratedIntColumn _superId;
+  @override
+  GeneratedIntColumn get superId => _superId ??= _constructSuperId();
+  GeneratedIntColumn _constructSuperId() {
+    return GeneratedIntColumn(
+      'super_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _idServicioLaboratorioMeta =
+      const VerificationMeta('idServicioLaboratorio');
+  GeneratedIntColumn _idServicioLaboratorio;
+  @override
+  GeneratedIntColumn get idServicioLaboratorio =>
+      _idServicioLaboratorio ??= _constructIdServicioLaboratorio();
+  GeneratedIntColumn _constructIdServicioLaboratorio() {
+    return GeneratedIntColumn(
+      'id_servicio_laboratorio',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _horasLaboratorioMeta =
+      const VerificationMeta('horasLaboratorio');
+  GeneratedIntColumn _horasLaboratorio;
+  @override
+  GeneratedIntColumn get horasLaboratorio =>
+      _horasLaboratorio ??= _constructHorasLaboratorio();
+  GeneratedIntColumn _constructHorasLaboratorio() {
+    return GeneratedIntColumn(
+      'horas_laboratorio',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _tipoSubcursoMeta =
+      const VerificationMeta('tipoSubcurso');
+  GeneratedBoolColumn _tipoSubcurso;
+  @override
+  GeneratedBoolColumn get tipoSubcurso =>
+      _tipoSubcurso ??= _constructTipoSubcurso();
+  GeneratedBoolColumn _constructTipoSubcurso() {
+    return GeneratedBoolColumn(
+      'tipo_subcurso',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _fotoMeta = const VerificationMeta('foto');
+  GeneratedTextColumn _foto;
+  @override
+  GeneratedTextColumn get foto => _foto ??= _constructFoto();
+  GeneratedTextColumn _constructFoto() {
+    return GeneratedTextColumn(
+      'foto',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _codigoMeta = const VerificationMeta('codigo');
+  GeneratedTextColumn _codigo;
+  @override
+  GeneratedTextColumn get codigo => _codigo ??= _constructCodigo();
+  GeneratedTextColumn _constructCodigo() {
+    return GeneratedTextColumn(
+      'codigo',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        cursoId,
+        nombre,
+        estadoId,
+        descripcion,
+        cursoAlias,
+        entidadId,
+        nivelAcadId,
+        tipoCursoId,
+        tipoConceptoId,
+        color,
+        creditos,
+        totalHP,
+        totalHT,
+        notaAprobatoria,
+        sumilla,
+        superId,
+        idServicioLaboratorio,
+        horasLaboratorio,
+        tipoSubcurso,
+        foto,
+        codigo
+      ];
+  @override
+  $CursosTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'cursos';
+  @override
+  final String actualTableName = 'cursos';
+  @override
+  VerificationContext validateIntegrity(Insertable<Curso> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('curso_id')) {
+      context.handle(_cursoIdMeta,
+          cursoId.isAcceptableOrUnknown(data['curso_id'], _cursoIdMeta));
+    }
+    if (data.containsKey('nombre')) {
+      context.handle(_nombreMeta,
+          nombre.isAcceptableOrUnknown(data['nombre'], _nombreMeta));
+    }
+    if (data.containsKey('estado_id')) {
+      context.handle(_estadoIdMeta,
+          estadoId.isAcceptableOrUnknown(data['estado_id'], _estadoIdMeta));
+    }
+    if (data.containsKey('descripcion')) {
+      context.handle(
+          _descripcionMeta,
+          descripcion.isAcceptableOrUnknown(
+              data['descripcion'], _descripcionMeta));
+    }
+    if (data.containsKey('curso_alias')) {
+      context.handle(
+          _cursoAliasMeta,
+          cursoAlias.isAcceptableOrUnknown(
+              data['curso_alias'], _cursoAliasMeta));
+    }
+    if (data.containsKey('entidad_id')) {
+      context.handle(_entidadIdMeta,
+          entidadId.isAcceptableOrUnknown(data['entidad_id'], _entidadIdMeta));
+    }
+    if (data.containsKey('nivel_acad_id')) {
+      context.handle(
+          _nivelAcadIdMeta,
+          nivelAcadId.isAcceptableOrUnknown(
+              data['nivel_acad_id'], _nivelAcadIdMeta));
+    }
+    if (data.containsKey('tipo_curso_id')) {
+      context.handle(
+          _tipoCursoIdMeta,
+          tipoCursoId.isAcceptableOrUnknown(
+              data['tipo_curso_id'], _tipoCursoIdMeta));
+    }
+    if (data.containsKey('tipo_concepto_id')) {
+      context.handle(
+          _tipoConceptoIdMeta,
+          tipoConceptoId.isAcceptableOrUnknown(
+              data['tipo_concepto_id'], _tipoConceptoIdMeta));
+    }
+    if (data.containsKey('color')) {
+      context.handle(
+          _colorMeta, color.isAcceptableOrUnknown(data['color'], _colorMeta));
+    }
+    if (data.containsKey('creditos')) {
+      context.handle(_creditosMeta,
+          creditos.isAcceptableOrUnknown(data['creditos'], _creditosMeta));
+    }
+    if (data.containsKey('total_h_p')) {
+      context.handle(_totalHPMeta,
+          totalHP.isAcceptableOrUnknown(data['total_h_p'], _totalHPMeta));
+    }
+    if (data.containsKey('total_h_t')) {
+      context.handle(_totalHTMeta,
+          totalHT.isAcceptableOrUnknown(data['total_h_t'], _totalHTMeta));
+    }
+    if (data.containsKey('nota_aprobatoria')) {
+      context.handle(
+          _notaAprobatoriaMeta,
+          notaAprobatoria.isAcceptableOrUnknown(
+              data['nota_aprobatoria'], _notaAprobatoriaMeta));
+    }
+    if (data.containsKey('sumilla')) {
+      context.handle(_sumillaMeta,
+          sumilla.isAcceptableOrUnknown(data['sumilla'], _sumillaMeta));
+    }
+    if (data.containsKey('super_id')) {
+      context.handle(_superIdMeta,
+          superId.isAcceptableOrUnknown(data['super_id'], _superIdMeta));
+    }
+    if (data.containsKey('id_servicio_laboratorio')) {
+      context.handle(
+          _idServicioLaboratorioMeta,
+          idServicioLaboratorio.isAcceptableOrUnknown(
+              data['id_servicio_laboratorio'], _idServicioLaboratorioMeta));
+    }
+    if (data.containsKey('horas_laboratorio')) {
+      context.handle(
+          _horasLaboratorioMeta,
+          horasLaboratorio.isAcceptableOrUnknown(
+              data['horas_laboratorio'], _horasLaboratorioMeta));
+    }
+    if (data.containsKey('tipo_subcurso')) {
+      context.handle(
+          _tipoSubcursoMeta,
+          tipoSubcurso.isAcceptableOrUnknown(
+              data['tipo_subcurso'], _tipoSubcursoMeta));
+    }
+    if (data.containsKey('foto')) {
+      context.handle(
+          _fotoMeta, foto.isAcceptableOrUnknown(data['foto'], _fotoMeta));
+    }
+    if (data.containsKey('codigo')) {
+      context.handle(_codigoMeta,
+          codigo.isAcceptableOrUnknown(data['codigo'], _codigoMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {cursoId};
+  @override
+  Curso map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return Curso.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $CursosTable createAlias(String alias) {
+    return $CursosTable(_db, alias);
+  }
+}
+
 abstract class _$AppDataBase extends GeneratedDatabase {
   _$AppDataBase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $PersonaTable _persona;
@@ -18664,6 +19781,8 @@ abstract class _$AppDataBase extends GeneratedDatabase {
   $UsuarioRolGeoreferenciaTable _usuarioRolGeoreferencia;
   $UsuarioRolGeoreferenciaTable get usuarioRolGeoreferencia =>
       _usuarioRolGeoreferencia ??= $UsuarioRolGeoreferenciaTable(this);
+  $CursosTable _cursos;
+  $CursosTable get cursos => _cursos ??= $CursosTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
@@ -18696,6 +19815,7 @@ abstract class _$AppDataBase extends GeneratedDatabase {
         entidad,
         georeferencia,
         rol,
-        usuarioRolGeoreferencia
+        usuarioRolGeoreferencia,
+        cursos
       ];
 }

@@ -570,20 +570,20 @@ class _FamiliaViewState extends ViewState<FamiliaView, FamiliaController>{
     // Navigator.pop on the Selection Screen.
     bool change = await Navigator.push(
       context,
-        MaterialPageRoute(builder: (context) => EditarUsuarioView(cabecera: true,))
+        MaterialPageRoute(builder: (context) => EditarUsuarioView(cabecera: true,), settings: RouteSettings(name: EditarUsuarioView.Name))
     );
 
     // After the Selection Screen returns a result, hide any previous snackbars
     // and show the new result.
     if(change!=null && change){
-      controller.onChangeFamilia();
+      controller.getDatosGenerales();
     }
-
+    /*
     Fluttertoast.showToast(
       msg: "EditarUsuarioRouter change: " +change?.toString(),
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,
-    );
+    );*/
   }
 }

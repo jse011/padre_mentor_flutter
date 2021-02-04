@@ -13,7 +13,7 @@ class TareaEvaluacionPresenter extends Presenter{
   GetTareaEvaluacion _getTareaEvaluacion;
   Function getEvaluacionOnNext, getEvaluacionOnComplete, getEvaluacionOnError;
 
-  TareaEvaluacionPresenter(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, this.fotoAlumno, cursoRepo, httpDatosRepo): _getCalendarioPerido = GetCalendarioPerido(cursoRepo), _getTareaEvaluacion = GetTareaEvaluacion(httpDatosRepo, cursoRepo), super();
+  TareaEvaluacionPresenter(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, this.fotoAlumno,usuarioConfigRepo ,cursoRepo, httpDatosRepo): _getCalendarioPerido = GetCalendarioPerido(cursoRepo), _getTareaEvaluacion = GetTareaEvaluacion(httpDatosRepo, cursoRepo, usuarioConfigRepo), super();
 
   @override
   void dispose() {
@@ -75,7 +75,7 @@ class _GetTareaEvaluacionCase extends Observer<GetTareaEvaluacionCaseResponse>{
   @override
   void onNext(GetTareaEvaluacionCaseResponse response) {
     assert(presenter.getEvaluacionOnNext != null);
-    presenter.getEvaluacionOnNext(response.rubroEvaluacionList, response.cantCalificado, response.cantSinCalifacar);
+    presenter.getEvaluacionOnNext(response.rubroEvaluacionList, response.cantCalificado, response.cantSinCalifacar, response.offlineServidor, response.errorServidor);
   }
 
 }

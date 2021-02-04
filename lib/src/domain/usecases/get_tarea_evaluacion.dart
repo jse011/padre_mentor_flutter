@@ -7,6 +7,7 @@ import 'package:padre_mentor/src/domain/entities/rubro_evaluacion_ui.dart';
 import 'package:padre_mentor/src/domain/entities/tarea_eval_curso_ui.dart';
 import 'package:padre_mentor/src/domain/repositories/curso_repository.dart';
 import 'package:padre_mentor/src/domain/repositories/http_datos_repository.dart';
+import 'package:padre_mentor/src/domain/repositories/usuario_configuarion_repository.dart';
 
 import 'get_boleta_nota.dart';
 
@@ -14,16 +15,26 @@ class GetTareaEvaluacion extends UseCase<GetTareaEvaluacionCaseResponse, GetTare
 
   final HttpDatosRepository httprepository;
   final CursoRepository repository;
-
-  GetTareaEvaluacion(this.httprepository, this.repository);
+  final UsuarioAndConfiguracionRepository usuaConfRepository;
+  GetTareaEvaluacion(this.httprepository, this.repository, this.usuaConfRepository);
 
   @override
   Future<Stream<GetTareaEvaluacionCaseResponse>> buildUseCaseStream(GetTareaEvaluacionCaseParams params) async{
     final controller = StreamController<GetTareaEvaluacionCaseResponse>();
-    try {
+    bool offlineServidor = false;
+    bool errorServidor = false;
+    try{
+      String urlServidorLocal = await usuaConfRepository.getSessionUsuarioUrlServidor();
+      Map<String, dynamic> datosTareas = await httprepository.getTareaPorCurso(urlServidorLocal, params.anioAcademicoId, params.programaId, params.calendarioPeridoId, params.alumnoId);
+      errorServidor = datosTareas==null;
+      if(!errorServidor){
+        await repository.saveTareaEvaluaciones(datosTareas, params.anioAcademicoId, params.programaId, params.calendarioPeridoId, params.alumnoId);
+      }
+    }catch(e){
+      offlineServidor = true;
+    }
 
-      Map<String, dynamic> datosTareas = await httprepository.getTareaPorCurso(params.anioAcademicoId, params.programaId, params.calendarioPeridoId, params.alumnoId);
-      await repository.saveTareaEvaluaciones(datosTareas);
+    try {
       List<dynamic> lista = [];
       List<TareaEvaluacionCursoUi> tareaEvalList = await repository.getTareaEvaluacionPorCurso(params.anioAcademicoId, params.programaId, params.calendarioPeridoId, params.alumnoId);
       var vobj_days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
@@ -80,7 +91,7 @@ class GetTareaEvaluacion extends UseCase<GetTareaEvaluacionCaseResponse, GetTare
         }
 
       }
-      controller.add(GetTareaEvaluacionCaseResponse(lista, calificado, sinCalificar));
+      controller.add(GetTareaEvaluacionCaseResponse(lista, calificado, sinCalificar, offlineServidor, errorServidor));
     logger.finest('GetTareaEvaluacion successful.');
     controller.close();
     } catch (e) {
@@ -109,7 +120,9 @@ class GetTareaEvaluacionCaseResponse {
     List<dynamic> rubroEvaluacionList;
     int cantCalificado;
     int cantSinCalifacar;
+    bool offlineServidor;
+    bool errorServidor;
 
     GetTareaEvaluacionCaseResponse(
-      this.rubroEvaluacionList, this.cantCalificado, this.cantSinCalifacar);
+      this.rubroEvaluacionList, this.cantCalificado, this.cantSinCalifacar, this.offlineServidor, this.errorServidor);
 }

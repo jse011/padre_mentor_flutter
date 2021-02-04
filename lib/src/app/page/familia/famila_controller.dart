@@ -45,10 +45,17 @@ class FamiliaController extends Controller{
       print('Could not retrieve user.');
       refreshUI(); // Refreshes the UI manually
     };
+
   }
 
-  void onChangeFamilia(){
-    presenter.updateFamilia(usuarioUi, hijosUiList, familiaUiList);
+  void getDatosGenerales(){
+    presenter.getDatosGenerales();
+  }
+
+  @override
+  void onDisposed() {
+    presenter.dispose();
+    super.onDisposed();
   }
 
 

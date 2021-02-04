@@ -13,9 +13,11 @@ class BoletaNotaController extends Controller{
   List<CursoBoletaUi> get cursoBoletaUiList => _cursoBoletaUiList;
   final String fotoAlumno;
   BoletaNotasPresenter presenter;
-  BoletaNotaController(alumnoId, programaAcademicoId, anioAcademicoId, this.fotoAlumno, cursoRepo, httpRepo):presenter = BoletaNotasPresenter(alumnoId, programaAcademicoId, anioAcademicoId, cursoRepo, httpRepo), super();
+  BoletaNotaController(alumnoId, programaAcademicoId, anioAcademicoId, this.fotoAlumno, usuarioConfigRepo, cursoRepo, httpRepo):presenter = BoletaNotasPresenter(alumnoId, programaAcademicoId, anioAcademicoId, usuarioConfigRepo, cursoRepo, httpRepo), super();
   bool _isLoading = false;
   get isLoading => _isLoading;
+  String _msgConexion = null;
+  String get msgConexion => _msgConexion;
 
   @override
   void initListeners() {
@@ -37,13 +39,16 @@ class BoletaNotaController extends Controller{
         hideProgress();
         refreshUI();
       };
-      presenter.getBoletaNotaOnNext = (List<CursoBoletaUi> items){
+      presenter.getBoletaNotaOnNext = (List<CursoBoletaUi> items, bool errorServidor, bool offlineServidor){
         _cursoBoletaUiList = items;
+        hideProgress();
+        _msgConexion = errorServidor? "!Oops! Al parecer ocurrió un error involuntario.":null;
+        _msgConexion = offlineServidor? "No hay Conexión a Internet...":null;
+        refreshUI();
       };
 
       presenter.getBoletaNotaOnComplete = (){
-        hideProgress();
-        refreshUI();
+
       };
 
   }
@@ -72,6 +77,10 @@ class BoletaNotaController extends Controller{
 
   void hideProgress(){
     _isLoading = false;
+  }
+
+  void successMsg() {
+    _msgConexion = null;
   }
 }
 

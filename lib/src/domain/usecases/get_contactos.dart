@@ -4,15 +4,16 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:padre_mentor/src/domain/entities/contacto_ui.dart';
 import 'package:padre_mentor/src/domain/repositories/curso_repository.dart';
 import 'package:padre_mentor/src/domain/repositories/http_datos_repository.dart';
+import 'package:padre_mentor/src/domain/repositories/usuario_configuarion_repository.dart';
 
 import 'get_eventos_top.dart';
 
 class GetContactos extends UseCase<GetContactosCaseResponse, GetContactosCaseParams> {
   CursoRepository repository;
   HttpDatosRepository httpRepository;
+  final UsuarioAndConfiguracionRepository usuaConfRepository;
 
-
-  GetContactos(this.repository, this.httpRepository);
+  GetContactos(this.repository, this.httpRepository, this.usuaConfRepository);
 
   @override
   Future<Stream<GetContactosCaseResponse>> buildUseCaseStream(GetContactosCaseParams params) async{
@@ -23,26 +24,30 @@ class GetContactos extends UseCase<GetContactosCaseResponse, GetContactosCasePar
       List<ContactoUi> contactoUIList = await repository.getContactos(params.hijoIdList);
 
 
-      controller.add(GetContactosCaseResponse(agregarCabecera(contactoUIList, 1), agregarCabecera(contactoUIList, 3), agregarCabecera(contactoUIList, 4)));
+      controller.add(GetContactosCaseResponse(agregarCabecera(contactoUIList, 1), agregarCabecera(contactoUIList, 3), agregarCabecera(contactoUIList, 4), false, false));
 
       Future<String> executeServidor() async{
-        Map<String, dynamic> contactoServidor = await httpRepository.getContacto(params.usuarioId);
-        bool errorServidor = contactoServidor==null;
-        if(!errorServidor){
-          await repository.saveContactos(contactoServidor);
+        bool offlineServidor = false;
+        bool errorServidor = false;
+        try{
+          String urlServidorLocal = await usuaConfRepository.getSessionUsuarioUrlServidor();
+          Map<String, dynamic> contactoServidor = await httpRepository.getContacto(urlServidorLocal, params.usuarioId);
+          errorServidor = contactoServidor==null;
+          if(!errorServidor){
+            await repository.saveContactos(contactoServidor);
+          }
+        }catch(e){
+          offlineServidor = true;
         }
+
         contactoUIList = await repository.getContactos(params.hijoIdList);
-        controller.add(GetContactosCaseResponse(agregarCabecera(contactoUIList, 1), agregarCabecera(contactoUIList, 3), agregarCabecera(contactoUIList, 4)));
+        controller.add(GetContactosCaseResponse(agregarCabecera(contactoUIList, 1), agregarCabecera(contactoUIList, 3), agregarCabecera(contactoUIList, 4),offlineServidor, errorServidor));
         logger.finest('EventoAgenda successful.');
         controller.close();
       }
 
       executeServidor().catchError((e) {
         controller.addError(e);
-        print("Got error: ${e.error}");     // Finally, callback fires.
-        throw Exception(e);              // Future completes with 42.
-      }).timeout(const Duration (seconds:60),onTimeout : () {
-        throw Exception("GetEventoAgenda timeout 60 seconds");
       });
 
 
@@ -89,7 +94,9 @@ class GetContactosCaseResponse {
   List<dynamic> alumnosList;
   List<dynamic> docentesList;
   List<dynamic> directivosList;
+  bool datosOffline;
+  bool errorServidor;
 
   GetContactosCaseResponse(
-      this.alumnosList, this.docentesList, this.directivosList);
+      this.alumnosList, this.docentesList, this.directivosList, this.datosOffline, this.errorServidor);
 }

@@ -67,6 +67,7 @@ class HomeController extends Controller{
   @override
   void onInitState() {
     homePresenter.validarUsuario();
+    homePresenter.updateDatos();
     super.onInitState();
   }
 
@@ -95,6 +96,11 @@ class HomeController extends Controller{
     homePresenter.cerrarCesion();
   }
 
+  @override
+  void onDisposed() {
+    super.onDisposed();
+    homePresenter.dispose();
+  }
 }
 
 enum VistaIndex {

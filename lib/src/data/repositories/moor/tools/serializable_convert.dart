@@ -3,6 +3,7 @@ import 'package:padre_mentor/src/data/helpers/serelizable/rest_api_response.dart
 import 'package:padre_mentor/src/data/repositories/moor/database/app_database.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/areas_boleta.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/calendario_acalendario.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/cursos.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/plan_estudios.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/silabo_evento.dart';
 
@@ -713,5 +714,41 @@ class SerializableConvert{
       items.add(converSerializeUsuarioRolGeoreferencia(item));
     }
     return items;
+  }
+
+  static List<Curso> converListSerializeCursos(dynamic model){
+    List<Curso> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeCursos(item));
+    }
+    return items;
+  }
+
+  static Curso converSerializeCursos(Map<String,dynamic> model){
+    CursosSerializable serial = CursosSerializable.fromJson(model);
+    return Curso(
+        cursoId: serial.cursoId,
+        nombre: serial.nombre,
+        estadoId: serial.estadoId,
+        descripcion: serial.descripcion,
+        cursoAlias: serial.alias,
+        entidadId: serial.entidadId,
+        nivelAcadId: serial.nivelAcadId,
+        tipoCursoId: serial.tipoCursoId,
+        tipoConceptoId: serial.tipoConceptoId,
+        color: serial.color,
+        creditos: serial.creditos,
+        totalHP: serial.totalHP,
+        totalHT: serial.totalHT,
+        notaAprobatoria: serial.notaAprobatoria,
+        sumilla: serial.sumilla,
+        superId: serial.superId,
+        idServicioLaboratorio: serial.idServicioLaboratorio,
+        horasLaboratorio: serial.horasLaboratorio,
+        tipoSubcurso: serial.tipoSubcurso,
+        foto: serial.foto,
+        codigo: serial.codigo);
+    //insert.personaId = Values(1);
   }
 }

@@ -188,66 +188,86 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
        // functions in a batch don't have to be awaited - just
        // await the whole batch afterwards.
        if(datosInicioPadre.containsKey("usuariosrelacionados")){
+         batch.deleteWhere(SQL.usuario, (row) => const Constant(true));
          batch.insertAll(SQL.usuario, SerializableConvert.converListSerializeUsuario(datosInicioPadre["usuariosrelacionados"]), mode: InsertMode.insertOrReplace );
        }
 
        if(datosInicioPadre.containsKey("personas")){
          //personaSerelizable.addAll(datosInicioPadre["usuariosrelacionados"]);
          //database.personaDao.insertAllTodo(SerializableConvert.converListSerializePersona(datosInicioPadre["personas"]));
+         batch.deleteWhere(SQL.persona, (row) => const Constant(true));
          batch.insertAll(SQL.persona, SerializableConvert.converListSerializePersona(datosInicioPadre["personas"]), mode: InsertMode.insertOrReplace);
        }
 
        if(datosInicioPadre.containsKey("relaciones")){
          //personaSerelizable.addAll(datosInicioPadre["usuariosrelacionados"]);
+         batch.deleteWhere(SQL.relaciones, (row) => const Constant(true));
          batch.insertAll(SQL.relaciones, SerializableConvert.converListSerializeRelaciones(datosInicioPadre["relaciones"]), mode: InsertMode.insertOrReplace);
        }
 
        if(datosInicioPadre.containsKey("anioAcademicosAlumno")){
+         batch.deleteWhere(SQL.anioAcademicoAlumno, (row) => const Constant(true));
          batch.insertAll(SQL.anioAcademicoAlumno, SerializableConvert.converListSerializeAnioAcademicoAlumno(datosInicioPadre["anioAcademicosAlumno"]), mode: InsertMode.insertOrReplace);
        }
 
        if(datosInicioPadre.containsKey("cargaCursos")){
+         batch.deleteWhere(SQL.cargaCurso, (row) => const Constant(true));
          batch.insertAll(SQL.cargaCurso, SerializableConvert.converListSerializeCargaCurso(datosInicioPadre["cargaCursos"]), mode: InsertMode.insertOrReplace);
        }
 
        if(datosInicioPadre.containsKey("contratos")){
+         batch.deleteWhere(SQL.contrato, (row) => const Constant(true));
          batch.insertAll(SQL.contrato, SerializableConvert.converListSerializeContrato(datosInicioPadre["contratos"]), mode: InsertMode.insertOrReplace);
        }
 
        if(datosInicioPadre.containsKey("detalleContratoAcad")){
+         batch.deleteWhere(SQL.detalleContratoAcad, (row) => const Constant(true));
          batch.insertAll(SQL.detalleContratoAcad, SerializableConvert.converListSerializeDetalleContratoAcad(datosInicioPadre["detalleContratoAcad"]), mode: InsertMode.insertOrReplace);
        }
 
        if(datosInicioPadre.containsKey("planCursos")){
+         batch.deleteWhere(SQL.planCursos, (row) => const Constant(true));
          batch.insertAll(SQL.planCursos, SerializableConvert.converListSerializePlanCurso(datosInicioPadre["planCursos"]), mode: InsertMode.insertOrReplace);
        }
 
        if(datosInicioPadre.containsKey("planEstudios")){
+         batch.deleteWhere(SQL.planEstudio, (row) => const Constant(true));
          batch.insertAll(SQL.planEstudio, SerializableConvert.converListSerializePlanEstudio(datosInicioPadre["planEstudios"]), mode: InsertMode.insertOrReplace);
        }
 
        if(datosInicioPadre.containsKey("programasEducativos")){
+         batch.deleteWhere(SQL.programasEducativo, (row) => const Constant(true));
          batch.insertAll(SQL.programasEducativo, SerializableConvert.converListSerializeProgramasEducativo(datosInicioPadre["programasEducativos"]), mode: InsertMode.insertOrReplace);
        }
 
        if(datosInicioPadre.containsKey("calendarioPeriodos")){
+         batch.deleteWhere(SQL.calendarioPeriodo, (row) => const Constant(true));
          batch.insertAll(SQL.calendarioPeriodo, SerializableConvert.converListSerializeCalendarioPeriodo(datosInicioPadre["calendarioPeriodos"]), mode: InsertMode.insertOrReplace);
        }
 
        if(datosInicioPadre.containsKey("calendarioAcademicos")){
+         batch.deleteWhere(SQL.calendarioAcademico, (row) => const Constant(true));
          batch.insertAll(SQL.calendarioAcademico, SerializableConvert.converListSerializeCalendarioAcademico(datosInicioPadre["calendarioAcademicos"]), mode: InsertMode.insertOrReplace);
        }
 
        if(datosInicioPadre.containsKey("tipos")){
+
          batch.insertAll(SQL.tipos, SerializableConvert.converListSerializeTipos(datosInicioPadre["tipos"]), mode: InsertMode.insertOrReplace);
        }
 
        if(datosInicioPadre.containsKey("obtener_parametros_disenio")){
+         batch.deleteWhere(SQL.parametrosDisenio, (row) => const Constant(true));
          batch.insertAll(SQL.parametrosDisenio, SerializableConvert.converListSerializeParametrosDisenio(datosInicioPadre["obtener_parametros_disenio"]), mode: InsertMode.insertOrReplace);
        }
 
        if(datosInicioPadre.containsKey("silaboEvento")){
+         batch.deleteWhere(SQL.silaboEvento, (row) => const Constant(true));
          batch.insertAll(SQL.silaboEvento, SerializableConvert.converListSerializeSilaboEvento(datosInicioPadre["silaboEvento"]), mode: InsertMode.insertOrReplace);
+       }
+
+       if(datosInicioPadre.containsKey("cursos")){
+         batch.deleteWhere(SQL.cursos, (row) => const Constant(true));
+         batch.insertAll(SQL.cursos, SerializableConvert.converListSerializeCursos(datosInicioPadre["cursos"]), mode: InsertMode.insertOrReplace);
        }
 
        if(datosInicioPadre.containsKey("bEWebConfigs")){
@@ -713,6 +733,10 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
         for (final table in SQL.allTables) {
           await SQL.delete(table).go();
         }
+
+        for (final table in SQL.allTables) {
+          await SQL.delete(table).go();
+        }
       });
     }catch(e){
       throw Exception(e);
@@ -753,16 +777,42 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
    }
 
    for(HijosUi hijosUi in hijosUiList??[]){
-     PersonaSerial personaSerial = PersonaSerial(personaId: hijosUi.personaId, correo: hijosUi.correo, celular: hijosUi.celular);
-     personaSerialList.add(personaSerial.toJson());
+     if(hijosUi.change??false){
+       PersonaSerial personaSerial = PersonaSerial(personaId: hijosUi.personaId, correo: hijosUi.correo, celular: hijosUi.celular);
+       personaSerialList.add(personaSerial.toJson());
+     }
+
    }
 
    for(FamiliaUi familiaUi in familiaUiList??[]){
-     PersonaSerial personaSerial = PersonaSerial(personaId: familiaUi.personaId, correo: familiaUi.correo, celular: familiaUi.celular);
-     personaSerialList.add(personaSerial.toJson());
+     if(familiaUi.change??false){
+       PersonaSerial personaSerial = PersonaSerial(personaId: familiaUi.personaId, correo: familiaUi.correo, celular: familiaUi.celular);
+       personaSerialList.add(personaSerial.toJson());
+     }
+
    }
 
    return personaSerialList;
+  }
+
+  @override
+  Future<void> updatePersona(List<dynamic> listaPersonas) async {
+    AppDataBase SQL = AppDataBase();
+    try{
+      if(listaPersonas!=null){
+        await SQL.transaction(() async {
+
+          List<PersonaData> personaDataList = SerializableConvert.converListSerializePersona(listaPersonas);
+          for (PersonaData item in personaDataList) {
+            PersonaData personaData = await (SQL.selectSingle(SQL.persona)..where((tbl) => tbl.personaId.equals(item.personaId))).getSingle();
+            if(personaData!=null)await SQL.update(SQL.persona).replace(personaData.copyWith(celular: item.celular, correo: item.correo));
+          }
+        });
+      }
+    }catch(e){
+      throw Exception(e);
+    }
+
   }
 
 

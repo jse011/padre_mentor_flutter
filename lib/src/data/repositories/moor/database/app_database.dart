@@ -7,6 +7,7 @@ import 'package:padre_mentor/src/data/repositories/moor/model/calendario_periodo
 import 'package:padre_mentor/src/data/repositories/moor/model/carga_cursos.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/contacto.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/contrato.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/cursos.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/detalle_contrato_acad.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/entidad.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/evento.dart';
@@ -32,7 +33,8 @@ import 'package:padre_mentor/src/data/repositories/moor/model/web_configs.dart';
 part 'app_database.g.dart';
 
 @UseMoor(tables: [Persona, Usuario, SessionUser, Relaciones, AnioAcademicoAlumno, ProgramasEducativo, PlanEstudio, PlanCursos, CargaCurso, DetalleContratoAcad, Contrato, CalendarioAcademico, CalendarioPeriodo, Tipos,
-                  AreasBoleta, NotasCalendarioBoleta, ParametrosDisenio, SilaboEvento, RubroEvalDesempenio, WebConfigs, TareaCurso, Evento, Calendario, SessionUserHijo, Contacto, Entidad, Georeferencia, Rol, UsuarioRolGeoreferencia])
+                  AreasBoleta, NotasCalendarioBoleta, ParametrosDisenio, SilaboEvento, RubroEvalDesempenio, WebConfigs, TareaCurso, Evento, Calendario, SessionUserHijo, Contacto, Entidad, Georeferencia, Rol, UsuarioRolGeoreferencia,
+                  Cursos])
 class AppDataBase extends _$AppDataBase{
 
   @override

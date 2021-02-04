@@ -17,11 +17,11 @@ class Contacto extends Table{
   TextColumn get foto => text().nullable()();
   TextColumn get nombreTipo => text().nullable()();
   IntColumn get tipo => integer()();
-  IntColumn get companieroId => integer().nullable()();
-  IntColumn get hijoRelacionId => integer()();
+  IntColumn get companieroId => integer()();
+  IntColumn get hijoRelacionId => integer().nullable()();
   TextColumn get relacion => text().nullable()();
   IntColumn get cargaCursoId => integer()();
 
   @override
-  Set<Column> get primaryKey => {personaId, hijoRelacionId, tipo, cargaCursoId};
+  Set<Column> get primaryKey => {personaId, companieroId, tipo, cargaCursoId};
 }

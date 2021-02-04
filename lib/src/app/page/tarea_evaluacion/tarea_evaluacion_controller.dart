@@ -10,6 +10,9 @@ class TareaEvaluacionController extends Controller{
   final int anioAcademicoId;
   final String fotoAlumno;
   List<CalendarioPeriodoUI> _calendarioPeriodoList = [];
+
+  String _msgConexion = null;
+  String get msgConexion => _msgConexion;
   List<CalendarioPeriodoUI> get calendarioPeriodoList => _calendarioPeriodoList;
   CalendarioPeriodoUI _calendarioPeriodoUI = null;
   CalendarioPeriodoUI get calendarioPeriodoUI => _calendarioPeriodoUI;
@@ -23,7 +26,7 @@ class TareaEvaluacionController extends Controller{
   get cantSinCalificar => _cantSinCalificar;
 
 
-  TareaEvaluacionController(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, this.fotoAlumno, cursoRepo, httpDatosRepo): presenter = TareaEvaluacionPresenter(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno,cursoRepo, httpDatosRepo), super();
+  TareaEvaluacionController(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, this.fotoAlumno,usuarioConfigRepo, cursoRepo, httpDatosRepo): presenter = TareaEvaluacionPresenter(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno, usuarioConfigRepo, cursoRepo, httpDatosRepo), super();
 
   @override
   void initListeners() {
@@ -42,20 +45,23 @@ class TareaEvaluacionController extends Controller{
 
     presenter.getEvaluacionOnError = (e){
       _rubroEvaluacionList = [];
+      _msgConexion = "!Oops! Al parecer ocurrió un error involuntario.";
       hideProgress();
       refreshUI();
     };
 
-    presenter.getEvaluacionOnNext = (List<dynamic> items, int cantCalificado, int cantSinCalificar){
+    presenter.getEvaluacionOnNext = (List<dynamic> items, int cantCalificado, int cantSinCalificar, bool offlineServidor, bool errorServidor){
       _rubroEvaluacionList = items;
       _cantCalificado = cantCalificado;
       _cantSinCalificar = cantSinCalificar;
-      print("getEvaluacionOnNext: "+items.length.toString());
+      _msgConexion = errorServidor? "!Oops! Al parecer ocurrió un error involuntario.":null;
+      _msgConexion = offlineServidor? "No hay Conexión a Internet...":null;
+      hideProgress();
+      refreshUI();
     };
 
     presenter.getEvaluacionOnComplete = (){
-      hideProgress();
-      refreshUI();
+
     };
   }
 
@@ -83,6 +89,10 @@ class TareaEvaluacionController extends Controller{
 
   void hideProgress(){
     _isLoading = false;
+  }
+
+  void successMsg() {
+    _msgConexion = null;
   }
 
 }

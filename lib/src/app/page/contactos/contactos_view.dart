@@ -84,8 +84,36 @@ class _ContactosViewState extends ViewState<ContactosView, ContactosController> 
             children: <Widget>[
               getMainTab(),
               getAppBarUI(),
-              SizedBox(
-                height: MediaQuery.of(context).padding.bottom,
+              ControlledWidgetBuilder<ContactosController>(
+                  builder: (context, controller){
+                    if(controller.msgConexion!=null ? true:false){
+                      return Positioned(
+                        bottom: 100.0,
+                        right: 1,
+                        left: 1,
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                //color:
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                  color: AppTheme.black.withOpacity(0.5),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+                                  child: Text(controller.msgConexion, style: TextStyle(color: AppTheme.white),),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    }else{
+                      return Container();
+                    }
+                  }
               )
             ],
           ),
@@ -200,609 +228,576 @@ class _ContactosViewState extends ViewState<ContactosView, ContactosController> 
   }
  int countView = 8;
   Widget getMainTab() {
-    return Container(
-        margin: const EdgeInsets.only(left: 0, right: 0, top: 8, bottom: 0),
-        padding: EdgeInsets.only(
-          top:
-          AppBar().preferredSize.height +
-              MediaQuery.of(context).padding.top +
-              0,
-          bottom: 62 + MediaQuery.of(context).padding.bottom,
-        ),
-        child:
-        AnimationView(
-            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-                parent: widget.animationController,
-                curve:
-                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
-            animationController: widget.animationController,
-            child:  DefaultTabController(
-          length: 3,
-          child: SizedBox(
-            child: Column(
-              children: <Widget>[
-                TabBar(
-                  labelColor: AppTheme.dark_grey,
-                  //physics: AlwaysScrollableScrollPhysics(),
-                  tabs: [
-                    Tab(text: "Compañeros",),
-                    Tab(text: "Profesores"),
-                    Tab(text: "Directivos"),
-                  ],
-                ),
-                Expanded(
-                  child: TabBarView(
-                    children: [
-                      ControlledWidgetBuilder<ContactosController>(
-                          builder: (context, controller){
-                            return  ListView.builder(
-                                itemCount: controller.companieroList.length,
-                                itemBuilder: (BuildContext ctxt, int index) {
-                                  dynamic o = controller.companieroList[index];
-                                  if(o is String){
-                                    return Container(
-                                      padding: const EdgeInsets.only(left: 16, right: 0, top: 8, bottom: 8),
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 0, right: 5, top: 0),
-                                            child: Text(o??'', style: TextStyle( color: AppTheme.lightText, fontSize: 14, fontWeight: FontWeight.w700),),
-                                          ),
-                                          Expanded(
-                                              child: Container(
-                                                color: AppTheme.lightText,
-                                                height: 1,
-                                              )
-                                          )
-                                        ],
-                                      ),
-                                    );
-                                  }else if(o is ContactoUi){
-                                    ContactoUi contactoUi = o;
-                                    return Theme(
-                                      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-                                      child: CustomExpansionTile(
-                                        expandedItem: _expanded,
-                                        key: Key(contactoUi.personaId.toString()),
-                                        title: Container(
-                                          margin: const EdgeInsets.only(left: 0, right: 0, top: 24, bottom: 16),
-                                          padding: const EdgeInsets.only(left: 16, right: 24, top: 0, bottom: 0),
-                                          child:Text(contactoUi.nombre??"", maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 16, color: AppTheme.lightText, fontWeight: FontWeight.w500),),
-                                        ),
-                                        trailing: Container(
-                                          height: 10,
-                                          width: 10,
-                                        ),
-                                        leading: CachedNetworkImage(
-                                            height: 60,
-                                            width: 60,
-                                            placeholder: (context, url) => CircularProgressIndicator(),
-                                            imageUrl: contactoUi.foto??'',
-                                            imageBuilder: (context, imageProvider) =>
-                                                Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.all(Radius.circular(50)),
-                                                      image: DecorationImage(
-                                                        image: imageProvider,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    )
-                                                )
-                                        ),
-                                        children: [
-                                          Container(
-                                            height: 60,
-                                            color: Color(0xFFF6F6F6),
-                                            padding: const EdgeInsets.only(left:  40, right: 28),
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                    child: Material(
-                                                      color: Colors.transparent,
-                                                      child: InkWell(
-                                                        focusColor: Colors.transparent,
-                                                        highlightColor: Colors.transparent,
-                                                        hoverColor: Colors.transparent,
-                                                        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                                                        splashColor: AppTheme.colorPrimary.withOpacity(0.2),
-                                                        onTap: () {
-                                                          if(contactoUi.telfono!=null&&contactoUi.telfono.isNotEmpty){
-                                                            launch("tel://${contactoUi.telfono}");
-                                                          }else{
-                                                            Fluttertoast.showToast(
-                                                                msg: "Compañero sin número",
-                                                                toastLength: Toast.LENGTH_SHORT,
-                                                                gravity: ToastGravity.BOTTOM,
-                                                                timeInSecForIosWeb: 1
-                                                            );
-                                                          }
-                                                        },
-                                                        child: Container(
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            children: [
-                                                              Icon(Icons.call, size: 24, color: Color(0xFF6FBD53),),
-                                                              Text("Llamar", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
-                                                            ],
-                                                          ),
-                                                        )
-                                                      ),
-                                                    )
-                                                ),
-                                                Expanded(
-                                                    child: Container(
-                                                      child: Material(
-                                                        color: Colors.transparent,
-                                                        child: InkWell(
-                                                          focusColor: Colors.transparent,
-                                                          highlightColor: Colors.transparent,
-                                                          hoverColor: Colors.transparent,
-                                                          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                                                          splashColor: AppTheme.colorPrimary.withOpacity(0.2),
-                                                          onTap: () {
-                                                            if(contactoUi.apoderadoTelfono!=null&&contactoUi.apoderadoTelfono.isNotEmpty){
-                                                              launch("tel://${contactoUi.apoderadoTelfono}");
-                                                            }else{
-                                                              Fluttertoast.showToast(
-                                                                  msg: "Apoderado sin número",
-                                                                  toastLength: Toast.LENGTH_SHORT,
-                                                                  gravity: ToastGravity.BOTTOM,
-                                                                  timeInSecForIosWeb: 1
-                                                              );
-                                                            }
-                                                          },
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            children: [
-                                                              Icon(Icons.call, size: 24, color: Color(0xFF6FBD53),),
-                                                              Text("Apoderado", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500, ),),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    )
-                                                ),
-                                                Expanded(
-                                                    child: Material(
-                                                      color: Colors.transparent,
-                                                      child: InkWell(
-                                                        focusColor: Colors.transparent,
-                                                        highlightColor: Colors.transparent,
-                                                        hoverColor: Colors.transparent,
-                                                        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                                                        splashColor: AppTheme.colorPrimary.withOpacity(0.2),
-                                                        onTap: () {
-
-                                                        },
-                                                        child: Container(
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            children: [
-                                                              Icon(Icons.insert_comment_outlined, size: 24, color: Color(0XFF52B1D3),),
-                                                              Text("Mensaje", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    )
-                                                ),
-                                                Expanded(
-                                                    child: Material(
-                                                      color: Colors.transparent,
-                                                      child: InkWell(
-                                                        focusColor: Colors.transparent,
-                                                        highlightColor: Colors.transparent,
-                                                        hoverColor: Colors.transparent,
-                                                        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                                                        splashColor: AppTheme.colorPrimary.withOpacity(0.2),
-                                                        onTap: () {
-
-                                                        },
-                                                        child: Container(
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            children: [
-                                                              Icon(Icons.supervised_user_circle_outlined, size: 24, color: Color(0xFF929292),),
-                                                              Text("Información", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    )
-                                                )
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    );
-                                  }else{
-                                    return Container();
-                                  }
-                                }
-                            );
-
-                          }),
-                      ControlledWidgetBuilder<ContactosController>(
-                          builder: (context, controller){
-                            return  ListView.builder(
-                                itemCount: controller.doncentesList.length,
-                                itemBuilder: (BuildContext ctxt, int index) {
-                                  dynamic o = controller.doncentesList[index];
-                                  if(o is String){
-                                    return Container(
-                                      padding: const EdgeInsets.only(left: 16, right: 0, top: 8, bottom: 8),
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 0, right: 5, top: 0),
-                                            child: Text(o??'', style: TextStyle( color: AppTheme.lightText, fontSize: 14, fontWeight: FontWeight.w700),),
-                                          ),
-                                          Expanded(
-                                              child: Container(
-                                                color: AppTheme.lightText,
-                                                height: 1,
-                                              )
-                                          )
-                                        ],
-                                      ),
-                                    );
-                                  }else if(o is ContactoUi){
-                                    ContactoUi contactoUi = o;
-                                    return Theme(
-                                      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-                                      child: CustomExpansionTile(
-                                        expandedItem: _expanded,
-                                        key: Key(contactoUi.personaId.toString()),
-                                        title: Container(
-                                          margin: const EdgeInsets.only(left: 0, right: 0, top: 24, bottom: 16),
-                                          padding: const EdgeInsets.only(left: 16, right: 24, top: 0, bottom: 0),
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(contactoUi.nombre??"", maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 16, color: AppTheme.lightText, fontWeight: FontWeight.w500),),
-                                                Text(contactoUi.relacion??"", maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 14, color: AppTheme.lightText.withOpacity(0.9), fontWeight: FontWeight.w500),),
-                                              ],
-                                            )
-                                        ),
-                                        trailing: Container(
-                                          height: 10,
-                                          width: 10,
-                                        ),
-                                        leading: CachedNetworkImage(
-                                            height: 60,
-                                            width: 60,
-                                            placeholder: (context, url) => CircularProgressIndicator(),
-                                            imageUrl: contactoUi.foto??'',
-                                            imageBuilder: (context, imageProvider) =>
-                                                Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.all(Radius.circular(50)),
-                                                      image: DecorationImage(
-                                                        image: imageProvider,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    )
-                                                )
-                                        ),
-                                        children: [
-                                          Container(
-                                            height: 60,
-                                            color: Color(0xFFF6F6F6),
-                                            padding: const EdgeInsets.only(left:  40, right: 28),
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                    child: Material(
-                                                      color: Colors.transparent,
-                                                      child: InkWell(
-                                                        focusColor: Colors.transparent,
-                                                        highlightColor: Colors.transparent,
-                                                        hoverColor: Colors.transparent,
-                                                        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                                                        splashColor: AppTheme.colorPrimary.withOpacity(0.2),
-                                                        onTap: () {
-
-                                                        },
-                                                        child: Container(
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            children: [
-                                                              Icon(Icons.call, size: 24, color: Color(0xFF6FBD53),),
-                                                              Text("Llamar", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    )
-                                                ),
-                                                Expanded(
-                                                    child: Container(
-                                                      child: Material(
-                                                        color: Colors.transparent,
-                                                        child: InkWell(
-                                                          focusColor: Colors.transparent,
-                                                          highlightColor: Colors.transparent,
-                                                          hoverColor: Colors.transparent,
-                                                          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                                                          splashColor: AppTheme.colorPrimary.withOpacity(0.2),
-                                                          onTap: () {
-
-                                                          },
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            children: [
-                                                              Icon(Icons.call, size: 24, color: Color(0xFF6FBD53),),
-                                                              Text("Apoderado", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500, ),),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    )
-                                                ),
-                                                Expanded(
-                                                    child: Material(
-                                                      color: Colors.transparent,
-                                                      child: InkWell(
-                                                        focusColor: Colors.transparent,
-                                                        highlightColor: Colors.transparent,
-                                                        hoverColor: Colors.transparent,
-                                                        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                                                        splashColor: AppTheme.colorPrimary.withOpacity(0.2),
-                                                        onTap: () {
-
-                                                        },
-                                                        child: Container(
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            children: [
-                                                              Icon(Icons.insert_comment_outlined, size: 24, color: Color(0XFF52B1D3),),
-                                                              Text("Mensaje", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    )
-                                                ),
-                                                Expanded(
-                                                    child: Material(
-                                                      color: Colors.transparent,
-                                                      child: InkWell(
-                                                        focusColor: Colors.transparent,
-                                                        highlightColor: Colors.transparent,
-                                                        hoverColor: Colors.transparent,
-                                                        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                                                        splashColor: AppTheme.colorPrimary.withOpacity(0.2),
-                                                        onTap: () {
-
-                                                        },
-                                                        child: Container(
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            children: [
-                                                              Icon(Icons.supervised_user_circle_outlined, size: 24, color: Color(0xFF929292),),
-                                                              Text("Información", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    )
-                                                )
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    );
-                                  }else{
-                                    return Container();
-                                  }
-                                }
-                            );
-
-                          }),
-                      ControlledWidgetBuilder<ContactosController>(
-                          builder: (context, controller){
-                            return  ListView.builder(
-                                itemCount: controller.directivosList.length,
-                                itemBuilder: (BuildContext ctxt, int index) {
-                                  dynamic o = controller.directivosList[index];
-                                  if(o is String){
-                                    return Container(
-                                      padding: const EdgeInsets.only(left: 16, right: 0, top: 8, bottom: 8),
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 0, right: 5, top: 0),
-                                            child: Text(o??'', style: TextStyle( color: AppTheme.lightText, fontSize: 14, fontWeight: FontWeight.w700),),
-                                          ),
-                                          Expanded(
-                                              child: Container(
-                                                color: AppTheme.lightText,
-                                                height: 1,
-                                              )
-                                          )
-                                        ],
-                                      ),
-                                    );
-                                  }else if(o is ContactoUi){
-                                    ContactoUi contactoUi = o;
-                                    return Theme(
-                                      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-                                      child: CustomExpansionTile(
-                                        expandedItem: _expanded,
-                                        key: Key(contactoUi.personaId.toString()),
-                                        title: Container(
-                                          margin: const EdgeInsets.only(left: 0, right: 0, top: 24, bottom: 16),
-                                          padding: const EdgeInsets.only(left: 16, right: 24, top: 0, bottom: 0),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(contactoUi.nombre??"", maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 16, color: AppTheme.lightText, fontWeight: FontWeight.w500),),
-                                              Text(contactoUi.relacion??"", maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 14, color: AppTheme.lightText.withOpacity(0.9), fontWeight: FontWeight.w500),),
-                                            ],
-                                          )
-                                        ),
-                                        trailing: Container(
-                                          height: 10,
-                                          width: 10,
-                                        ),
-                                        leading: CachedNetworkImage(
-                                            height: 60,
-                                            width: 60,
-                                            placeholder: (context, url) => CircularProgressIndicator(),
-                                            imageUrl: contactoUi.foto??'',
-                                            imageBuilder: (context, imageProvider) =>
-                                                Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.all(Radius.circular(50)),
-                                                      image: DecorationImage(
-                                                        image: imageProvider,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    )
-                                                )
-                                        ),
-                                        children: [
-                                          Container(
-                                            height: 60,
-                                            color: Color(0xFFF6F6F6),
-                                            padding: const EdgeInsets.only(left:  40, right: 28),
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                    child: Material(
-                                                      color: Colors.transparent,
-                                                      child: InkWell(
-                                                        focusColor: Colors.transparent,
-                                                        highlightColor: Colors.transparent,
-                                                        hoverColor: Colors.transparent,
-                                                        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                                                        splashColor: AppTheme.colorPrimary.withOpacity(0.2),
-                                                        onTap: () {
-
-                                                        },
-                                                        child: Container(
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            children: [
-                                                              Icon(Icons.call, size: 24, color: Color(0xFF6FBD53),),
-                                                              Text("Llamar", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    )
-                                                ),
-                                                Expanded(
-                                                    child: Container(
-                                                      child: Material(
-                                                        color: Colors.transparent,
-                                                        child: InkWell(
-                                                          focusColor: Colors.transparent,
-                                                          highlightColor: Colors.transparent,
-                                                          hoverColor: Colors.transparent,
-                                                          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                                                          splashColor: AppTheme.colorPrimary.withOpacity(0.2),
-                                                          onTap: () {
-
-                                                          },
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            children: [
-                                                              Icon(Icons.call, size: 24, color: Color(0xFF6FBD53),),
-                                                              Text("Apoderado", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500, ),),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    )
-                                                ),
-                                                Expanded(
-                                                    child: Material(
-                                                      color: Colors.transparent,
-                                                      child: InkWell(
-                                                        focusColor: Colors.transparent,
-                                                        highlightColor: Colors.transparent,
-                                                        hoverColor: Colors.transparent,
-                                                        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                                                        splashColor: AppTheme.colorPrimary.withOpacity(0.2),
-                                                        onTap: () {
-
-                                                        },
-                                                        child: Container(
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            children: [
-                                                              Icon(Icons.insert_comment_outlined, size: 24, color: Color(0XFF52B1D3),),
-                                                              Text("Mensaje", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    )
-                                                ),
-                                                Expanded(
-                                                    child: Material(
-                                                      color: Colors.transparent,
-                                                      child: InkWell(
-                                                        focusColor: Colors.transparent,
-                                                        highlightColor: Colors.transparent,
-                                                        hoverColor: Colors.transparent,
-                                                        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                                                        splashColor: AppTheme.colorPrimary.withOpacity(0.2),
-                                                        onTap: () {
-
-                                                        },
-                                                        child: Container(
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            children: [
-                                                              Icon(Icons.supervised_user_circle_outlined, size: 24, color: Color(0xFF929292),),
-                                                              Text("Información", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    )
-                                                )
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    );
-                                  }else{
-                                    return Container();
-                                  }
-                                }
-                            );
-
-                          }),
-                    ],
+    return  ControlledWidgetBuilder<ContactosController>(
+        builder: (context, controller){
+          return  Stack(
+            children: [
+              Container(
+                  margin: const EdgeInsets.only(left: 0, right: 0, top: 8, bottom: 0),
+                  padding: EdgeInsets.only(
+                    top:
+                    AppBar().preferredSize.height +
+                        MediaQuery.of(context).padding.top +
+                        0,
+                    bottom: 62 + MediaQuery.of(context).padding.bottom,
                   ),
-                )
-              ],
-            ),
-          ),
-        )
-        )
-    );
+                  child:
+                  AnimationView(
+                      animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                          parent: widget.animationController,
+                          curve:
+                          Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                      animationController: widget.animationController,
+                      child:  DefaultTabController(
+                        length: 3,
+                        child: SizedBox(
+                          child: Column(
+                            children: <Widget>[
+                              TabBar(
+                                labelColor: AppTheme.dark_grey,
+                                //physics: AlwaysScrollableScrollPhysics(),
+                                tabs: [
+                                  Tab(text: "Compañeros",),
+                                  Tab(text: "Profesores"),
+                                  Tab(text: "Directivos"),
+                                ],
+                              ),
+                              Expanded(
+                                child: TabBarView(
+                                  children: [
+                                    ListView.builder(
+                                        itemCount: controller.companieroList.length,
+                                        itemBuilder: (BuildContext ctxt, int index) {
+                                          dynamic o = controller.companieroList[index];
+                                          if(o is String){
+                                            return Container(
+                                              padding: const EdgeInsets.only(left: 16, right: 0, top: 8, bottom: 8),
+                                              child: Row(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(left: 0, right: 5, top: 0),
+                                                    child: Text(o??'', style: TextStyle( color: AppTheme.lightText, fontSize: 14, fontWeight: FontWeight.w700),),
+                                                  ),
+                                                  Expanded(
+                                                      child: Container(
+                                                        color: AppTheme.lightText,
+                                                        height: 1,
+                                                      )
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          }else if(o is ContactoUi){
+                                            ContactoUi contactoUi = o;
+                                            return Theme(
+                                              data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                                              child: CustomExpansionTile(
+                                                expandedItem: _expanded,
+                                                key: Key(contactoUi.personaId.toString()),
+                                                title: Container(
+                                                  margin: const EdgeInsets.only(left: 0, right: 0, top: 24, bottom: 16),
+                                                  padding: const EdgeInsets.only(left: 16, right: 24, top: 0, bottom: 0),
+                                                  child:Text(contactoUi.nombre??"", maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 16, color: AppTheme.lightText, fontWeight: FontWeight.w500),),
+                                                ),
+                                                trailing: Container(
+                                                  height: 10,
+                                                  width: 10,
+                                                ),
+                                                leading: CachedNetworkImage(
+                                                    height: 60,
+                                                    width: 60,
+                                                    placeholder: (context, url) => CircularProgressIndicator(),
+                                                    imageUrl: contactoUi.foto??'',
+                                                    imageBuilder: (context, imageProvider) =>
+                                                        Container(
+                                                            decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                                                              image: DecorationImage(
+                                                                image: imageProvider,
+                                                                fit: BoxFit.cover,
+                                                              ),
+                                                            )
+                                                        )
+                                                ),
+                                                children: [
+                                                  Container(
+                                                    height: 60,
+                                                    color: Color(0xFFF6F6F6),
+                                                    padding: const EdgeInsets.only(left:  40, right: 28),
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                            child: Material(
+                                                              color: Colors.transparent,
+                                                              child: InkWell(
+                                                                  focusColor: Colors.transparent,
+                                                                  highlightColor: Colors.transparent,
+                                                                  hoverColor: Colors.transparent,
+                                                                  borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                                                  splashColor: AppTheme.colorPrimary.withOpacity(0.2),
+                                                                  onTap: () {
+                                                                    if(contactoUi.telfono!=null&&contactoUi.telfono.isNotEmpty){
+                                                                      launch("tel://${contactoUi.telfono}");
+                                                                    }else{
+                                                                      Fluttertoast.showToast(
+                                                                          msg: "Compañero sin número",
+                                                                          toastLength: Toast.LENGTH_SHORT,
+                                                                          gravity: ToastGravity.BOTTOM,
+                                                                          timeInSecForIosWeb: 1
+                                                                      );
+                                                                    }
+                                                                  },
+                                                                  child: Container(
+                                                                    child: Column(
+                                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                                      children: [
+                                                                        Icon(Icons.call, size: 24, color: Color(0xFF6FBD53),),
+                                                                        Text("Llamar", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
+                                                                      ],
+                                                                    ),
+                                                                  )
+                                                              ),
+                                                            )
+                                                        ),
+                                                        Expanded(
+                                                            child: Container(
+                                                              child: Material(
+                                                                color: Colors.transparent,
+                                                                child: InkWell(
+                                                                  focusColor: Colors.transparent,
+                                                                  highlightColor: Colors.transparent,
+                                                                  hoverColor: Colors.transparent,
+                                                                  borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                                                  splashColor: AppTheme.colorPrimary.withOpacity(0.2),
+                                                                  onTap: () {
+                                                                    if(contactoUi.apoderadoTelfono!=null&&contactoUi.apoderadoTelfono.isNotEmpty){
+                                                                      launch("tel://${contactoUi.apoderadoTelfono}");
+                                                                    }else{
+                                                                      Fluttertoast.showToast(
+                                                                          msg: "Apoderado sin número",
+                                                                          toastLength: Toast.LENGTH_SHORT,
+                                                                          gravity: ToastGravity.BOTTOM,
+                                                                          timeInSecForIosWeb: 1
+                                                                      );
+                                                                    }
+                                                                  },
+                                                                  child: Column(
+                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                                    children: [
+                                                                      Icon(Icons.call, size: 24, color: Color(0xFF6FBD53),),
+                                                                      Text("Apoderado", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500, ),),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                        ),
+                                                        Expanded(
+                                                            child: Material(
+                                                              color: Colors.transparent,
+                                                              child: InkWell(
+                                                                focusColor: Colors.transparent,
+                                                                highlightColor: Colors.transparent,
+                                                                hoverColor: Colors.transparent,
+                                                                borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                                                splashColor: AppTheme.colorPrimary.withOpacity(0.2),
+                                                                onTap: () {
+
+                                                                },
+                                                                child: Container(
+                                                                  child: Column(
+                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                                    children: [
+                                                                      Icon(Icons.insert_comment_outlined, size: 24, color: Color(0XFF52B1D3),),
+                                                                      Text("Mensaje", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                        ),
+                                                        Expanded(
+                                                            child: Material(
+                                                              color: Colors.transparent,
+                                                              child: InkWell(
+                                                                focusColor: Colors.transparent,
+                                                                highlightColor: Colors.transparent,
+                                                                hoverColor: Colors.transparent,
+                                                                borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                                                splashColor: AppTheme.colorPrimary.withOpacity(0.2),
+                                                                onTap: () {
+
+                                                                },
+                                                                child: Container(
+                                                                  child: Column(
+                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                                    children: [
+                                                                      Icon(Icons.supervised_user_circle_outlined, size: 24, color: Color(0xFF929292),),
+                                                                      Text("Información", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                        )
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          }else{
+                                            return Container();
+                                          }
+                                        }
+                                    ),
+                                    ListView.builder(
+                                        itemCount: controller.doncentesList.length,
+                                        itemBuilder: (BuildContext ctxt, int index) {
+                                          dynamic o = controller.doncentesList[index];
+                                          if(o is String){
+                                            return Container(
+                                              padding: const EdgeInsets.only(left: 16, right: 0, top: 8, bottom: 8),
+                                              child: Row(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(left: 0, right: 5, top: 0),
+                                                    child: Text(o??'', style: TextStyle( color: AppTheme.lightText, fontSize: 14, fontWeight: FontWeight.w700),),
+                                                  ),
+                                                  Expanded(
+                                                      child: Container(
+                                                        color: AppTheme.lightText,
+                                                        height: 1,
+                                                      )
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          }else if(o is ContactoUi){
+                                            ContactoUi contactoUi = o;
+                                            return Theme(
+                                              data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                                              child: CustomExpansionTile(
+                                                expandedItem: _expanded,
+                                                key: Key(contactoUi.personaId.toString()),
+                                                title: Container(
+                                                    margin: const EdgeInsets.only(left: 0, right: 0, top: 24, bottom: 16),
+                                                    padding: const EdgeInsets.only(left: 16, right: 24, top: 0, bottom: 0),
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(contactoUi.nombre??"", maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 16, color: AppTheme.lightText, fontWeight: FontWeight.w500),),
+                                                        Text(contactoUi.relacion??"", maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 14, color: AppTheme.lightText.withOpacity(0.9), fontWeight: FontWeight.w500),),
+                                                      ],
+                                                    )
+                                                ),
+                                                trailing: Container(
+                                                  height: 10,
+                                                  width: 10,
+                                                ),
+                                                leading: CachedNetworkImage(
+                                                    height: 60,
+                                                    width: 60,
+                                                    placeholder: (context, url) => CircularProgressIndicator(),
+                                                    imageUrl: contactoUi.foto??'',
+                                                    imageBuilder: (context, imageProvider) =>
+                                                        Container(
+                                                            decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                                                              image: DecorationImage(
+                                                                image: imageProvider,
+                                                                fit: BoxFit.cover,
+                                                              ),
+                                                            )
+                                                        )
+                                                ),
+                                                children: [
+                                                  Container(
+                                                    height: 60,
+                                                    color: Color(0xFFF6F6F6),
+                                                    padding: const EdgeInsets.only(left:  40, right: 28),
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                            child: Material(
+                                                              color: Colors.transparent,
+                                                              child: InkWell(
+                                                                focusColor: Colors.transparent,
+                                                                highlightColor: Colors.transparent,
+                                                                hoverColor: Colors.transparent,
+                                                                borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                                                splashColor: AppTheme.colorPrimary.withOpacity(0.2),
+                                                                onTap: () {
+                                                                  if(contactoUi.telfono!=null&&contactoUi.telfono.isNotEmpty){
+                                                                    launch("tel://${contactoUi.telfono}");
+                                                                  }else{
+                                                                    Fluttertoast.showToast(
+                                                                        msg: "Docente sin número",
+                                                                        toastLength: Toast.LENGTH_SHORT,
+                                                                        gravity: ToastGravity.BOTTOM,
+                                                                        timeInSecForIosWeb: 1
+                                                                    );
+                                                                  }
+                                                                },
+                                                                child: Container(
+                                                                  child: Column(
+                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                                    children: [
+                                                                      Icon(Icons.call, size: 24, color: Color(0xFF6FBD53),),
+                                                                      Text("Llamar", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                        ),
+                                                        Expanded(
+                                                            child: Material(
+                                                              color: Colors.transparent,
+                                                              child: InkWell(
+                                                                focusColor: Colors.transparent,
+                                                                highlightColor: Colors.transparent,
+                                                                hoverColor: Colors.transparent,
+                                                                borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                                                splashColor: AppTheme.colorPrimary.withOpacity(0.2),
+                                                                onTap: () {
+
+                                                                },
+                                                                child: Container(
+                                                                  child: Column(
+                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                                    children: [
+                                                                      Icon(Icons.insert_comment_outlined, size: 24, color: Color(0XFF52B1D3),),
+                                                                      Text("Mensaje", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                        ),
+                                                        Expanded(
+                                                            child: Material(
+                                                              color: Colors.transparent,
+                                                              child: InkWell(
+                                                                focusColor: Colors.transparent,
+                                                                highlightColor: Colors.transparent,
+                                                                hoverColor: Colors.transparent,
+                                                                borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                                                splashColor: AppTheme.colorPrimary.withOpacity(0.2),
+                                                                onTap: () {
+
+                                                                },
+                                                                child: Container(
+                                                                  child: Column(
+                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                                    children: [
+                                                                      Icon(Icons.supervised_user_circle_outlined, size: 24, color: Color(0xFF929292),),
+                                                                      Text("Información", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                        )
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          }else{
+                                            return Container();
+                                          }
+                                        }
+                                    ),
+                                    ListView.builder(
+                                        itemCount: controller.directivosList.length,
+                                        itemBuilder: (BuildContext ctxt, int index) {
+                                          dynamic o = controller.directivosList[index];
+                                          if(o is String){
+                                            return Container(
+                                              padding: const EdgeInsets.only(left: 16, right: 0, top: 8, bottom: 8),
+                                              child: Row(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(left: 0, right: 5, top: 0),
+                                                    child: Text(o??'', style: TextStyle( color: AppTheme.lightText, fontSize: 14, fontWeight: FontWeight.w700),),
+                                                  ),
+                                                  Expanded(
+                                                      child: Container(
+                                                        color: AppTheme.lightText,
+                                                        height: 1,
+                                                      )
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          }else if(o is ContactoUi){
+                                            ContactoUi contactoUi = o;
+                                            return Theme(
+                                              data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                                              child: CustomExpansionTile(
+                                                expandedItem: _expanded,
+                                                key: Key(contactoUi.personaId.toString()),
+                                                title: Container(
+                                                    margin: const EdgeInsets.only(left: 0, right: 0, top: 24, bottom: 16),
+                                                    padding: const EdgeInsets.only(left: 16, right: 24, top: 0, bottom: 0),
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(contactoUi.nombre??"", maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 16, color: AppTheme.lightText, fontWeight: FontWeight.w500),),
+                                                        Text(contactoUi.relacion??"", maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 14, color: AppTheme.lightText.withOpacity(0.9), fontWeight: FontWeight.w500),),
+                                                      ],
+                                                    )
+                                                ),
+                                                trailing: Container(
+                                                  height: 10,
+                                                  width: 10,
+                                                ),
+                                                leading: CachedNetworkImage(
+                                                    height: 60,
+                                                    width: 60,
+                                                    placeholder: (context, url) => CircularProgressIndicator(),
+                                                    imageUrl: contactoUi.foto??'',
+                                                    imageBuilder: (context, imageProvider) =>
+                                                        Container(
+                                                            decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                                                              image: DecorationImage(
+                                                                image: imageProvider,
+                                                                fit: BoxFit.cover,
+                                                              ),
+                                                            )
+                                                        )
+                                                ),
+                                                children: [
+                                                  Container(
+                                                    height: 60,
+                                                    color: Color(0xFFF6F6F6),
+                                                    padding: const EdgeInsets.only(left:  40, right: 28),
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                            child: Material(
+                                                              color: Colors.transparent,
+                                                              child: InkWell(
+                                                                focusColor: Colors.transparent,
+                                                                highlightColor: Colors.transparent,
+                                                                hoverColor: Colors.transparent,
+                                                                borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                                                splashColor: AppTheme.colorPrimary.withOpacity(0.2),
+                                                                onTap: () {
+                                                                  if(contactoUi.telfono!=null&&contactoUi.telfono.isNotEmpty){
+                                                                    launch("tel://${contactoUi.telfono}");
+                                                                  }else{
+                                                                    Fluttertoast.showToast(
+                                                                        msg: "Directivo sin número",
+                                                                        toastLength: Toast.LENGTH_SHORT,
+                                                                        gravity: ToastGravity.BOTTOM,
+                                                                        timeInSecForIosWeb: 1
+                                                                    );
+                                                                  }
+                                                                },
+                                                                child: Container(
+                                                                  child: Column(
+                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                                    children: [
+                                                                      Icon(Icons.call, size: 24, color: Color(0xFF6FBD53),),
+                                                                      Text("Llamar", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                        ),
+                                                        Expanded(
+                                                            child: Material(
+                                                              color: Colors.transparent,
+                                                              child: InkWell(
+                                                                focusColor: Colors.transparent,
+                                                                highlightColor: Colors.transparent,
+                                                                hoverColor: Colors.transparent,
+                                                                borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                                                splashColor: AppTheme.colorPrimary.withOpacity(0.2),
+                                                                onTap: () {
+
+                                                                },
+                                                                child: Container(
+                                                                  child: Column(
+                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                                    children: [
+                                                                      Icon(Icons.insert_comment_outlined, size: 24, color: Color(0XFF52B1D3),),
+                                                                      Text("Mensaje", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                        ),
+                                                        Expanded(
+                                                            child: Material(
+                                                              color: Colors.transparent,
+                                                              child: InkWell(
+                                                                focusColor: Colors.transparent,
+                                                                highlightColor: Colors.transparent,
+                                                                hoverColor: Colors.transparent,
+                                                                borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                                                splashColor: AppTheme.colorPrimary.withOpacity(0.2),
+                                                                onTap: () {
+
+                                                                },
+                                                                child: Container(
+                                                                  child: Column(
+                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                                    children: [
+                                                                      Icon(Icons.supervised_user_circle_outlined, size: 24, color: Color(0xFF929292),),
+                                                                      Text("Información", style: TextStyle(color: AppTheme.lightText, fontSize: 10, fontWeight: FontWeight.w500),),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                        )
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          }else{
+                                            return Container();
+                                          }
+                                        }
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                  )
+              ),
+              controller.isLoading ?  Container(child: Center(
+                child: CircularProgressIndicator(),
+              )): Container(),
+            ],
+          );
+
+        });
   }
 
 }

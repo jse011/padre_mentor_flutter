@@ -2,6 +2,9 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:padre_mentor/src/domain/entities/hijos_ui.dart';
 import 'package:padre_mentor/src/domain/entities/tipo_evento_ui.dart';
 import 'package:padre_mentor/src/domain/entities/usuario_ui.dart';
+import 'package:padre_mentor/src/domain/repositories/check_conex_repository.dart';
+import 'package:padre_mentor/src/domain/repositories/http_datos_repository.dart';
+import 'package:padre_mentor/src/domain/repositories/usuario_configuarion_repository.dart';
 import 'package:padre_mentor/src/domain/usecases/get_evento_agenda.dart';
 import 'package:padre_mentor/src/domain/usecases/get_usuario_usecase.dart';
 import 'package:padre_mentor/src/domain/usecases/update_session_usuario.dart';
@@ -15,7 +18,7 @@ class EventoAgendaPresenter extends Presenter{
   Function getEventoAgendaOnNext, getEventoAgendaOnComplete, getEventoAgendaOnError;
   UpdateSession updateSession;
 
-  EventoAgendaPresenter(checkConext, usuarioRepo, httpRepo): this._getEventoAgenda = GetEventoAgenda(checkConext ,usuarioRepo, httpRepo), this.getSessionUsuarioCase = GetSessionUsuarioCase(usuarioRepo), updateSession = UpdateSession(usuarioRepo);
+  EventoAgendaPresenter(CheckConexRepository checkConext, UsuarioAndConfiguracionRepository usuarioRepo, HttpDatosRepository httpRepo): this._getEventoAgenda = GetEventoAgenda(checkConext ,usuarioRepo, httpRepo), this.getSessionUsuarioCase = GetSessionUsuarioCase(usuarioRepo), updateSession = UpdateSession(usuarioRepo);
 
   void getEventoAgenda(int usuarioId, int tipoEventoId, List<int> hijoIdList){
     _getEventoAgenda.execute(_GetEventoAgendaCase(this), GetEventoAgendaParams(usuarioId, tipoEventoId, hijoIdList));

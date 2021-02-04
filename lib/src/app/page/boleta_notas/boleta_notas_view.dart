@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:padre_mentor/src/app/page/boleta_notas/boleta_nota_controller.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/app/utils/hex_color.dart';
@@ -10,6 +11,7 @@ import 'package:padre_mentor/src/app/widgets/menu_item_view.dart';
 import 'package:padre_mentor/src/app/widgets/title_view.dart';
 import 'package:padre_mentor/src/app/widgets/workout_view.dart';
 import 'package:padre_mentor/src/data/repositories/moor/data_curso_repository.dart';
+import 'package:padre_mentor/src/data/repositories/moor/data_usuario_configuracion_respository.dart';
 import 'package:padre_mentor/src/device/repositories/http/device_http_datos_repository.dart';
 import 'package:padre_mentor/src/domain/entities/curso_boleta_ui.dart';
 import 'package:padre_mentor/src/domain/repositories/http_datos_repository.dart';
@@ -33,7 +35,7 @@ class _BoletasNotasViewState extends ViewState<BoletasNotasView, BoletaNotaContr
   double topBarOpacity = 0.0;
   AnimationController animationController;
 
-  _BoletasNotasViewState(alumnoId,programaAcademicoId, anioAcademicoId, fotoAlumno) : super(BoletaNotaController(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno, DataCursoRepository(), DeviceHttpDatosRepositorio()));
+  _BoletasNotasViewState(alumnoId,programaAcademicoId, anioAcademicoId, fotoAlumno) : super(BoletaNotaController(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno,DataUsuarioAndRepository(), DataCursoRepository(), DeviceHttpDatosRepositorio()));
 
   @override
   void initState() {
@@ -93,9 +95,6 @@ class _BoletasNotasViewState extends ViewState<BoletasNotasView, BoletaNotaContr
             children: <Widget>[
               getMainTab(),
               getAppBarUI(),
-              SizedBox(
-                height: MediaQuery.of(context).padding.bottom,
-              )
             ],
           ),
         ),
@@ -230,6 +229,17 @@ class _BoletasNotasViewState extends ViewState<BoletasNotasView, BoletaNotaContr
                   animationController: animationController,
                   child:  ControlledWidgetBuilder<BoletaNotaController>(
                       builder: (context, controller) {
+
+                        if(controller.msgConexion!=null&&controller.msgConexion.isNotEmpty){
+                          Fluttertoast.showToast(
+                            msg: controller.msgConexion,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                          );
+                          controller.successMsg();
+                        }
+
                         return Stack(
                           children: [
                             CustomScrollView(

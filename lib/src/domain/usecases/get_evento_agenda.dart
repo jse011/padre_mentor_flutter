@@ -26,14 +26,22 @@ class GetEventoAgenda extends UseCase<GetEvaluacionCaseResponse, GetEventoAgenda
       //printTime();
       print("EventoAgenda executeServidor init");
       Future<String> executeServidor() async{
-        //printTime();
-        Map<String, dynamic> eventoAgenda = await httpRepository.getEventoAgenda(params.usuarioId, params.tipoEventoId);
-        bool errorServidor = eventoAgenda==null;
-        if(!errorServidor){
-          //printTime();
-          await repository.saveEventoAgenda(eventoAgenda, params.usuarioId, params.tipoEventoId, params.hijoIdList);
-          //printTime();
+        bool offlineServidor = false;
+        bool errorServidor = false;
+        try{
+          String urlServidorLocal = await repository.getSessionUsuarioUrlServidor();
+          Map<String, dynamic> eventoAgenda = await httpRepository.getEventoAgenda(urlServidorLocal, params.usuarioId, params.tipoEventoId);
+          errorServidor = eventoAgenda==null;
+          if(!errorServidor){
+            //printTime();
+            await repository.saveEventoAgenda(eventoAgenda, params.usuarioId, params.tipoEventoId, params.hijoIdList);
+            //printTime();
+          }
+        }catch(e){
+          offlineServidor = true;
         }
+
+
 
         List<TipoEventoUi> tiposUiList = await repository.getTiposEvento();
         //printTime();
@@ -61,14 +69,14 @@ class GetEventoAgenda extends UseCase<GetEvaluacionCaseResponse, GetEventoAgenda
           }
         }
 
-        controller.add(GetEvaluacionCaseResponse(tiposUiList, eventoUIList, errorServidor, false));
+        controller.add(GetEvaluacionCaseResponse(tiposUiList, eventoUIList, errorServidor, offlineServidor));
         controller.close();
       }
 
       executeServidor().catchError((e) {
         controller.addError(e);
-        print("Got error: ${e.error}");     // Finally, callback fires.
-        throw Exception(e);              // Future completes with 42.
+          // Finally, callback fires.
+       // throw Exception(e);              // Future completes with 42.
       }).timeout(const Duration (seconds:60),onTimeout : () {
         throw Exception("GetEventoAgenda timeout 60 seconds");
       });

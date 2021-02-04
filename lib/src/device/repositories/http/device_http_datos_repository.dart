@@ -7,7 +7,7 @@ import 'package:padre_mentor/src/domain/repositories/http_datos_repository.dart'
 
 class DeviceHttpDatosRepositorio extends HttpDatosRepository{
   //'http://educar.icrmedu.com/CRMMovil/PortalAcadMovil.ashx/'
-  String url = 'http://educar.icrmedu.com/CRMMovil/PortalAcadMovil.ashx/';
+  //String url = 'http://educar.icrmedu.com/CRMMovil/PortalAcadMovil.ashx/';
   static const  TAG = "DeviceHttpDatosRepositorio";
   String getBody(String method, Object parameters){
     Map<String, dynamic> body = Map<String, dynamic>();
@@ -42,7 +42,7 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
   }
 
   @override
-  Future<Map<String, dynamic>> getBoletasNotas(int anioAcademicoId, int programaId, int periodoId, int seccionId, int calendarioPeridoId, int alumnoId, int georeferenciaId) async{
+  Future<Map<String, dynamic>> getBoletasNotas(String urlServidor, int anioAcademicoId, int programaId, int periodoId, int seccionId, int calendarioPeridoId, int alumnoId, int georeferenciaId) async{
     Map<String, dynamic> parameters = Map<String, dynamic>();
     parameters["vint_anioAcademicoId"] = anioAcademicoId;
     parameters["vint_programaId"] = programaId;
@@ -51,7 +51,7 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
     parameters["vint_calendarioPeridoId"] = calendarioPeridoId;
     parameters["vint_alumnoId"] = alumnoId;
     parameters["vint_georeferenciaId"] = georeferenciaId;
-    final response = await http.post(url, body: getBody("fobj_BoletasNotas",parameters));
+    final response = await http.post(urlServidor, body: getBody("fobj_BoletasNotas",parameters));
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
@@ -59,7 +59,7 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
       if(body.containsKey("Successful")&&body.containsKey("Value")){
         return body["Value"];
       }else{
-        throw Exception('Failed to boleta notas 1');
+        return null;
       }
 
     } else {
@@ -70,13 +70,13 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
   }
 
   @override
-  Future<Map<String, dynamic>> getEvaluacionesPorCurso(int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId) async{
+  Future<Map<String, dynamic>> getEvaluacionesPorCurso(String urlServidor, int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId) async{
     Map<String, dynamic> parameters = Map<String, dynamic>();
     parameters["vint_alumnoId"] = alumnoId;
     parameters["vint_programaEduId"] = programaId;
     parameters["vstr_calendarioPeriodo"] = calendarioPeridoId;
     parameters["vint_anioAcademicoId"] = anioAcademicoId;
-    final response = await http.post(url, body: getBody("getEvaluacionesPorCurso",parameters));
+    final response = await http.post(urlServidor, body: getBody("getEvaluacionesPorCurso",parameters));
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
@@ -87,7 +87,7 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
         salida["evaluaciones"] = lista;
         return salida;
       }else{
-        throw Exception('Failed to load evaluaciones 1');
+        return null;
       }
 
     } else {
@@ -98,13 +98,13 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
   }
 
   @override
-  Future<Map<String, dynamic>> getTareaPorCurso(int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId)async {
+  Future<Map<String, dynamic>> getTareaPorCurso(String urlServidor, int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId)async {
     Map<String, dynamic> parameters = Map<String, dynamic>();
     parameters["vint_alumnoId"] = alumnoId;
     parameters["vint_programaEduId"] = programaId;
     parameters["vstr_calendarioPeriodo"] = calendarioPeridoId;
     parameters["vint_anioAcademicoId"] = anioAcademicoId;
-    final response = await http.post(url, body: getBody("getTareaPorCurso",parameters));
+    final response = await http.post(urlServidor, body: getBody("getTareaPorCurso",parameters));
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
@@ -115,7 +115,7 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
         salida["tareas"] = lista;
         return salida;
       }else{
-        throw Exception('Failed to load evaluaciones 1');
+        return null;
       }
 
     } else {
@@ -126,11 +126,11 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
   }
 
   @override
-  Future<Map<String, dynamic>> getEventoAgenda(int usuarioId, int tipoEventoId) async {
+  Future<Map<String, dynamic>> getEventoAgenda(String urlServidor, int usuarioId, int tipoEventoId) async {
     Map<String, dynamic> parameters = Map<String, dynamic>();
     parameters["vint_UsuarioId"] = usuarioId;
     parameters["vint_tipoEventoId"] = tipoEventoId;
-    final response = await http.post(url, body: getBody("getEventoAgendaFlutter",parameters));
+    final response = await http.post(urlServidor, body: getBody("getEventoAgendaFlutter",parameters));
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
@@ -149,10 +149,10 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
   }
 
   @override
-  Future<Map<String, dynamic>> getContacto(int usuarioId) async{
+  Future<Map<String, dynamic>> getContacto(String urlServidor, int usuarioId) async{
     Map<String, dynamic> parameters = Map<String, dynamic>();
     parameters["vint_UsuarioId"] = usuarioId;
-    final response = await http.post(url, body: getBody("getContactoFlutter",parameters));
+    final response = await http.post(urlServidor, body: getBody("getContactoFlutter",parameters));
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.

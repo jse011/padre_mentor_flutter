@@ -15,7 +15,7 @@ class BoletaNotasPresenter extends Presenter{
   Function getBoletaNotaOnNext, getBoletaNotaOnComplete, getBoletaNotaOnError;
 
 
-  BoletaNotasPresenter(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, cursoRepo, httpRepo):_getCalendarioPerido = GetCalendarioPerido(cursoRepo), _getBoletaNota = GetBoletaNota(httpRepo, cursoRepo);
+  BoletaNotasPresenter(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, usuarioConfigRepo, cursoRepo, httpRepo):_getCalendarioPerido = GetCalendarioPerido(cursoRepo), _getBoletaNota = GetBoletaNota(httpRepo, cursoRepo, usuarioConfigRepo);
 
   @override
   void dispose() {
@@ -89,7 +89,7 @@ class _GetBoletaNotaCase extends Observer<GetBoletaNotaResponse>{
         }
       }
     }
-    presenter.getBoletaNotaOnNext(cursoBoletaUiList);
+    presenter.getBoletaNotaOnNext(cursoBoletaUiList, response.errorServidor, response.offlineServidor);
   }
 
 }

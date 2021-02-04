@@ -25,7 +25,8 @@ class GetEventoActuales extends UseCase<GetEventoActualesResponse, GetEventoActu
       controller.add(GetEventoActualesResponse( eventoUIList, false, true));
 
       Future<String> executeServidor() async{
-        Map<String, dynamic> eventoAgenda = await httpRepository.getEventoAgenda(params.usuarioId, params.tipoEventoId);
+        String urlServidorLocal = await repository.getSessionUsuarioUrlServidor();
+        Map<String, dynamic> eventoAgenda = await httpRepository.getEventoAgenda(urlServidorLocal,params.usuarioId, params.tipoEventoId);
         bool errorServidor = eventoAgenda==null;
         if(!errorServidor){
           await repository.saveEventoAgenda(eventoAgenda, params.usuarioId, params.tipoEventoId, params.hijoIdList);
@@ -38,10 +39,8 @@ class GetEventoActuales extends UseCase<GetEventoActualesResponse, GetEventoActu
 
       executeServidor().catchError((e) {
         controller.addError(e);
-        print("Got error: ${e.error}");     // Finally, callback fires.
-        throw Exception(e);              // Future completes with 42.
       }).timeout(const Duration (seconds:60),onTimeout : () {
-        throw Exception("GetEventoAgenda timeout 60 seconds");
+        controller.addError(throw Exception("GetEventoAgenda timeout 60 seconds"));
       });
 
 

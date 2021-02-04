@@ -17,8 +17,10 @@ class EvaluacionController extends Controller{
   List<dynamic> get rubroEvaluacionList => _rubroEvaluacionList;
   bool _isLoading = false;
   get isLoading => _isLoading;
+  String _msgConexion = null;
+  String get msgConexion => _msgConexion;
 
-  EvaluacionController(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, this.fotoAlumno, cursoRepo, httpDatosRepo): presenter = EvaluacionPresenter(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno,cursoRepo, httpDatosRepo), super();
+  EvaluacionController(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, this.fotoAlumno, usuarioConfigRepo, cursoRepo, httpDatosRepo): presenter = EvaluacionPresenter(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno,usuarioConfigRepo, cursoRepo, httpDatosRepo), super();
 
   @override
   void initListeners() {
@@ -41,14 +43,16 @@ class EvaluacionController extends Controller{
       refreshUI();
     };
 
-    presenter.getEvaluacionOnNext = (List<dynamic> items){
+    presenter.getEvaluacionOnNext = (List<dynamic> items, bool errorServidor, bool offlineServidor){
       _rubroEvaluacionList = items;
-      print("getEvaluacionOnNext: "+items.length.toString());
+      _msgConexion = errorServidor? "!Oops! Al parecer ocurrió un error involuntario.":null;
+      _msgConexion = offlineServidor? "No hay Conexión a Internet...":null;
+      hideProgress();
+      refreshUI();
     };
 
     presenter.getEvaluacionOnComplete = (){
-      hideProgress();
-      refreshUI();
+
     };
   }
 
@@ -76,6 +80,10 @@ class EvaluacionController extends Controller{
 
   void hideProgress(){
     _isLoading = false;
+  }
+
+  void successMsg() {
+    _msgConexion = null;
   }
 
 }

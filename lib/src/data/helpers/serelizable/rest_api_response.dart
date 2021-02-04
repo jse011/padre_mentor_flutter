@@ -66,7 +66,7 @@ class PersonaSerial{
       this.estadoCivil,
       this.numDoc,
       this.ocupacion,
-       this.estadoId,
+       this.estadoId = 0,
       this.correo,
       this.direccion,
       this.path});
@@ -912,4 +912,57 @@ class UsuarioRolGeoreferenciaSerializable{
   factory UsuarioRolGeoreferenciaSerializable.fromJson(Map<String, dynamic> json) => _$UsuarioRolGeoreferenciaSerializableFromJson(json);
 
   Map<String, dynamic> toJson() => _$UsuarioRolGeoreferenciaSerializableToJson(this);
+}
+
+@JsonSerializable()
+class CursosSerializable {
+ 
+  int cursoId;
+  String nombre;
+  int estadoId;
+  String descripcion;
+  String alias;
+  int entidadId;
+  int nivelAcadId;
+  int tipoCursoId;
+  int tipoConceptoId;
+  String color;
+  String creditos;
+  String totalHP;
+  String totalHT;
+  String notaAprobatoria;
+  String sumilla;
+  int superId;
+  int idServicioLaboratorio;
+  int horasLaboratorio;
+  bool tipoSubcurso;
+  String foto;
+  String codigo;
+
+  CursosSerializable(
+      {this.cursoId,
+      this.nombre,
+      this.estadoId,
+      this.descripcion,
+      this.alias,
+      this.entidadId,
+      this.nivelAcadId,
+      this.tipoCursoId,
+      this.tipoConceptoId,
+      this.color,
+      this.creditos,
+      this.totalHP,
+      this.totalHT,
+      this.notaAprobatoria,
+      this.sumilla,
+      this.superId,
+      this.idServicioLaboratorio,
+      this.horasLaboratorio,
+      this.tipoSubcurso,
+      this.foto,
+      this.codigo});
+
+  factory CursosSerializable.fromJson(Map<String, dynamic> json) => _$CursosSerializableFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CursosSerializableToJson(this);
 }

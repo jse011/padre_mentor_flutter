@@ -8,15 +8,12 @@ import 'package:padre_mentor/src/domain/usecases/update_familia.dart';
 class FamiliaPresenter extends Presenter{
   GetSessionUsuarioCase getSessionUsuarioCase;
   Function getSesionUsuarioOnNext, getSesionUsuarioOnComplete,  getSesionUsuarioOnError;
-  UpdateFamilia _updateFamilia;
-  Function updateFamiliaOnNext, updateFamiliaOnComplete, updateFamiliaOnError;
 
-  FamiliaPresenter(httpRepo, usuarioConfiRepo ):getSessionUsuarioCase = GetSessionUsuarioCase(usuarioConfiRepo), _updateFamilia = UpdateFamilia(httpRepo, usuarioConfiRepo);
+  FamiliaPresenter(httpRepo, usuarioConfiRepo ):getSessionUsuarioCase = GetSessionUsuarioCase(usuarioConfiRepo);
 
   @override
   void dispose() {
     getSessionUsuarioCase.dispose();
-    _updateFamilia.dispose();
   }
 
   void onInitState() {
@@ -27,9 +24,6 @@ class FamiliaPresenter extends Presenter{
     getSessionUsuarioCase.execute(_GetSessionUsuarioCase(this), GetSessionUsuarioCaseParams());
   }
 
-  void updateFamilia(UsuarioUi usuarioUi, List<HijosUi> hijosUiList, List<FamiliaUi> familiaUiList) {
-    _updateFamilia.execute(_UpdateFamiliaCaseState(this), UpdateFamiliaCaseParams(usuarioUi, hijosUiList, familiaUiList));
-  }
 
 }
 
@@ -53,29 +47,6 @@ class _GetSessionUsuarioCase extends Observer<GetSessionUsuarioCaseResponse>{
   void onNext(GetSessionUsuarioCaseResponse response) {
     assert(presenter.getSesionUsuarioOnNext != null);
     presenter.getSesionUsuarioOnNext(response.usurio);
-  }
-
-}
-
-class _UpdateFamiliaCaseState extends Observer<UpdateFamiliaCaseResponse>{
-  final FamiliaPresenter presenter;
-  _UpdateFamiliaCaseState(this.presenter);
-  @override
-  void onComplete() {
-    assert(presenter.updateFamiliaOnComplete != null);
-    presenter.updateFamiliaOnComplete();
-  }
-
-  @override
-  void onError(e) {
-    assert(presenter.updateFamiliaOnError != null);
-    presenter.updateFamiliaOnError(e);
-  }
-
-  @override
-  void onNext(UpdateFamiliaCaseResponse response) {
-    assert(presenter.updateFamiliaOnNext != null);
-    presenter.updateFamiliaOnNext();
   }
 
 }
