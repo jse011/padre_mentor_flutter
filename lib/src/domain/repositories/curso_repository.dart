@@ -1,3 +1,5 @@
+import 'package:padre_mentor/src/domain/entities/asistencia_tipo_ui.dart';
+import 'package:padre_mentor/src/domain/entities/asistencia_ui.dart';
 import 'package:padre_mentor/src/domain/entities/calendario_periodio_ui.dart';
 import 'package:padre_mentor/src/domain/entities/contacto_ui.dart';
 import 'package:padre_mentor/src/domain/entities/contrato_ui_ui.dart';
@@ -18,4 +20,7 @@ abstract class CursoRepository{
   Future<void> saveContactos(Map<String, dynamic> datosTareaEvalaucion);
   Future<List<ContactoUi>> getContactos(List<int> hijoIdList);
   Future<List<CursoUi>> getCursos(int programaAcademicoId, int alumnoId, int anioAcademico);
+  Future<void> saveAsistencia(Map<String, dynamic> datosEvaluaciones, int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId);
+  Future<List<AsistenciaUi>> getAsistenciaAlumno(int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId);
+  Future<List<AsistenciaTipoUi>> getAsistenciaTipo(int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId);
 }

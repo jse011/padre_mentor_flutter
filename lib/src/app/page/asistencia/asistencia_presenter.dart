@@ -1,5 +1,6 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:padre_mentor/src/domain/entities/calendario_periodio_ui.dart';
+import 'package:padre_mentor/src/domain/usecases/get_asistencia.dart';
 import 'package:padre_mentor/src/domain/usecases/get_calendario_periodo.dart';
 import 'package:padre_mentor/src/domain/usecases/get_evaluacion.dart';
 
@@ -10,10 +11,10 @@ class AsistenciaPresenter extends Presenter{
   final int programaAcademicoId;
   final int anioAcademicoId;
   final String fotoAlumno;
-  GetEvaluacion _getEvaluacion;
-  Function getEvaluacionOnNext, getEvaluacionOnComplete, getEvaluacionOnError;
+  GetAsistencia _getAsistencia;
+  Function getAsistenciaOnNext, getAsistenciaOnComplete, getAsistenciaOnError;
 
-  AsistenciaPresenter(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, this.fotoAlumno, cursoRepo, httpDatosRepo, usuarioConfigRepo): _getCalendarioPerido = GetCalendarioPerido(cursoRepo), _getEvaluacion = GetEvaluacion(httpDatosRepo, cursoRepo, usuarioConfigRepo), super();
+  AsistenciaPresenter(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, this.fotoAlumno, cursoRepo, httpDatosRepo, usuarioConfigRepo): _getCalendarioPerido = GetCalendarioPerido(cursoRepo), _getAsistencia = GetAsistencia(httpDatosRepo, cursoRepo, usuarioConfigRepo), super();
 
   @override
   void dispose() {
@@ -25,7 +26,7 @@ class AsistenciaPresenter extends Presenter{
   }
 
   void getEvaluacion(CalendarioPeriodoUI calendarioPeriodoUi){
-    _getEvaluacion.execute(_GetEvaluacionCase(this), GetEvaluacionCaseParams(anioAcademicoId, programaAcademicoId, calendarioPeriodoUi==null?0:calendarioPeriodoUi.id, alumnoId));
+    _getAsistencia.execute(_GetAsistenciaCase(this), GetAsistenciaParameters(anioAcademicoId, programaAcademicoId, calendarioPeriodoUi==null?0:calendarioPeriodoUi.id, alumnoId));
   }
 
 }
@@ -55,27 +56,27 @@ class _GetCalendarioPeridoCase extends Observer<GetCalendarioPeridoResponse>{
 
 }
 
-class _GetEvaluacionCase extends Observer<GetEvaluacionCaseResponse>{
+class _GetAsistenciaCase extends Observer<GetAsistenciaResponse>{
   final AsistenciaPresenter presenter;
 
-  _GetEvaluacionCase(this.presenter);
+  _GetAsistenciaCase(this.presenter);
 
   @override
   void onComplete() {
-    assert(presenter.getEvaluacionOnComplete != null);
-    presenter.getEvaluacionOnComplete();
+    assert(presenter.getAsistenciaOnComplete != null);
+    presenter.getAsistenciaOnComplete();
   }
 
   @override
   void onError(e) {
-    assert(presenter.getEvaluacionOnError != null);
-    presenter.getEvaluacionOnError(e);
+    assert(presenter.getAsistenciaOnError != null);
+    presenter.getAsistenciaOnError(e);
   }
 
   @override
-  void onNext(GetEvaluacionCaseResponse response) {
-    assert(presenter.getEvaluacionOnNext != null);
-    presenter.getEvaluacionOnNext(response.rubroEvaluacionList, response.errorServidor, response.offlineServidor);
+  void onNext(GetAsistenciaResponse response) {
+    assert(presenter.getAsistenciaOnNext != null);
+    presenter.getAsistenciaOnNext(response.asistenciaAlumnoList, response.asistenciaTipoList, response.porcentaje, response.cantidad, response.errorServidor, response.offlineServidor);
   }
 
 }

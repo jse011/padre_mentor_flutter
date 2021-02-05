@@ -2,6 +2,7 @@ import 'package:moor_flutter/moor_flutter.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/Calendario.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/anio_academico_alumno.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/areas_boleta.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/asistencia_alumnos.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/aula.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/calendario_acalendario.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/calendario_periodo.dart';
@@ -39,7 +40,7 @@ part 'app_database.g.dart';
 
 @UseMoor(tables: [Persona, Usuario, SessionUser, Relaciones, AnioAcademicoAlumno, ProgramasEducativo, PlanEstudio, PlanCursos, CargaCurso, DetalleContratoAcad, Contrato, CalendarioAcademico, CalendarioPeriodo, Tipos,
                   AreasBoleta, NotasCalendarioBoleta, ParametrosDisenio, SilaboEvento, RubroEvalDesempenio, WebConfigs, TareaCurso, Evento, Calendario, SessionUserHijo, Contacto, Entidad, Georeferencia, Rol, UsuarioRolGeoreferencia,
-                  Cursos, Aula, Periodos, Seccion, CargaAcademica, NivelAcademico])
+                  Cursos, Aula, Periodos, Seccion, CargaAcademica, NivelAcademico, AsistenciaAlumnos, AsistenciaJustificacion, AsistecniaArchivo, AsistenciaTipoNota, AsistenciaValorTipoNota, AsistenciaRelProgramaTipoNota])
 class AppDataBase extends _$AppDataBase{
 
   @override

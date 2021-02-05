@@ -255,6 +255,31 @@ class DeviceHttpDatosRepositorio extends HttpDatosRepository{
     }
   }
 
+  @override
+  Future<Map<String, dynamic>> getEvaluacionAlumno(String urlServidor, int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId)async {
+    Map<String, dynamic> parameters = Map<String, dynamic>();
+    parameters["vint_alumnoId"] = alumnoId;
+    parameters["vint_programaEduId"] = programaId;
+    parameters["vstr_calendarioPeriodo"] = calendarioPeridoId;
+    parameters["vint_anioAcademicoId"] = anioAcademicoId;
+    final response = await http.post(urlServidor, body: getBody("flst_ObtenerAsitenciaFlutter",parameters));
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      Map<String,dynamic> body = json.decode(response.body);
+      if(body.containsKey("Successful")&&body.containsKey("Value")){
+        return body["Value"];
+      }else{
+        return null;
+      }
+
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load evaluaciones 0');
+    }
+  }
+
 
 
 

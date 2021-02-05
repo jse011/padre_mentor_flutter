@@ -7,6 +7,7 @@ import 'package:padre_mentor/src/data/repositories/moor/model/cursos.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/nivel_academico.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/plan_estudios.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/silabo_evento.dart';
+import 'package:padre_mentor/src/domain/tools/app_tools.dart';
 
 
 class SerializableConvert{
@@ -872,4 +873,163 @@ class SerializableConvert{
         activo: serial.activo,
         entidadId: serial.entidadId);
   }
+
+  static List<AsistenciaAlumno> converListSerializeAsistenciaAlumnos(dynamic model){
+    List<AsistenciaAlumno> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeAsistenciaAlumnos(item));
+    }
+    return items;
+  }
+
+  static AsistenciaAlumno converSerializeAsistenciaAlumnos(Map<String,dynamic> model){
+    AsistenciaAlumnosSerializable serial = AsistenciaAlumnosSerializable.fromJson(model);
+    return AsistenciaAlumno(
+        asistenciaSesionId: serial.asistenciaSesionId,
+        fechaAsistenciaN: serial.fechaAsistenciaN,
+        hora: serial.hora,
+        georeferenciaId: serial.georeferenciaId,
+        alumnoId: serial.alumnoId,
+        sesionAprendizajeId: serial.sesionAprendizajeId,
+        calendarioPeriodoId: serial.calendarioPeriodoId,
+        cargaCursoId: serial.cargaCursoId,
+        valorTipoNotaId: serial.valorTipoNotaId,
+        asistenciaSesionIdAndroid: serial.asistenciaSesionIdAndroid,
+        periodoId: serial.periodoId,
+        docenteId: serial.docenteId,
+        grupoId: serial.grupoId,
+        fechaAsistenciaS: serial.fechaAsistenciaS,
+        nombreCurso: serial.nombreCurso,
+        gradoId: serial.grupoId,
+        grado: serial.grado,
+        seccionId: serial.seccionId,
+        seccion: serial.seccion,
+        silaboEventoId: serial.silaboEventoId,
+        parametroDesenioId: serial.parametroDesenioId,
+        correoDocente: serial.correoDocente,
+        celularDocente: serial.celularDocente,
+        telefonoDocente: serial.telefonoDocente,
+        fotoDocente: serial.fotoDocente,
+        nombreDocente: serial.nombreDocente,
+        personaIdDocente: serial.personaIdDocente,
+        anioAcademicoId: serial.anioAcademicoId,
+        programaAcadId: serial.programaAcadId,
+        fechaAsistenciaTime: AppTools.convertDateTimePtBR(serial.fechaAsistenciaN, serial.hora));
+  }
+
+  static List<AsistenciaJustificacionData> converListSerializeAsistenciaJustificacion(dynamic model){
+    List<AsistenciaJustificacionData> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeAsistenciaJustificacion(item));
+    }
+    return items;
+  }
+
+  static AsistenciaJustificacionData converSerializeAsistenciaJustificacion(Map<String,dynamic> model){
+    AsistenciaJustificacionSerializable serial = AsistenciaJustificacionSerializable.fromJson(model);
+    return AsistenciaJustificacionData(
+        justificacionId: serial.justificacionId,
+        asistenciaId: serial.asistenciaId,
+        descripcion: serial.descripcion,
+        tipoJustificacionId: serial.tipoJustificacionId,
+        tipoIngresoId: serial.tipoIngresoId,
+        asistenciaSesionId: serial.asistenciaSesionId,
+        asistenciaDocenteId: serial.asistenciaDocenteId);
+  }
+
+  static List<AsistecniaArchivoData> converListSerializeAsistecniaArchivo(dynamic model){
+    List<AsistecniaArchivoData> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeAsistecniaArchivo(item));
+    }
+    return items;
+  }
+
+  static AsistecniaArchivoData converSerializeAsistecniaArchivo(Map<String,dynamic> model){
+    AsistecniaArchivoSerializable serial = AsistecniaArchivoSerializable.fromJson(model);
+    return AsistecniaArchivoData(
+        archivoAsistenciaId: serial.archivoAsistenciaId,
+        path: serial.path,
+        nombre: serial.nombre,
+        tipoId: serial.tipoId,
+        justificacionId: serial.justificacionId,
+        pathLectura: serial.pathLectura);
+  }
+
+  static List<AsistenciaTipoNotaData> converListSerializeAsistenciaTipoNota(dynamic model){
+    List<AsistenciaTipoNotaData> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeAsistecniaAsistenciaTipoNota(item));
+    }
+    return items;
+  }
+
+  static AsistenciaTipoNotaData converSerializeAsistecniaAsistenciaTipoNota(Map<String,dynamic> model){
+    AsistenciaTipoNotaSerializable serial = AsistenciaTipoNotaSerializable.fromJson(model);
+    return AsistenciaTipoNotaData(
+        tipoNotaId: serial.tipoNotaId,
+        nombre: serial.nombre,
+        tipoId: serial.tipoId,
+        valorDefecto: serial.valorDefecto,
+        valorMaximo: serial.valorMaximo,
+        valorMinino: serial.valorMinino,
+        longitudPaso: serial.longitudPaso,
+        intervalo: serial.intervalo,
+        estatico: serial.estatico,
+        entidadId: serial.entidadId,
+        georeferenciaId: serial.georeferenciaId,
+        organigramaId: serial.organigramaId,
+        estadoId: serial.estadoId,
+        tipoFuenteId: serial.tipoFuenteId,
+        escalaEvaluacionId:serial.escalaEvaluacionId);
+  }
+
+  static List<AsistenciaValorTipoNotaData> converListSerializeAsistenciaValorTipoNota(dynamic model){
+    List<AsistenciaValorTipoNotaData> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeAsistenciaValorTipoNota(item));
+    }
+    return items;
+  }
+
+  static AsistenciaValorTipoNotaData converSerializeAsistenciaValorTipoNota(Map<String,dynamic> model){
+    AsistenciaValorTipoNotaSerializable serial = AsistenciaValorTipoNotaSerializable.fromJson(model);
+    return AsistenciaValorTipoNotaData(
+        valorTipoNotaId: serial.valorTipoNotaId,
+        tipoNotaId: serial.tipoNotaId,
+        titulo: serial.titulo,
+        tipoNotaAlias: serial.alias,
+        limiteInferior: serial.limiteInferior,
+        limiteSuperior: serial.limiteSuperior,
+        valorNumerico: serial.valorNumerico,
+        icono: serial.icono,
+        estadoId: serial.estadoId,
+        incluidoLInferior: serial.incluidoLInferior,
+        incluidoLSuperior: serial.incluidoLSuperior,
+        tipoId: serial.tipoId);
+  }
+
+  static List<AsistenciaRelProgramaTipoNotaData> converListSerializeAsistenciaRelProgramaTipoNota(dynamic model){
+    List<AsistenciaRelProgramaTipoNotaData> items = [];
+    Iterable l = model;
+    for(var item in l){
+      items.add(converSerializeAsisteciaRelProgramaTipoNota(item));
+    }
+    return items;
+  }
+
+  static AsistenciaRelProgramaTipoNotaData converSerializeAsisteciaRelProgramaTipoNota(Map<String,dynamic> model){
+    AsistenciaRelProgramaTipoNotaSerializable serial = AsistenciaRelProgramaTipoNotaSerializable.fromJson(model);
+    return AsistenciaRelProgramaTipoNotaData(
+        programaEducativoId: serial.programaEducativoId,
+        tipoNotaId: serial.tipoNotaId,
+        estado: serial.estado);
+  }
+
 }
+
