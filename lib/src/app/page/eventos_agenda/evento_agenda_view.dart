@@ -20,6 +20,8 @@ import 'package:padre_mentor/src/domain/entities/tipo_evento_ui.dart';
 import 'package:padre_mentor/src/domain/repositories/check_conex_repository.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../informacion_evento_agenda/informacion_evento_agenda_view.dart';
+
 class EventoAgendaView extends View{
   final AnimationController animationController;
 
@@ -388,57 +390,65 @@ class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaCon
                           delegate: SliverChildBuilderDelegate(
                                   (BuildContext context, int index){
                                 EventoUi eventoUi = controller.eventoUiList[index];
-                                return Card(
-                                  //color: AppTheme.colorAccent,
-                                  margin: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10), // if you need this
-                                    side: BorderSide(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      width: 1,
+                                return AnimationView(
+                                  animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                      parent: widget.animationController,
+                                      curve:
+                                      Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                                  animationController: widget.animationController,
+                                  child: Card(
+                                    //color: AppTheme.colorAccent,
+                                    margin: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10), // if you need this
+                                      side: BorderSide(
+                                        color: Colors.grey.withOpacity(0.2),
+                                        width: 1,
+                                      ),
                                     ),
-                                  ),
-                                  child: Container(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Container(
-                                                margin: const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 0),
-                                                child: CachedNetworkImage(
-                                                    placeholder: (context, url) => CircularProgressIndicator(),
-                                                    imageUrl: eventoUi.fotoEntidad??'',
-                                                    imageBuilder: (context, imageProvider) => Container(
-                                                        height: 40,
-                                                        width: 40,
-                                                        decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.all(Radius.circular(50)),
-                                                          image: DecorationImage(
-                                                            image: imageProvider,
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        )
+                                    child: Container(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Container(
+                                                  margin: const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 0),
+                                                  child: CachedNetworkImage(
+                                                      placeholder: (context, url) => CircularProgressIndicator(),
+                                                      imageUrl: eventoUi.fotoEntidad??'',
+                                                      imageBuilder: (context, imageProvider) => Container(
+                                                          height: 40,
+                                                          width: 40,
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                                                            image: DecorationImage(
+                                                              image: imageProvider,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          )
+                                                      )
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                    flex: 6,
+                                                    child: Container(
+                                                      margin: const EdgeInsets.only(top: 8, left: 8, right: 16, bottom: 0),
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          //Text(eventoUi.nombreEntidad??'', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 16, color: AppTheme.darkText),),
+                                                          Text(eventoUi.nombreEmisor??'', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 14, color: AppTheme.darkText),),
+                                                          Text(eventoUi.rolEmisor??'', maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 10, color: AppTheme.darkText),),
+                                                          Text(eventoUi.nombreFecha??'', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 10, color: AppTheme.lightText))
+                                                        ],
+                                                      ),
                                                     )
                                                 ),
-                                              ),
-                                              Expanded(
-                                                  flex: 6,
-                                                  child: Container(
-                                                    margin: const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 0),
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        Text(eventoUi.nombreEntidad??'', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 16, color: AppTheme.darkText),),
-                                                        Text(eventoUi.nombreFecha??'', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 12, color: AppTheme.lightText))
-                                                      ],
-                                                    ),
-                                                  )
-                                              ),
-                                              Icon(Icons.arrow_right, color: AppTheme.grey,),
-                                              Expanded(
+                                                //Icon(Icons.arrow_right, color: AppTheme.grey,),
+                                                /*Expanded(
                                                   flex: 5,
                                                   child: Container(
                                                     margin: const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 0),
@@ -450,19 +460,19 @@ class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaCon
                                                       ],
                                                     ),
                                                   )
-                                              ),
-                                            ],
+                                              ),*/
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        Container(
-                                          margin: const EdgeInsets.only(top: 8, left: 16, right: 0, bottom: 0),
-                                          child: Text(eventoUi.titulo??'', style: TextStyle( fontSize: 16, color: AppTheme.darkText, fontFamily: AppTheme.fontName, )),
-                                        ),
-                                        Container(
-                                          margin: const EdgeInsets.only(top: 0, left: 16, right: 0, bottom: 0),
-                                          child: Text(eventoUi.descripcion??'', style: TextStyle( fontSize: 16, color: AppTheme.darkText, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w300,)),
-                                        ),
-                                        /*
+                                          Container(
+                                            margin: const EdgeInsets.only(top: 8, left: 16, right: 16, bottom: 0),
+                                            child: Text(eventoUi.titulo??'', style: TextStyle( fontSize: 16, color: AppTheme.darkText, fontFamily: AppTheme.fontName, )),
+                                          ),
+                                          Container(
+                                            margin: const EdgeInsets.only(top: 0, left: 16, right: 16, bottom: 0),
+                                            child: Text(eventoUi.descripcion??'', style: TextStyle( fontSize: 16, color: AppTheme.darkText, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w300,)),
+                                          ),
+                                          /*
                             * CENTER = none
                             * CENTER_CROP = Cover
                             * CENTER_INSIDE = scaleDown
@@ -472,46 +482,53 @@ class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaCon
                             * FIT_XY = Fill
                             *
                             * */
-                                            (){
+                                              (){
 
-                                          if (eventoUi.tipoEventoUi.tipo == EventoIconoEnumUI.NOTICIA ||
-                                              eventoUi.tipoEventoUi.tipo == EventoIconoEnumUI.EVENTO || (eventoUi.tipoEventoUi.tipo == EventoIconoEnumUI.AGENDA && eventoUi.foto!=null&&eventoUi.foto.isNotEmpty)){
-                                            return Container(
-                                              margin: const EdgeInsets.only(top: 8, left: 0, right: 0, bottom: 0),
-                                              color: AppTheme.grey.withOpacity(0.7),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.stretch,  // add this
-                                                children: [
-                                                  ClipRRect(
-                                                    /*borderRadius: BorderRadius.only(
+                                            if (eventoUi.tipoEventoUi.tipo == EventoIconoEnumUI.NOTICIA ||
+                                                eventoUi.tipoEventoUi.tipo == EventoIconoEnumUI.EVENTO || (eventoUi.tipoEventoUi.tipo == EventoIconoEnumUI.AGENDA && eventoUi.foto!=null&&eventoUi.foto.isNotEmpty)){
+                                              return Container(
+                                                margin: const EdgeInsets.only(top: 8, left: 0, right: 0, bottom: 0),
+                                                color: AppTheme.grey.withOpacity(0.7),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.stretch,  // add this
+                                                  children: [
+                                                    ClipRRect(
+                                                      /*borderRadius: BorderRadius.only(
                                             topLeft: Radius.circular(8.0),
                                             topRight: Radius.circular(8.0),
                                           ),*/
-                                                    child: FancyShimmerImage(
-                                                      boxFit: BoxFit.cover,
-                                                      imageUrl: eventoUi.foto??'',
-                                                      errorWidget: Icon(Icons.warning_amber_rounded, color: AppTheme.white, size: 105,),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            );
-                                          }else{
-                                            return Container();
-                                          }
+                                                        child: InkWell(
+                                                          onTap: (){
+                                                            //controller.onClickVerEvento(eventoUi);
+                                                            Navigator.of(context).push(InformacionEventoAgendaView.createRouteAgenda(eventoUi));
 
-                                        }(),
-                                        Container(
-                                          margin: const EdgeInsets.only(top: 8, left: 16, right: 0, bottom: 0),
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                width:18,
-                                                height:18,
-                                                margin: const EdgeInsets.only(top: 0, left: 0, right: 8, bottom: 0),
-                                                child: Image.asset("assets/fitness_app/evento_like.png"),
-                                              ),
-                                              (){
+                                                          },
+                                                          child: FancyShimmerImage(
+                                                            boxFit: BoxFit.cover,
+                                                            imageUrl: eventoUi.foto??'',
+                                                            errorWidget: Icon(Icons.warning_amber_rounded, color: AppTheme.white, size: 105,),
+                                                          ),
+                                                        )
+                                                    )
+                                                  ],
+                                                ),
+                                              );
+                                            }else{
+                                              return Container();
+                                            }
+
+                                          }(),
+                                          Container(
+                                            margin: const EdgeInsets.only(top: 8, left: 16, right: 0, bottom: 0),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  width:18,
+                                                  height:18,
+                                                  margin: const EdgeInsets.only(top: 0, left: 0, right: 8, bottom: 0),
+                                                  child: Image.asset("assets/fitness_app/evento_like.png"),
+                                                ),
+                                                    (){
                                                   String megusta = "me gusta";
                                                   if(eventoUi.cantLike!=null && eventoUi.cantLike!=0){
                                                     megusta =  eventoUi.cantLike.toString() + " me gusta";
@@ -519,82 +536,88 @@ class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaCon
                                                     megusta += "1k me gusta" ;
                                                   }
                                                   return Text(megusta, style: TextStyle( fontSize: 12, color: AppTheme.darkText),);
-                                              }()
+                                                }(),
+                                                Expanded(
+                                                  child: Container(),
+                                                ),
+                                                Text(eventoUi.nombreEntidad??'', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle( fontSize: 12, color: AppTheme.darkText, fontStyle: FontStyle.italic),),
+                                                Padding(padding: const EdgeInsets.only(right: 16))
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            margin:  const EdgeInsets.only(top: 8, left: 16, right: 16, bottom: 0),
+                                            child: Divider(
+                                              height: 1,
+                                              color: AppTheme.colorShimmer,
+                                            ),
+                                          ),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Material(
+                                                color: Colors.transparent,
+                                                child: InkWell(
+                                                    focusColor: Colors.transparent,
+                                                    highlightColor: Colors.transparent,
+                                                    hoverColor: Colors.transparent,
+                                                    borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                                    splashColor: AppTheme.nearlyDarkBlue.withOpacity(0.2),
+                                                    onTap: () {
+
+                                                    },
+                                                    child:
+                                                    Container(
+                                                      padding: const EdgeInsets.only(top: 0, left: 16, right: 16, bottom: 0),
+                                                      height: 48,
+                                                      child: Row(
+                                                        children: [
+                                                          Container(
+                                                            width:20,
+                                                            height:20,
+                                                            margin: const EdgeInsets.only(top: 0, left: 8, right: 8, bottom: 0),
+                                                            child: Image.asset("assets/fitness_app/evento_like2.png"),
+                                                          ),
+                                                          Text("Me gusta", style: TextStyle( fontSize: 14, color: AppTheme.lightText),),
+                                                        ],
+                                                      ),
+                                                    )
+                                                ),
+                                              ),
+                                              Expanded(child: Container()),
+                                              Material(
+                                                color: Colors.transparent,
+                                                child: InkWell(
+                                                    focusColor: Colors.transparent,
+                                                    highlightColor: Colors.transparent,
+                                                    hoverColor: Colors.transparent,
+                                                    borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                                    splashColor: AppTheme.nearlyDarkBlue.withOpacity(0.2),
+                                                    onTap: () {
+
+                                                    },
+                                                    child:
+                                                    Container(
+                                                      padding: const EdgeInsets.only(top: 0, left: 16, right: 16, bottom: 0),
+                                                      height: 48,
+                                                      child: Row(
+                                                        children: [
+                                                          Container(
+                                                            width:20,
+                                                            height:20,
+                                                            margin: const EdgeInsets.only(top: 0, left: 8, right: 8, bottom: 0),
+                                                            child: Image.asset("assets/fitness_app/evento_shared.png"),
+                                                          ),
+                                                          Text("Me gusta", style: TextStyle( fontSize: 14, color: AppTheme.lightText),),
+                                                        ],
+                                                      ),
+                                                    )
+                                                ),
+                                              ),
                                             ],
-                                          ),
-                                        ),
-                                        Container(
-                                          margin:  const EdgeInsets.only(top: 8, left: 16, right: 16, bottom: 0),
-                                          child: Divider(
-                                            height: 1,
-                                            color: AppTheme.colorShimmer,
-                                          ),
-                                        ),
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            Material(
-                                              color: Colors.transparent,
-                                              child: InkWell(
-                                                  focusColor: Colors.transparent,
-                                                  highlightColor: Colors.transparent,
-                                                  hoverColor: Colors.transparent,
-                                                  borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                                                  splashColor: AppTheme.nearlyDarkBlue.withOpacity(0.2),
-                                                  onTap: () {
-
-                                                  },
-                                                  child:
-                                                  Container(
-                                                    padding: const EdgeInsets.only(top: 0, left: 16, right: 16, bottom: 0),
-                                                    height: 48,
-                                                    child: Row(
-                                                      children: [
-                                                        Container(
-                                                          width:20,
-                                                          height:20,
-                                                          margin: const EdgeInsets.only(top: 0, left: 8, right: 8, bottom: 0),
-                                                          child: Image.asset("assets/fitness_app/evento_like2.png"),
-                                                        ),
-                                                        Text("Me gusta", style: TextStyle( fontSize: 14, color: AppTheme.lightText),),
-                                                      ],
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                            Expanded(child: Container()),
-                                            Material(
-                                              color: Colors.transparent,
-                                              child: InkWell(
-                                                  focusColor: Colors.transparent,
-                                                  highlightColor: Colors.transparent,
-                                                  hoverColor: Colors.transparent,
-                                                  borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                                                  splashColor: AppTheme.nearlyDarkBlue.withOpacity(0.2),
-                                                  onTap: () {
-
-                                                  },
-                                                  child:
-                                                  Container(
-                                                    padding: const EdgeInsets.only(top: 0, left: 16, right: 16, bottom: 0),
-                                                    height: 48,
-                                                    child: Row(
-                                                      children: [
-                                                        Container(
-                                                          width:20,
-                                                          height:20,
-                                                          margin: const EdgeInsets.only(top: 0, left: 8, right: 8, bottom: 0),
-                                                          child: Image.asset("assets/fitness_app/evento_shared.png"),
-                                                        ),
-                                                        Text("Me gusta", style: TextStyle( fontSize: 14, color: AppTheme.lightText),),
-                                                      ],
-                                                    ),
-                                                  )
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ],
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 );

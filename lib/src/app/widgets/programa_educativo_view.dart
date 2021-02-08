@@ -57,7 +57,9 @@ class ProgramaEducativoView extends StatelessWidget {
                                   child: AspectRatio(
                                     aspectRatio: 1.714,
                                     child: Image.asset(
-                                        "assets/fitness_app/back.png"),
+                                        "assets/fitness_app/back_3.png",
+                                      color: Color(0xFFA9BCFA),
+                                    ),
                                   ),
                                 ),
                               ),

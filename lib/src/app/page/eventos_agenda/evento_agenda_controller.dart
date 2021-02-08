@@ -17,6 +17,9 @@ class EventoAgendaController extends Controller{
   String _msgConexion = null;
 
   Timer selectedTipoEventoTimer;
+
+  EventoUi _selectedEventoUi = null;
+  EventoUi get selectedEventoUi => _selectedEventoUi;
   String get msgConexion => _msgConexion;
   List<TipoEventoUi> get tipoEventoList => _tipoEventoList;
   TipoEventoUi _selectedTipoEventoUi;
@@ -148,6 +151,10 @@ class EventoAgendaController extends Controller{
     print("GetEventoAgenda onChagenHijo");
     presenter.onChangeUsuario(_usuarioUi, selectedTipoEventoUi);
     refreshUI();
+  }
+
+  void onClickVerEvento(EventoUi eventoUi) {
+    _selectedEventoUi = eventoUi;
   }
 
 }

@@ -1329,3 +1329,46 @@ Map<String, dynamic> _$AsistenciaRelProgramaTipoNotaSerializableToJson(
       'tipoNotaId': instance.tipoNotaId,
       'estado': instance.estado,
     };
+
+AsistenciaGeneralSerializable _$AsistenciaGeneralSerializableFromJson(
+    Map<String, dynamic> json) {
+  return AsistenciaGeneralSerializable(
+    json['controlAsistenciaId'] as int,
+    json['alumnoId'] as int,
+    json['calendarioPeriodoId'] as int,
+    json['grupoId'] as int,
+    json['periodoId'] as int,
+    json['programaEducativoId'] as int,
+    json['docenteId'] as int,
+    json['georeferenciaId'] as int,
+    json['fechaAsistencia'] as String,
+    json['horaIngreso'] as String,
+    json['horaSalida'] as String,
+    json['estadoIngresoId'] as int,
+    json['estadosIngresoNombre'] as String,
+    json['estadoSalidaId'] as int,
+    json['estadosSalidaNombre'] as String,
+    json['observaciones'] as String,
+  );
+}
+
+Map<String, dynamic> _$AsistenciaGeneralSerializableToJson(
+        AsistenciaGeneralSerializable instance) =>
+    <String, dynamic>{
+      'controlAsistenciaId': instance.controlAsistenciaId,
+      'alumnoId': instance.alumnoId,
+      'calendarioPeriodoId': instance.calendarioPeriodoId,
+      'grupoId': instance.grupoId,
+      'periodoId': instance.periodoId,
+      'programaEducativoId': instance.programaEducativoId,
+      'docenteId': instance.docenteId,
+      'georeferenciaId': instance.georeferenciaId,
+      'fechaAsistencia': instance.fechaAsistencia,
+      'horaIngreso': instance.horaIngreso,
+      'horaSalida': instance.horaSalida,
+      'estadoIngresoId': instance.estadoIngresoId,
+      'estadosIngresoNombre': instance.estadosIngresoNombre,
+      'estadoSalidaId': instance.estadoSalidaId,
+      'estadosSalidaNombre': instance.estadosSalidaNombre,
+      'observaciones': instance.observaciones,
+    };

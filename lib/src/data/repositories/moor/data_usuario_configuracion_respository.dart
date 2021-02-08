@@ -469,7 +469,9 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
       //else{
         //query.where(SQL.evento.tipoEventoId.equals(529));
       //}
-
+      query.orderBy([
+        OrderingTerm(expression: SQL.evento.fechaEventoTime, mode: OrderingMode.desc)
+      ]);
       var rows = await query.get();
       for(var item in  rows){
         EventoData eventoData = item.readTable(SQL.evento);
@@ -579,7 +581,9 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
       if(tipoEventoId>0){
         query.where(SQL.evento.tipoEventoId.equals(tipoEventoId));
       }
-
+      query.orderBy([
+        OrderingTerm(expression: SQL.evento.fechaEventoTime, mode: OrderingMode.desc)
+      ]);
       var rows = await query.get();
       for(var item in  rows){
         EventoData eventoData = item.readTable(SQL.evento);
@@ -629,7 +633,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
         eventoUiList.add(eventoUi);
       }
 
-      eventoUiList.sort((a, b) => a.getFecha().compareTo(b.getFecha()));
+     // eventoUiList.sort((a, b) => a.getFecha().compareTo(b.getFecha()));
       int count = 0;
       int max = 10;
       List<EventoUi> limitList = [];

@@ -3,6 +3,7 @@ import 'package:padre_mentor/src/data/repositories/moor/model/Calendario.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/anio_academico_alumno.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/areas_boleta.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/asistencia_alumnos.dart';
+import 'package:padre_mentor/src/data/repositories/moor/model/asistencia_general.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/aula.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/calendario_acalendario.dart';
 import 'package:padre_mentor/src/data/repositories/moor/model/calendario_periodo.dart';
@@ -40,7 +41,8 @@ part 'app_database.g.dart';
 
 @UseMoor(tables: [Persona, Usuario, SessionUser, Relaciones, AnioAcademicoAlumno, ProgramasEducativo, PlanEstudio, PlanCursos, CargaCurso, DetalleContratoAcad, Contrato, CalendarioAcademico, CalendarioPeriodo, Tipos,
                   AreasBoleta, NotasCalendarioBoleta, ParametrosDisenio, SilaboEvento, RubroEvalDesempenio, WebConfigs, TareaCurso, Evento, Calendario, SessionUserHijo, Contacto, Entidad, Georeferencia, Rol, UsuarioRolGeoreferencia,
-                  Cursos, Aula, Periodos, Seccion, CargaAcademica, NivelAcademico, AsistenciaAlumnos, AsistenciaJustificacion, AsistecniaArchivo, AsistenciaTipoNota, AsistenciaValorTipoNota, AsistenciaRelProgramaTipoNota])
+                  Cursos, Aula, Periodos, Seccion, CargaAcademica, NivelAcademico, AsistenciaAlumnos, AsistenciaJustificacion, AsistecniaArchivo, AsistenciaTipoNota, AsistenciaValorTipoNota, AsistenciaRelProgramaTipoNota,
+                  AsistenciaGeneral])
 class AppDataBase extends _$AppDataBase{
 
   @override
@@ -62,7 +64,7 @@ class AppDataBase extends _$AppDataBase{
   }
 }
 /*
-* Moor integrates with Dart’s build system, so you can generate all the code needed with flutter packages pub run build_runner build.
+* Moor integrates with Dart’s build system, so you can generate all the code needed with |.
 * If you want to continuously rebuild the generated code where you change your code, run flutter packages pub run build_runner watch instead.
 * After running either command once, the moor generator will have created a class for your database and data classes for your entities.
 * To use it, change the MyDatabase class as follows:

@@ -13,6 +13,7 @@ class Evento extends Table{
     IntColumn get georeferenciaId => integer().nullable()();
     TextColumn get fechaEvento  => text().nullable()();
     TextColumn get horaEvento => text().nullable()();
+
     TextColumn get pathImagen => text().nullable()();
     BoolColumn get envioPersonalizado => boolean().nullable()();
     TextColumn get tipoEventoNombre => text().nullable()();
@@ -23,6 +24,8 @@ class Evento extends Table{
     TextColumn get nombreEntidad  => text().nullable()();
     TextColumn get fotoEntidad => text().nullable()();
     TextColumn get nombreEntidadSiglas => text().nullable()();
+
+    DateTimeColumn get fechaEventoTime => dateTime().nullable()();
     @override
     Set<Column> get primaryKey => {eventoId};
 }

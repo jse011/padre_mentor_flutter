@@ -94,9 +94,6 @@ class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionControlle
         children: <Widget>[
           getMainTab(),
           getAppBarUI(),
-          SizedBox(
-            height: MediaQuery.of(context).padding.bottom,
-          )
         ],
       ),
     ),

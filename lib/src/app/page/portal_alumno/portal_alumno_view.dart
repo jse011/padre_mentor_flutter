@@ -7,9 +7,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:padre_mentor/src/app/page/asistencia/asistencia_router.dart';
 import 'package:padre_mentor/src/app/page/boleta_notas/boleta_notas_router.dart';
+import 'package:padre_mentor/src/app/page/comportamiento/comportamiento_router.dart';
 import 'package:padre_mentor/src/app/page/cursos/cursos_router.dart';
 import 'package:padre_mentor/src/app/page/estado_cuenta/estado_cuenta_router.dart';
 import 'package:padre_mentor/src/app/page/evaluacion/evaluacion_router.dart';
+import 'package:padre_mentor/src/app/page/horarios/horarios_router.dart';
+import 'package:padre_mentor/src/app/page/informacion_evento_agenda/informacion_evento_agenda_view.dart';
 import 'package:padre_mentor/src/app/page/portal_alumno/portal_alumno_controller.dart';
 import 'package:padre_mentor/src/app/page/tarea_evaluacion/tarea_evaluacion_router.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
@@ -297,19 +300,26 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                                   foto = null;
                                 }
 
-                                return  WorkoutView(
-                                  animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-                                      parent: widget.animationController,
-                                      curve:
-                                      Interval((1 / countView) * 2, 1.0, curve: Curves.fastOutSlowIn))),
-                                  animationController: widget.animationController,
-                                  titulo1: item.nombreEmisor,
-                                  titulo2: item.titulo,
-                                  subTitulo: item.rolEmisor,
-                                  foto: foto,
-                                  colors1: Colors.black,
-                                  colors2: color,
+                                return InkWell(
+                                  onTap: (){
+                                    if(item!=null)Navigator.of(context).push(InformacionEventoAgendaView.createRouteAgenda(item));
+                                  },
+                                  child: WorkoutView(
+                                    animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                        parent: widget.animationController,
+                                        curve:
+                                        Interval((1 / countView) * 2, 1.0, curve: Curves.fastOutSlowIn))),
+                                    animationController: widget.animationController,
+                                    titulo1: item.nombreEmisor,
+                                    titulo2: item.titulo,
+                                    subTitulo: item.rolEmisor,
+                                    foto: foto,
+                                    colors1: Colors.black,
+                                    colors2: color,
+                                  ),
                                 );
+
+
                               }).toList(),
                             )
                         ),
@@ -422,7 +432,7 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                               onTap: () {
                                 var programaEducativo = controller.programaEducativoSelected;
                                 if(programaEducativo!=null){
-                                  Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
+                                  Navigator.of(context).push(ComportamientoRouter.createRouteComportamiento(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
                                 }
                               },
                             ),
@@ -437,7 +447,7 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                               onTap: () {
                                 var programaEducativo = controller.programaEducativoSelected;
                                 if(programaEducativo!=null){
-                                  Navigator.of(context).push(BoletaNotasRouter.createRouteBoletaNotas(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
+                                  Navigator.of(context).push(HorariosRouter.createRouteHorarios(programaAcademicoId: programaEducativo.programaId, alumnoId: programaEducativo.hijoId, anioAcademico: programaEducativo.anioAcademicoId, fotoAlumno: programaEducativo.fotoHijo));
                                 }
                               },
                             ),

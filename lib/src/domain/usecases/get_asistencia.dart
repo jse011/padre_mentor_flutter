@@ -23,16 +23,16 @@ class GetAsistencia extends UseCase<GetAsistenciaResponse, GetAsistenciaParamete
     bool offlineServidor = false;
     bool errorServidor = false;
 
-    //try{
+    try{
       String urlServidorLocal = await usuaConfRepository.getSessionUsuarioUrlServidor();
       Map<String, dynamic> datosEvaluaciones = await httprepository.getEvaluacionAlumno(urlServidorLocal, params.anioAcademicoId, params.programaId, params.calendarioPeridoId, params.alumnoId);
       errorServidor = datosEvaluaciones==null;
       if(!errorServidor){
         await cursoRepository.saveAsistencia(datosEvaluaciones, params.anioAcademicoId, params.programaId, params.calendarioPeridoId, params.alumnoId);
       }
-    //}catch(e){
-      //offlineServidor = true;
-   // }
+    }catch(e){
+      offlineServidor = true;
+   }
 
 
     try {
@@ -45,6 +45,8 @@ class GetAsistencia extends UseCase<GetAsistenciaResponse, GetAsistenciaParamete
           porcentaje+=asistenciaTipoUi.porcentaje;
           cantidad += asistenciaTipoUi.cantidad;
       }
+      porcentaje = porcentaje.round();
+      cantidad = cantidad.round();
 
       for(AsistenciaUi rubroEvalItem in asistenciaAlumnoList){
         CursoUi cursoUi = rubroEvalItem.cursoUi;

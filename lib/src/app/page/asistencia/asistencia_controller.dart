@@ -1,6 +1,7 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:padre_mentor/src/app/page/asistencia/asistencia_presenter.dart';
 import 'package:padre_mentor/src/domain/entities/asistencia_tipo_ui.dart';
+import 'package:padre_mentor/src/domain/entities/asistencia_ui.dart';
 import 'package:padre_mentor/src/domain/entities/calendario_periodio_ui.dart';
 
 class AsistenciaController extends Controller{
@@ -17,14 +18,26 @@ class AsistenciaController extends Controller{
   CalendarioPeriodoUI get calendarioPeriodoUI => _calendarioPeriodoUI;
   List<dynamic> _asistenciaAlumnoList = [];
   List<dynamic> get aistenicaAlumnoList => _asistenciaAlumnoList;
-  bool _isLoading = false;
-  get isLoading => _isLoading;
+  bool _isLoadingCurso = false;
+  get isLoadingCurso => _isLoadingCurso;
+  bool _isLoadingGeneral = false;
+  get isLoadingGeneral => _isLoadingGeneral;
   String _msgConexion = null;
   String get msgConexion => _msgConexion;
   int _porcentaje = 0;
   int get porcentaje => _porcentaje;
   int _cantidad = 0;
   int get cantidad => _cantidad;
+
+  List<AsistenciaUi> _asistenciaGeneralList = [];
+  List<AsistenciaUi> get asistenciaGeneralList => _asistenciaGeneralList;
+  int _porcentajeGeneral = 0;
+  int get porcentajeGeneral => _porcentajeGeneral;
+  int _cantidadGeneral = 0;
+  int get cantidadGeneral => _cantidadGeneral;
+  List<AsistenciaTipoUi> _asistenciaTipoGeneralList = [];
+  List<AsistenciaTipoUi> get asistenciaTipoGeneralList => _asistenciaTipoGeneralList;
+
 
   AsistenciaController(this.alumnoId, this.programaAcademicoId, this.anioAcademicoId, this.fotoAlumno, usuarioConfigRepo, cursoRepo, httpDatosRepo): presenter = AsistenciaPresenter(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno, cursoRepo, httpDatosRepo, usuarioConfigRepo), super();
 
@@ -41,6 +54,7 @@ class AsistenciaController extends Controller{
     };
     presenter.getCalendarioPeridoOnComplete = (){
       presenter.getEvaluacion(_calendarioPeriodoUI);
+      presenter.getEvaluacionGeneral(_calendarioPeriodoUI);
     };
 
     presenter.getAsistenciaOnError = (e){
@@ -48,7 +62,7 @@ class AsistenciaController extends Controller{
       _asistenciaTipoList = [];
       _porcentaje = 0;
       _cantidad = 0;
-          hideProgress();
+      hideProgressCurso();
       refreshUI();
     };
 
@@ -59,11 +73,35 @@ class AsistenciaController extends Controller{
       _cantidad = cantidad;
       _msgConexion = errorServidor? "!Oops! Al parecer ocurrió un error involuntario.":null;
       _msgConexion = offlineServidor? "No hay Conexión a Internet...":null;
-      hideProgress();
+      hideProgressCurso();
       refreshUI();
     };
 
     presenter.getAsistenciaOnComplete = (){
+
+    };
+
+    presenter.getAsistenciaGeneralOnError = (e){
+      _asistenciaGeneralList = [];
+      _asistenciaTipoGeneralList = [];
+      _porcentajeGeneral = 0;
+      _cantidadGeneral = 0;
+      hideProgressGeneral();
+      refreshUI();
+    };
+
+    presenter.getAsistenciaGeneralOnNext = (List<AsistenciaUi> items,  List<AsistenciaTipoUi> asistenciaTipoList, int porcentaje, int cantidad, bool errorServidor, bool offlineServidor){
+      _asistenciaGeneralList = items;
+      _asistenciaTipoGeneralList = asistenciaTipoList;
+      _porcentajeGeneral = porcentaje;
+      _cantidadGeneral = cantidad;
+      _msgConexion = errorServidor? "!Oops! Al parecer ocurrió un error involuntario.":null;
+      _msgConexion = offlineServidor? "No hay Conexión a Internet...":null;
+      hideProgressGeneral();
+      refreshUI();
+    };
+
+    presenter.getAsistenciaGeneralOnComplete = (){
 
     };
   }
@@ -71,7 +109,8 @@ class AsistenciaController extends Controller{
   @override
   void onInitState() {
     super.onInitState();
-    showProgress();
+    showProgressCurso();
+    showProgressGeneral();
     presenter.getCalendarioPerido();
   }
 
@@ -81,17 +120,27 @@ class AsistenciaController extends Controller{
       item.selected = false;
     }
     calendarioPeriodoUI.selected = true;
-    showProgress();
+    showProgressGeneral();
+    showProgressCurso();
     presenter.getEvaluacion(calendarioPeriodoUi);
+    presenter.getEvaluacionGeneral(calendarioPeriodoUi);
     refreshUI();
   }
 
-  void showProgress(){
-    _isLoading = true;
+  void showProgressCurso(){
+    _isLoadingCurso = true;
   }
 
-  void hideProgress(){
-    _isLoading = false;
+  void hideProgressCurso(){
+    _isLoadingCurso = false;
+  }
+
+  void showProgressGeneral(){
+    _isLoadingGeneral = true;
+  }
+
+  void hideProgressGeneral(){
+    _isLoadingGeneral = false;
   }
 
   void successMsg() {

@@ -110,7 +110,7 @@ class DataCursoRepository extends CursoRepository{
 
         for (var data in rows) {
           NotasCalendarioBoletaData notasCalendarioBoletaData = data.readTable(SQL.notasCalendarioBoleta);
-            await (SQL.delete(SQL.notasCalendarioBoleta).delete(notasCalendarioBoletaData));
+          await (SQL.delete(SQL.notasCalendarioBoleta).delete(notasCalendarioBoletaData));
         }
 
         var query =  await SQL.select(SQL.areasBoleta)..where((tbl) => tbl.calendarioPeriodoId.equals(calendarioPeridoId));
@@ -320,16 +320,16 @@ class DataCursoRepository extends CursoRepository{
     print("getBoletaNotas" );
     AppDataBase SQL = AppDataBase();
     try{
-    var queryContrato =  await SQL.selectSingle(SQL.contrato)..where((tbl) => tbl.personaId.equals(alumnoId));
-    queryContrato.where((tbl) => tbl.estadoId.equals(190));
-    queryContrato.where((tbl) => tbl.idAnioAcademico.equals(anioAcademicoId));
-    ContratoData contratoData = await queryContrato.getSingle();
+      var queryContrato =  await SQL.selectSingle(SQL.contrato)..where((tbl) => tbl.personaId.equals(alumnoId));
+      queryContrato.where((tbl) => tbl.estadoId.equals(190));
+      queryContrato.where((tbl) => tbl.idAnioAcademico.equals(anioAcademicoId));
+      ContratoData contratoData = await queryContrato.getSingle();
 
-    int contratoId = contratoData!=null?contratoData.idContrato:0;
-    int periodoId = contratoData!=null?contratoData.periodoId:0;
-    int seccionId = contratoData!=null?contratoData.seccionId:0;
+      int contratoId = contratoData!=null?contratoData.idContrato:0;
+      int periodoId = contratoData!=null?contratoData.periodoId:0;
+      int seccionId = contratoData!=null?contratoData.seccionId:0;
 
-    return ContratoUi(id: contratoId, periodoId: periodoId, seccionId: seccionId);
+      return ContratoUi(id: contratoId, periodoId: periodoId, seccionId: seccionId);
     }catch(e){
       throw Exception(e);
     }
@@ -355,8 +355,8 @@ class DataCursoRepository extends CursoRepository{
       await SQL.batch((batch) async {
         // functions in a batch don't have to be awaited - just
         // await the whole batch afterwards.
-          //rubroEvalList.add(SerializableConvert.converSerializeRubroEvalDesempenio(item));
-          batch.insertAll(SQL.rubroEvalDesempenio, SerializableConvert.converListSerializeRubroEvalDesempenio(datosEvaluaciones["evaluaciones"]), mode: InsertMode.insertOrReplace );
+        //rubroEvalList.add(SerializableConvert.converSerializeRubroEvalDesempenio(item));
+        batch.insertAll(SQL.rubroEvalDesempenio, SerializableConvert.converListSerializeRubroEvalDesempenio(datosEvaluaciones["evaluaciones"]), mode: InsertMode.insertOrReplace );
 
       });
     }catch(e){
@@ -390,7 +390,7 @@ class DataCursoRepository extends CursoRepository{
 
       ParametrosDisenioData defaultParametrosDisenioData = await (SQL.selectSingle(SQL.parametrosDisenio)..where((tbl) => tbl.nombre.equals("default"))).getSingle();
 
-       Future.forEach(rows, (item) {
+      Future.forEach(rows, (item) {
         RubroEvalDesempenioData rubroEvalDesempenioData = item.readTable(SQL.rubroEvalDesempenio);
         ParametrosDisenioData parametrosDisenioData = item.readTable(SQL.parametrosDisenio);
         RubroEvaluacionUi rubroEvaluacionUi = RubroEvaluacionUi();
@@ -615,68 +615,68 @@ class DataCursoRepository extends CursoRepository{
   Future<List<CursoUi>> getCursos(int programaAcademicoId, int alumnoId, int anioAcademico) async{
     AppDataBase SQL = AppDataBase();
     try{
-     var query = SQL.select(SQL.cargaCurso).join([
-       innerJoin(SQL.detalleContratoAcad, SQL.cargaCurso.cargaCursoId.equalsExp(SQL.detalleContratoAcad.cargaCursoId)),
-       innerJoin(SQL.contrato, SQL.contrato.idContrato.equalsExp(SQL.detalleContratoAcad.idContrato)),
-       innerJoin(SQL.planCursos, SQL.cargaCurso.planCursoId.equalsExp(SQL.planCursos.planCursoId)),
-       innerJoin(SQL.planEstudio, SQL.planCursos.planEstudiosId.equalsExp(SQL.planEstudio.planEstudiosId)),
-       innerJoin(SQL.programasEducativo, SQL.planEstudio.programaEduId.equalsExp(SQL.programasEducativo.programaEduId)),
-       innerJoin(SQL.silaboEvento, SQL.cargaCurso.cargaCursoId.equalsExp(SQL.silaboEvento.cargaCursoId)),
-       innerJoin(SQL.cursos, SQL.cursos.cursoId.equalsExp(SQL.planCursos.cursoId)),
-       innerJoin(SQL.cargaAcademica, SQL.cargaCurso.cargaAcademicaId.equalsExp(SQL.cargaAcademica.cargaAcademicaId)),
-       innerJoin(SQL.aula, SQL.cargaAcademica.aulaId.equalsExp(SQL.aula.aulaId)),
-       innerJoin(SQL.seccion, SQL.cargaAcademica.seccionId.equalsExp(SQL.seccion.seccionId)),
-       innerJoin(SQL.periodos, SQL.cargaAcademica.periodoId.equalsExp(SQL.periodos.periodoId)),
-       innerJoin(SQL.nivelAcademico, SQL.programasEducativo.nivelAcadId.equalsExp(SQL.nivelAcademico.nivelAcadId)),
-       leftOuterJoin(SQL.parametrosDisenio, SQL.silaboEvento.parametroDisenioId.equalsExp(SQL.parametrosDisenio.parametroDisenioId))
-     ]);
+      var query = SQL.select(SQL.cargaCurso).join([
+        innerJoin(SQL.detalleContratoAcad, SQL.cargaCurso.cargaCursoId.equalsExp(SQL.detalleContratoAcad.cargaCursoId)),
+        innerJoin(SQL.contrato, SQL.contrato.idContrato.equalsExp(SQL.detalleContratoAcad.idContrato)),
+        innerJoin(SQL.planCursos, SQL.cargaCurso.planCursoId.equalsExp(SQL.planCursos.planCursoId)),
+        innerJoin(SQL.planEstudio, SQL.planCursos.planEstudiosId.equalsExp(SQL.planEstudio.planEstudiosId)),
+        innerJoin(SQL.programasEducativo, SQL.planEstudio.programaEduId.equalsExp(SQL.programasEducativo.programaEduId)),
+        innerJoin(SQL.silaboEvento, SQL.cargaCurso.cargaCursoId.equalsExp(SQL.silaboEvento.cargaCursoId)),
+        innerJoin(SQL.cursos, SQL.cursos.cursoId.equalsExp(SQL.planCursos.cursoId)),
+        innerJoin(SQL.cargaAcademica, SQL.cargaCurso.cargaAcademicaId.equalsExp(SQL.cargaAcademica.cargaAcademicaId)),
+        innerJoin(SQL.aula, SQL.cargaAcademica.aulaId.equalsExp(SQL.aula.aulaId)),
+        innerJoin(SQL.seccion, SQL.cargaAcademica.seccionId.equalsExp(SQL.seccion.seccionId)),
+        innerJoin(SQL.periodos, SQL.cargaAcademica.periodoId.equalsExp(SQL.periodos.periodoId)),
+        innerJoin(SQL.nivelAcademico, SQL.programasEducativo.nivelAcadId.equalsExp(SQL.nivelAcademico.nivelAcadId)),
+        leftOuterJoin(SQL.parametrosDisenio, SQL.silaboEvento.parametroDisenioId.equalsExp(SQL.parametrosDisenio.parametroDisenioId))
+      ]);
 
-     query.where(SQL.contrato.personaId.equals(alumnoId));
-     query.where(SQL.detalleContratoAcad.anioAcademicoId.equals(anioAcademico));
-     query.where(SQL.silaboEvento.estadoId.isNotIn([243]));
-     query.where(SQL.programasEducativo.programaEduId.equals(programaAcademicoId));
-     query.where(SQL.cursos.tipoConceptoId.equals(495));
-     query.where(SQL.contrato.estadoId.equals(190));
-     query.groupBy([SQL.silaboEvento.silaboEventoId]);
-     var rows = await query.get();
+      query.where(SQL.contrato.personaId.equals(alumnoId));
+      query.where(SQL.detalleContratoAcad.anioAcademicoId.equals(anioAcademico));
+      query.where(SQL.silaboEvento.estadoId.isNotIn([243]));
+      query.where(SQL.programasEducativo.programaEduId.equals(programaAcademicoId));
+      query.where(SQL.cursos.tipoConceptoId.equals(495));
+      query.where(SQL.contrato.estadoId.equals(190));
+      query.groupBy([SQL.silaboEvento.silaboEventoId]);
+      var rows = await query.get();
 
-     ParametrosDisenioData defaultParametrosDisenioData = await (SQL.selectSingle(SQL.parametrosDisenio)..where((tbl) => tbl.nombre.equals("default"))).getSingle();
-     List<CursoUi> cursoUiList = [];
-     for(var data in rows){
-       CursoUi cursoUi = CursoUi();
-       Curso curso = data.readTable(SQL.cursos);
-       CargaCursoData cargaCursoData = data.readTable(SQL.cargaCurso);
-       ParametrosDisenioData parametrosDisenioData = data.readTable(SQL.parametrosDisenio);
-       SeccionData seccionData = data.readTable(SQL.seccion);
-       Periodo periodoData = data.readTable(SQL.periodos);
-       AulaData aulaData = data.readTable(SQL.aula);
-       NivelAcademicoData nivelAcademicoData = data.readTable(SQL.nivelAcademico);
+      ParametrosDisenioData defaultParametrosDisenioData = await (SQL.selectSingle(SQL.parametrosDisenio)..where((tbl) => tbl.nombre.equals("default"))).getSingle();
+      List<CursoUi> cursoUiList = [];
+      for(var data in rows){
+        CursoUi cursoUi = CursoUi();
+        Curso curso = data.readTable(SQL.cursos);
+        CargaCursoData cargaCursoData = data.readTable(SQL.cargaCurso);
+        ParametrosDisenioData parametrosDisenioData = data.readTable(SQL.parametrosDisenio);
+        SeccionData seccionData = data.readTable(SQL.seccion);
+        Periodo periodoData = data.readTable(SQL.periodos);
+        AulaData aulaData = data.readTable(SQL.aula);
+        NivelAcademicoData nivelAcademicoData = data.readTable(SQL.nivelAcademico);
 
-       cursoUi.nombre = curso?.nombre;
-       cursoUi.nombreDocente = AppTools.capitalize(cargaCursoData.nombreDocente);
-       cursoUi.fotoDocente = cargaCursoData.fotoDocente;
-       cursoUi.seccion = seccionData.nombre;
-       cursoUi.grado = periodoData.aliasPeriodo;
-       cursoUi.nivelAcademico = nivelAcademicoData.nombre;
-       cursoUi.salon = aulaData.descripcion+ ": " + aulaData.numero;
+        cursoUi.nombre = curso?.nombre;
+        cursoUi.nombreDocente = AppTools.capitalize(cargaCursoData.nombreDocente);
+        cursoUi.fotoDocente = cargaCursoData.fotoDocente;
+        cursoUi.seccion = seccionData.nombre;
+        cursoUi.grado = periodoData.aliasPeriodo;
+        cursoUi.nivelAcademico = nivelAcademicoData.nombre;
+        cursoUi.salon = aulaData.descripcion+ ": " + aulaData.numero;
 
-       if(parametrosDisenioData!=null){
-         cursoUi.colorCurso = parametrosDisenioData.color1;
-         cursoUi.colorCurso2 = parametrosDisenioData.color2;
-         cursoUi.colorCurso3 = parametrosDisenioData.color3;
-         cursoUi.imagenCurso = parametrosDisenioData.path;
-       }else{
-         if(defaultParametrosDisenioData!=null){
-           cursoUi.colorCurso = defaultParametrosDisenioData.color1;
-           cursoUi.colorCurso2 = defaultParametrosDisenioData.color2;
-           cursoUi.colorCurso3 = defaultParametrosDisenioData.color3;
-           cursoUi.imagenCurso = parametrosDisenioData.path;
-         }
-       }
-       cursoUiList.add(cursoUi);
-     }
+        if(parametrosDisenioData!=null){
+          cursoUi.colorCurso = parametrosDisenioData.color1;
+          cursoUi.colorCurso2 = parametrosDisenioData.color2;
+          cursoUi.colorCurso3 = parametrosDisenioData.color3;
+          cursoUi.imagenCurso = parametrosDisenioData.path;
+        }else{
+          if(defaultParametrosDisenioData!=null){
+            cursoUi.colorCurso = defaultParametrosDisenioData.color1;
+            cursoUi.colorCurso2 = defaultParametrosDisenioData.color2;
+            cursoUi.colorCurso3 = defaultParametrosDisenioData.color3;
+            cursoUi.imagenCurso = parametrosDisenioData.path;
+          }
+        }
+        cursoUiList.add(cursoUi);
+      }
 
-     return cursoUiList;
+      return cursoUiList;
     }catch(e){
       throw Exception(e);
     }
@@ -686,19 +686,47 @@ class DataCursoRepository extends CursoRepository{
   Future<void> saveAsistencia(Map<String, dynamic> datosAsistencia, int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId) async {
     AppDataBase SQL = AppDataBase();
     try{
-/*
+
       await SQL.transaction(() async {
-        var query = SQL.select(SQL.rubroEvalDesempenio)..where((tbl) =>  tbl.anioAcademicoId.equals(anioAcademicoId));
-        query.where((tbl) => tbl.programaAcadId.equals(programaId));
-        query.where((tbl) => tbl.calendarioPeriodoId.equals(calendarioPeridoId));
-        query.where((tbl) => tbl.alumnoId.equals(alumnoId));
+        var query = SQL.select(SQL.asistenciaAlumnos).join([
+          leftOuterJoin(SQL.asistenciaJustificacion, SQL.asistenciaJustificacion.asistenciaSesionId.equalsExp(SQL.asistenciaAlumnos.asistenciaSesionId)),
+          leftOuterJoin(SQL.asistecniaArchivo, SQL.asistecniaArchivo.justificacionId.equalsExp(SQL.asistenciaJustificacion.justificacionId)),
+        ]);
+
+        query.where(SQL.asistenciaAlumnos.anioAcademicoId.equals(anioAcademicoId));
+        query.where(SQL.asistenciaAlumnos.programaAcadId.equals(programaId));
+        query.where(SQL.asistenciaAlumnos.calendarioPeriodoId.equals(calendarioPeridoId));
+        query.where(SQL.asistenciaAlumnos.alumnoId.equals(alumnoId));
 
         var rows = await query.get();
         print("saveEvaluaciones cantidad : "+rows.length.toString());
-        for (RubroEvalDesempenioData row in rows) {
-          await (SQL.delete(SQL.rubroEvalDesempenio).delete(row));
+        for (var row in rows) {
+          AsistenciaAlumno asistenciaAlumno = row.readTable(SQL.asistenciaAlumnos);
+          await (SQL.delete(SQL.asistenciaAlumnos).delete(asistenciaAlumno));
+          AsistenciaJustificacionData asistenciaJustificacionData = row.readTable(SQL.asistenciaJustificacion);
+          if(asistenciaJustificacionData!=null){
+            await (SQL.delete(SQL.asistenciaJustificacion).delete(asistenciaJustificacionData));
+          }
+          AsistecniaArchivoData asistecniaArchivoData = row.readTable(SQL.asistecniaArchivo);
+          if(asistecniaArchivoData!=null){
+            await (SQL.delete(SQL.asistecniaArchivo).delete(asistecniaArchivoData));
+          }
         }
-      });*/
+
+        var queryNota = SQL.select(SQL.asistenciaTipoNota).join([
+          innerJoin(SQL.asistenciaRelProgramaTipoNota, SQL.asistenciaTipoNota.tipoNotaId.equalsExp(SQL.asistenciaRelProgramaTipoNota.tipoNotaId)),
+        ]);
+        var rowsNota = await queryNota.get();
+        for (var row in rowsNota) {
+          AsistenciaTipoNotaData asistenciaTipoNotaData = row.readTable(SQL.asistenciaTipoNota);
+          await (SQL.delete(SQL.asistenciaTipoNota).delete(asistenciaTipoNotaData));
+          AsistenciaRelProgramaTipoNotaData asistenciaRelProgramaTipoNotaData = row.readTable(SQL.asistenciaRelProgramaTipoNota);
+          await (SQL.delete(SQL.asistenciaRelProgramaTipoNota).delete(asistenciaRelProgramaTipoNotaData));
+          await (SQL.delete(SQL.asistenciaValorTipoNota)..where((tbl) => tbl.tipoNotaId.equals(asistenciaTipoNotaData.tipoNotaId))).go();
+
+        }
+
+      });
 
       await SQL.batch((batch) async {
         if(datosAsistencia.containsKey("asistenciaAlumnos")){
@@ -708,19 +736,19 @@ class DataCursoRepository extends CursoRepository{
         }
 
         if(datosAsistencia.containsKey("justificacion")){
-         batch.insertAll(SQL.asistenciaJustificacion, SerializableConvert.converListSerializeAsistenciaJustificacion(datosAsistencia["justificacion"]), mode: InsertMode.insertOrReplace );
+          batch.insertAll(SQL.asistenciaJustificacion, SerializableConvert.converListSerializeAsistenciaJustificacion(datosAsistencia["justificacion"]), mode: InsertMode.insertOrReplace );
         }
 
         if(datosAsistencia.containsKey("archivoAsistencia")){
-         batch.insertAll(SQL.asistecniaArchivo, SerializableConvert.converListSerializeAsistecniaArchivo(datosAsistencia["archivoAsistencia"]), mode: InsertMode.insertOrReplace );
+          batch.insertAll(SQL.asistecniaArchivo, SerializableConvert.converListSerializeAsistecniaArchivo(datosAsistencia["archivoAsistencia"]), mode: InsertMode.insertOrReplace );
         }
 
         if(datosAsistencia.containsKey("tipoNota")){
-         batch.insertAll(SQL.asistenciaTipoNota, SerializableConvert.converListSerializeAsistenciaTipoNota(datosAsistencia["tipoNota"]), mode: InsertMode.insertOrReplace );
+          batch.insertAll(SQL.asistenciaTipoNota, SerializableConvert.converListSerializeAsistenciaTipoNota(datosAsistencia["tipoNota"]), mode: InsertMode.insertOrReplace );
         }
 
         if(datosAsistencia.containsKey("valorTipoNota")){
-         batch.insertAll(SQL.asistenciaValorTipoNota, SerializableConvert.converListSerializeAsistenciaValorTipoNota(datosAsistencia["valorTipoNota"]), mode: InsertMode.insertOrReplace );
+          batch.insertAll(SQL.asistenciaValorTipoNota, SerializableConvert.converListSerializeAsistenciaValorTipoNota(datosAsistencia["valorTipoNota"]), mode: InsertMode.insertOrReplace );
         }
 
         if(datosAsistencia.containsKey("relProgramaEducativoTipoNota")){
@@ -755,7 +783,7 @@ class DataCursoRepository extends CursoRepository{
       query.where(SQL.asistenciaAlumnos.programaAcadId.equals(programaId));
       query.where(SQL.asistenciaAlumnos.calendarioPeriodoId.equals(calendarioPeridoId));
       query.where(SQL.asistenciaAlumnos.alumnoId.equals(alumnoId));
-      query.orderBy([OrderingTerm(expression: SQL.asistenciaAlumnos.silaboEventoId)]);
+      query.orderBy([OrderingTerm(expression: SQL.asistenciaAlumnos.silaboEventoId), OrderingTerm(expression: SQL.asistenciaAlumnos.fechaAsistenciaTime)]);
       //query.where(SQL.evaluacionDesempenio.secRubroEvalProcesoId.equals(""));
       var rows = await query.get();
 
@@ -775,26 +803,26 @@ class DataCursoRepository extends CursoRepository{
         asistenciaUi.fecha = AppTools.f_fecha_letras(asistenciaAlumnoData.fechaAsistenciaTime);
         if(asistenciaValorTipoNotaData!=null){
           AsistenciaEstadoEnumUi asistenciaEstadoEnumUi;
-         switch(asistenciaValorTipoNotaData.estadoId){
-           case 285://Puntual
+          switch(asistenciaValorTipoNotaData.estadoId){
+            case 285://Puntual
               asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.PUNTUAL;
-             break;
-           case 286://TARDE
-             asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.TARDE;
-             break;
-           case 287://AUSENTE
-             asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.AUSENTE;
-             break;
-           case 288://TARDE_JDT
-             asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.TARDE_JDT;
-             break;
-           case 289://AUSENTE_JDT
-             asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.AUSENTE_JDT;
-             break;
-           default:
-             asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.TARDE;
-             break;
-         }
+              break;
+            case 286://TARDE
+              asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.TARDE;
+              break;
+            case 287://AUSENTE
+              asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.AUSENTE;
+              break;
+            case 288://TARDE_JDT
+              asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.TARDE_JDT;
+              break;
+            case 289://AUSENTE_JDT
+              asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.AUSENTE_JDT;
+              break;
+            default:
+              asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.TARDE;
+              break;
+          }
           AsistenciaTipoUi asistenciaTipoUi = AsistenciaTipoUi(valorTipoNotaId: asistenciaValorTipoNotaData.valorTipoNotaId, nombre: asistenciaValorTipoNotaData.tipoNotaAlias, logo: asistenciaValorTipoNotaData.icono, estado: asistenciaEstadoEnumUi);
           asistenciaUi.asistenciaTipoUi = asistenciaTipoUi;
         }
@@ -875,85 +903,288 @@ class DataCursoRepository extends CursoRepository{
         innerJoin(SQL.asistenciaTipoNota, SQL.asistenciaTipoNota.tipoNotaId.equalsExp(SQL.asistenciaValorTipoNota.tipoNotaId)),
         innerJoin(SQL.asistenciaRelProgramaTipoNota, SQL.asistenciaRelProgramaTipoNota.tipoNotaId.equalsExp(SQL.asistenciaTipoNota.tipoNotaId)),
       ]);
-      
+
       queryTipoNota.where(SQL.asistenciaRelProgramaTipoNota.programaEducativoId.equals(programaId));
       queryTipoNota.where(SQL.asistenciaTipoNota.tipoId.equals(474));
       queryTipoNota.where(SQL.asistenciaRelProgramaTipoNota.estado.equals(true));
+      query.orderBy([OrderingTerm(expression: SQL.asistenciaValorTipoNota.estadoId)]);
       var rowsTipoNota = await queryTipoNota.get();
 
       List<AsistenciaTipoUi> asistenciaTipoUiList = [];
       for(var row in rowsTipoNota){
-         AsistenciaTipoNotaData asistenciaTipoNotaData = row.readTable(SQL.asistenciaTipoNota);
+        AsistenciaTipoNotaData asistenciaTipoNotaData = row.readTable(SQL.asistenciaTipoNota);
         AsistenciaValorTipoNotaData asistenciaValorTipoNotaData = row.readTable(SQL.asistenciaValorTipoNota);
-         AsistenciaTipoUi asistenciaTipoUi = AsistenciaTipoUi();
-         switch(asistenciaValorTipoNotaData.estadoId){
-           case 285://Puntual
-             asistenciaTipoUi.alias = "P";
-             asistenciaTipoUi.cantidad = p;
-             if(cantidad!=0)asistenciaTipoUi.porcentaje  = (p * 100 / cantidad).toInt();
-             break;
-           case 286://TARDE
-             asistenciaTipoUi.alias = "T";
-             asistenciaTipoUi.cantidad = t;
-             if(cantidad!=0)asistenciaTipoUi.porcentaje  = (t * 100 / cantidad).toInt();
-             break;
-           case 287://AUSENTE
-             asistenciaTipoUi.alias = "A";
-             asistenciaTipoUi.cantidad = a;
-             if(cantidad!=0)asistenciaTipoUi.porcentaje  = (a * 100 / cantidad).toInt();
-             break;
-           case 288://TARDE_JDT
-             asistenciaTipoUi.alias = "TJ";
-             asistenciaTipoUi.cantidad = tj;
-             if(cantidad!=0)asistenciaTipoUi.porcentaje  = (tj * 100 / cantidad).toInt();
-             break;
-           case 289://AUSENTE_JDT
-             asistenciaTipoUi.alias = "AJ";
-             asistenciaTipoUi.cantidad = aj;
-             if(cantidad!=0)asistenciaTipoUi.porcentaje  = (aj * 100 / cantidad).toInt();
-             break;
-           default:
-             asistenciaTipoUi.alias = "";
-             asistenciaTipoUi.cantidad = 0;
-             if(cantidad!=0)asistenciaTipoUi.porcentaje  = 0;
-             break;
-         }
+        AsistenciaTipoUi asistenciaTipoUi = AsistenciaTipoUi();
+        switch(asistenciaValorTipoNotaData.estadoId){
+          case 285://Puntual
+            asistenciaTipoUi.alias = "P";
+            asistenciaTipoUi.cantidad = p;
+            if(cantidad!=0)asistenciaTipoUi.porcentaje  = (p * 100 / cantidad).toInt();
+            break;
+          case 286://TARDE
+            asistenciaTipoUi.alias = "T";
+            asistenciaTipoUi.cantidad = t;
+            if(cantidad!=0)asistenciaTipoUi.porcentaje  = (t * 100 / cantidad).round().toInt();
+            break;
+          case 287://AUSENTE
+            asistenciaTipoUi.alias = "A";
+            asistenciaTipoUi.cantidad = a;
+            if(cantidad!=0)asistenciaTipoUi.porcentaje  = (a * 100 / cantidad).round().toInt();
+            break;
+          case 288://TARDE_JDT
+            asistenciaTipoUi.alias = "TJ";
+            asistenciaTipoUi.cantidad = tj;
+            if(cantidad!=0)asistenciaTipoUi.porcentaje  = (tj * 100 / cantidad).round().toInt();
+            break;
+          case 289://AUSENTE_JDT
+            asistenciaTipoUi.alias = "AJ";
+            asistenciaTipoUi.cantidad = aj;
+            if(cantidad!=0)asistenciaTipoUi.porcentaje  = (aj * 100 / cantidad).round().toInt();
+            break;
+          default:
+            asistenciaTipoUi.alias = "";
+            asistenciaTipoUi.cantidad = 0;
+            if(cantidad!=0)asistenciaTipoUi.porcentaje  = 0;
+            break;
+        }
 
-         AsistenciaEstadoEnumUi asistenciaEstadoEnumUi;
-         switch(asistenciaValorTipoNotaData.estadoId){
-           case 285://Puntual
-             asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.PUNTUAL;
-             break;
-           case 286://TARDE
-             asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.TARDE;
-             break;
-           case 287://AUSENTE
-             asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.AUSENTE;
-             break;
-           case 288://TARDE_JDT
-             asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.TARDE_JDT;
-             break;
-           case 289://AUSENTE_JDT
-             asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.AUSENTE_JDT;
-             break;
-           default:
-             asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.TARDE;
-             break;
-         }
-         asistenciaTipoUi.estado = asistenciaEstadoEnumUi;
-         asistenciaTipoUi.logo = asistenciaValorTipoNotaData.icono;
-         asistenciaTipoUiList.add(asistenciaTipoUi);
+        AsistenciaEstadoEnumUi asistenciaEstadoEnumUi;
+        switch(asistenciaValorTipoNotaData.estadoId){
+          case 285://Puntual
+            asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.PUNTUAL;
+            break;
+          case 286://TARDE
+            asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.TARDE;
+            break;
+          case 287://AUSENTE
+            asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.AUSENTE;
+            break;
+          case 288://TARDE_JDT
+            asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.TARDE_JDT;
+            break;
+          case 289://AUSENTE_JDT
+            asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.AUSENTE_JDT;
+            break;
+          default:
+            asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.TARDE;
+            break;
+        }
+        asistenciaTipoUi.estado = asistenciaEstadoEnumUi;
+        asistenciaTipoUi.logo = asistenciaValorTipoNotaData.icono;
+        asistenciaTipoUiList.add(asistenciaTipoUi);
       }
-      
 
-      
+
+
       return asistenciaTipoUiList;
-      
+
     }catch(e){
       throw Exception(e);
     }
   }
-  
+
+  @override
+  Future<void> saveAsistenciaGeneral(Map<String, dynamic> datosAsistencia, int calendarioPeridoId, int alumnoId) async {
+    AppDataBase SQL = AppDataBase();
+    try{
+
+      await SQL.transaction(() async {
+        var query = SQL.select(SQL.asistenciaGeneral)..where((tbl) =>  tbl.alumnoId.equals(alumnoId));
+        query.where((tbl) => tbl.calendarioPeriodoId.equals(calendarioPeridoId));
+
+        var rows = await query.get();
+        print("saveEvaluaciones cantidad : "+rows.length.toString());
+        for (AsistenciaGeneralData row in rows) {
+          await (SQL.delete(SQL.asistenciaGeneral).delete(row));
+        }
+      });
+
+      await SQL.batch((batch) async {
+
+        if(datosAsistencia.containsKey("asistencia")){
+
+          batch.insertAll(SQL.asistenciaGeneral, SerializableConvert.converListSerializeAsistenciaGeneral(datosAsistencia["asistencia"]), mode: InsertMode.insertOrReplace );
+
+        }
+      });
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<List<AsistenciaUi>> getAsistenciaGeneral(int calendarioPeridoId, int alumnoId) async{
+    AppDataBase SQL = AppDataBase();
+    try{
+
+      WebConfig webConfig = await (SQL.selectSingle(SQL.webConfigs)..where((tbl) => tbl.nombre.equals("wstr_UrlExpresiones"))).getSingle();
+      String urlExpresiones = webConfig?.content == null ? "" : webConfig.content;
+      /*
+      * Obtner asistencia por cursos
+      * */
+      List<AsistenciaUi> asistenciaUiList = [];
+
+      var query = SQL.select(SQL.asistenciaGeneral)..where((tbl) => tbl.alumnoId.equals(alumnoId));
+      query.where((tbl) => tbl.calendarioPeriodoId.equals(calendarioPeridoId));
+
+      var rows = await query.get();
+
+      await Future.forEach(rows, (AsistenciaGeneralData asistenciaGeneralData) async{
+
+        AsistenciaUi asistenciaUi = AsistenciaUi();
+        asistenciaUi.asistenciaId = asistenciaGeneralData.controlAsistenciaId?.toString();
+        DateTime dateTime = AppTools.convertDateTimePtBR(asistenciaGeneralData.fechaAsistencia, asistenciaGeneralData.horaIngreso);
+        asistenciaUi.fecha = AppTools.f_fecha_letras(dateTime);
+        asistenciaUi.timeStamp = dateTime;
+        AsistenciaTipoUi asistenciaTipoUi = AsistenciaTipoUi();
+        asistenciaTipoUi.nombre = asistenciaGeneralData.estadosIngresoNombre;
+
+        AsistenciaEstadoEnumUi asistenciaEstadoEnumUi;
+        switch(asistenciaGeneralData.estadoIngresoId){
+          case 285://Puntual
+            asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.PUNTUAL;
+            break;
+          case 286://TARDE
+            asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.TARDE;
+            break;
+          case 287://AUSENTE
+            asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.AUSENTE;
+            break;
+          case 288://TARDE_JDT
+            asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.TARDE_JDT;
+            break;
+          case 289://AUSENTE_JDT
+            asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.AUSENTE_JDT;
+            break;
+          default:
+            asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.TARDE;
+            break;
+        }
+        asistenciaTipoUi.estado = asistenciaEstadoEnumUi;
+        asistenciaUi.asistenciaTipoUi = asistenciaTipoUi;
+
+        asistenciaUiList.add(asistenciaUi);
+      });
+
+      asistenciaUiList.sort((o2, o1) => o2?.timeStamp?.compareTo(o1?.timeStamp));
+
+      return asistenciaUiList;
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<List<AsistenciaTipoUi>> getAsistenciaTipoGeneral(int calendarioPeridoId, int alumnoId)async {
+    AppDataBase SQL = AppDataBase();
+    try{
+
+
+      var query = SQL.select(SQL.asistenciaGeneral)..where((tbl) => tbl.alumnoId.equals(alumnoId));
+      query.where((tbl) => tbl.calendarioPeriodoId.equals(calendarioPeridoId));
+
+      int p=0;
+      int t=0;
+      int tj=0;
+      int a=0;
+      int aj=0;
+      int cantidad=0;
+
+      var rows = await query.get();
+      for(AsistenciaGeneralData asistenciaGeneral in rows){
+
+        switch(asistenciaGeneral.estadoIngresoId){
+          case 285://Puntual
+            p++;
+            break;
+          case 286://TARDE
+            t++;
+            break;
+          case 287://AUSENTE
+            a++;
+            break;
+          case 288://TARDE_JDT
+            tj++;
+            break;
+          case 289://AUSENTE_JDT
+            aj++;
+            break;
+        }
+        cantidad++;
+      }
+
+      var estadoIdList = [285, 286, 287, 288, 289];
+      List<AsistenciaTipoUi> asistenciaTipoUiList = [];
+      for(var estadoId in estadoIdList){
+
+        AsistenciaTipoUi asistenciaTipoUi = AsistenciaTipoUi();
+        switch(estadoId){
+          case 285://Puntual
+            asistenciaTipoUi.alias = "P";
+            asistenciaTipoUi.cantidad = p;
+            if(cantidad!=0)asistenciaTipoUi.porcentaje  = (p * 100 / cantidad).round().toInt();
+            break;
+          case 286://TARDE
+            asistenciaTipoUi.alias = "T";
+            asistenciaTipoUi.cantidad = t;
+            if(cantidad!=0)asistenciaTipoUi.porcentaje  = (t * 100 / cantidad).round().toInt();
+            break;
+          case 287://AUSENTE
+            asistenciaTipoUi.alias = "A";
+            asistenciaTipoUi.cantidad = a;
+            if(cantidad!=0)asistenciaTipoUi.porcentaje  = (a * 100 / cantidad).round().toInt();
+            break;
+          case 288://TARDE_JDT
+            asistenciaTipoUi.alias = "TJ";
+            asistenciaTipoUi.cantidad = tj;
+            if(cantidad!=0)asistenciaTipoUi.porcentaje  = (tj * 100 / cantidad).round().toInt();
+            break;
+          case 289://AUSENTE_JDT
+            asistenciaTipoUi.alias = "AJ";
+            asistenciaTipoUi.cantidad = aj;
+            if(cantidad!=0)asistenciaTipoUi.porcentaje  = (aj * 100 / cantidad).round().toInt();
+            break;
+          default:
+            asistenciaTipoUi.alias = "";
+            asistenciaTipoUi.cantidad = 0;
+            if(cantidad!=0)asistenciaTipoUi.porcentaje  = 0;
+            break;
+        }
+
+        AsistenciaEstadoEnumUi asistenciaEstadoEnumUi;
+        switch(estadoId){
+          case 285://Puntual
+            asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.PUNTUAL;
+            break;
+          case 286://TARDE
+            asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.TARDE;
+            break;
+          case 287://AUSENTE
+            asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.AUSENTE;
+            break;
+          case 288://TARDE_JDT
+            asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.TARDE_JDT;
+            break;
+          case 289://AUSENTE_JDT
+            asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.AUSENTE_JDT;
+            break;
+          default:
+            asistenciaEstadoEnumUi = AsistenciaEstadoEnumUi.TARDE;
+            break;
+        }
+        asistenciaTipoUi.estado = asistenciaEstadoEnumUi;
+        asistenciaTipoUiList.add(asistenciaTipoUi);
+      }
+
+
+
+      return asistenciaTipoUiList;
+
+    }catch(e){
+      throw Exception(e);
+    }
+  }
+
 
 
 }

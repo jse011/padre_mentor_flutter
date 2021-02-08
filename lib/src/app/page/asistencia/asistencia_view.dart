@@ -97,9 +97,6 @@ class _AsistenciaViewState extends ViewState<AsistenciaView, AsistenciaControlle
         children: <Widget>[
           getMainTab(),
           getAppBarUI(),
-          SizedBox(
-            height: MediaQuery.of(context).padding.bottom,
-          )
         ],
       ),
     ),
@@ -269,77 +266,304 @@ class _AsistenciaViewState extends ViewState<AsistenciaView, AsistenciaControlle
                                         Expanded(
                                           child: TabBarView(
                                             children: [
-                                              CustomScrollView(
-                                                //controller: scrollController,
-                                                slivers: <Widget>[
-                                                  SliverList(
-                                                      delegate: SliverChildListDelegate([
-                                                        Container(
-                                                          margin: const EdgeInsets.only(right: 0, left: 16, top: 8),
-                                                          height: 130,
-                                                          decoration: BoxDecoration(
-                                                              border: Border.all(
-                                                                  color: AppTheme.greyDarken3,
-                                                                  width: 2
+                                              Stack(
+                                                children: [
+                                                  CustomScrollView(
+                                                    //controller: scrollController,
+                                                    slivers: <Widget>[
+                                                      SliverList(
+                                                          delegate: SliverChildListDelegate([
+                                                            Container(
+                                                              margin: const EdgeInsets.only(right: 0, left: 16, top: 8),
+                                                              height: 130,
+                                                              decoration: BoxDecoration(
+                                                                  border: Border.all(
+                                                                      color: AppTheme.greyDarken3,
+                                                                      width: 2
+                                                                  ),
+                                                                  borderRadius: BorderRadius.all(Radius.circular(16))
                                                               ),
-                                                              borderRadius: BorderRadius.all(Radius.circular(16))
-                                                          ),
-                                                          child: Row(
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            children: [
-                                                              Column(
+                                                              child: Row(
                                                                 crossAxisAlignment: CrossAxisAlignment.center,
                                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                                 children: [
-                                                                  Container(
-                                                                    padding: const EdgeInsets.only(right: 0, left: 8),
-                                                                    height: 50,
-                                                                    width: 50,
-                                                                    child: SvgPicture.asset(
-                                                                        "assets/fitness_app/icono_calendario_2.svg",
-                                                                        semanticsLabel: 'Calendario Asistencia'
+                                                                  Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                    children: [
+                                                                      Container(
+                                                                        padding: const EdgeInsets.only(right: 0, left: 8),
+                                                                        height: 50,
+                                                                        width: 50,
+                                                                        child: SvgPicture.asset(
+                                                                            "assets/fitness_app/icono_calendario_2.svg",
+                                                                            semanticsLabel: 'Calendario Asistencia'
+                                                                        ),
+                                                                      ),
+                                                                      Padding(
+                                                                          padding: const EdgeInsets.only(top: 4, bottom: 0, left: 8),
+                                                                          child: Text(controller.cantidad!=null?controller.cantidad.toString():"0", style: TextStyle(fontSize: 20, color: AppTheme.colorAccent),)
+                                                                      ),
+                                                                      Padding(
+                                                                          padding: const EdgeInsets.only(top: 2, bottom: 0, left: 8),
+                                                                          child: Text(controller.porcentaje!=null?controller.porcentaje.toString()+"%":"0%", style: TextStyle(fontSize: 10, color: AppTheme.colorAccent))
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  Expanded(
+                                                                    child: StaggeredGridView.count(
+                                                                      key: Key("Lista_"+ (controller.asistenciaTipoList.length!=0?controller.asistenciaTipoList.length.toString():"1")),
+                                                                      crossAxisCount: controller.asistenciaTipoList.length!=0?controller.asistenciaTipoList.length:1, // I only need two card horizontally
+                                                                      padding: const EdgeInsets.all(0),
+                                                                      children: controller.asistenciaTipoList.map<Widget>((item) {
+                                                                        return Container(
+                                                                          height: 126,
+                                                                          child: Column(
+                                                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                                            children: <Widget>[
+                                                                              Container(
+                                                                                height: 50,
+                                                                                child: Column(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                                                  children: [
+                                                                                    Text(item.alias, style: TextStyle(fontSize: 16, color: AppTheme.colorAccent)),
+                                                                                        (){
+
+                                                                                      if(item.logo!=null&&item.logo.isNotEmpty){
+                                                                                        return Container(
+                                                                                          margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                          width: 25,
+                                                                                          height: 25,
+                                                                                          child: CachedNetworkImage(
+                                                                                              placeholder: (context, url) => CircularProgressIndicator(),
+                                                                                              imageUrl: item.logo,
+                                                                                              imageBuilder: (context, imageProvider) => Container(
+                                                                                                  decoration: BoxDecoration(
+                                                                                                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                                                                                                    image: DecorationImage(
+                                                                                                      image: imageProvider,
+                                                                                                      //fit: BoxFit.contain,
+                                                                                                    ),
+                                                                                                  )
+                                                                                              )
+                                                                                          ),
+                                                                                        );
+
+                                                                                      }else{
+                                                                                        switch(item.estado){
+                                                                                          case AsistenciaEstadoEnumUi.PUNTUAL:
+                                                                                            return Container(
+                                                                                              margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                              width: 25,
+                                                                                              height: 25,
+                                                                                              decoration: BoxDecoration(
+                                                                                                  shape: BoxShape.circle,
+                                                                                                  color: AppTheme.greenAccent4),
+                                                                                            );
+                                                                                            break;
+                                                                                          case AsistenciaEstadoEnumUi.TARDE:
+                                                                                            return Container(
+                                                                                              margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                              width: 25,
+                                                                                              height: 25,
+                                                                                              decoration: BoxDecoration(
+                                                                                                  shape: BoxShape.circle,
+                                                                                                  color: AppTheme.yellowAccent4),
+                                                                                            );
+                                                                                            break;
+                                                                                          case AsistenciaEstadoEnumUi.AUSENTE:
+                                                                                            return Container(
+                                                                                              margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                              width: 25,
+                                                                                              height: 25,
+                                                                                              decoration: BoxDecoration(
+                                                                                                  shape: BoxShape.circle,
+                                                                                                  color: AppTheme.redAccent4),
+                                                                                            );
+                                                                                            break;
+                                                                                          case AsistenciaEstadoEnumUi.TARDE_JDT:
+                                                                                            return Container(
+                                                                                              margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                              width: 25,
+                                                                                              height: 25,
+                                                                                              decoration: BoxDecoration(
+                                                                                                  shape: BoxShape.circle,
+                                                                                                  color: AppTheme.yellowAccent4),
+                                                                                            );
+                                                                                            break;
+                                                                                          case AsistenciaEstadoEnumUi.AUSENTE_JDT:
+                                                                                            return Container(
+                                                                                              margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                              width: 25,
+                                                                                              height: 25,
+                                                                                              decoration: BoxDecoration(
+                                                                                                  shape: BoxShape.circle,
+                                                                                                  color: AppTheme.redAccent4),
+                                                                                            );
+                                                                                            break;
+                                                                                        }
+                                                                                      }
+                                                                                    }()
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                              Padding(
+                                                                                  padding: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                  child: Text(item.cantidad!=null?item.cantidad.toString():"0", style: TextStyle(fontSize: 20, color: AppTheme.colorAccent),)
+                                                                              ),
+                                                                              Padding(
+                                                                                  padding: const EdgeInsets.only(top: 2, bottom: 0, left: 0),
+                                                                                  child: Text(item.porcentaje!=null?item.porcentaje.toString()+"%":"0%", style: TextStyle(fontSize: 10, color: AppTheme.colorAccent))
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        );
+                                                                      }).toList(),
+
+                                                                      //Here is the place that we are getting flexible/ dynamic card for various images
+                                                                      staggeredTiles: controller.asistenciaTipoList.map<StaggeredTile>((_) => StaggeredTile.fit(1))
+                                                                          .toList(),
+                                                                      //mainAxisSpacing: 3.0,
+                                                                      //crossAxisSpacing: 4.0, // add some space
                                                                     ),
-                                                                  ),
-                                                                  Padding(
-                                                                      padding: const EdgeInsets.only(top: 4, bottom: 0, left: 8),
-                                                                      child: Text(controller.cantidad!=null?controller.cantidad.toString():"0", style: TextStyle(fontSize: 20, color: AppTheme.colorAccent),)
-                                                                  ),
-                                                                  Padding(
-                                                                      padding: const EdgeInsets.only(top: 2, bottom: 0, left: 8),
-                                                                      child: Text(controller.porcentaje!=null?controller.porcentaje.toString()+"%":"0%", style: TextStyle(fontSize: 10, color: AppTheme.colorAccent))
-                                                                  ),
+                                                                  )
                                                                 ],
                                                               ),
-                                                              Expanded(
-                                                                  child: StaggeredGridView.count(
-                                                                    key: Key("Lista_"+ (controller.asistenciaTipoList.length!=0?controller.asistenciaTipoList.length.toString():"1")),
-                                                                    crossAxisCount: controller.asistenciaTipoList.length!=0?controller.asistenciaTipoList.length:1, // I only need two card horizontally
-                                                                    padding: const EdgeInsets.all(0),
-                                                                    children: controller.asistenciaTipoList.map<Widget>((item) {
-                                                                      return Container(
-                                                                        height: 126,
-                                                                        child: Column(
-                                                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                                          children: <Widget>[
-                                                                            Container(
-                                                                              height: 50,
-                                                                              child: Column(
-                                                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                                                children: [
-                                                                                  Text(item.alias, style: TextStyle(fontSize: 16, color: AppTheme.colorAccent)),
-                                                                                  (){
+                                                            ),
+                                                            Container(
+                                                              margin: const EdgeInsets.only(left: 24, top: 8),
+                                                              child: Text("P=Puntual  T=Tarde  TJ=Tardanza justificada  A=Ausencia  AJ=Ausencia justificada", style: TextStyle(fontSize: 11, color: AppTheme.grey)),
+                                                            )
+                                                          ])
+                                                      ),
+                                                      SliverList(
+                                                        delegate: SliverChildBuilderDelegate(
+                                                              (BuildContext context, int index){
+                                                            dynamic o = controller.aistenicaAlumnoList[index];
+                                                            if(o is CursoUi){
+                                                              return Card(
+                                                                color: o.colorCurso == null ? AppTheme.colorAccent : HexColor(o.colorCurso),
+                                                                margin: const EdgeInsets.only(top: 24, left: 16, right: 0, bottom: 8),
+                                                                shape: RoundedRectangleBorder(
+                                                                  borderRadius: BorderRadius.circular(10), // if you need this
+                                                                  side: BorderSide(
+                                                                    color: Colors.grey.withOpacity(0.2),
+                                                                    width: 1,
+                                                                  ),
+                                                                ),
+                                                                child: Container(
+                                                                  margin: const EdgeInsets.only(top: 2, left: 8, right: 2, bottom: 2),
+                                                                  decoration: BoxDecoration(
+                                                                    color: Colors.white,
+                                                                    borderRadius: new BorderRadius.only(
+                                                                      topLeft: const Radius.circular(10.0),
+                                                                      topRight: const Radius.circular(10.0),
+                                                                      bottomLeft:const Radius.circular(10.0),
+                                                                      bottomRight: const Radius.circular(10.0),
+                                                                    ),
+                                                                  ),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Expanded(child: Container(margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12), child: Text(o.nombre, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w500, fontSize: 20)))),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }else if(o is AsistenciaUi){
+                                                              return  Container(
+                                                                height: 134,
+                                                                child: Row(
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: const EdgeInsets.only(left: 24),
+                                                                      child: Column(
+                                                                        children: [
+                                                                          Expanded(
+                                                                              child: Center(
+                                                                                child:
+                                                                                Container(
+                                                                                  margin: const EdgeInsets.only(bottom: 4),
+                                                                                  color: o.cursoUi.colorCurso2 == null || o.cursoUi.colorCurso2.isEmpty ?  Colors.black :  HexColor(o.cursoUi.colorCurso2),
+                                                                                  width: 3,
+                                                                                ),
+                                                                              )
+                                                                          ),
+                                                                          Container(
+                                                                            width: 20,
+                                                                            height: 20,
+                                                                            decoration: BoxDecoration(
+                                                                                shape: BoxShape.circle,
+                                                                                color: Colors.white,
+                                                                                border: Border.all(color:   HexColor("#757575") , width: 2)
+                                                                            ),
+                                                                            child: Center(
+                                                                              child: Container(
+                                                                                width: 9,
+                                                                                height: 9,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                  color:   HexColor("#757575"),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Expanded(
+                                                                              child: Center(
+                                                                                child:
+                                                                                Container(
+                                                                                  margin: const EdgeInsets.only(top: 4),
+                                                                                  color:o.cursoUi.colorCurso2 == null || o.cursoUi.colorCurso2.isEmpty ?  Colors.black :  HexColor(o.cursoUi.colorCurso2),
+                                                                                  width: 3,
+                                                                                ),
+                                                                              )
+                                                                          )
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                    Expanded(
+                                                                        child:  Card(
+                                                                          color: AppTheme.colorCard,
+                                                                          margin: const EdgeInsets.only(top: 8, left: 8, right: 0, bottom: 8),
+                                                                          shape: RoundedRectangleBorder(
+                                                                            borderRadius: BorderRadius.circular(10), // if you need this
+                                                                            side: BorderSide(
+                                                                              color: Colors.grey.withOpacity(0.2),
+                                                                              width: 1,
+                                                                            ),
+                                                                          ),
+                                                                          child: Container(
+                                                                            child: Row(
+                                                                              children: [
+                                                                                Expanded(
+                                                                                    child: Container(
+                                                                                        margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12),
+                                                                                        child: Column(
+                                                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                          mainAxisSize: MainAxisSize.min,
+                                                                                          children: [
+                                                                                            Text(o.fecha??'', maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.black54, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 16)),
+                                                                                            SizedBox(height: 6),
+                                                                                            Text(o.asistenciaTipoUi?.nombre??"", maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 17)),
+                                                                                            SizedBox(height: 4),
+                                                                                            Text(o.descripcion??"Sin descripción", maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w300, fontSize: 14)),
+                                                                                          ],
+                                                                                        )
+                                                                                    )
+                                                                                ),
+                                                                                Container(
+                                                                                  margin: const EdgeInsets.only(right: 8),
+                                                                                  width: 68.0,
+                                                                                  child: (() {
+                                                                                    if(o.asistenciaTipoUi!=null){
 
-                                                                                    if(item.logo!=null&&item.logo.isNotEmpty){
-                                                                                      return Container(
-                                                                                        margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
-                                                                                        width: 25,
-                                                                                        height: 25,
-                                                                                        child: CachedNetworkImage(
+                                                                                      if(o.asistenciaTipoUi.logo!=null&&o.asistenciaTipoUi.logo.isNotEmpty){
+                                                                                        return CachedNetworkImage(
+                                                                                            height: 35.0,
+                                                                                            width: 35.0,
                                                                                             placeholder: (context, url) => CircularProgressIndicator(),
-                                                                                            imageUrl: item.logo,
+                                                                                            imageUrl: o.asistenciaTipoUi.logo,
                                                                                             imageBuilder: (context, imageProvider) => Container(
                                                                                                 decoration: BoxDecoration(
                                                                                                   borderRadius: BorderRadius.all(Radius.circular(30)),
@@ -349,319 +573,455 @@ class _AsistenciaViewState extends ViewState<AsistenciaView, AsistenciaControlle
                                                                                                   ),
                                                                                                 )
                                                                                             )
-                                                                                        ),
-                                                                                      );
-
-                                                                                    }else{
-                                                                                      switch(item.estado){
-                                                                                        case AsistenciaEstadoEnumUi.PUNTUAL:
-                                                                                          return Container(
-                                                                                            margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
-                                                                                            width: 25,
-                                                                                            height: 25,
-                                                                                            decoration: BoxDecoration(
-                                                                                                shape: BoxShape.circle,
-                                                                                                color: AppTheme.greenAccent4),
-                                                                                          );
-                                                                                          break;
-                                                                                        case AsistenciaEstadoEnumUi.TARDE:
-                                                                                          return Container(
-                                                                                            margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
-                                                                                            width: 25,
-                                                                                            height: 25,
-                                                                                            decoration: BoxDecoration(
-                                                                                                shape: BoxShape.circle,
-                                                                                                color: AppTheme.yellowAccent4),
-                                                                                          );
-                                                                                          break;
-                                                                                        case AsistenciaEstadoEnumUi.AUSENTE:
-                                                                                          return Container(
-                                                                                            margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
-                                                                                            width: 25,
-                                                                                            height: 25,
-                                                                                            decoration: BoxDecoration(
-                                                                                                shape: BoxShape.circle,
-                                                                                                color: AppTheme.redAccent4),
-                                                                                          );
-                                                                                          break;
-                                                                                        case AsistenciaEstadoEnumUi.TARDE_JDT:
-                                                                                          return Container(
-                                                                                            margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
-                                                                                            width: 25,
-                                                                                            height: 25,
-                                                                                            decoration: BoxDecoration(
-                                                                                                shape: BoxShape.circle,
-                                                                                                color: AppTheme.yellowAccent4),
-                                                                                          );
-                                                                                          break;
-                                                                                        case AsistenciaEstadoEnumUi.AUSENTE_JDT:
-                                                                                          return Container(
-                                                                                            margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
-                                                                                            width: 25,
-                                                                                            height: 25,
-                                                                                            decoration: BoxDecoration(
-                                                                                                shape: BoxShape.circle,
-                                                                                                color: AppTheme.redAccent4),
-                                                                                          );
-                                                                                          break;
+                                                                                        );
+                                                                                      }else{
+                                                                                        switch(o.asistenciaTipoUi.estado){
+                                                                                          case AsistenciaEstadoEnumUi.PUNTUAL:
+                                                                                            return Container(
+                                                                                              margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                              width: 35,
+                                                                                              height: 35,
+                                                                                              decoration: BoxDecoration(
+                                                                                                  shape: BoxShape.circle,
+                                                                                                  color: AppTheme.greenAccent4),
+                                                                                            );
+                                                                                            break;
+                                                                                          case AsistenciaEstadoEnumUi.TARDE:
+                                                                                            return Container(
+                                                                                              margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                              width: 35,
+                                                                                              height: 35,
+                                                                                              decoration: BoxDecoration(
+                                                                                                  shape: BoxShape.circle,
+                                                                                                  color: AppTheme.yellowAccent4),
+                                                                                            );
+                                                                                            break;
+                                                                                          case AsistenciaEstadoEnumUi.AUSENTE:
+                                                                                            return Container(
+                                                                                              margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                              width: 35,
+                                                                                              height: 35,
+                                                                                              decoration: BoxDecoration(
+                                                                                                  shape: BoxShape.circle,
+                                                                                                  color: AppTheme.redAccent4),
+                                                                                            );
+                                                                                            break;
+                                                                                          case AsistenciaEstadoEnumUi.TARDE_JDT:
+                                                                                            return Container(
+                                                                                              margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                              width: 35,
+                                                                                              height: 35,
+                                                                                              decoration: BoxDecoration(
+                                                                                                  shape: BoxShape.circle,
+                                                                                                  color: AppTheme.yellowAccent4),
+                                                                                            );
+                                                                                            break;
+                                                                                          case AsistenciaEstadoEnumUi.AUSENTE_JDT:
+                                                                                            return Container(
+                                                                                              margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                              width: 35,
+                                                                                              height: 35,
+                                                                                              decoration: BoxDecoration(
+                                                                                                  shape: BoxShape.circle,
+                                                                                                  color: AppTheme.redAccent4),
+                                                                                            );
+                                                                                            break;
+                                                                                        }
                                                                                       }
-                                                                                    }
-                                                                                  }()
-                                                                                ],
-                                                                              ),
-                                                                            ),
-                                                                            Padding(
-                                                                                padding: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
-                                                                                child: Text(item.cantidad!=null?item.cantidad.toString():"0", style: TextStyle(fontSize: 20, color: AppTheme.colorAccent),)
-                                                                            ),
-                                                                            Padding(
-                                                                                padding: const EdgeInsets.only(top: 2, bottom: 0, left: 0),
-                                                                                child: Text(item.porcentaje!=null?item.porcentaje.toString()+"%":"0%", style: TextStyle(fontSize: 10, color: AppTheme.colorAccent))
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      );
-                                                                    }).toList(),
 
-                                                                    //Here is the place that we are getting flexible/ dynamic card for various images
-                                                                    staggeredTiles: controller.asistenciaTipoList.map<StaggeredTile>((_) => StaggeredTile.fit(1))
-                                                                        .toList(),
-                                                                    //mainAxisSpacing: 3.0,
-                                                                    //crossAxisSpacing: 4.0, // add some space
-                                                                  ),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          margin: const EdgeInsets.only(left: 24, top: 8),
-                                                          child: Text("P=Puntual  T=Tarde  TJ=Tardanza justificada  A=Ausencia  AJ=Ausencia justificada", style: TextStyle(fontSize: 11, color: AppTheme.grey)),
-                                                        )
-                                                      ])
-                                                  ),
-                                                  SliverList(
-                                                    delegate: SliverChildBuilderDelegate(
-                                                          (BuildContext context, int index){
-                                                        dynamic o = controller.aistenicaAlumnoList[index];
-                                                        if(o is CursoUi){
-                                                          return Card(
-                                                            color: o.colorCurso == null ? AppTheme.colorAccent : HexColor(o.colorCurso),
-                                                            margin: const EdgeInsets.only(top: 24, left: 16, right: 0, bottom: 8),
-                                                            shape: RoundedRectangleBorder(
-                                                              borderRadius: BorderRadius.circular(10), // if you need this
-                                                              side: BorderSide(
-                                                                color: Colors.grey.withOpacity(0.2),
-                                                                width: 1,
-                                                              ),
-                                                            ),
-                                                            child: Container(
-                                                              margin: const EdgeInsets.only(top: 2, left: 8, right: 2, bottom: 2),
-                                                              decoration: BoxDecoration(
-                                                                color: Colors.white,
-                                                                borderRadius: new BorderRadius.only(
-                                                                  topLeft: const Radius.circular(10.0),
-                                                                  topRight: const Radius.circular(10.0),
-                                                                  bottomLeft:const Radius.circular(10.0),
-                                                                  bottomRight: const Radius.circular(10.0),
-                                                                ),
-                                                              ),
-                                                              child: Row(
-                                                                children: [
-                                                                  Expanded(child: Container(margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12), child: Text(o.nombre, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w500, fontSize: 20)))),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          );
-                                                        }else if(o is AsistenciaUi){
-                                                          return  Container(
-                                                            height: 134,
-                                                            child: Row(
-                                                              children: [
-                                                                Container(
-                                                                  margin: const EdgeInsets.only(left: 24),
-                                                                  child: Column(
-                                                                    children: [
-                                                                      Expanded(
-                                                                          child: Center(
-                                                                            child:
-                                                                            Container(
-                                                                              margin: const EdgeInsets.only(bottom: 4),
-                                                                              color: o.cursoUi.colorCurso2 == null || o.cursoUi.colorCurso2.isEmpty ?  Colors.black :  HexColor(o.cursoUi.colorCurso2),
-                                                                              width: 3,
-                                                                            ),
-                                                                          )
-                                                                      ),
-                                                                      Container(
-                                                                        width: 20,
-                                                                        height: 20,
-                                                                        decoration: BoxDecoration(
-                                                                            shape: BoxShape.circle,
-                                                                            color: Colors.white,
-                                                                            border: Border.all(color:   HexColor("#757575") , width: 2)
-                                                                        ),
-                                                                        child: Center(
-                                                                          child: Container(
-                                                                            width: 9,
-                                                                            height: 9,
-                                                                            decoration: BoxDecoration(
-                                                                              shape: BoxShape.circle,
-                                                                              color:   HexColor("#757575"),
+                                                                                    } else {
+                                                                                      return Container();
+                                                                                    }
+
+
+                                                                                  }()),
+                                                                                )
+                                                                              ],
                                                                             ),
                                                                           ),
-                                                                        ),
-                                                                      ),
-                                                                      Expanded(
-                                                                          child: Center(
-                                                                            child:
-                                                                            Container(
-                                                                              margin: const EdgeInsets.only(top: 4),
-                                                                              color:o.cursoUi.colorCurso2 == null || o.cursoUi.colorCurso2.isEmpty ?  Colors.black :  HexColor(o.cursoUi.colorCurso2),
-                                                                              width: 3,
-                                                                            ),
-                                                                          )
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                Expanded(
-                                                                    child:  Card(
-                                                                      color: AppTheme.colorCard,
-                                                                      margin: const EdgeInsets.only(top: 8, left: 8, right: 0, bottom: 8),
-                                                                      shape: RoundedRectangleBorder(
-                                                                        borderRadius: BorderRadius.circular(10), // if you need this
-                                                                        side: BorderSide(
-                                                                          color: Colors.grey.withOpacity(0.2),
-                                                                          width: 1,
-                                                                        ),
-                                                                      ),
-                                                                      child: Container(
-                                                                        child: Row(
-                                                                          children: [
-                                                                            Expanded(
-                                                                                child: Container(
-                                                                                    margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12),
-                                                                                    child: Column(
-                                                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                      mainAxisSize: MainAxisSize.min,
-                                                                                      children: [
-                                                                                        Text(o.fecha??'', maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.black54, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 16)),
-                                                                                        SizedBox(height: 6),
-                                                                                        Text(o.asistenciaTipoUi?.nombre??"", maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 17)),
-                                                                                        SizedBox(height: 4),
-                                                                                        Text(o.descripcion??"Sin descripción", maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w300, fontSize: 14)),
-                                                                                      ],
-                                                                                    )
-                                                                                )
-                                                                            ),
-                                                                            Container(
-                                                                              margin: const EdgeInsets.only(right: 8),
-                                                                              width: 68.0,
-                                                                              child: (() {
-                                                                                if(o.asistenciaTipoUi!=null){
-
-                                                                                  if(o.asistenciaTipoUi.logo!=null&&o.asistenciaTipoUi.logo.isNotEmpty){
-                                                                                    return CachedNetworkImage(
-                                                                                        height: 35.0,
-                                                                                        width: 35.0,
-                                                                                        placeholder: (context, url) => CircularProgressIndicator(),
-                                                                                        imageUrl: o.asistenciaTipoUi.logo,
-                                                                                        imageBuilder: (context, imageProvider) => Container(
-                                                                                            decoration: BoxDecoration(
-                                                                                              borderRadius: BorderRadius.all(Radius.circular(30)),
-                                                                                              image: DecorationImage(
-                                                                                                image: imageProvider,
-                                                                                                //fit: BoxFit.contain,
-                                                                                              ),
-                                                                                            )
-                                                                                        )
-                                                                                    );
-                                                                                  }else{
-                                                                                    switch(o.asistenciaTipoUi.estado){
-                                                                                      case AsistenciaEstadoEnumUi.PUNTUAL:
-                                                                                        return Container(
-                                                                                          margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
-                                                                                          width: 35,
-                                                                                          height: 35,
-                                                                                          decoration: BoxDecoration(
-                                                                                              shape: BoxShape.circle,
-                                                                                              color: AppTheme.greenAccent4),
-                                                                                        );
-                                                                                        break;
-                                                                                      case AsistenciaEstadoEnumUi.TARDE:
-                                                                                        return Container(
-                                                                                          margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
-                                                                                          width: 35,
-                                                                                          height: 35,
-                                                                                          decoration: BoxDecoration(
-                                                                                              shape: BoxShape.circle,
-                                                                                              color: AppTheme.yellowAccent4),
-                                                                                        );
-                                                                                        break;
-                                                                                      case AsistenciaEstadoEnumUi.AUSENTE:
-                                                                                        return Container(
-                                                                                          margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
-                                                                                          width: 35,
-                                                                                          height: 35,
-                                                                                          decoration: BoxDecoration(
-                                                                                              shape: BoxShape.circle,
-                                                                                              color: AppTheme.redAccent4),
-                                                                                        );
-                                                                                        break;
-                                                                                      case AsistenciaEstadoEnumUi.TARDE_JDT:
-                                                                                        return Container(
-                                                                                          margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
-                                                                                          width: 35,
-                                                                                          height: 35,
-                                                                                          decoration: BoxDecoration(
-                                                                                              shape: BoxShape.circle,
-                                                                                              color: AppTheme.yellowAccent4),
-                                                                                        );
-                                                                                        break;
-                                                                                      case AsistenciaEstadoEnumUi.AUSENTE_JDT:
-                                                                                        return Container(
-                                                                                          margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
-                                                                                          width: 35,
-                                                                                          height: 35,
-                                                                                          decoration: BoxDecoration(
-                                                                                              shape: BoxShape.circle,
-                                                                                              color: AppTheme.redAccent4),
-                                                                                        );
-                                                                                        break;
-                                                                                    }
-                                                                                  }
-
-                                                                                } else {
-                                                                                  return Container();
-                                                                                }
-
-
-                                                                              }()),
-                                                                            )
-                                                                          ],
-                                                                        ),
-                                                                      ),
+                                                                        )
                                                                     )
-                                                                )
-                                                              ],
-                                                            ),
-                                                          );
-                                                        }else{
-                                                          return Container();
-                                                        }
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            }else{
+                                                              return Container();
+                                                            }
 
-                                                      },
-                                                      childCount: controller.aistenicaAlumnoList.length,
-                                                    ),
+                                                          },
+                                                          childCount: controller.aistenicaAlumnoList.length,
+                                                        ),
 
+                                                      ),
+                                                    ],
                                                   ),
+                                                  controller.isLoadingCurso ?  Container(child: Center(
+                                                    child: CircularProgressIndicator(),
+                                                  )): Container(),
                                                 ],
                                               ),
-                                              CustomScrollView(
-                                                //controller: scrollController,
-                                                slivers: <Widget>[
+                                             Stack(
+                                               children: [
+                                                 CustomScrollView(
+                                                   //controller: scrollController,
+                                                   slivers: <Widget>[
+                                                     SliverList(
+                                                         delegate: SliverChildListDelegate([
+                                                           Container(
+                                                             margin: const EdgeInsets.only(right: 0, left: 16, top: 8),
+                                                             height: 130,
+                                                             decoration: BoxDecoration(
+                                                                 border: Border.all(
+                                                                     color: AppTheme.greyDarken3,
+                                                                     width: 2
+                                                                 ),
+                                                                 borderRadius: BorderRadius.all(Radius.circular(16))
+                                                             ),
+                                                             child: Row(
+                                                               crossAxisAlignment: CrossAxisAlignment.center,
+                                                               mainAxisAlignment: MainAxisAlignment.center,
+                                                               children: [
+                                                                 Column(
+                                                                   crossAxisAlignment: CrossAxisAlignment.center,
+                                                                   mainAxisAlignment: MainAxisAlignment.center,
+                                                                   children: [
+                                                                     Container(
+                                                                       padding: const EdgeInsets.only(right: 0, left: 8),
+                                                                       height: 50,
+                                                                       width: 50,
+                                                                       child: SvgPicture.asset(
+                                                                           "assets/fitness_app/icono_calendario_2.svg",
+                                                                           semanticsLabel: 'Calendario Asistencia'
+                                                                       ),
+                                                                     ),
+                                                                     Padding(
+                                                                         padding: const EdgeInsets.only(top: 4, bottom: 0, left: 8),
+                                                                         child: Text(controller.cantidadGeneral!=null?controller.cantidadGeneral.toString():"0", style: TextStyle(fontSize: 20, color: AppTheme.colorAccent),)
+                                                                     ),
+                                                                     Padding(
+                                                                         padding: const EdgeInsets.only(top: 2, bottom: 0, left: 8),
+                                                                         child: Text(controller.porcentajeGeneral!=null?controller.porcentajeGeneral.toString()+"%":"0%", style: TextStyle(fontSize: 10, color: AppTheme.colorAccent))
+                                                                     ),
+                                                                   ],
+                                                                 ),
+                                                                 Expanded(
+                                                                   child: StaggeredGridView.count(
+                                                                     key: Key("Lista_"+ (controller.asistenciaTipoGeneralList.length!=0?controller.asistenciaTipoGeneralList.length.toString():"1")),
+                                                                     crossAxisCount: controller.asistenciaTipoGeneralList.length!=0?controller.asistenciaTipoGeneralList.length:1, // I only need two card horizontally
+                                                                     padding: const EdgeInsets.all(0),
+                                                                     children: controller.asistenciaTipoGeneralList.map<Widget>((item) {
+                                                                       return Container(
+                                                                         height: 126,
+                                                                         child: Column(
+                                                                           crossAxisAlignment: CrossAxisAlignment.center,
+                                                                           mainAxisAlignment: MainAxisAlignment.center,
+                                                                           children: <Widget>[
+                                                                             Container(
+                                                                               height: 50,
+                                                                               child: Column(
+                                                                                 crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                 mainAxisAlignment: MainAxisAlignment.center,
+                                                                                 children: [
+                                                                                   Text(item.alias, style: TextStyle(fontSize: 16, color: AppTheme.colorAccent)),
+                                                                                       (){
 
-                                                ],
-                                              ),
+                                                                                     if(item.logo!=null&&item.logo.isNotEmpty){
+                                                                                       return Container(
+                                                                                         margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                         width: 25,
+                                                                                         height: 25,
+                                                                                         child: CachedNetworkImage(
+                                                                                             placeholder: (context, url) => CircularProgressIndicator(),
+                                                                                             imageUrl: item.logo,
+                                                                                             imageBuilder: (context, imageProvider) => Container(
+                                                                                                 decoration: BoxDecoration(
+                                                                                                   borderRadius: BorderRadius.all(Radius.circular(30)),
+                                                                                                   image: DecorationImage(
+                                                                                                     image: imageProvider,
+                                                                                                     //fit: BoxFit.contain,
+                                                                                                   ),
+                                                                                                 )
+                                                                                             )
+                                                                                         ),
+                                                                                       );
+
+                                                                                     }else{
+                                                                                       switch(item.estado){
+                                                                                         case AsistenciaEstadoEnumUi.PUNTUAL:
+                                                                                           return Container(
+                                                                                             margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                             width: 25,
+                                                                                             height: 25,
+                                                                                             decoration: BoxDecoration(
+                                                                                                 shape: BoxShape.circle,
+                                                                                                 color: AppTheme.greenAccent4),
+                                                                                           );
+                                                                                           break;
+                                                                                         case AsistenciaEstadoEnumUi.TARDE:
+                                                                                           return Container(
+                                                                                             margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                             width: 25,
+                                                                                             height: 25,
+                                                                                             decoration: BoxDecoration(
+                                                                                                 shape: BoxShape.circle,
+                                                                                                 color: AppTheme.yellowAccent4),
+                                                                                           );
+                                                                                           break;
+                                                                                         case AsistenciaEstadoEnumUi.AUSENTE:
+                                                                                           return Container(
+                                                                                             margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                             width: 25,
+                                                                                             height: 25,
+                                                                                             decoration: BoxDecoration(
+                                                                                                 shape: BoxShape.circle,
+                                                                                                 color: AppTheme.redAccent4),
+                                                                                           );
+                                                                                           break;
+                                                                                         case AsistenciaEstadoEnumUi.TARDE_JDT:
+                                                                                           return Container(
+                                                                                             margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                             width: 25,
+                                                                                             height: 25,
+                                                                                             decoration: BoxDecoration(
+                                                                                                 shape: BoxShape.circle,
+                                                                                                 color: AppTheme.yellowAccent4),
+                                                                                           );
+                                                                                           break;
+                                                                                         case AsistenciaEstadoEnumUi.AUSENTE_JDT:
+                                                                                           return Container(
+                                                                                             margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                             width: 25,
+                                                                                             height: 25,
+                                                                                             decoration: BoxDecoration(
+                                                                                                 shape: BoxShape.circle,
+                                                                                                 color: AppTheme.redAccent4),
+                                                                                           );
+                                                                                           break;
+                                                                                       }
+                                                                                     }
+                                                                                   }()
+                                                                                 ],
+                                                                               ),
+                                                                             ),
+                                                                             Padding(
+                                                                                 padding: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                 child: Text(item.cantidad!=null?item.cantidad.toString():"0", style: TextStyle(fontSize: 20, color: AppTheme.colorAccent),)
+                                                                             ),
+                                                                             Padding(
+                                                                                 padding: const EdgeInsets.only(top: 2, bottom: 0, left: 0),
+                                                                                 child: Text(item.porcentaje!=null?item.porcentaje.toString()+"%":"0%", style: TextStyle(fontSize: 10, color: AppTheme.colorAccent))
+                                                                             ),
+                                                                           ],
+                                                                         ),
+                                                                       );
+                                                                     }).toList(),
+
+                                                                     //Here is the place that we are getting flexible/ dynamic card for various images
+                                                                     staggeredTiles: controller.asistenciaTipoGeneralList.map<StaggeredTile>((_) => StaggeredTile.fit(1))
+                                                                         .toList(),
+                                                                     //mainAxisSpacing: 3.0,
+                                                                     //crossAxisSpacing: 4.0, // add some space
+                                                                   ),
+                                                                 )
+                                                               ],
+                                                             ),
+                                                           ),
+                                                           Container(
+                                                             margin: const EdgeInsets.only(left: 24, top: 8),
+                                                             child: Text("P=Puntual  T=Tarde  TJ=Tardanza justificada  A=Ausencia  AJ=Ausencia justificada", style: TextStyle(fontSize: 11, color: AppTheme.grey)),
+                                                           )
+                                                         ])
+                                                     ),
+                                                     SliverList(
+                                                       delegate: SliverChildBuilderDelegate(
+                                                             (BuildContext context, int index){
+                                                           AsistenciaUi o = controller.asistenciaGeneralList[index];
+                                                           return Container(
+                                                             height: 134,
+                                                             child: Row(
+                                                               children: [
+                                                                 Container(
+                                                                   margin: const EdgeInsets.only(left: 24),
+                                                                   child: Column(
+                                                                     children: [
+                                                                       Expanded(
+                                                                           child: Center(
+                                                                             child:
+                                                                             Container(
+                                                                               margin: const EdgeInsets.only(bottom: 4),
+                                                                               color:   Colors.black,
+                                                                               width: 3,
+                                                                             ),
+                                                                           )
+                                                                       ),
+                                                                       Container(
+                                                                         width: 20,
+                                                                         height: 20,
+                                                                         decoration: BoxDecoration(
+                                                                             shape: BoxShape.circle,
+                                                                             color: Colors.white,
+                                                                             border: Border.all(color:   HexColor("#757575") , width: 2)
+                                                                         ),
+                                                                         child: Center(
+                                                                           child: Container(
+                                                                             width: 9,
+                                                                             height: 9,
+                                                                             decoration: BoxDecoration(
+                                                                               shape: BoxShape.circle,
+                                                                               color:   HexColor("#757575"),
+                                                                             ),
+                                                                           ),
+                                                                         ),
+                                                                       ),
+                                                                       Expanded(
+                                                                           child: Center(
+                                                                             child:
+                                                                             Container(
+                                                                               margin: const EdgeInsets.only(top: 4),
+                                                                               color: Colors.black,
+                                                                               width: 3,
+                                                                             ),
+                                                                           )
+                                                                       )
+                                                                     ],
+                                                                   ),
+                                                                 ),
+                                                                 Expanded(
+                                                                     child:  Card(
+                                                                       color: AppTheme.colorCard,
+                                                                       margin: const EdgeInsets.only(top: 8, left: 8, right: 0, bottom: 8),
+                                                                       shape: RoundedRectangleBorder(
+                                                                         borderRadius: BorderRadius.circular(10), // if you need this
+                                                                         side: BorderSide(
+                                                                           color: Colors.grey.withOpacity(0.2),
+                                                                           width: 1,
+                                                                         ),
+                                                                       ),
+                                                                       child: Container(
+                                                                         child: Row(
+                                                                           children: [
+                                                                             Expanded(
+                                                                                 child: Container(
+                                                                                     margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12),
+                                                                                     child: Column(
+                                                                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                       mainAxisSize: MainAxisSize.min,
+                                                                                       children: [
+                                                                                         Text(o.fecha??'', maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.black54, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 16)),
+                                                                                         SizedBox(height: 6),
+                                                                                         Text(o.asistenciaTipoUi?.nombre??"", maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 17)),
+                                                                                         SizedBox(height: 4),
+                                                                                         Text(o.descripcion??"Sin descripción", maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w300, fontSize: 14)),
+                                                                                       ],
+                                                                                     )
+                                                                                 )
+                                                                             ),
+                                                                             Container(
+                                                                               margin: const EdgeInsets.only(right: 8),
+                                                                               width: 68.0,
+                                                                               child: (() {
+                                                                                 if(o.asistenciaTipoUi!=null){
+
+                                                                                   if(o.asistenciaTipoUi.logo!=null&&o.asistenciaTipoUi.logo.isNotEmpty){
+                                                                                     return CachedNetworkImage(
+                                                                                         height: 35.0,
+                                                                                         width: 35.0,
+                                                                                         placeholder: (context, url) => CircularProgressIndicator(),
+                                                                                         imageUrl: o.asistenciaTipoUi.logo,
+                                                                                         imageBuilder: (context, imageProvider) => Container(
+                                                                                             decoration: BoxDecoration(
+                                                                                               borderRadius: BorderRadius.all(Radius.circular(30)),
+                                                                                               image: DecorationImage(
+                                                                                                 image: imageProvider,
+                                                                                                 //fit: BoxFit.contain,
+                                                                                               ),
+                                                                                             )
+                                                                                         )
+                                                                                     );
+                                                                                   }else{
+                                                                                     switch(o.asistenciaTipoUi.estado){
+                                                                                       case AsistenciaEstadoEnumUi.PUNTUAL:
+                                                                                         return Container(
+                                                                                           margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                           width: 35,
+                                                                                           height: 35,
+                                                                                           decoration: BoxDecoration(
+                                                                                               shape: BoxShape.circle,
+                                                                                               color: AppTheme.greenAccent4),
+                                                                                         );
+                                                                                         break;
+                                                                                       case AsistenciaEstadoEnumUi.TARDE:
+                                                                                         return Container(
+                                                                                           margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                           width: 35,
+                                                                                           height: 35,
+                                                                                           decoration: BoxDecoration(
+                                                                                               shape: BoxShape.circle,
+                                                                                               color: AppTheme.yellowAccent4),
+                                                                                         );
+                                                                                         break;
+                                                                                       case AsistenciaEstadoEnumUi.AUSENTE:
+                                                                                         return Container(
+                                                                                           margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                           width: 35,
+                                                                                           height: 35,
+                                                                                           decoration: BoxDecoration(
+                                                                                               shape: BoxShape.circle,
+                                                                                               color: AppTheme.redAccent4),
+                                                                                         );
+                                                                                         break;
+                                                                                       case AsistenciaEstadoEnumUi.TARDE_JDT:
+                                                                                         return Container(
+                                                                                           margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                           width: 35,
+                                                                                           height: 35,
+                                                                                           decoration: BoxDecoration(
+                                                                                               shape: BoxShape.circle,
+                                                                                               color: AppTheme.yellowAccent4),
+                                                                                         );
+                                                                                         break;
+                                                                                       case AsistenciaEstadoEnumUi.AUSENTE_JDT:
+                                                                                         return Container(
+                                                                                           margin: const EdgeInsets.only(top: 4, bottom: 0, left: 0),
+                                                                                           width: 35,
+                                                                                           height: 35,
+                                                                                           decoration: BoxDecoration(
+                                                                                               shape: BoxShape.circle,
+                                                                                               color: AppTheme.redAccent4),
+                                                                                         );
+                                                                                         break;
+                                                                                     }
+                                                                                   }
+
+                                                                                 } else {
+                                                                                   return Container();
+                                                                                 }
+
+
+                                                                               }()),
+                                                                             )
+                                                                           ],
+                                                                         ),
+                                                                       ),
+                                                                     )
+                                                                 )
+                                                               ],
+                                                             ),
+                                                           );
+
+                                                         },
+                                                         childCount: controller.asistenciaGeneralList.length,
+                                                       ),
+
+                                                     ),
+                                                   ],
+                                                 ),
+                                                 controller.isLoadingGeneral ?  Container(child: Center(
+                                                   child: CircularProgressIndicator(),
+                                                 )): Container(),
+                                               ],
+                                             )
+
                                             ],
                                           ),
                                         )

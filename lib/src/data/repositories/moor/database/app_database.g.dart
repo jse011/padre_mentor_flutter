@@ -13863,6 +13863,7 @@ class EventoData extends DataClass implements Insertable<EventoData> {
   final String nombreEntidad;
   final String fotoEntidad;
   final String nombreEntidadSiglas;
+  final DateTime fechaEventoTime;
   EventoData(
       {@required this.eventoId,
       this.titulo,
@@ -13883,13 +13884,15 @@ class EventoData extends DataClass implements Insertable<EventoData> {
       this.likeCount,
       this.nombreEntidad,
       this.fotoEntidad,
-      this.nombreEntidadSiglas});
+      this.nombreEntidadSiglas,
+      this.fechaEventoTime});
   factory EventoData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final stringType = db.typeSystem.forDartType<String>();
     final intType = db.typeSystem.forDartType<int>();
     final boolType = db.typeSystem.forDartType<bool>();
+    final dateTimeType = db.typeSystem.forDartType<DateTime>();
     return EventoData(
       eventoId: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}evento_id']),
@@ -13931,6 +13934,8 @@ class EventoData extends DataClass implements Insertable<EventoData> {
           .mapFromDatabaseResponse(data['${effectivePrefix}foto_entidad']),
       nombreEntidadSiglas: stringType.mapFromDatabaseResponse(
           data['${effectivePrefix}nombre_entidad_siglas']),
+      fechaEventoTime: dateTimeType
+          .mapFromDatabaseResponse(data['${effectivePrefix}fecha_evento_time']),
     );
   }
   @override
@@ -13996,6 +14001,9 @@ class EventoData extends DataClass implements Insertable<EventoData> {
     if (!nullToAbsent || nombreEntidadSiglas != null) {
       map['nombre_entidad_siglas'] = Variable<String>(nombreEntidadSiglas);
     }
+    if (!nullToAbsent || fechaEventoTime != null) {
+      map['fecha_evento_time'] = Variable<DateTime>(fechaEventoTime);
+    }
     return map;
   }
 
@@ -14060,6 +14068,9 @@ class EventoData extends DataClass implements Insertable<EventoData> {
       nombreEntidadSiglas: nombreEntidadSiglas == null && nullToAbsent
           ? const Value.absent()
           : Value(nombreEntidadSiglas),
+      fechaEventoTime: fechaEventoTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fechaEventoTime),
     );
   }
 
@@ -14088,6 +14099,7 @@ class EventoData extends DataClass implements Insertable<EventoData> {
       fotoEntidad: serializer.fromJson<String>(json['fotoEntidad']),
       nombreEntidadSiglas:
           serializer.fromJson<String>(json['nombreEntidadSiglas']),
+      fechaEventoTime: serializer.fromJson<DateTime>(json['fechaEventoTime']),
     );
   }
   @override
@@ -14114,6 +14126,7 @@ class EventoData extends DataClass implements Insertable<EventoData> {
       'nombreEntidad': serializer.toJson<String>(nombreEntidad),
       'fotoEntidad': serializer.toJson<String>(fotoEntidad),
       'nombreEntidadSiglas': serializer.toJson<String>(nombreEntidadSiglas),
+      'fechaEventoTime': serializer.toJson<DateTime>(fechaEventoTime),
     };
   }
 
@@ -14137,7 +14150,8 @@ class EventoData extends DataClass implements Insertable<EventoData> {
           int likeCount,
           String nombreEntidad,
           String fotoEntidad,
-          String nombreEntidadSiglas}) =>
+          String nombreEntidadSiglas,
+          DateTime fechaEventoTime}) =>
       EventoData(
         eventoId: eventoId ?? this.eventoId,
         titulo: titulo ?? this.titulo,
@@ -14159,6 +14173,7 @@ class EventoData extends DataClass implements Insertable<EventoData> {
         nombreEntidad: nombreEntidad ?? this.nombreEntidad,
         fotoEntidad: fotoEntidad ?? this.fotoEntidad,
         nombreEntidadSiglas: nombreEntidadSiglas ?? this.nombreEntidadSiglas,
+        fechaEventoTime: fechaEventoTime ?? this.fechaEventoTime,
       );
   @override
   String toString() {
@@ -14182,7 +14197,8 @@ class EventoData extends DataClass implements Insertable<EventoData> {
           ..write('likeCount: $likeCount, ')
           ..write('nombreEntidad: $nombreEntidad, ')
           ..write('fotoEntidad: $fotoEntidad, ')
-          ..write('nombreEntidadSiglas: $nombreEntidadSiglas')
+          ..write('nombreEntidadSiglas: $nombreEntidadSiglas, ')
+          ..write('fechaEventoTime: $fechaEventoTime')
           ..write(')'))
         .toString();
   }
@@ -14232,7 +14248,7 @@ class EventoData extends DataClass implements Insertable<EventoData> {
                                                                               .hashCode,
                                                                           $mrjc(
                                                                               fotoEntidad.hashCode,
-                                                                              nombreEntidadSiglas.hashCode))))))))))))))))))));
+                                                                              $mrjc(nombreEntidadSiglas.hashCode, fechaEventoTime.hashCode)))))))))))))))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -14256,7 +14272,8 @@ class EventoData extends DataClass implements Insertable<EventoData> {
           other.likeCount == this.likeCount &&
           other.nombreEntidad == this.nombreEntidad &&
           other.fotoEntidad == this.fotoEntidad &&
-          other.nombreEntidadSiglas == this.nombreEntidadSiglas);
+          other.nombreEntidadSiglas == this.nombreEntidadSiglas &&
+          other.fechaEventoTime == this.fechaEventoTime);
 }
 
 class EventoCompanion extends UpdateCompanion<EventoData> {
@@ -14280,6 +14297,7 @@ class EventoCompanion extends UpdateCompanion<EventoData> {
   final Value<String> nombreEntidad;
   final Value<String> fotoEntidad;
   final Value<String> nombreEntidadSiglas;
+  final Value<DateTime> fechaEventoTime;
   const EventoCompanion({
     this.eventoId = const Value.absent(),
     this.titulo = const Value.absent(),
@@ -14301,6 +14319,7 @@ class EventoCompanion extends UpdateCompanion<EventoData> {
     this.nombreEntidad = const Value.absent(),
     this.fotoEntidad = const Value.absent(),
     this.nombreEntidadSiglas = const Value.absent(),
+    this.fechaEventoTime = const Value.absent(),
   });
   EventoCompanion.insert({
     @required String eventoId,
@@ -14323,6 +14342,7 @@ class EventoCompanion extends UpdateCompanion<EventoData> {
     this.nombreEntidad = const Value.absent(),
     this.fotoEntidad = const Value.absent(),
     this.nombreEntidadSiglas = const Value.absent(),
+    this.fechaEventoTime = const Value.absent(),
   }) : eventoId = Value(eventoId);
   static Insertable<EventoData> custom({
     Expression<String> eventoId,
@@ -14345,6 +14365,7 @@ class EventoCompanion extends UpdateCompanion<EventoData> {
     Expression<String> nombreEntidad,
     Expression<String> fotoEntidad,
     Expression<String> nombreEntidadSiglas,
+    Expression<DateTime> fechaEventoTime,
   }) {
     return RawValuesInsertable({
       if (eventoId != null) 'evento_id': eventoId,
@@ -14368,6 +14389,7 @@ class EventoCompanion extends UpdateCompanion<EventoData> {
       if (fotoEntidad != null) 'foto_entidad': fotoEntidad,
       if (nombreEntidadSiglas != null)
         'nombre_entidad_siglas': nombreEntidadSiglas,
+      if (fechaEventoTime != null) 'fecha_evento_time': fechaEventoTime,
     });
   }
 
@@ -14391,7 +14413,8 @@ class EventoCompanion extends UpdateCompanion<EventoData> {
       Value<int> likeCount,
       Value<String> nombreEntidad,
       Value<String> fotoEntidad,
-      Value<String> nombreEntidadSiglas}) {
+      Value<String> nombreEntidadSiglas,
+      Value<DateTime> fechaEventoTime}) {
     return EventoCompanion(
       eventoId: eventoId ?? this.eventoId,
       titulo: titulo ?? this.titulo,
@@ -14413,6 +14436,7 @@ class EventoCompanion extends UpdateCompanion<EventoData> {
       nombreEntidad: nombreEntidad ?? this.nombreEntidad,
       fotoEntidad: fotoEntidad ?? this.fotoEntidad,
       nombreEntidadSiglas: nombreEntidadSiglas ?? this.nombreEntidadSiglas,
+      fechaEventoTime: fechaEventoTime ?? this.fechaEventoTime,
     );
   }
 
@@ -14480,6 +14504,9 @@ class EventoCompanion extends UpdateCompanion<EventoData> {
       map['nombre_entidad_siglas'] =
           Variable<String>(nombreEntidadSiglas.value);
     }
+    if (fechaEventoTime.present) {
+      map['fecha_evento_time'] = Variable<DateTime>(fechaEventoTime.value);
+    }
     return map;
   }
 
@@ -14505,7 +14532,8 @@ class EventoCompanion extends UpdateCompanion<EventoData> {
           ..write('likeCount: $likeCount, ')
           ..write('nombreEntidad: $nombreEntidad, ')
           ..write('fotoEntidad: $fotoEntidad, ')
-          ..write('nombreEntidadSiglas: $nombreEntidadSiglas')
+          ..write('nombreEntidadSiglas: $nombreEntidadSiglas, ')
+          ..write('fechaEventoTime: $fechaEventoTime')
           ..write(')'))
         .toString();
   }
@@ -14781,6 +14809,20 @@ class $EventoTable extends Evento with TableInfo<$EventoTable, EventoData> {
     );
   }
 
+  final VerificationMeta _fechaEventoTimeMeta =
+      const VerificationMeta('fechaEventoTime');
+  GeneratedDateTimeColumn _fechaEventoTime;
+  @override
+  GeneratedDateTimeColumn get fechaEventoTime =>
+      _fechaEventoTime ??= _constructFechaEventoTime();
+  GeneratedDateTimeColumn _constructFechaEventoTime() {
+    return GeneratedDateTimeColumn(
+      'fecha_evento_time',
+      $tableName,
+      true,
+    );
+  }
+
   @override
   List<GeneratedColumn> get $columns => [
         eventoId,
@@ -14802,7 +14844,8 @@ class $EventoTable extends Evento with TableInfo<$EventoTable, EventoData> {
         likeCount,
         nombreEntidad,
         fotoEntidad,
-        nombreEntidadSiglas
+        nombreEntidadSiglas,
+        fechaEventoTime
       ];
   @override
   $EventoTable get asDslTable => this;
@@ -14926,6 +14969,12 @@ class $EventoTable extends Evento with TableInfo<$EventoTable, EventoData> {
           _nombreEntidadSiglasMeta,
           nombreEntidadSiglas.isAcceptableOrUnknown(
               data['nombre_entidad_siglas'], _nombreEntidadSiglasMeta));
+    }
+    if (data.containsKey('fecha_evento_time')) {
+      context.handle(
+          _fechaEventoTimeMeta,
+          fechaEventoTime.isAcceptableOrUnknown(
+              data['fecha_evento_time'], _fechaEventoTimeMeta));
     }
     return context;
   }
@@ -26870,6 +26919,924 @@ class $AsistenciaRelProgramaTipoNotaTable extends AsistenciaRelProgramaTipoNota
   }
 }
 
+class AsistenciaGeneralData extends DataClass
+    implements Insertable<AsistenciaGeneralData> {
+  final int controlAsistenciaId;
+  final int alumnoId;
+  final int calendarioPeriodoId;
+  final int grupoId;
+  final int periodoId;
+  final int programaEducativoId;
+  final int docenteId;
+  final int georeferenciaId;
+  final String fechaAsistencia;
+  final String horaIngreso;
+  final String horaSalida;
+  final int estadoIngresoId;
+  final String estadosIngresoNombre;
+  final int estadoSalidaId;
+  final String estadosSalidaNombre;
+  final String observaciones;
+  AsistenciaGeneralData(
+      {@required this.controlAsistenciaId,
+      this.alumnoId,
+      this.calendarioPeriodoId,
+      this.grupoId,
+      this.periodoId,
+      this.programaEducativoId,
+      this.docenteId,
+      this.georeferenciaId,
+      this.fechaAsistencia,
+      this.horaIngreso,
+      this.horaSalida,
+      this.estadoIngresoId,
+      this.estadosIngresoNombre,
+      this.estadoSalidaId,
+      this.estadosSalidaNombre,
+      this.observaciones});
+  factory AsistenciaGeneralData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return AsistenciaGeneralData(
+      controlAsistenciaId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}control_asistencia_id']),
+      alumnoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}alumno_id']),
+      calendarioPeriodoId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}calendario_periodo_id']),
+      grupoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}grupo_id']),
+      periodoId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}periodo_id']),
+      programaEducativoId: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}programa_educativo_id']),
+      docenteId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}docente_id']),
+      georeferenciaId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}georeferencia_id']),
+      fechaAsistencia: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}fecha_asistencia']),
+      horaIngreso: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}hora_ingreso']),
+      horaSalida: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}hora_salida']),
+      estadoIngresoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}estado_ingreso_id']),
+      estadosIngresoNombre: stringType.mapFromDatabaseResponse(
+          data['${effectivePrefix}estados_ingreso_nombre']),
+      estadoSalidaId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}estado_salida_id']),
+      estadosSalidaNombre: stringType.mapFromDatabaseResponse(
+          data['${effectivePrefix}estados_salida_nombre']),
+      observaciones: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}observaciones']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || controlAsistenciaId != null) {
+      map['control_asistencia_id'] = Variable<int>(controlAsistenciaId);
+    }
+    if (!nullToAbsent || alumnoId != null) {
+      map['alumno_id'] = Variable<int>(alumnoId);
+    }
+    if (!nullToAbsent || calendarioPeriodoId != null) {
+      map['calendario_periodo_id'] = Variable<int>(calendarioPeriodoId);
+    }
+    if (!nullToAbsent || grupoId != null) {
+      map['grupo_id'] = Variable<int>(grupoId);
+    }
+    if (!nullToAbsent || periodoId != null) {
+      map['periodo_id'] = Variable<int>(periodoId);
+    }
+    if (!nullToAbsent || programaEducativoId != null) {
+      map['programa_educativo_id'] = Variable<int>(programaEducativoId);
+    }
+    if (!nullToAbsent || docenteId != null) {
+      map['docente_id'] = Variable<int>(docenteId);
+    }
+    if (!nullToAbsent || georeferenciaId != null) {
+      map['georeferencia_id'] = Variable<int>(georeferenciaId);
+    }
+    if (!nullToAbsent || fechaAsistencia != null) {
+      map['fecha_asistencia'] = Variable<String>(fechaAsistencia);
+    }
+    if (!nullToAbsent || horaIngreso != null) {
+      map['hora_ingreso'] = Variable<String>(horaIngreso);
+    }
+    if (!nullToAbsent || horaSalida != null) {
+      map['hora_salida'] = Variable<String>(horaSalida);
+    }
+    if (!nullToAbsent || estadoIngresoId != null) {
+      map['estado_ingreso_id'] = Variable<int>(estadoIngresoId);
+    }
+    if (!nullToAbsent || estadosIngresoNombre != null) {
+      map['estados_ingreso_nombre'] = Variable<String>(estadosIngresoNombre);
+    }
+    if (!nullToAbsent || estadoSalidaId != null) {
+      map['estado_salida_id'] = Variable<int>(estadoSalidaId);
+    }
+    if (!nullToAbsent || estadosSalidaNombre != null) {
+      map['estados_salida_nombre'] = Variable<String>(estadosSalidaNombre);
+    }
+    if (!nullToAbsent || observaciones != null) {
+      map['observaciones'] = Variable<String>(observaciones);
+    }
+    return map;
+  }
+
+  AsistenciaGeneralCompanion toCompanion(bool nullToAbsent) {
+    return AsistenciaGeneralCompanion(
+      controlAsistenciaId: controlAsistenciaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(controlAsistenciaId),
+      alumnoId: alumnoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(alumnoId),
+      calendarioPeriodoId: calendarioPeriodoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(calendarioPeriodoId),
+      grupoId: grupoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(grupoId),
+      periodoId: periodoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(periodoId),
+      programaEducativoId: programaEducativoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(programaEducativoId),
+      docenteId: docenteId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(docenteId),
+      georeferenciaId: georeferenciaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(georeferenciaId),
+      fechaAsistencia: fechaAsistencia == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fechaAsistencia),
+      horaIngreso: horaIngreso == null && nullToAbsent
+          ? const Value.absent()
+          : Value(horaIngreso),
+      horaSalida: horaSalida == null && nullToAbsent
+          ? const Value.absent()
+          : Value(horaSalida),
+      estadoIngresoId: estadoIngresoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadoIngresoId),
+      estadosIngresoNombre: estadosIngresoNombre == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadosIngresoNombre),
+      estadoSalidaId: estadoSalidaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadoSalidaId),
+      estadosSalidaNombre: estadosSalidaNombre == null && nullToAbsent
+          ? const Value.absent()
+          : Value(estadosSalidaNombre),
+      observaciones: observaciones == null && nullToAbsent
+          ? const Value.absent()
+          : Value(observaciones),
+    );
+  }
+
+  factory AsistenciaGeneralData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return AsistenciaGeneralData(
+      controlAsistenciaId:
+          serializer.fromJson<int>(json['controlAsistenciaId']),
+      alumnoId: serializer.fromJson<int>(json['alumnoId']),
+      calendarioPeriodoId:
+          serializer.fromJson<int>(json['calendarioPeriodoId']),
+      grupoId: serializer.fromJson<int>(json['grupoId']),
+      periodoId: serializer.fromJson<int>(json['periodoId']),
+      programaEducativoId:
+          serializer.fromJson<int>(json['programaEducativoId']),
+      docenteId: serializer.fromJson<int>(json['docenteId']),
+      georeferenciaId: serializer.fromJson<int>(json['georeferenciaId']),
+      fechaAsistencia: serializer.fromJson<String>(json['fechaAsistencia']),
+      horaIngreso: serializer.fromJson<String>(json['horaIngreso']),
+      horaSalida: serializer.fromJson<String>(json['horaSalida']),
+      estadoIngresoId: serializer.fromJson<int>(json['estadoIngresoId']),
+      estadosIngresoNombre:
+          serializer.fromJson<String>(json['estadosIngresoNombre']),
+      estadoSalidaId: serializer.fromJson<int>(json['estadoSalidaId']),
+      estadosSalidaNombre:
+          serializer.fromJson<String>(json['estadosSalidaNombre']),
+      observaciones: serializer.fromJson<String>(json['observaciones']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'controlAsistenciaId': serializer.toJson<int>(controlAsistenciaId),
+      'alumnoId': serializer.toJson<int>(alumnoId),
+      'calendarioPeriodoId': serializer.toJson<int>(calendarioPeriodoId),
+      'grupoId': serializer.toJson<int>(grupoId),
+      'periodoId': serializer.toJson<int>(periodoId),
+      'programaEducativoId': serializer.toJson<int>(programaEducativoId),
+      'docenteId': serializer.toJson<int>(docenteId),
+      'georeferenciaId': serializer.toJson<int>(georeferenciaId),
+      'fechaAsistencia': serializer.toJson<String>(fechaAsistencia),
+      'horaIngreso': serializer.toJson<String>(horaIngreso),
+      'horaSalida': serializer.toJson<String>(horaSalida),
+      'estadoIngresoId': serializer.toJson<int>(estadoIngresoId),
+      'estadosIngresoNombre': serializer.toJson<String>(estadosIngresoNombre),
+      'estadoSalidaId': serializer.toJson<int>(estadoSalidaId),
+      'estadosSalidaNombre': serializer.toJson<String>(estadosSalidaNombre),
+      'observaciones': serializer.toJson<String>(observaciones),
+    };
+  }
+
+  AsistenciaGeneralData copyWith(
+          {int controlAsistenciaId,
+          int alumnoId,
+          int calendarioPeriodoId,
+          int grupoId,
+          int periodoId,
+          int programaEducativoId,
+          int docenteId,
+          int georeferenciaId,
+          String fechaAsistencia,
+          String horaIngreso,
+          String horaSalida,
+          int estadoIngresoId,
+          String estadosIngresoNombre,
+          int estadoSalidaId,
+          String estadosSalidaNombre,
+          String observaciones}) =>
+      AsistenciaGeneralData(
+        controlAsistenciaId: controlAsistenciaId ?? this.controlAsistenciaId,
+        alumnoId: alumnoId ?? this.alumnoId,
+        calendarioPeriodoId: calendarioPeriodoId ?? this.calendarioPeriodoId,
+        grupoId: grupoId ?? this.grupoId,
+        periodoId: periodoId ?? this.periodoId,
+        programaEducativoId: programaEducativoId ?? this.programaEducativoId,
+        docenteId: docenteId ?? this.docenteId,
+        georeferenciaId: georeferenciaId ?? this.georeferenciaId,
+        fechaAsistencia: fechaAsistencia ?? this.fechaAsistencia,
+        horaIngreso: horaIngreso ?? this.horaIngreso,
+        horaSalida: horaSalida ?? this.horaSalida,
+        estadoIngresoId: estadoIngresoId ?? this.estadoIngresoId,
+        estadosIngresoNombre: estadosIngresoNombre ?? this.estadosIngresoNombre,
+        estadoSalidaId: estadoSalidaId ?? this.estadoSalidaId,
+        estadosSalidaNombre: estadosSalidaNombre ?? this.estadosSalidaNombre,
+        observaciones: observaciones ?? this.observaciones,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('AsistenciaGeneralData(')
+          ..write('controlAsistenciaId: $controlAsistenciaId, ')
+          ..write('alumnoId: $alumnoId, ')
+          ..write('calendarioPeriodoId: $calendarioPeriodoId, ')
+          ..write('grupoId: $grupoId, ')
+          ..write('periodoId: $periodoId, ')
+          ..write('programaEducativoId: $programaEducativoId, ')
+          ..write('docenteId: $docenteId, ')
+          ..write('georeferenciaId: $georeferenciaId, ')
+          ..write('fechaAsistencia: $fechaAsistencia, ')
+          ..write('horaIngreso: $horaIngreso, ')
+          ..write('horaSalida: $horaSalida, ')
+          ..write('estadoIngresoId: $estadoIngresoId, ')
+          ..write('estadosIngresoNombre: $estadosIngresoNombre, ')
+          ..write('estadoSalidaId: $estadoSalidaId, ')
+          ..write('estadosSalidaNombre: $estadosSalidaNombre, ')
+          ..write('observaciones: $observaciones')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      controlAsistenciaId.hashCode,
+      $mrjc(
+          alumnoId.hashCode,
+          $mrjc(
+              calendarioPeriodoId.hashCode,
+              $mrjc(
+                  grupoId.hashCode,
+                  $mrjc(
+                      periodoId.hashCode,
+                      $mrjc(
+                          programaEducativoId.hashCode,
+                          $mrjc(
+                              docenteId.hashCode,
+                              $mrjc(
+                                  georeferenciaId.hashCode,
+                                  $mrjc(
+                                      fechaAsistencia.hashCode,
+                                      $mrjc(
+                                          horaIngreso.hashCode,
+                                          $mrjc(
+                                              horaSalida.hashCode,
+                                              $mrjc(
+                                                  estadoIngresoId.hashCode,
+                                                  $mrjc(
+                                                      estadosIngresoNombre
+                                                          .hashCode,
+                                                      $mrjc(
+                                                          estadoSalidaId
+                                                              .hashCode,
+                                                          $mrjc(
+                                                              estadosSalidaNombre
+                                                                  .hashCode,
+                                                              observaciones
+                                                                  .hashCode))))))))))))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is AsistenciaGeneralData &&
+          other.controlAsistenciaId == this.controlAsistenciaId &&
+          other.alumnoId == this.alumnoId &&
+          other.calendarioPeriodoId == this.calendarioPeriodoId &&
+          other.grupoId == this.grupoId &&
+          other.periodoId == this.periodoId &&
+          other.programaEducativoId == this.programaEducativoId &&
+          other.docenteId == this.docenteId &&
+          other.georeferenciaId == this.georeferenciaId &&
+          other.fechaAsistencia == this.fechaAsistencia &&
+          other.horaIngreso == this.horaIngreso &&
+          other.horaSalida == this.horaSalida &&
+          other.estadoIngresoId == this.estadoIngresoId &&
+          other.estadosIngresoNombre == this.estadosIngresoNombre &&
+          other.estadoSalidaId == this.estadoSalidaId &&
+          other.estadosSalidaNombre == this.estadosSalidaNombre &&
+          other.observaciones == this.observaciones);
+}
+
+class AsistenciaGeneralCompanion
+    extends UpdateCompanion<AsistenciaGeneralData> {
+  final Value<int> controlAsistenciaId;
+  final Value<int> alumnoId;
+  final Value<int> calendarioPeriodoId;
+  final Value<int> grupoId;
+  final Value<int> periodoId;
+  final Value<int> programaEducativoId;
+  final Value<int> docenteId;
+  final Value<int> georeferenciaId;
+  final Value<String> fechaAsistencia;
+  final Value<String> horaIngreso;
+  final Value<String> horaSalida;
+  final Value<int> estadoIngresoId;
+  final Value<String> estadosIngresoNombre;
+  final Value<int> estadoSalidaId;
+  final Value<String> estadosSalidaNombre;
+  final Value<String> observaciones;
+  const AsistenciaGeneralCompanion({
+    this.controlAsistenciaId = const Value.absent(),
+    this.alumnoId = const Value.absent(),
+    this.calendarioPeriodoId = const Value.absent(),
+    this.grupoId = const Value.absent(),
+    this.periodoId = const Value.absent(),
+    this.programaEducativoId = const Value.absent(),
+    this.docenteId = const Value.absent(),
+    this.georeferenciaId = const Value.absent(),
+    this.fechaAsistencia = const Value.absent(),
+    this.horaIngreso = const Value.absent(),
+    this.horaSalida = const Value.absent(),
+    this.estadoIngresoId = const Value.absent(),
+    this.estadosIngresoNombre = const Value.absent(),
+    this.estadoSalidaId = const Value.absent(),
+    this.estadosSalidaNombre = const Value.absent(),
+    this.observaciones = const Value.absent(),
+  });
+  AsistenciaGeneralCompanion.insert({
+    this.controlAsistenciaId = const Value.absent(),
+    this.alumnoId = const Value.absent(),
+    this.calendarioPeriodoId = const Value.absent(),
+    this.grupoId = const Value.absent(),
+    this.periodoId = const Value.absent(),
+    this.programaEducativoId = const Value.absent(),
+    this.docenteId = const Value.absent(),
+    this.georeferenciaId = const Value.absent(),
+    this.fechaAsistencia = const Value.absent(),
+    this.horaIngreso = const Value.absent(),
+    this.horaSalida = const Value.absent(),
+    this.estadoIngresoId = const Value.absent(),
+    this.estadosIngresoNombre = const Value.absent(),
+    this.estadoSalidaId = const Value.absent(),
+    this.estadosSalidaNombre = const Value.absent(),
+    this.observaciones = const Value.absent(),
+  });
+  static Insertable<AsistenciaGeneralData> custom({
+    Expression<int> controlAsistenciaId,
+    Expression<int> alumnoId,
+    Expression<int> calendarioPeriodoId,
+    Expression<int> grupoId,
+    Expression<int> periodoId,
+    Expression<int> programaEducativoId,
+    Expression<int> docenteId,
+    Expression<int> georeferenciaId,
+    Expression<String> fechaAsistencia,
+    Expression<String> horaIngreso,
+    Expression<String> horaSalida,
+    Expression<int> estadoIngresoId,
+    Expression<String> estadosIngresoNombre,
+    Expression<int> estadoSalidaId,
+    Expression<String> estadosSalidaNombre,
+    Expression<String> observaciones,
+  }) {
+    return RawValuesInsertable({
+      if (controlAsistenciaId != null)
+        'control_asistencia_id': controlAsistenciaId,
+      if (alumnoId != null) 'alumno_id': alumnoId,
+      if (calendarioPeriodoId != null)
+        'calendario_periodo_id': calendarioPeriodoId,
+      if (grupoId != null) 'grupo_id': grupoId,
+      if (periodoId != null) 'periodo_id': periodoId,
+      if (programaEducativoId != null)
+        'programa_educativo_id': programaEducativoId,
+      if (docenteId != null) 'docente_id': docenteId,
+      if (georeferenciaId != null) 'georeferencia_id': georeferenciaId,
+      if (fechaAsistencia != null) 'fecha_asistencia': fechaAsistencia,
+      if (horaIngreso != null) 'hora_ingreso': horaIngreso,
+      if (horaSalida != null) 'hora_salida': horaSalida,
+      if (estadoIngresoId != null) 'estado_ingreso_id': estadoIngresoId,
+      if (estadosIngresoNombre != null)
+        'estados_ingreso_nombre': estadosIngresoNombre,
+      if (estadoSalidaId != null) 'estado_salida_id': estadoSalidaId,
+      if (estadosSalidaNombre != null)
+        'estados_salida_nombre': estadosSalidaNombre,
+      if (observaciones != null) 'observaciones': observaciones,
+    });
+  }
+
+  AsistenciaGeneralCompanion copyWith(
+      {Value<int> controlAsistenciaId,
+      Value<int> alumnoId,
+      Value<int> calendarioPeriodoId,
+      Value<int> grupoId,
+      Value<int> periodoId,
+      Value<int> programaEducativoId,
+      Value<int> docenteId,
+      Value<int> georeferenciaId,
+      Value<String> fechaAsistencia,
+      Value<String> horaIngreso,
+      Value<String> horaSalida,
+      Value<int> estadoIngresoId,
+      Value<String> estadosIngresoNombre,
+      Value<int> estadoSalidaId,
+      Value<String> estadosSalidaNombre,
+      Value<String> observaciones}) {
+    return AsistenciaGeneralCompanion(
+      controlAsistenciaId: controlAsistenciaId ?? this.controlAsistenciaId,
+      alumnoId: alumnoId ?? this.alumnoId,
+      calendarioPeriodoId: calendarioPeriodoId ?? this.calendarioPeriodoId,
+      grupoId: grupoId ?? this.grupoId,
+      periodoId: periodoId ?? this.periodoId,
+      programaEducativoId: programaEducativoId ?? this.programaEducativoId,
+      docenteId: docenteId ?? this.docenteId,
+      georeferenciaId: georeferenciaId ?? this.georeferenciaId,
+      fechaAsistencia: fechaAsistencia ?? this.fechaAsistencia,
+      horaIngreso: horaIngreso ?? this.horaIngreso,
+      horaSalida: horaSalida ?? this.horaSalida,
+      estadoIngresoId: estadoIngresoId ?? this.estadoIngresoId,
+      estadosIngresoNombre: estadosIngresoNombre ?? this.estadosIngresoNombre,
+      estadoSalidaId: estadoSalidaId ?? this.estadoSalidaId,
+      estadosSalidaNombre: estadosSalidaNombre ?? this.estadosSalidaNombre,
+      observaciones: observaciones ?? this.observaciones,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (controlAsistenciaId.present) {
+      map['control_asistencia_id'] = Variable<int>(controlAsistenciaId.value);
+    }
+    if (alumnoId.present) {
+      map['alumno_id'] = Variable<int>(alumnoId.value);
+    }
+    if (calendarioPeriodoId.present) {
+      map['calendario_periodo_id'] = Variable<int>(calendarioPeriodoId.value);
+    }
+    if (grupoId.present) {
+      map['grupo_id'] = Variable<int>(grupoId.value);
+    }
+    if (periodoId.present) {
+      map['periodo_id'] = Variable<int>(periodoId.value);
+    }
+    if (programaEducativoId.present) {
+      map['programa_educativo_id'] = Variable<int>(programaEducativoId.value);
+    }
+    if (docenteId.present) {
+      map['docente_id'] = Variable<int>(docenteId.value);
+    }
+    if (georeferenciaId.present) {
+      map['georeferencia_id'] = Variable<int>(georeferenciaId.value);
+    }
+    if (fechaAsistencia.present) {
+      map['fecha_asistencia'] = Variable<String>(fechaAsistencia.value);
+    }
+    if (horaIngreso.present) {
+      map['hora_ingreso'] = Variable<String>(horaIngreso.value);
+    }
+    if (horaSalida.present) {
+      map['hora_salida'] = Variable<String>(horaSalida.value);
+    }
+    if (estadoIngresoId.present) {
+      map['estado_ingreso_id'] = Variable<int>(estadoIngresoId.value);
+    }
+    if (estadosIngresoNombre.present) {
+      map['estados_ingreso_nombre'] =
+          Variable<String>(estadosIngresoNombre.value);
+    }
+    if (estadoSalidaId.present) {
+      map['estado_salida_id'] = Variable<int>(estadoSalidaId.value);
+    }
+    if (estadosSalidaNombre.present) {
+      map['estados_salida_nombre'] =
+          Variable<String>(estadosSalidaNombre.value);
+    }
+    if (observaciones.present) {
+      map['observaciones'] = Variable<String>(observaciones.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AsistenciaGeneralCompanion(')
+          ..write('controlAsistenciaId: $controlAsistenciaId, ')
+          ..write('alumnoId: $alumnoId, ')
+          ..write('calendarioPeriodoId: $calendarioPeriodoId, ')
+          ..write('grupoId: $grupoId, ')
+          ..write('periodoId: $periodoId, ')
+          ..write('programaEducativoId: $programaEducativoId, ')
+          ..write('docenteId: $docenteId, ')
+          ..write('georeferenciaId: $georeferenciaId, ')
+          ..write('fechaAsistencia: $fechaAsistencia, ')
+          ..write('horaIngreso: $horaIngreso, ')
+          ..write('horaSalida: $horaSalida, ')
+          ..write('estadoIngresoId: $estadoIngresoId, ')
+          ..write('estadosIngresoNombre: $estadosIngresoNombre, ')
+          ..write('estadoSalidaId: $estadoSalidaId, ')
+          ..write('estadosSalidaNombre: $estadosSalidaNombre, ')
+          ..write('observaciones: $observaciones')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $AsistenciaGeneralTable extends AsistenciaGeneral
+    with TableInfo<$AsistenciaGeneralTable, AsistenciaGeneralData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $AsistenciaGeneralTable(this._db, [this._alias]);
+  final VerificationMeta _controlAsistenciaIdMeta =
+      const VerificationMeta('controlAsistenciaId');
+  GeneratedIntColumn _controlAsistenciaId;
+  @override
+  GeneratedIntColumn get controlAsistenciaId =>
+      _controlAsistenciaId ??= _constructControlAsistenciaId();
+  GeneratedIntColumn _constructControlAsistenciaId() {
+    return GeneratedIntColumn(
+      'control_asistencia_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _alumnoIdMeta = const VerificationMeta('alumnoId');
+  GeneratedIntColumn _alumnoId;
+  @override
+  GeneratedIntColumn get alumnoId => _alumnoId ??= _constructAlumnoId();
+  GeneratedIntColumn _constructAlumnoId() {
+    return GeneratedIntColumn(
+      'alumno_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _calendarioPeriodoIdMeta =
+      const VerificationMeta('calendarioPeriodoId');
+  GeneratedIntColumn _calendarioPeriodoId;
+  @override
+  GeneratedIntColumn get calendarioPeriodoId =>
+      _calendarioPeriodoId ??= _constructCalendarioPeriodoId();
+  GeneratedIntColumn _constructCalendarioPeriodoId() {
+    return GeneratedIntColumn(
+      'calendario_periodo_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _grupoIdMeta = const VerificationMeta('grupoId');
+  GeneratedIntColumn _grupoId;
+  @override
+  GeneratedIntColumn get grupoId => _grupoId ??= _constructGrupoId();
+  GeneratedIntColumn _constructGrupoId() {
+    return GeneratedIntColumn(
+      'grupo_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _periodoIdMeta = const VerificationMeta('periodoId');
+  GeneratedIntColumn _periodoId;
+  @override
+  GeneratedIntColumn get periodoId => _periodoId ??= _constructPeriodoId();
+  GeneratedIntColumn _constructPeriodoId() {
+    return GeneratedIntColumn(
+      'periodo_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _programaEducativoIdMeta =
+      const VerificationMeta('programaEducativoId');
+  GeneratedIntColumn _programaEducativoId;
+  @override
+  GeneratedIntColumn get programaEducativoId =>
+      _programaEducativoId ??= _constructProgramaEducativoId();
+  GeneratedIntColumn _constructProgramaEducativoId() {
+    return GeneratedIntColumn(
+      'programa_educativo_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _docenteIdMeta = const VerificationMeta('docenteId');
+  GeneratedIntColumn _docenteId;
+  @override
+  GeneratedIntColumn get docenteId => _docenteId ??= _constructDocenteId();
+  GeneratedIntColumn _constructDocenteId() {
+    return GeneratedIntColumn(
+      'docente_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _georeferenciaIdMeta =
+      const VerificationMeta('georeferenciaId');
+  GeneratedIntColumn _georeferenciaId;
+  @override
+  GeneratedIntColumn get georeferenciaId =>
+      _georeferenciaId ??= _constructGeoreferenciaId();
+  GeneratedIntColumn _constructGeoreferenciaId() {
+    return GeneratedIntColumn(
+      'georeferencia_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _fechaAsistenciaMeta =
+      const VerificationMeta('fechaAsistencia');
+  GeneratedTextColumn _fechaAsistencia;
+  @override
+  GeneratedTextColumn get fechaAsistencia =>
+      _fechaAsistencia ??= _constructFechaAsistencia();
+  GeneratedTextColumn _constructFechaAsistencia() {
+    return GeneratedTextColumn(
+      'fecha_asistencia',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _horaIngresoMeta =
+      const VerificationMeta('horaIngreso');
+  GeneratedTextColumn _horaIngreso;
+  @override
+  GeneratedTextColumn get horaIngreso =>
+      _horaIngreso ??= _constructHoraIngreso();
+  GeneratedTextColumn _constructHoraIngreso() {
+    return GeneratedTextColumn(
+      'hora_ingreso',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _horaSalidaMeta = const VerificationMeta('horaSalida');
+  GeneratedTextColumn _horaSalida;
+  @override
+  GeneratedTextColumn get horaSalida => _horaSalida ??= _constructHoraSalida();
+  GeneratedTextColumn _constructHoraSalida() {
+    return GeneratedTextColumn(
+      'hora_salida',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoIngresoIdMeta =
+      const VerificationMeta('estadoIngresoId');
+  GeneratedIntColumn _estadoIngresoId;
+  @override
+  GeneratedIntColumn get estadoIngresoId =>
+      _estadoIngresoId ??= _constructEstadoIngresoId();
+  GeneratedIntColumn _constructEstadoIngresoId() {
+    return GeneratedIntColumn(
+      'estado_ingreso_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadosIngresoNombreMeta =
+      const VerificationMeta('estadosIngresoNombre');
+  GeneratedTextColumn _estadosIngresoNombre;
+  @override
+  GeneratedTextColumn get estadosIngresoNombre =>
+      _estadosIngresoNombre ??= _constructEstadosIngresoNombre();
+  GeneratedTextColumn _constructEstadosIngresoNombre() {
+    return GeneratedTextColumn(
+      'estados_ingreso_nombre',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadoSalidaIdMeta =
+      const VerificationMeta('estadoSalidaId');
+  GeneratedIntColumn _estadoSalidaId;
+  @override
+  GeneratedIntColumn get estadoSalidaId =>
+      _estadoSalidaId ??= _constructEstadoSalidaId();
+  GeneratedIntColumn _constructEstadoSalidaId() {
+    return GeneratedIntColumn(
+      'estado_salida_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _estadosSalidaNombreMeta =
+      const VerificationMeta('estadosSalidaNombre');
+  GeneratedTextColumn _estadosSalidaNombre;
+  @override
+  GeneratedTextColumn get estadosSalidaNombre =>
+      _estadosSalidaNombre ??= _constructEstadosSalidaNombre();
+  GeneratedTextColumn _constructEstadosSalidaNombre() {
+    return GeneratedTextColumn(
+      'estados_salida_nombre',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _observacionesMeta =
+      const VerificationMeta('observaciones');
+  GeneratedTextColumn _observaciones;
+  @override
+  GeneratedTextColumn get observaciones =>
+      _observaciones ??= _constructObservaciones();
+  GeneratedTextColumn _constructObservaciones() {
+    return GeneratedTextColumn(
+      'observaciones',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [
+        controlAsistenciaId,
+        alumnoId,
+        calendarioPeriodoId,
+        grupoId,
+        periodoId,
+        programaEducativoId,
+        docenteId,
+        georeferenciaId,
+        fechaAsistencia,
+        horaIngreso,
+        horaSalida,
+        estadoIngresoId,
+        estadosIngresoNombre,
+        estadoSalidaId,
+        estadosSalidaNombre,
+        observaciones
+      ];
+  @override
+  $AsistenciaGeneralTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'asistencia_general';
+  @override
+  final String actualTableName = 'asistencia_general';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<AsistenciaGeneralData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('control_asistencia_id')) {
+      context.handle(
+          _controlAsistenciaIdMeta,
+          controlAsistenciaId.isAcceptableOrUnknown(
+              data['control_asistencia_id'], _controlAsistenciaIdMeta));
+    }
+    if (data.containsKey('alumno_id')) {
+      context.handle(_alumnoIdMeta,
+          alumnoId.isAcceptableOrUnknown(data['alumno_id'], _alumnoIdMeta));
+    }
+    if (data.containsKey('calendario_periodo_id')) {
+      context.handle(
+          _calendarioPeriodoIdMeta,
+          calendarioPeriodoId.isAcceptableOrUnknown(
+              data['calendario_periodo_id'], _calendarioPeriodoIdMeta));
+    }
+    if (data.containsKey('grupo_id')) {
+      context.handle(_grupoIdMeta,
+          grupoId.isAcceptableOrUnknown(data['grupo_id'], _grupoIdMeta));
+    }
+    if (data.containsKey('periodo_id')) {
+      context.handle(_periodoIdMeta,
+          periodoId.isAcceptableOrUnknown(data['periodo_id'], _periodoIdMeta));
+    }
+    if (data.containsKey('programa_educativo_id')) {
+      context.handle(
+          _programaEducativoIdMeta,
+          programaEducativoId.isAcceptableOrUnknown(
+              data['programa_educativo_id'], _programaEducativoIdMeta));
+    }
+    if (data.containsKey('docente_id')) {
+      context.handle(_docenteIdMeta,
+          docenteId.isAcceptableOrUnknown(data['docente_id'], _docenteIdMeta));
+    }
+    if (data.containsKey('georeferencia_id')) {
+      context.handle(
+          _georeferenciaIdMeta,
+          georeferenciaId.isAcceptableOrUnknown(
+              data['georeferencia_id'], _georeferenciaIdMeta));
+    }
+    if (data.containsKey('fecha_asistencia')) {
+      context.handle(
+          _fechaAsistenciaMeta,
+          fechaAsistencia.isAcceptableOrUnknown(
+              data['fecha_asistencia'], _fechaAsistenciaMeta));
+    }
+    if (data.containsKey('hora_ingreso')) {
+      context.handle(
+          _horaIngresoMeta,
+          horaIngreso.isAcceptableOrUnknown(
+              data['hora_ingreso'], _horaIngresoMeta));
+    }
+    if (data.containsKey('hora_salida')) {
+      context.handle(
+          _horaSalidaMeta,
+          horaSalida.isAcceptableOrUnknown(
+              data['hora_salida'], _horaSalidaMeta));
+    }
+    if (data.containsKey('estado_ingreso_id')) {
+      context.handle(
+          _estadoIngresoIdMeta,
+          estadoIngresoId.isAcceptableOrUnknown(
+              data['estado_ingreso_id'], _estadoIngresoIdMeta));
+    }
+    if (data.containsKey('estados_ingreso_nombre')) {
+      context.handle(
+          _estadosIngresoNombreMeta,
+          estadosIngresoNombre.isAcceptableOrUnknown(
+              data['estados_ingreso_nombre'], _estadosIngresoNombreMeta));
+    }
+    if (data.containsKey('estado_salida_id')) {
+      context.handle(
+          _estadoSalidaIdMeta,
+          estadoSalidaId.isAcceptableOrUnknown(
+              data['estado_salida_id'], _estadoSalidaIdMeta));
+    }
+    if (data.containsKey('estados_salida_nombre')) {
+      context.handle(
+          _estadosSalidaNombreMeta,
+          estadosSalidaNombre.isAcceptableOrUnknown(
+              data['estados_salida_nombre'], _estadosSalidaNombreMeta));
+    }
+    if (data.containsKey('observaciones')) {
+      context.handle(
+          _observacionesMeta,
+          observaciones.isAcceptableOrUnknown(
+              data['observaciones'], _observacionesMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {controlAsistenciaId};
+  @override
+  AsistenciaGeneralData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return AsistenciaGeneralData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $AsistenciaGeneralTable createAlias(String alias) {
+    return $AsistenciaGeneralTable(_db, alias);
+  }
+}
+
 abstract class _$AppDataBase extends GeneratedDatabase {
   _$AppDataBase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $PersonaTable _persona;
@@ -26975,6 +27942,9 @@ abstract class _$AppDataBase extends GeneratedDatabase {
   $AsistenciaRelProgramaTipoNotaTable get asistenciaRelProgramaTipoNota =>
       _asistenciaRelProgramaTipoNota ??=
           $AsistenciaRelProgramaTipoNotaTable(this);
+  $AsistenciaGeneralTable _asistenciaGeneral;
+  $AsistenciaGeneralTable get asistenciaGeneral =>
+      _asistenciaGeneral ??= $AsistenciaGeneralTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
@@ -27019,6 +27989,7 @@ abstract class _$AppDataBase extends GeneratedDatabase {
         asistecniaArchivo,
         asistenciaTipoNota,
         asistenciaValorTipoNota,
-        asistenciaRelProgramaTipoNota
+        asistenciaRelProgramaTipoNota,
+        asistenciaGeneral
       ];
 }

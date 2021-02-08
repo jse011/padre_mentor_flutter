@@ -39,7 +39,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
           bottom: false,
           child: Scaffold(
             backgroundColor: AppTheme.nearlyWhite,
-            appBar: AppBar(
+            /*appBar: AppBar(
                 title: Text('DBDEBUG'),
                 actions: <Widget>[
                   new IconButton(
@@ -49,7 +49,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                       }
                   ),
                 ]
-            ),
+            ),*/
             body: ControlledWidgetBuilder<HomeController>(
               builder: (context, controller) {
                 if(controller.showLoggin == 0){

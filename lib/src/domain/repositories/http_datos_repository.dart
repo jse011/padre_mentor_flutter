@@ -13,4 +13,5 @@ abstract class HttpDatosRepository {
   Future<Map<String, dynamic>> getUsuario(String urlServidor, int usuarioId);
   Future<List<dynamic>> updateFamilia(String urlServidor, int usuarioId, List<dynamic> jsonPersonas);
   Future<Map<String, dynamic>> getEvaluacionAlumno(String urlServidorLocal, int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId);
+  Future<Map<String, dynamic>> getEvaluacionGeneral(String urlServidorLocal, int calendarioPeridoId, int alumnoId);
 }

@@ -23,4 +23,7 @@ abstract class CursoRepository{
   Future<void> saveAsistencia(Map<String, dynamic> datosEvaluaciones, int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId);
   Future<List<AsistenciaUi>> getAsistenciaAlumno(int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId);
   Future<List<AsistenciaTipoUi>> getAsistenciaTipo(int anioAcademicoId, int programaId, int calendarioPeridoId, int alumnoId);
+  Future<void> saveAsistenciaGeneral(Map<String, dynamic> datosEvaluaciones, int calendarioPeridoId, int alumnoId);
+  Future<List<AsistenciaUi>> getAsistenciaGeneral(int calendarioPeridoId, int alumnoId);
+  Future<List<AsistenciaTipoUi>> getAsistenciaTipoGeneral(int calendarioPeridoId, int alumnoId);
 }
