@@ -1,14 +1,18 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:padre_mentor/src/app/page/eventos_agenda/evento_agenda_controller.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/domain/entities/evento_ui.dart';
 import 'package:padre_mentor/src/domain/entities/tipo_evento_ui.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:share/share.dart';
 
 class InformacionEventoAgendaView extends StatefulWidget {
   final EventoUi eventoUi;
@@ -39,11 +43,10 @@ class InformacionEventoAgendaView extends StatefulWidget {
 
 class _InformacionEventoAgendaViewState extends State<InformacionEventoAgendaView> {
   bool widgetImage = false;
+  bool showContent = true;
   @override
   Widget build(BuildContext context) {
     //Widget widgetImage = Container();
-
-
     return Container(
         color: Colors.black.withOpacity(0.7),
         child: Scaffold(
@@ -57,6 +60,18 @@ class _InformacionEventoAgendaViewState extends State<InformacionEventoAgendaVie
                 children: [
                   PhotoView(
                       imageProvider: CachedNetworkImageProvider(widget.eventoUi.foto??''),
+                    loadingBuilder: (context, event) => Center(
+                      child: Container(
+                        width: 20.0,
+                        height: 20.0,
+                        child: CircularProgressIndicator(
+                          value: event == null
+                              ? 0
+                              : event.cumulativeBytesLoaded / event.expectedTotalBytes,
+                        ),
+                      ),
+                    ),
+
                   ),
                   Container(
                     child: Column(
@@ -212,7 +227,11 @@ class _InformacionEventoAgendaViewState extends State<InformacionEventoAgendaVie
                                     borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                                     splashColor: AppTheme.nearlyDarkBlue.withOpacity(0.2),
                                     onTap: () {
-
+                                      if(widget.eventoUi.fotoEntidad!=null && widget.eventoUi.fotoEntidad.isNotEmpty){
+                                        _onShare(widget.eventoUi);
+                                      }else{
+                                        Share.share(widget.eventoUi.descripcion??"", subject: widget.eventoUi.titulo??"");
+                                      }
                                     },
                                     child:
                                     Container(
@@ -226,7 +245,7 @@ class _InformacionEventoAgendaViewState extends State<InformacionEventoAgendaVie
                                             margin: const EdgeInsets.only(top: 0, left: 8, right: 8, bottom: 0),
                                             child: Image.asset("assets/fitness_app/evento_shared.png", color: AppTheme.white,),
                                           ),
-                                          Text("Me gusta", style: TextStyle( fontSize: 14, color: AppTheme.white),),
+                                          Text("Compartir", style: TextStyle( fontSize: 14, color: AppTheme.white),),
                                         ],
                                       ),
                                     )
@@ -263,5 +282,22 @@ class _InformacionEventoAgendaViewState extends State<InformacionEventoAgendaVie
         )
     );
   }
+
+
+  _onShare(EventoUi eventoUi) async {
+    print("file1: " + eventoUi.foto);
+    var file = await DefaultCacheManager().getSingleFile(eventoUi.foto);
+    if (await File(file.path).exists()) {
+      print("File exists");
+      await File(file.path).delete();
+    } else {
+      print("File don't exists");
+    }
+    final directory = Directory(file.path);
+    print("file2: " + directory.path);
+    Share.shareFiles( ['${directory.path}/image.jpg'], subject: widget.eventoUi.titulo??"", text: eventoUi.descripcion);
+
+  }
+
 }
 
