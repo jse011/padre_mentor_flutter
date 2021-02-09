@@ -8,7 +8,7 @@ import 'package:padre_mentor/src/app/page/eventos_agenda/evento_agenda_controlle
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/domain/entities/evento_ui.dart';
 import 'package:padre_mentor/src/domain/entities/tipo_evento_ui.dart';
-import 'package:pinch_zoom_image_updated/pinch_zoom_image_updated.dart';
+import 'package:photo_view/photo_view.dart';
 
 class InformacionEventoAgendaView extends StatefulWidget {
   final EventoUi eventoUi;
@@ -55,13 +55,8 @@ class _InformacionEventoAgendaViewState extends State<InformacionEventoAgendaVie
               child: Stack(
                 alignment: AlignmentDirectional.center,
                 children: [
-                  PinchZoomImage(
-                    image: CachedNetworkImage(
-                      imageUrl: widget.eventoUi.foto??'',
-                      fit: BoxFit.cover,
-                    ),
-                    //zoomedBackgroundColor: AppTheme.grey.withOpacity(0.7),
-                    hideStatusBarWhileZooming: true,
+                  PhotoView(
+                      imageProvider: CachedNetworkImageProvider(widget.eventoUi.foto??''),
                   ),
                   Container(
                     child: Column(
