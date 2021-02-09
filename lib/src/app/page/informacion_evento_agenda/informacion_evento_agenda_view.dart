@@ -1,18 +1,15 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:padre_mentor/src/app/page/eventos_agenda/evento_agenda_controller.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/domain/entities/evento_ui.dart';
-import 'package:padre_mentor/src/domain/entities/tipo_evento_ui.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:share/share.dart';
 
 class InformacionEventoAgendaView extends StatefulWidget {
   final EventoUi eventoUi;
@@ -228,9 +225,9 @@ class _InformacionEventoAgendaViewState extends State<InformacionEventoAgendaVie
                                     splashColor: AppTheme.nearlyDarkBlue.withOpacity(0.2),
                                     onTap: () {
                                       if(widget.eventoUi.fotoEntidad!=null && widget.eventoUi.fotoEntidad.isNotEmpty){
-                                        _onShare(widget.eventoUi);
+                                        _shareImageFromUrl(widget.eventoUi);
                                       }else{
-                                        Share.share(widget.eventoUi.descripcion??"", subject: widget.eventoUi.titulo??"");
+                                        _shareText(widget.eventoUi);
                                       }
                                     },
                                     child:
@@ -284,7 +281,7 @@ class _InformacionEventoAgendaViewState extends State<InformacionEventoAgendaVie
   }
 
 
-  _onShare(EventoUi eventoUi) async {
+ /* _onShare(EventoUi eventoUi) async {
     print("file1: " + eventoUi.foto);
     var file = await DefaultCacheManager().getSingleFile(eventoUi.foto);
     if (await File(file.path).exists()) {
@@ -297,6 +294,29 @@ class _InformacionEventoAgendaViewState extends State<InformacionEventoAgendaVie
     print("file2: " + directory.path);
     Share.shareFiles( ['${directory.path}/image.jpg'], subject: widget.eventoUi.titulo??"", text: eventoUi.descripcion);
 
+  }*/
+  Future<void> _shareImageFromUrl(EventoUi eventoUi) async {
+    try {
+      /*var request = await HttpClient().getUrl(Uri.parse(
+          'https://shop.esys.eu/media/image/6f/8f/af/amlog_transport-berwachung.jpg'));
+      var response = await request.close();
+      Uint8List bytes = await consolidateHttpClientResponseBytes(response);*/
+
+      var file = await DefaultCacheManager().getSingleFile(eventoUi.foto);
+      List<int> bytes = await file.readAsBytes();
+      Uint8List ubytes = Uint8List.fromList(bytes);
+
+      await Share.file(eventoUi.titulo, 'amlog.jpg', ubytes, 'image/jpg', text: eventoUi.titulo +"\n"+eventoUi.descripcion,);
+    } catch (e) {}
+  }
+
+  Future<void> _shareText(EventoUi eventoUi) async {
+    try {
+      Share.text(eventoUi.titulo,
+          eventoUi.titulo +"\n"+eventoUi.descripcion, 'text/plain');
+    } catch (e) {
+
+    }
   }
 
 }

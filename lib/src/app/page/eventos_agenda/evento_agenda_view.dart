@@ -1,24 +1,23 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:padre_mentor/src/app/page/eventos_agenda/evento_agenda_controller.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/app/widgets/animation_view.dart';
-import 'package:padre_mentor/src/app/widgets/menu_item_view.dart';
 import 'package:padre_mentor/src/data/repositories/moor/data_usuario_configuracion_respository.dart';
 import 'package:padre_mentor/src/device/repositories/check_conexion/device_conex_provider.dart';
 import 'package:padre_mentor/src/device/repositories/http/device_http_datos_repository.dart';
 import 'package:padre_mentor/src/domain/entities/evento_ui.dart';
 import 'package:padre_mentor/src/domain/entities/tipo_evento_ui.dart';
-import 'package:padre_mentor/src/domain/repositories/check_conex_repository.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../informacion_evento_agenda/informacion_evento_agenda_view.dart';
 
@@ -594,7 +593,11 @@ class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaCon
                                                     borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                                                     splashColor: AppTheme.nearlyDarkBlue.withOpacity(0.2),
                                                     onTap: () {
-
+                                                      if(eventoUi.fotoEntidad!=null && eventoUi.fotoEntidad.isNotEmpty){
+                                                        _shareImageFromUrl(eventoUi);
+                                                      }else{
+                                                        _shareText(eventoUi);
+                                                      }
                                                     },
                                                     child:
                                                     Container(
@@ -608,7 +611,7 @@ class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaCon
                                                             margin: const EdgeInsets.only(top: 0, left: 8, right: 8, bottom: 0),
                                                             child: Image.asset("assets/fitness_app/evento_shared.png"),
                                                           ),
-                                                          Text("Me gusta", style: TextStyle( fontSize: 14, color: AppTheme.lightText),),
+                                                          Text("Compartir", style: TextStyle( fontSize: 14, color: AppTheme.lightText),),
                                                         ],
                                                       ),
                                                     )
@@ -646,6 +649,30 @@ class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaCon
         ),
       ),
     );
+  }
+
+  Future<void> _shareImageFromUrl(EventoUi eventoUi) async {
+    try {
+      /*var request = await HttpClient().getUrl(Uri.parse(
+          'https://shop.esys.eu/media/image/6f/8f/af/amlog_transport-berwachung.jpg'));
+      var response = await request.close();
+      Uint8List bytes = await consolidateHttpClientResponseBytes(response);*/
+
+      var file = await DefaultCacheManager().getSingleFile(eventoUi.foto);
+      List<int> bytes = await file.readAsBytes();
+      Uint8List ubytes = Uint8List.fromList(bytes);
+
+      await Share.file(eventoUi.titulo, 'amlog.jpg', ubytes, 'image/jpg', text: eventoUi.titulo +"\n"+eventoUi.descripcion,);
+    } catch (e) {}
+  }
+
+  Future<void> _shareText(EventoUi eventoUi) async {
+    try {
+      Share.text(eventoUi.titulo,
+          eventoUi.titulo +"\n"+eventoUi.descripcion, 'text/plain');
+    } catch (e) {
+      print('error: $e');
+    }
   }
 
 }
