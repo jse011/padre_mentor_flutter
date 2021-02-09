@@ -46,7 +46,8 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
         dismissText: "Quizás más tarde",
         updateText: "Actualizar",
         dialogTitle: "Actualización disponible",
-        iOSId: 'com.google.Vespa',
+        //iOSId: 'com.google.Vespa',
+        iOSId: 'com.consultoraestrategia.padre_mentor',
         androidId: 'com.consultoraestrategia.padre_mentor',
         dialogTextBuilder: (localVersion, storeVersion) => 'Ahora puede actualizar esta aplicación del ${localVersion} al ${storeVersion}',
       ).showAlertIfNecessary();
