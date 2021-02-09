@@ -13,6 +13,7 @@ import 'package:padre_mentor/src/app/widgets/navigation_drawer/drawer_user_contr
 import 'package:padre_mentor/src/app/widgets/navigation_drawer/home_drawer.dart';
 import 'package:padre_mentor/src/data/repositories/moor/data_usuario_configuracion_respository.dart';
 import 'package:padre_mentor/src/device/repositories/http/device_http_datos_repository.dart';
+import 'package:padre_mentor/utils/new_version.dart';
 import 'package:sqlite_viewer/sqlite_viewer.dart';
 
 import 'home_controller.dart';
@@ -29,6 +30,34 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
   DrawerIndex _drawerIndex;
   Widget _screenView;
   _HomePageState() : super(HomeController(DataUsuarioAndRepository(), DeviceHttpDatosRepositorio()));
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    Future.delayed(const Duration(milliseconds: 500), () {
+      NewVersion(
+        context: context,
+        dismissText: "Quizás más tarde",
+        updateText: "Actualizar",
+        dialogTitle: "Actualización disponible",
+        iOSId: 'com.google.Vespa',
+        androidId: 'com.consultoraestrategia.padre_mentor',
+        dialogTextBuilder: (localVersion, storeVersion) => 'Ahora puede actualizar esta aplicación del ${localVersion} al ${storeVersion}',
+      ).showAlertIfNecessary();
+    }
+    );
+
+
+
+
+  }
+
 
   @override
   Widget get view =>
