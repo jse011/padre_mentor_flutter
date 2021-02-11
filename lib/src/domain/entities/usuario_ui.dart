@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:padre_mentor/src/domain/entities/contacto_ui.dart';
 import 'package:padre_mentor/src/domain/entities/hijos_ui.dart';
 import 'package:padre_mentor/src/domain/entities/programa_educativo_ui.dart';
@@ -19,6 +21,7 @@ class UsuarioUi {
   String fechaNacimiento2;
   List<FamiliaUi> familiaUiList = [];
   bool change;
+  File fotoFile;
 
   UsuarioUi({this.personaId, this.nombre, this.foto, this.hijos, this.programaEducativoUiList, this.celular, this.correo, this.fechaNacimiento, this.familiaUiList, this.nombreSimple, this.fechaNacimiento2});
 }

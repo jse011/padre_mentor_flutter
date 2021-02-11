@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +14,7 @@ import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/app/widgets/animation_view.dart';
 import 'package:padre_mentor/src/app/widgets/ars_progress.dart';
 import 'package:padre_mentor/src/app/widgets/ars_progress_dialog.dart';
+import 'package:padre_mentor/src/app/widgets/image_picker/image_picker_handler.dart';
 import 'package:padre_mentor/src/data/repositories/moor/data_usuario_configuracion_respository.dart';
 import 'package:padre_mentor/src/device/repositories/check_conexion/device_conex_provider.dart';
 import 'package:padre_mentor/src/device/repositories/http/device_http_datos_repository.dart';
@@ -24,20 +27,23 @@ class EditarUsuarioView extends View{
   EditarUsuarioView({this.cabecera = false});
 
   @override
-  EditarUsuarioViewState createState() => EditarUsuarioViewState();
+  EditarUsuarioViewState createState() => EditarUsuarioViewState(EditarUsuarioController(DeviceHttpDatosRepositorio(), DataUsuarioAndRepository(), DeviceCheckConexRepository()));
 
 }
 
-class EditarUsuarioViewState extends ViewState<EditarUsuarioView, EditarUsuarioController> with TickerProviderStateMixin {
+class EditarUsuarioViewState extends ViewState<EditarUsuarioView, EditarUsuarioController> with  TickerProviderStateMixin,ImagePickerListener {
   Animation<double> topBarAnimation;
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
   AnimationController animationController;
-  TextEditingController nameController = TextEditingController();
-  TextEditingController cityController = TextEditingController();
-  TextEditingController accountController = TextEditingController();
 
-  EditarUsuarioViewState() : super(EditarUsuarioController(DeviceHttpDatosRepositorio(), DataUsuarioAndRepository(), DeviceCheckConexRepository()));
+  AnimationController _imagePickerAnimationcontroller;
+  ImagePickerHandler imagePicker;
+  EditarUsuarioController controller;
+
+  EditarUsuarioViewState(controller): super(controller){
+    this.controller = controller;
+  }
 
   @override
   void initState() {
@@ -79,6 +85,16 @@ class EditarUsuarioViewState extends ViewState<EditarUsuarioView, EditarUsuarioC
       });}
 
     );
+
+
+    _imagePickerAnimationcontroller = new AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+
+    imagePicker=new ImagePickerHandler(this,_imagePickerAnimationcontroller);
+    imagePicker.init();
+
     super.initState();
     //initDialog();
   }
@@ -105,6 +121,7 @@ class EditarUsuarioViewState extends ViewState<EditarUsuarioView, EditarUsuarioC
   @override
   void dispose() {
     animationController.dispose();
+    _imagePickerAnimationcontroller.dispose();
     super.dispose();
   }
   @override
@@ -171,36 +188,96 @@ class EditarUsuarioViewState extends ViewState<EditarUsuarioView, EditarUsuarioC
                         SliverList(
                             delegate: SliverChildListDelegate([
                               Center(
-                                child:  Container(
-                                  margin: const EdgeInsets.only(top: 48),
-                                  height: 120,
-                                  width: 120,
-                                  padding: const EdgeInsets.all(2),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: AppTheme.white,
-                                    boxShadow: <BoxShadow>[
-                                      BoxShadow(color: AppTheme.grey.withOpacity(0.6), offset: const Offset(2.0, 4.0), blurRadius: 8),
-                                    ],
-                                  ),
-                                  child: Container(
-                                      child:  CachedNetworkImage(
-                                        placeholder: (context, url) => CircularProgressIndicator(),
-                                        imageUrl: controller.usuarioUi.foto??'',
-                                        errorWidget: (context, url, error) =>  Icon(Icons.error_outline_rounded, size: 80,),
-                                        imageBuilder: (context, imageProvider) => Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.all(Radius.circular(100)),
-                                                image: DecorationImage(
-                                                  image: imageProvider,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                boxShadow: <BoxShadow>[
-                                                  BoxShadow(color: AppTheme.grey.withOpacity(0.4), offset: const Offset(2.0, 2.0), blurRadius: 6),
-                                                ]
+                                child:  Stack(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 90,right: 90),
+                                      child: Container(
+                                        margin: const EdgeInsets.only(top: 48),
+                                        height: 120,
+                                        width: 120,
+                                        padding: const EdgeInsets.all(2),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: AppTheme.white,
+                                          boxShadow: <BoxShadow>[
+                                            BoxShadow(color: AppTheme.grey.withOpacity(0.6), offset: const Offset(2.0, 4.0), blurRadius: 8),
+                                          ],
+                                        ),
+                                        child: GestureDetector(
+                                            onTap: (){
+                                              controller.onChangeImageUsuario();
+                                              imagePicker.showDialog(context);
+                                            },
+                                            child:  controller.usuarioUi.fotoFile!=null?Container(
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.all(Radius.circular(100)),
+                                                    image: DecorationImage(
+                                                      image: ExactAssetImage(controller.usuarioUi.fotoFile.path),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                    boxShadow: <BoxShadow>[
+                                                      BoxShadow(color: AppTheme.grey.withOpacity(0.4), offset: const Offset(2.0, 2.0), blurRadius: 6),
+                                                    ]
+                                                )
+                                            ):
+                                            CachedNetworkImage(
+                                              placeholder: (context, url) => CircularProgressIndicator(),
+                                              imageUrl: controller.usuarioUi.foto??'',
+                                              errorWidget: (context, url, error) =>  Icon(Icons.error_outline_rounded, size: 80,),
+                                              imageBuilder: (context, imageProvider) => Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.all(Radius.circular(100)),
+                                                      image: DecorationImage(
+                                                        image: imageProvider,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                      boxShadow: <BoxShadow>[
+                                                        BoxShadow(color: AppTheme.grey.withOpacity(0.4), offset: const Offset(2.0, 2.0), blurRadius: 6),
+                                                      ]
+                                                  )
+                                              ),
                                             )
                                         ),
-                                      )),
+                                      ),
+                                    ),
+                                   Positioned(
+                                        bottom: 0,
+                                        left: 0,
+                                       child:  Container(
+                                         width: 85,
+                                         height: 30,
+                                         padding: const EdgeInsets.all(1),
+                                         decoration: BoxDecoration(
+                                           borderRadius: BorderRadius.all(Radius.circular(20)),
+                                           color: AppTheme.colorPrimary,
+                                         ),
+                                         child: GestureDetector(
+                                             onTap: (){
+                                               controller.onChangeImageUsuario();
+                                               imagePicker.showDialog(context);
+                                             },
+                                             child:  Container(
+                                                 decoration: BoxDecoration(
+                                                   borderRadius: BorderRadius.all(Radius.circular(19)),
+                                                   color: AppTheme.background,
+                                                 ),
+                                               child: Row(
+                                                 children: [
+                                                   Padding(
+                                                     padding: const EdgeInsets.only(left: 8, right: 4),
+                                                     child: Icon(Icons.camera_alt_outlined, color: AppTheme.colorPrimary, size: 20,),
+                                                   ),
+                                                   Expanded(
+                                                       child: Text("Editar", style: TextStyle(color: AppTheme.colorPrimary),)
+                                                   )
+                                                 ],
+                                               ),
+                                             )
+                                         ),
+                                       ),
+                                   )
+                                  ],
                                 ),
                               ),
                               // Textform Field
@@ -555,36 +632,83 @@ class EditarUsuarioViewState extends ViewState<EditarUsuarioView, EditarUsuarioC
                                     ),
                                   ),
                                   Center(
-                                    child:  Container(
-                                      margin: const EdgeInsets.only(top: 48),
-                                      height: 120,
-                                      width: 120,
-                                      padding: const EdgeInsets.all(2),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: AppTheme.white,
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(color: AppTheme.grey.withOpacity(0.6), offset: const Offset(2.0, 4.0), blurRadius: 8),
-                                        ],
-                                      ),
-                                      child: Container(
-                                          child:  CachedNetworkImage(
-                                            placeholder: (context, url) => CircularProgressIndicator(),
-                                            imageUrl: hijosUi.foto??'',
-                                            errorWidget: (context, url, error) =>  Icon(Icons.error_outline_rounded, size: 80,),
-                                            imageBuilder: (context, imageProvider) => Container(
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.all(Radius.circular(100)),
-                                                    image: DecorationImage(
-                                                      image: imageProvider,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                    boxShadow: <BoxShadow>[
-                                                      BoxShadow(color: AppTheme.grey.withOpacity(0.4), offset: const Offset(2.0, 2.0), blurRadius: 6),
-                                                    ]
+                                    child:  Stack(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 90,right: 90),
+                                          child: Container(
+                                            margin: const EdgeInsets.only(top: 48),
+                                            height: 120,
+                                            width: 120,
+                                            padding: const EdgeInsets.all(2),
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: AppTheme.white,
+                                              boxShadow: <BoxShadow>[
+                                                BoxShadow(color: AppTheme.grey.withOpacity(0.6), offset: const Offset(2.0, 4.0), blurRadius: 8),
+                                              ],
+                                            ),
+                                            child: GestureDetector(
+                                                onTap: (){
+                                                  controller.onChangeImageHijo(hijosUi);
+                                                  imagePicker.showDialog(context);
+                                                },
+                                                child:  CachedNetworkImage(
+                                                  placeholder: (context, url) => CircularProgressIndicator(),
+                                                  imageUrl: hijosUi.foto??'',
+                                                  errorWidget: (context, url, error) =>  Icon(Icons.error_outline_rounded, size: 80,),
+                                                  imageBuilder: (context, imageProvider) => Container(
+                                                      decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                                                          image: DecorationImage(
+                                                            image: imageProvider,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                          boxShadow: <BoxShadow>[
+                                                            BoxShadow(color: AppTheme.grey.withOpacity(0.4), offset: const Offset(2.0, 2.0), blurRadius: 6),
+                                                          ]
+                                                      )
+                                                  ),
+                                                )),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          bottom: 0,
+                                          left: 0,
+                                          child:  Container(
+                                            width: 85,
+                                            height: 30,
+                                            padding: const EdgeInsets.all(1),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(Radius.circular(20)),
+                                              color: AppTheme.colorPrimary,
+                                            ),
+                                            child: GestureDetector(
+                                                onTap: (){
+                                                  controller.onChangeImageHijo(hijosUi);
+                                                  imagePicker.showDialog(context);
+                                                },
+                                                child:  Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.all(Radius.circular(19)),
+                                                    color: AppTheme.background,
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(left: 8, right: 4),
+                                                        child: Icon(Icons.camera_alt_outlined, color: AppTheme.colorPrimary, size: 20,),
+                                                      ),
+                                                      Expanded(
+                                                          child: Text("Editar", style: TextStyle(color: AppTheme.colorPrimary),)
+                                                      )
+                                                    ],
+                                                  ),
                                                 )
                                             ),
-                                          )),
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   ),
                                   // Textform Field
@@ -944,36 +1068,83 @@ class EditarUsuarioViewState extends ViewState<EditarUsuarioView, EditarUsuarioC
                                     ),
                                   ),
                                   Center(
-                                    child:  Container(
-                                      margin: const EdgeInsets.only(top: 48),
-                                      height: 120,
-                                      width: 120,
-                                      padding: const EdgeInsets.all(2),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: AppTheme.white,
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(color: AppTheme.grey.withOpacity(0.6), offset: const Offset(2.0, 4.0), blurRadius: 8),
-                                        ],
-                                      ),
-                                      child: Container(
-                                          child:  CachedNetworkImage(
-                                            placeholder: (context, url) => CircularProgressIndicator(),
-                                            imageUrl: familiaUi.foto??'',
-                                            errorWidget: (context, url, error) =>  Icon(Icons.error_outline_rounded, size: 80,),
-                                            imageBuilder: (context, imageProvider) => Container(
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.all(Radius.circular(100)),
-                                                    image: DecorationImage(
-                                                      image: imageProvider,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                    boxShadow: <BoxShadow>[
-                                                      BoxShadow(color: AppTheme.grey.withOpacity(0.4), offset: const Offset(2.0, 2.0), blurRadius: 6),
-                                                    ]
+                                    child:  Stack(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 90,right: 90),
+                                          child: Container(
+                                            margin: const EdgeInsets.only(top: 48),
+                                            height: 120,
+                                            width: 120,
+                                            padding: const EdgeInsets.all(2),
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: AppTheme.white,
+                                              boxShadow: <BoxShadow>[
+                                                BoxShadow(color: AppTheme.grey.withOpacity(0.6), offset: const Offset(2.0, 4.0), blurRadius: 8),
+                                              ],
+                                            ),
+                                            child: GestureDetector(
+                                                onTap: (){
+                                                  controller.onChangeImageFamila(familiaUi);
+                                                  imagePicker.showDialog(context);
+                                                },
+                                                child:  CachedNetworkImage(
+                                                  placeholder: (context, url) => CircularProgressIndicator(),
+                                                  imageUrl: familiaUi.foto??'',
+                                                  errorWidget: (context, url, error) =>  Icon(Icons.error_outline_rounded, size: 80,),
+                                                  imageBuilder: (context, imageProvider) => Container(
+                                                      decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                                                          image: DecorationImage(
+                                                            image: imageProvider,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                          boxShadow: <BoxShadow>[
+                                                            BoxShadow(color: AppTheme.grey.withOpacity(0.4), offset: const Offset(2.0, 2.0), blurRadius: 6),
+                                                          ]
+                                                      )
+                                                  ),
+                                                )),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          bottom: 0,
+                                          left: 0,
+                                          child:  Container(
+                                            width: 85,
+                                            height: 30,
+                                            padding: const EdgeInsets.all(1),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(Radius.circular(20)),
+                                              color: AppTheme.colorPrimary,
+                                            ),
+                                            child: GestureDetector(
+                                                onTap: (){
+                                                  controller.onChangeImageFamila(familiaUi);
+                                                  imagePicker.showDialog(context);
+                                                },
+                                                child:  Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.all(Radius.circular(19)),
+                                                    color: AppTheme.background,
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(left: 8, right: 4),
+                                                        child: Icon(Icons.camera_alt_outlined, color: AppTheme.colorPrimary, size: 20,),
+                                                      ),
+                                                      Expanded(
+                                                          child: Text("Editar", style: TextStyle(color: AppTheme.colorPrimary),)
+                                                      )
+                                                    ],
+                                                  ),
                                                 )
                                             ),
-                                          )),
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   ),
                                   // Textform Field
@@ -1453,6 +1624,11 @@ class EditarUsuarioViewState extends ViewState<EditarUsuarioView, EditarUsuarioC
         )
       ],
     );
+  }
+
+  @override
+  userImage(File _image) {
+    controller.changeImage(_image);
   }
 
 }

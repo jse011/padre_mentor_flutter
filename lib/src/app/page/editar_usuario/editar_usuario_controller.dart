@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:padre_mentor/src/app/page/editar_usuario/editar_usuario_presenter.dart';
@@ -24,6 +26,9 @@ class EditarUsuarioController extends Controller{
   List<FamiliaUi> get familiaUiList => _familiaUiList;
   String _mensaje = null;
   String get mensaje => _mensaje;
+  bool _fotoUsuarioSelected = false;
+  HijosUi _fotoHijosUiSelected = null;
+  FamiliaUi _fotoFamiliaUiSelected = null;
 
   EditarUsuarioController(httpRepo, usuarioConfRepo, checkInternetRepo):this.presenter=EditarUsuarioPresenter(httpRepo, usuarioConfRepo, checkInternetRepo);
 
@@ -103,4 +108,35 @@ class EditarUsuarioController extends Controller{
     presenter.dispose();
     super.onDisposed();
   }
+
+  void onChangeImageUsuario() {
+    _fotoUsuarioSelected = true;
+    _fotoHijosUiSelected = null;
+    _fotoFamiliaUiSelected = null;
+  }
+
+  void onChangeImageHijo(HijosUi hijosUi) {
+    _fotoUsuarioSelected = false;
+    _fotoHijosUiSelected = hijosUi;
+    _fotoFamiliaUiSelected = null;
+  }
+
+  void onChangeImageFamila(FamiliaUi familiaUi) {
+    _fotoUsuarioSelected = false;
+    _fotoHijosUiSelected = null;
+    _fotoFamiliaUiSelected = familiaUi;
+  }
+
+  void changeImage(File image) {
+    refreshUI();
+    if(_fotoUsuarioSelected){
+      _usuarioUi.fotoFile = image;
+    }else if(_fotoHijosUiSelected!=null){
+      _fotoHijosUiSelected.fotoFile = image;
+    }else if(_fotoFamiliaUiSelected!=null){
+      _fotoFamiliaUiSelected.fotoFile = image;
+    }
+  }
+
+
 }

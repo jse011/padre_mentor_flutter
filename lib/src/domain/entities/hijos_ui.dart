@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class HijosUi {
   int usuarioId;
   int personaId;
@@ -9,6 +11,7 @@ class HijosUi {
   String fechaNacimiento;
   String fechaNacimiento2;
   bool change;
+  File fotoFile;
 
   HijosUi({this.usuarioId, this.personaId, this.nombre, this.foto, this.documento, this.celular, this.correo, this.fechaNacimiento, this.fechaNacimiento2});
 }
