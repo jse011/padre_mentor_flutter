@@ -2,6 +2,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:padre_mentor/src/domain/entities/programa_educativo_ui.dart';
 import 'package:padre_mentor/src/domain/entities/usuario_ui.dart';
 import 'package:padre_mentor/src/domain/usecases/get_eventos_top.dart';
+import 'package:padre_mentor/src/domain/usecases/get_prematricula.dart';
 import 'package:padre_mentor/src/domain/usecases/get_usuario_usecase.dart';
 import 'package:padre_mentor/src/domain/usecases/update_session_usuario.dart';
 
@@ -11,14 +12,17 @@ class PortalAlumnoPresenter extends Presenter{
   Function getSesionUsuarioOnComplete;
   Function getSesionUsuarioOnError;
   UpdateSession updateSession;
+  GetPrematicula getPrematicula;
+  Function getPrematiculaOnNext, getPrematiculaOnComplete, getPrematiculaOnError;
 
   GetEventoActuales _getEventoActuales;
   Function getEventoActualesOnNext, getEventoActualesOnComplete, getEventoActualesOnError;
 
-  PortalAlumnoPresenter(checkConexRepo, httpRepository, usuarioConfiRepo ):getSessionUsuarioCase = GetSessionUsuarioCase(usuarioConfiRepo), updateSession = UpdateSession(usuarioConfiRepo), _getEventoActuales = GetEventoActuales(checkConexRepo, usuarioConfiRepo, httpRepository);
+  PortalAlumnoPresenter(checkConexRepo, httpRepository, usuarioConfiRepo ):getSessionUsuarioCase = GetSessionUsuarioCase(usuarioConfiRepo), updateSession = UpdateSession(usuarioConfiRepo), _getEventoActuales = GetEventoActuales(checkConexRepo, usuarioConfiRepo, httpRepository), getPrematicula = GetPrematicula(usuarioConfiRepo);
 
   @override
   void dispose() {
+    getPrematicula.dispose();
     getSessionUsuarioCase.dispose();
     updateSession.dispose();
     _getEventoActuales.dispose();
@@ -34,6 +38,7 @@ class PortalAlumnoPresenter extends Presenter{
   }
 
   void onInitState() {
+    getPrematicula.execute(_GetPrematriculaCase(this),GetPrematriculaParams());
     getDatosGenerales();
   }
 
@@ -123,6 +128,30 @@ class _UpdateSessionCase extends Observer<UpdateSessionResponse>{
   @override
   void onNext(UpdateSessionResponse response) {
 
+  }
+
+}
+
+class _GetPrematriculaCase extends Observer<GetPrematriculaResponse>{
+  final PortalAlumnoPresenter presenter;
+  _GetPrematriculaCase(this.presenter);
+
+  @override
+  void onComplete() {
+    assert(presenter.getPrematiculaOnComplete != null);
+    presenter.getPrematiculaOnComplete();
+  }
+
+  @override
+  void onError(e) {
+    assert(presenter.getPrematiculaOnError != null);
+    presenter.getPrematiculaOnError(e);
+  }
+
+  @override
+  void onNext(GetPrematriculaResponse response) {
+    assert(presenter.getPrematiculaOnNext != null);
+    presenter.getPrematiculaOnNext(response.titulo);
   }
 
 }

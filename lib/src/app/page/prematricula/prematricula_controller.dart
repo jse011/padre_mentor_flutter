@@ -1,16 +1,16 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:padre_mentor/src/app/page/estado_cuenta/estado_cuenta_presenter.dart';
+import 'package:padre_mentor/src/app/page/prematricula/prematricula_presenter.dart';
 import 'package:padre_mentor/src/domain/entities/hijos_ui.dart';
 
-class EstadoCuentaController extends Controller{
-  EstadoCuentaPresenter presenter;
+class PrematriculaController extends Controller{
+  PrematriculaPresenter presenter;
   final String _fotoAlumno;
   String get fotoAlumno => _fotoAlumno;
   HijosUi _hijosUi = null;
   HijosUi get hijosUi => _hijosUi;
   String _urlServidor = null;
   String get urlServidor => _urlServidor;
-  EstadoCuentaController(alumnoId, fotoAlumno, usuarioConfRepo) : presenter = EstadoCuentaPresenter(alumnoId, usuarioConfRepo), _fotoAlumno = fotoAlumno, super();
+  PrematriculaController(alumnoId, fotoAlumno, usuarioConfRepo) : presenter = PrematriculaPresenter(alumnoId, usuarioConfRepo), _fotoAlumno = fotoAlumno, super();
 
   @override
   void initListeners() {
@@ -25,6 +25,7 @@ class EstadoCuentaController extends Controller{
     presenter.getHijoOnComplete = (){
 
     };
+
     presenter.getUrlServidorOnNext = (String url){
       _urlServidor = url;
       refreshUI();
@@ -43,8 +44,8 @@ class EstadoCuentaController extends Controller{
   @override
   void onInitState() {
     super.onInitState();
-    presenter.getUrlServidor();
     presenter.getHijo();
+    presenter.getUrlServidor();
   }
 
 

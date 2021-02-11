@@ -16,7 +16,10 @@ class PortalAlumnoController extends Controller{
   List<EventoUi> get eventoUiList => _eventoUilIst;
   bool _isLoading = false;
   get isLoading => _isLoading;
-
+  bool _showPrematricula = false;
+  bool get showPrematricula => _showPrematricula;
+  String _tituloPrematricula = null;
+  String get tituloPrematricula => _tituloPrematricula;
   HijosUi get hijoSelected => _hijoSelected;
   List<HijosUi> _hijoList = [];
   List<ProgramaEducativoUi> _programaEducativoList = [];
@@ -67,6 +70,21 @@ class PortalAlumnoController extends Controller{
       _eventoUilIst = eventoList;
       _msgConexion = errorServidor?"!Oops! Al parecer ocurrió un error involuntario.":null;
       refreshUI(); //
+    };
+
+    presenter.getPrematiculaOnComplete = (){
+
+    };
+
+    presenter.getPrematiculaOnNext = (String titulo){
+      _showPrematricula = titulo!=null&&titulo.isNotEmpty;
+      _tituloPrematricula = titulo;
+      refreshUI();
+    };
+
+    presenter.getPrematiculaOnError = (){
+      _showPrematricula = false;
+      refreshUI();
     };
 
   }

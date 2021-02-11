@@ -6,7 +6,6 @@ import 'package:padre_mentor/model/tabIcon_data.dart';
 import 'package:padre_mentor/src/app/page/contactos/contactos_view.dart';
 import 'package:padre_mentor/src/app/page/eventos_agenda/evento_agenda_view.dart';
 import 'package:padre_mentor/src/app/page/familia/famila_view.dart';
-import 'package:padre_mentor/src/app/page/portal_alumno/portal_alumno_screen.dart';
 import 'package:padre_mentor/src/app/page/portal_alumno/portal_alumno_view.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 

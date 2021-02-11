@@ -18,6 +18,8 @@ import 'package:padre_mentor/src/device/repositories/check_conexion/device_conex
 import 'package:padre_mentor/src/device/repositories/http/device_http_datos_repository.dart';
 import 'package:padre_mentor/src/domain/entities/evento_ui.dart';
 import 'package:padre_mentor/src/domain/entities/tipo_evento_ui.dart';
+import 'package:smart_text_view/smart_text_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../informacion_evento_agenda/informacion_evento_agenda_view.dart';
 
@@ -469,8 +471,13 @@ class _EventoAgendaViewState extends ViewState<EventoAgendaView, EventoAgendaCon
                                           ),
                                           Container(
                                             margin: const EdgeInsets.only(top: 0, left: 16, right: 16, bottom: 0),
-                                            child: Text(eventoUi.descripcion??'', style: TextStyle( fontSize: 16, color: AppTheme.darkText, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w300,)),
+                                            child: SmartText(
+                                              text: eventoUi.descripcion??'',
+                                              style: TextStyle( fontSize: 16, color: AppTheme.darkText, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w300,),
+                                              onOpen: (url) => launch(url),
+                                            ),
                                           ),
+
                                           /*
                             * CENTER = none
                             * CENTER_CROP = Cover

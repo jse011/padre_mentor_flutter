@@ -22,7 +22,7 @@ class GetEventoAgenda extends UseCase<GetEvaluacionCaseResponse, GetEventoAgenda
       //printTime();
       List<TipoEventoUi> tiposUiList = await repository.getTiposEvento();
       for(TipoEventoUi tipoEventoUi in tiposUiList)tipoEventoUi.disable = false;
-      controller.add(GetEvaluacionCaseResponse(tiposUiList, [], false, false));
+      controller.add(GetEvaluacionCaseResponse(tiposUiList, null, false, false));
       //printTime();
       print("EventoAgenda executeServidor init");
       Future<String> executeServidor() async{

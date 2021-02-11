@@ -30,7 +30,7 @@ class MyApp2 extends StatelessWidget{
     ));
 
     return MaterialApp(
-      title: 'Flutter UI',
+      title: ' ',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -46,3 +46,5 @@ class MyApp2 extends StatelessWidget{
     );
   }
 }
+
+

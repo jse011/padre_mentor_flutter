@@ -11,6 +11,7 @@ import 'package:padre_mentor/src/app/page/menu/invite_friend_screen.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/app/widgets/navigation_drawer/drawer_user_controller.dart';
 import 'package:padre_mentor/src/app/widgets/navigation_drawer/home_drawer.dart';
+import 'package:padre_mentor/src/app/widgets/splash.dart';
 import 'package:padre_mentor/src/data/repositories/moor/data_usuario_configuracion_respository.dart';
 import 'package:padre_mentor/src/device/repositories/http/device_http_datos_repository.dart';
 import 'package:padre_mentor/utils/new_version.dart';
@@ -38,7 +39,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
+
     super.didChangeDependencies();
     Future.delayed(const Duration(milliseconds: 500), () {
       NewVersion(
@@ -53,10 +54,6 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
       ).showAlertIfNecessary();
     }
     );
-
-
-
-
   }
 
 
@@ -82,8 +79,11 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
             ),*/
             body: ControlledWidgetBuilder<HomeController>(
               builder: (context, controller) {
+                Color colorEspera = Color(0xFFBBADA2);
                 if(controller.showLoggin == 0){
-                  return Container();
+                  return Container(
+                    color: colorEspera,
+                  );
                 }else if(controller.showLoggin == 1){
                   SchedulerBinding.instance.addPostFrameCallback((_) {
                     // fetch data
@@ -93,39 +93,46 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                   return Container();
                 }else{
                   changeIndex(controller.vistaActual);
-                  return DrawerUserController(
-                    photoUser: controller.usuario == null ? '' : '${controller.usuario.foto}',
-                    nameUser: controller.usuario == null ? '' : '${controller.usuario.nombreSimple}',
-                    correo: controller.usuario == null ? '' : '${controller.usuario.correo}',
-                    screenIndex: _drawerIndex,
-                    screenView: _screenView,
-                    drawerWidth: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.70,
-                      onDrawerCall: (DrawerIndex drawerIndexdata) {
+                  return Stack(
+                    children: [
+                      DrawerUserController(
+                        photoUser: controller.usuario == null ? '' : '${controller.usuario.foto}',
+                        nameUser: controller.usuario == null ? '' : '${controller.usuario.nombreSimple}',
+                        correo: controller.usuario == null ? '' : '${controller.usuario.correo}',
+                        screenIndex: _drawerIndex,
+                        screenView: _screenView,
+                        drawerWidth: MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.70,
+                        onDrawerCall: (DrawerIndex drawerIndexdata) {
 
-                        switch(drawerIndexdata){
-                          case DrawerIndex.HOME:
-                            controller.onSelectedVistaPrincial();
-                            break;
-                          case DrawerIndex.EDITUSER:
-                            controller.onSelectedVistaEditUsuario();
-                            break;
-                          case DrawerIndex.SUGERENCIAS:
-                            controller.onSelectedVistaFeedBack();
-                            break;
-                          case DrawerIndex.ABAOUT:
-                            controller.onSelectedVistaAbout();
-                            break;
-                        }
+                          switch(drawerIndexdata){
+                            case DrawerIndex.HOME:
+                              controller.onSelectedVistaPrincial();
+                              break;
+                            case DrawerIndex.EDITUSER:
+                              controller.onSelectedVistaEditUsuario();
+                              break;
+                            case DrawerIndex.SUGERENCIAS:
+                              controller.onSelectedVistaFeedBack();
+                              break;
+                            case DrawerIndex.ABAOUT:
+                              controller.onSelectedVistaAbout();
+                              break;
+                          }
 
-                      },
-                    onClickCerrarCession: (){
-                      controller.onClickCerrarCession();
-                    },
+                        },
+                        onClickCerrarCession: (){
+                          controller.onClickCerrarCession();
+                        },
+                      ),
+                      if(controller.splash)SplashView(colorEspera),
+
+                    ],
                   );
                 }
+
               }
             ),
           ),

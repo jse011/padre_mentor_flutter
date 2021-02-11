@@ -14,6 +14,7 @@ import 'package:padre_mentor/src/app/page/evaluacion/evaluacion_router.dart';
 import 'package:padre_mentor/src/app/page/horarios/horarios_router.dart';
 import 'package:padre_mentor/src/app/page/informacion_evento_agenda/informacion_evento_agenda_view.dart';
 import 'package:padre_mentor/src/app/page/portal_alumno/portal_alumno_controller.dart';
+import 'package:padre_mentor/src/app/page/prematricula/prematricula_router.dart';
 import 'package:padre_mentor/src/app/page/tarea_evaluacion/tarea_evaluacion_router.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/app/widgets/animation_view.dart';
@@ -85,7 +86,7 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
       }
     });
 
-    Future.delayed(const Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 700), () {
 // Here you can write your code
       setState(() {
         widget.animationController.forward();
@@ -239,101 +240,84 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                 SliverList(
                     delegate: SliverChildListDelegate(
                       [
-                        AnimationView(
-                            animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-                                parent: widget.animationController,
-                                curve:
-                                Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
-                            animationController: widget.animationController,
-                            child:  controller.programaEducativoList.length==0? Container(height: 100.0):
-                            CarouselSlider(
-                              options: CarouselOptions(
-                                height: 220.0,
-                                autoPlay: true,
-                                autoPlayInterval: Duration(seconds: 10),
-                                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                                autoPlayCurve: Curves.fastOutSlowIn,
-                                pauseAutoPlayOnTouch: true,
-                                //initialPage: pagePosition,
-                                aspectRatio: 2.0,
-                                viewportFraction: 1,
-                                onPageChanged: (index, reason) {
-                                  //_currentIndex = index;
-                                  //controller.onSelectedProgramaSelected(controller.programaEducativoList[index]);
+                        Container(
+                          height: 220.0,
+                          child: CarouselSlider(
+                            options: CarouselOptions(
+                              height: 220.0,
+                              autoPlay: true,
+                              autoPlayInterval: Duration(seconds: 10),
+                              autoPlayAnimationDuration: Duration(milliseconds: 800),
+                              autoPlayCurve: Curves.fastOutSlowIn,
+                              pauseAutoPlayOnTouch: true,
+                              //initialPage: pagePosition,
+                              aspectRatio: 2.0,
+                              viewportFraction: 1,
+                              onPageChanged: (index, reason) {
+                                //_currentIndex = index;
+                                //controller.onSelectedProgramaSelected(controller.programaEducativoList[index]);
+                              },
+                            ),
+                            items:controller.eventoUiList.map((item){
+
+                              Color color;
+                              switch(item.tipoEventoUi.tipo){
+                                case EventoIconoEnumUI.DEFAULT:
+                                  color = Color(0xFF00BCD4);
+                                  break;
+                                case EventoIconoEnumUI.EVENTO:
+                                  color = Color(0xFF4CAF50);
+                                  break;
+                                case EventoIconoEnumUI.NOTICIA:
+                                  color = Color(0xFF03A9F4);
+                                  break;
+                                case EventoIconoEnumUI.ACTIVIDAD:
+                                  color = Color(0xFFFF9800);
+                                  break;
+                                case EventoIconoEnumUI.TAREA:
+                                  color = Color(0xFFE91E63);
+                                  break;
+                                case EventoIconoEnumUI.CITA:
+                                  color = Color(0xFF00BCD4);
+                                  break;
+                                case EventoIconoEnumUI.AGENDA:
+                                  color = Color(0xFFAD3FF8);
+                                  break;
+                                case EventoIconoEnumUI.TODOS:
+                                  color = Color(0xFF00BCD4);
+                                  break;
+                              }
+
+                              String foto;
+                              if (item.tipoEventoUi.tipo == EventoIconoEnumUI.NOTICIA ||
+                                  item.tipoEventoUi.tipo == EventoIconoEnumUI.EVENTO || (item.tipoEventoUi.tipo == EventoIconoEnumUI.AGENDA && item.foto!=null&&item.foto.isNotEmpty)){
+                                foto = item.foto;
+                              }else{
+                                foto = null;
+                              }
+
+                              return InkWell(
+                                onTap: (){
+                                  if(item!=null)Navigator.of(context).push(InformacionEventoAgendaView.createRouteAgenda(item));
                                 },
-                              ),
-                              items:controller.eventoUiList.map((item){
-
-                                Color color;
-                                switch(item.tipoEventoUi.tipo){
-                                  case EventoIconoEnumUI.DEFAULT:
-                                    color = Color(0xFF00BCD4);
-                                    break;
-                                  case EventoIconoEnumUI.EVENTO:
-                                    color = Color(0xFF4CAF50);
-                                    break;
-                                  case EventoIconoEnumUI.NOTICIA:
-                                    color = Color(0xFF03A9F4);
-                                    break;
-                                  case EventoIconoEnumUI.ACTIVIDAD:
-                                    color = Color(0xFFFF9800);
-                                    break;
-                                  case EventoIconoEnumUI.TAREA:
-                                    color = Color(0xFFE91E63);
-                                    break;
-                                  case EventoIconoEnumUI.CITA:
-                                    color = Color(0xFF00BCD4);
-                                    break;
-                                  case EventoIconoEnumUI.AGENDA:
-                                    color = Color(0xFFAD3FF8);
-                                    break;
-                                  case EventoIconoEnumUI.TODOS:
-                                    color = Color(0xFF00BCD4);
-                                    break;
-                                }
-
-                                String foto;
-                                if (item.tipoEventoUi.tipo == EventoIconoEnumUI.NOTICIA ||
-                                    item.tipoEventoUi.tipo == EventoIconoEnumUI.EVENTO || (item.tipoEventoUi.tipo == EventoIconoEnumUI.AGENDA && item.foto!=null&&item.foto.isNotEmpty)){
-                                    foto = item.foto;
-                                }else{
-                                  foto = null;
-                                }
-
-                                return InkWell(
-                                  onTap: (){
-                                    if(item!=null)Navigator.of(context).push(InformacionEventoAgendaView.createRouteAgenda(item));
-                                  },
-                                  child: WorkoutView(
-                                    animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-                                        parent: widget.animationController,
-                                        curve:
-                                        Interval((1 / countView) * 2, 1.0, curve: Curves.fastOutSlowIn))),
-                                    animationController: widget.animationController,
-                                    titulo1: item.nombreEmisor,
-                                    titulo2: item.titulo,
-                                    subTitulo: item.rolEmisor,
-                                    foto: foto,
-                                    colors1: Colors.black,
-                                    colors2: color,
-                                  ),
-                                );
+                                child: WorkoutView(
+                                  animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                      parent: widget.animationController,
+                                      curve:
+                                      Interval((1 / countView) * 2, 1.0, curve: Curves.fastOutSlowIn))),
+                                  animationController: widget.animationController,
+                                  titulo1: item.nombreEmisor,
+                                  titulo2: item.titulo,
+                                  subTitulo: item.rolEmisor,
+                                  foto: foto,
+                                  colors1: Colors.black,
+                                  colors2: color,
+                                ),
+                              );
 
 
-                              }).toList(),
-                            )
-                        ),
-                        TitleView(
-                          titleTxt: 'Programa Educativo',
-                          subTxt: "Cambiar",
-                          animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-                              parent: widget.animationController,
-                              curve:
-                              Interval((1 / countView) * 0, 1.0, curve: Curves.fastOutSlowIn))),
-                          animationController: widget.animationController,
-                          onClick: (){
-                            if(carouselController!=null)carouselController.nextPage();
-                          },
+                            }).toList(),
+                          ),
                         ),
                         AnimationView(
                           animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
@@ -341,25 +325,43 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                               curve:
                               Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
                           animationController: widget.animationController,
-                          child:  controller.programaEducativoList.length==0? Container(height: 100.0):
-                          CarouselSlider(
-                            carouselController: carouselController,
-                            options: CarouselOptions(
+                          child: TitleView(
+                            titleTxt: 'Programa Educativo',
+                            subTxt: "Cambiar",
+                            onClick: (){
+                              if(carouselController!=null)carouselController.nextPage();
+                            },
+                          ),
+                        ),
+
+                        AnimationView(
+                          animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                              parent: widget.animationController,
+                              curve:
+                              Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                          animationController: widget.animationController,
+                          child:  Container(
                               height: 100.0,
-                              autoPlay: false,
-                              autoPlayInterval: Duration(seconds: 3),
-                              autoPlayAnimationDuration: Duration(milliseconds: 800),
-                              autoPlayCurve: Curves.fastOutSlowIn,
-                              pauseAutoPlayOnTouch: true,
-                              initialPage: pagePosition,
-                              aspectRatio: 2.0,
-                              onPageChanged: (index, reason) {
-                                _currentIndex = index;
-                                controller.onSelectedProgramaSelected(controller.programaEducativoList[index]);
-                              },
-                            ),
-                            items:controller.programaEducativoList.map((item) => ProgramaEducativoView(titulo: item.nombrePrograma, subTitulo: "Año "+item.nombreAnioAcademico+"\n"+item.nombreHijo, foto: item.fotoHijo,)).toList(),
-                          )
+                              child: CarouselSlider(
+                                carouselController: carouselController,
+                                options: CarouselOptions(
+                                  height: 100.0,
+                                  autoPlay: false,
+                                  autoPlayInterval: Duration(seconds: 3),
+                                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                                  autoPlayCurve: Curves.fastOutSlowIn,
+                                  pauseAutoPlayOnTouch: true,
+                                  initialPage: pagePosition,
+                                  aspectRatio: 2.0,
+                                  onPageChanged: (index, reason) {
+                                    _currentIndex = index;
+                                    controller.onSelectedProgramaSelected(controller.programaEducativoList[index]);
+                                  },
+                                ),
+                                items:controller.programaEducativoList.map((item) => ProgramaEducativoView(titulo: item.nombrePrograma, subTitulo: "Año "+item.nombreAnioAcademico+"\n"+item.nombreHijo, foto: item.fotoHijo,)).toList(),
+                              ),
+                          ),
+
                         )
 
                       ],
@@ -495,8 +497,23 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                                   Navigator.of(context).push(EstadoCuentaRouter.createRouteEstadoCuenta(alumnoId: programaEducativo.hijoId, fotoAlumno: programaEducativo.fotoHijo));
                                 }
                               },
-                            )
-
+                            ),
+                            if(controller.showPrematricula??false)
+                              MenuItemView(
+                                animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                                    parent: widget.animationController,
+                                    curve:
+                                    Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                                animationController: widget.animationController,
+                                titulo: controller.tituloPrematricula??"",
+                                imagepath: "assets/fitness_app/icono_prematricula.svg",
+                                onTap: () {
+                                  var programaEducativo = controller.programaEducativoSelected;
+                                  if(programaEducativo!=null){
+                                    Navigator.of(context).push(PrematriculaRouter.createRoutePrematricula(alumnoId: programaEducativo.hijoId, fotoAlumno: programaEducativo.fotoHijo));
+                                  }
+                                },
+                              )
                           ]
                       )
                   ),

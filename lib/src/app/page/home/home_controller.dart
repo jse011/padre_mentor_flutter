@@ -8,6 +8,8 @@ class HomeController extends Controller{
   final HomePresenter homePresenter;
   VistaIndex _vistaActual;
   UsuarioUi _userioSession;
+  bool _splash = true;
+  bool get splash => _splash;
   UsuarioUi get usuario => _userioSession; // data used by the View
   int _showLoggin = 0;// 0 cargando, 1 show Loggin, -1 nada
   int get showLoggin => _showLoggin;
@@ -28,7 +30,10 @@ class HomeController extends Controller{
     };
 
     homePresenter.getUserOnComplete = () {
-      print('User retrieved');
+      Future.delayed(const Duration(milliseconds: 3000), () {
+        _splash = false;
+        refreshUI();
+      });
     };
 
     // On error, show a snackbar, remove the user, and refresh the UI

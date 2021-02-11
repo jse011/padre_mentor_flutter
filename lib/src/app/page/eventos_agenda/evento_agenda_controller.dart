@@ -75,10 +75,8 @@ class EventoAgendaController extends Controller{
     presenter.getEventoAgendaOnNext = (List<TipoEventoUi> tipoEvantoList, List<EventoUi> eventoList, bool errorServidor, bool datosOffline) {
 
       _tipoEventoList = tipoEvantoList;
-      _eventoUilIst = eventoList;
       _msgConexion = errorServidor? "!Oops! Al parecer ocurrió un error involuntario.":null;
       _msgConexion = datosOffline? "No hay Conexión a Internet...":null;
-      hideProgress();
 
       if(_selectedTipoEventoUi==null){
         for(TipoEventoUi tipoEventoUi in tipoEventoList){
@@ -94,6 +92,13 @@ class EventoAgendaController extends Controller{
             _selectedTipoEventoUi = tipoEventoUi;
           }
         }
+      }
+
+      if(eventoList!=null){
+        _eventoUilIst = eventoList;
+        hideProgress();
+      }else{
+        _eventoUilIst = [];
       }
 
       print('evento next');

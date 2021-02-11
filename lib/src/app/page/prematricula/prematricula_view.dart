@@ -5,23 +5,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:padre_mentor/src/app/page/estado_cuenta/estado_cuenta_controller.dart';
+import 'package:padre_mentor/src/app/page/prematricula/prematricula_controller.dart';
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/app/widgets/animation_view.dart';
 import 'package:padre_mentor/src/data/repositories/moor/data_usuario_configuracion_respository.dart';
 
-class EstadoCuentaView extends View{
+class PrematriculaView extends View{
   final String fotoAlumno;
   final int alumnoId;
 
-  EstadoCuentaView({this.fotoAlumno, this.alumnoId});
+  PrematriculaView({this.fotoAlumno, this.alumnoId});
 
   @override
-  _EstadoCuentaViewState createState() => _EstadoCuentaViewState(this.alumnoId, this.fotoAlumno);
+  _PrematriculaViewState createState() => _PrematriculaViewState(this.alumnoId, this.fotoAlumno);
 
 }
 
-class _EstadoCuentaViewState extends ViewState<EstadoCuentaView, EstadoCuentaController>  with TickerProviderStateMixin{
+class _PrematriculaViewState extends ViewState<PrematriculaView, PrematriculaController>  with TickerProviderStateMixin{
   double _webViewHeight = 1;
   bool _visibleWebView = false;
   InAppWebViewController _webView;
@@ -33,7 +33,7 @@ class _EstadoCuentaViewState extends ViewState<EstadoCuentaView, EstadoCuentaCon
   double topBarOpacity = 0.0;
   AnimationController animationController;
 
-  _EstadoCuentaViewState(alumnoId, fotoAlumno) : super(EstadoCuentaController(alumnoId, fotoAlumno, DataUsuarioAndRepository()));
+  _PrematriculaViewState(alumnoId, fotoAlumno) : super(PrematriculaController(alumnoId, fotoAlumno, DataUsuarioAndRepository()));
 
   @override
   void initState() {
@@ -157,7 +157,7 @@ class _EstadoCuentaViewState extends ViewState<EstadoCuentaView, EstadoCuentaCon
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Pago en línea',
+                                  'Pre Matrícula',
                                   textAlign: TextAlign.left,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -170,7 +170,7 @@ class _EstadoCuentaViewState extends ViewState<EstadoCuentaView, EstadoCuentaCon
                                 ),
                               ),
                             ),
-                            ControlledWidgetBuilder<EstadoCuentaController>(
+                            ControlledWidgetBuilder<PrematriculaController>(
                               builder: (context, controller) {
                                 if(false){
                                   return Padding(
@@ -226,12 +226,11 @@ class _EstadoCuentaViewState extends ViewState<EstadoCuentaView, EstadoCuentaCon
               curve:
               Interval((1 / countView) * 3, 1.0, curve: Curves.fastOutSlowIn))),
           animationController: animationController,
-          child:  ControlledWidgetBuilder<EstadoCuentaController>(
+          child:  ControlledWidgetBuilder<PrematriculaController>(
               builder: (context, controller) {
-
                   return  Stack(
                     children: [
-                     controller.hijosUi!=null&&controller.urlServidor!=null?
+                     controller.hijosUi!=null?
                      SingleChildScrollView(
                         controller: scrollController,
                         child: Column(
@@ -253,7 +252,7 @@ class _EstadoCuentaViewState extends ViewState<EstadoCuentaView, EstadoCuentaCon
 
                                     var data = "nrodocumento=" + (controller.hijosUi!=null?controller.hijosUi.documento:"") + "&password="+(controller.hijosUi!=null?controller.hijosUi.personaId.toString():"");
                                     webController.postUrl(
-                                        url: (controller.urlServidor??"") +'/?misaldo',
+                                        url: (controller.urlServidor??"") +'/?prematricula',
                                         postData: utf8.encode(data));
                                     _webView = webController;
 

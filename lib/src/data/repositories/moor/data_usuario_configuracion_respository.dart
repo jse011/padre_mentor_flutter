@@ -16,6 +16,7 @@ import 'package:padre_mentor/src/domain/entities/tipo_evento_ui.dart';
 import 'package:padre_mentor/src/domain/entities/usuario_ui.dart';
 import 'package:padre_mentor/src/domain/repositories/usuario_configuarion_repository.dart';
 import 'package:padre_mentor/src/domain/tools/app_tools.dart';
+import 'package:intl/intl.dart';
 
 class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
 
@@ -323,6 +324,8 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
   Future<void> saveEventoAgenda(Map<String, dynamic> eventoAgenda, int usuarioId, int tipoEventoId, List<int> hijoIdList) async{
     AppDataBase SQL = AppDataBase();
     try{
+      DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+      String string = dateFormat.format(DateTime.now());
       print("saveEventoAgenda tipoEventoId : "+tipoEventoId.toString());
       await SQL.transaction(() async {
 
@@ -338,7 +341,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
 
         //queryCalendario.groupBy([SQL.calendario.calendarioId]);
         var rows = await queryCalendario.get();
-        print("saveEventoAgenda cantidad : "+rows.length.toString());
+        /*print("saveEventoAgenda cantidad : "+rows.length.toString());*/
         for (var row in rows) {
           CalendarioData calendarioData = row.readTable(SQL.calendario);
           EventoData eventoData = row.readTable(SQL.evento);
@@ -840,6 +843,24 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
       throw Exception(e);
     }
 
+  }
+
+
+  @override
+  Future<String> gePrematricula() async{
+    AppDataBase SQL = AppDataBase();
+    try{
+      AppDataBase SQL = AppDataBase();
+      WebConfig webConfig = await (SQL.selectSingle(SQL.webConfigs)..where((tbl) => tbl.nombre.equals("wstr_Nombre_Pre_Matricula"))).getSingle();
+      if(webConfig!=null&&
+          webConfig.content!=null && webConfig.content.isNotEmpty&&
+          webConfig.content.toUpperCase() != "NULL"){
+        return webConfig.content;
+      }
+      return null;
+    }catch(e){
+      return null;
+    }
   }
 
 
