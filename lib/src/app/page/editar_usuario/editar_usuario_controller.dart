@@ -30,7 +30,7 @@ class EditarUsuarioController extends Controller{
   HijosUi _fotoHijosUiSelected = null;
   FamiliaUi _fotoFamiliaUiSelected = null;
 
-  EditarUsuarioController(httpRepo, usuarioConfRepo, checkInternetRepo):this.presenter=EditarUsuarioPresenter(httpRepo, usuarioConfRepo, checkInternetRepo);
+  EditarUsuarioController(httpRepo, usuarioConfRepo, checkInternetRepo, compresImageRepo):this.presenter=EditarUsuarioPresenter(httpRepo, usuarioConfRepo, checkInternetRepo, compresImageRepo);
 
   @override
   void initListeners() {
@@ -131,10 +131,13 @@ class EditarUsuarioController extends Controller{
     refreshUI();
     if(_fotoUsuarioSelected){
       _usuarioUi.fotoFile = image;
+      _usuarioUi.change = true;
     }else if(_fotoHijosUiSelected!=null){
       _fotoHijosUiSelected.fotoFile = image;
+      _fotoHijosUiSelected.change = true;
     }else if(_fotoFamiliaUiSelected!=null){
       _fotoFamiliaUiSelected.fotoFile = image;
+      _fotoFamiliaUiSelected.change = true;
     }
   }
 

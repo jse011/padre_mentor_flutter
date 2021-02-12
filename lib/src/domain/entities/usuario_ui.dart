@@ -22,6 +22,7 @@ class UsuarioUi {
   List<FamiliaUi> familiaUiList = [];
   bool change;
   File fotoFile;
+  String image64;
 
   UsuarioUi({this.personaId, this.nombre, this.foto, this.hijos, this.programaEducativoUiList, this.celular, this.correo, this.fechaNacimiento, this.familiaUiList, this.nombreSimple, this.fechaNacimiento2});
 }

@@ -802,13 +802,13 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
   List<dynamic> getJsonUpdatePersonas(UsuarioUi usuarioUi, List<HijosUi> hijosUiList, List<FamiliaUi> familiaUiList) {
    List<dynamic> personaSerialList = [];
    if(usuarioUi.change??false){
-     PersonaSerial personaSerial = PersonaSerial(personaId: usuarioUi.personaId, correo: usuarioUi.correo, celular: usuarioUi.celular);
+     PersonaSerial personaSerial = PersonaSerial(personaId: usuarioUi.personaId, correo: usuarioUi.correo, celular: usuarioUi.celular, image64: usuarioUi.image64);
      personaSerialList.add(personaSerial.toJson());
    }
 
    for(HijosUi hijosUi in hijosUiList??[]){
      if(hijosUi.change??false){
-       PersonaSerial personaSerial = PersonaSerial(personaId: hijosUi.personaId, correo: hijosUi.correo, celular: hijosUi.celular);
+       PersonaSerial personaSerial = PersonaSerial(personaId: hijosUi.personaId, correo: hijosUi.correo, celular: hijosUi.celular, image64: hijosUi.image64);
        personaSerialList.add(personaSerial.toJson());
      }
 
@@ -816,7 +816,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
 
    for(FamiliaUi familiaUi in familiaUiList??[]){
      if(familiaUi.change??false){
-       PersonaSerial personaSerial = PersonaSerial(personaId: familiaUi.personaId, correo: familiaUi.correo, celular: familiaUi.celular);
+       PersonaSerial personaSerial = PersonaSerial(personaId: familiaUi.personaId, correo: familiaUi.correo, celular: familiaUi.celular, image64: familiaUi.image64);
        personaSerialList.add(personaSerial.toJson());
      }
 
@@ -835,7 +835,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
           List<PersonaData> personaDataList = SerializableConvert.converListSerializePersona(listaPersonas);
           for (PersonaData item in personaDataList) {
             PersonaData personaData = await (SQL.selectSingle(SQL.persona)..where((tbl) => tbl.personaId.equals(item.personaId))).getSingle();
-            if(personaData!=null)await SQL.update(SQL.persona).replace(personaData.copyWith(celular: item.celular, correo: item.correo));
+            if(personaData!=null)await SQL.update(SQL.persona).replace(personaData.copyWith(celular: item.celular, correo: item.correo, foto: item.foto??personaData.foto));
           }
         });
       }
@@ -848,7 +848,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
 
   @override
   Future<String> gePrematricula() async{
-    AppDataBase SQL = AppDataBase();
+
     try{
       AppDataBase SQL = AppDataBase();
       WebConfig webConfig = await (SQL.selectSingle(SQL.webConfigs)..where((tbl) => tbl.nombre.equals("wstr_Nombre_Pre_Matricula"))).getSingle();

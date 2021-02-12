@@ -12,7 +12,7 @@ class EditarUsuarioPresenter extends Presenter{
   UpdateFamilia _updateFamilia;
   Function updateFamiliaOnComplete, updateFamiliaOnError, updateFamiliaOnNext;
 
-  EditarUsuarioPresenter(httpRepo, usuarioConfRepo, checkInternetRepo):this._getSessionUsuarioCase=GetSessionUsuarioCase(usuarioConfRepo),_updateFamilia = UpdateFamilia(httpRepo, usuarioConfRepo, checkInternetRepo);
+  EditarUsuarioPresenter(httpRepo, usuarioConfRepo, checkInternetRepo, compresImageRepo):this._getSessionUsuarioCase=GetSessionUsuarioCase(usuarioConfRepo),_updateFamilia = UpdateFamilia(httpRepo, usuarioConfRepo, checkInternetRepo, compresImageRepo);
 
   void getSessionUsuarioCase(){
     _getSessionUsuarioCase.execute(_GetSessionUsuarioCase(this), GetSessionUsuarioCaseParams());

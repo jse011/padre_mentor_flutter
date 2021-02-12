@@ -17,6 +17,7 @@ import 'package:padre_mentor/src/app/widgets/ars_progress_dialog.dart';
 import 'package:padre_mentor/src/app/widgets/image_picker/image_picker_handler.dart';
 import 'package:padre_mentor/src/data/repositories/moor/data_usuario_configuracion_respository.dart';
 import 'package:padre_mentor/src/device/repositories/check_conexion/device_conex_provider.dart';
+import 'package:padre_mentor/src/device/repositories/compress_image/device_compress_image_repository.dart';
 import 'package:padre_mentor/src/device/repositories/http/device_http_datos_repository.dart';
 import 'package:padre_mentor/src/domain/entities/familia_ui.dart';
 import 'package:padre_mentor/src/domain/entities/hijos_ui.dart';
@@ -27,7 +28,7 @@ class EditarUsuarioView extends View{
   EditarUsuarioView({this.cabecera = false});
 
   @override
-  EditarUsuarioViewState createState() => EditarUsuarioViewState(EditarUsuarioController(DeviceHttpDatosRepositorio(), DataUsuarioAndRepository(), DeviceCheckConexRepository()));
+  EditarUsuarioViewState createState() => EditarUsuarioViewState(EditarUsuarioController(DeviceHttpDatosRepositorio(), DataUsuarioAndRepository(), DeviceCheckConexRepository(), DeviceCompressImageRepository()));
 
 }
 
@@ -213,7 +214,7 @@ class EditarUsuarioViewState extends ViewState<EditarUsuarioView, EditarUsuarioC
                                                 decoration: BoxDecoration(
                                                     borderRadius: BorderRadius.all(Radius.circular(100)),
                                                     image: DecorationImage(
-                                                      image: ExactAssetImage(controller.usuarioUi.fotoFile.path),
+                                                      image: FileImage(controller.usuarioUi.fotoFile),
                                                       fit: BoxFit.cover,
                                                     ),
                                                     boxShadow: <BoxShadow>[
@@ -653,7 +654,19 @@ class EditarUsuarioViewState extends ViewState<EditarUsuarioView, EditarUsuarioC
                                                   controller.onChangeImageHijo(hijosUi);
                                                   imagePicker.showDialog(context);
                                                 },
-                                                child:  CachedNetworkImage(
+                                                child: hijosUi.fotoFile!=null?Container(
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.all(Radius.circular(100)),
+                                                        image: DecorationImage(
+                                                          image: FileImage(hijosUi.fotoFile),
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                        boxShadow: <BoxShadow>[
+                                                          BoxShadow(color: AppTheme.grey.withOpacity(0.4), offset: const Offset(2.0, 2.0), blurRadius: 6),
+                                                        ]
+                                                    )
+                                                ):
+                                                CachedNetworkImage(
                                                   placeholder: (context, url) => CircularProgressIndicator(),
                                                   imageUrl: hijosUi.foto??'',
                                                   errorWidget: (context, url, error) =>  Icon(Icons.error_outline_rounded, size: 80,),
@@ -1089,7 +1102,19 @@ class EditarUsuarioViewState extends ViewState<EditarUsuarioView, EditarUsuarioC
                                                   controller.onChangeImageFamila(familiaUi);
                                                   imagePicker.showDialog(context);
                                                 },
-                                                child:  CachedNetworkImage(
+                                                child:  familiaUi.fotoFile!=null?Container(
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.all(Radius.circular(100)),
+                                                        image: DecorationImage(
+                                                          image: FileImage(familiaUi.fotoFile),
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                        boxShadow: <BoxShadow>[
+                                                          BoxShadow(color: AppTheme.grey.withOpacity(0.4), offset: const Offset(2.0, 2.0), blurRadius: 6),
+                                                        ]
+                                                    )
+                                                ):
+                                                CachedNetworkImage(
                                                   placeholder: (context, url) => CircularProgressIndicator(),
                                                   imageUrl: familiaUi.foto??'',
                                                   errorWidget: (context, url, error) =>  Icon(Icons.error_outline_rounded, size: 80,),

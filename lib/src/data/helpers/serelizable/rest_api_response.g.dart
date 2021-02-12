@@ -45,6 +45,7 @@ PersonaSerial _$PersonaSerialFromJson(Map<String, dynamic> json) {
     correo: json['correo'] as String,
     direccion: json['direccion'] as String,
     path: json['path'] as String,
+    image64: json['image64'] as String,
   );
 }
 
@@ -66,6 +67,7 @@ Map<String, dynamic> _$PersonaSerialToJson(PersonaSerial instance) =>
       'correo': instance.correo,
       'direccion': instance.direccion,
       'path': instance.path,
+      'image64': instance.image64,
     };
 
 RelacionesSerial _$RelacionesSerialFromJson(Map<String, dynamic> json) {

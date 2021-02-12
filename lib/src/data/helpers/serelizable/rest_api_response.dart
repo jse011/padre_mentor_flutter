@@ -52,6 +52,7 @@ class PersonaSerial{
   String correo;
   String direccion;
   String path;
+  String image64; //Solo sirve para guardar un imagen
 
   PersonaSerial(
       {this.personaId,
@@ -69,7 +70,8 @@ class PersonaSerial{
         this.estadoId = 0,
         this.correo,
         this.direccion,
-        this.path});
+        this.path,
+        this.image64});
 
   factory PersonaSerial.fromJson(Map<String, dynamic> json) => _$PersonaSerialFromJson(json);
 

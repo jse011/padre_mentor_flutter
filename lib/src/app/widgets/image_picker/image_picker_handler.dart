@@ -40,8 +40,8 @@ class ImagePickerHandler {
       aspectRatioPresets: [
         CropAspectRatioPreset.square
       ],
-      maxWidth: 512,
-      maxHeight: 512,
+      maxWidth: 2300,
+      maxHeight: 2300,
     );
     _listener.userImage(croppedFile);
   }

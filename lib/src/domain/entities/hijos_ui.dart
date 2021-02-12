@@ -12,6 +12,7 @@ class HijosUi {
   String fechaNacimiento2;
   bool change;
   File fotoFile;
+  String image64;
 
   HijosUi({this.usuarioId, this.personaId, this.nombre, this.foto, this.documento, this.celular, this.correo, this.fechaNacimiento, this.fechaNacimiento2});
 }
