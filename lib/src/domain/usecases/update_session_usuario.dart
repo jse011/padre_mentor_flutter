@@ -21,7 +21,7 @@ class UpdateSession extends UseCase<UpdateSessionResponse, UpdateSessionParams>{
        await repository.updateSessionHijoSelected(params.hijoSelectedId);
      }
      if(params.hijoSelectedId!=null&&params.programaAcademicoId!=null){
-       await repository.updateSessionProgramaEduSelected(params.programaAcademicoId, params.hijoSelectedId);
+       await repository.updateSessionProgramaEduSelected(params.programaAcademicoId, params.hijoSelectedId, params.anioAcademicoId);
      }
       // Adding it triggers the .onNext() in the `Observer`
       // It is usually better to wrap the reponse inside a respose object.
@@ -45,6 +45,7 @@ class UpdateSessionResponse {
 class UpdateSessionParams {
   int hijoSelectedId;
   int programaAcademicoId;
+  int anioAcademicoId;
 
-  UpdateSessionParams({this.hijoSelectedId, this.programaAcademicoId});
+  UpdateSessionParams({this.hijoSelectedId, this.programaAcademicoId, this.anioAcademicoId});
 }

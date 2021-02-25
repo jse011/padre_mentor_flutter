@@ -226,11 +226,12 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
           builder: (context, controller) {
             int pagePosition = 0;
             if(controller.programaEducativoList!=null&&controller.programaEducativoSelected!=null){
-              pagePosition = controller.programaEducativoList.indexWhere((element) => controller.programaEducativoSelected.programaId == element.programaId);
-
-
+              pagePosition = controller.programaEducativoList.indexWhere((element) => controller.programaEducativoSelected.programaId == element.programaId
+                  && controller.programaEducativoSelected.anioAcademicoId == element.anioAcademicoId && controller.programaEducativoSelected.alumnoId == element.alumnoId);
+              print("pagePosition "+pagePosition?.toString());
             }else{
               pagePosition = 0;
+              print("pagePosition null");
             }
 
 
@@ -343,6 +344,7 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                           child:  Container(
                               height: 100.0,
                               child: CarouselSlider(
+                                key: Key("car_"+ (pagePosition!=null?pagePosition.toString():"0")),
                                 carouselController: carouselController,
                                 options: CarouselOptions(
                                   height: 100.0,
@@ -358,7 +360,7 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                                     controller.onSelectedProgramaSelected(controller.programaEducativoList[index]);
                                   },
                                 ),
-                                items:controller.programaEducativoList.map((item) => ProgramaEducativoView(titulo: item.nombrePrograma, subTitulo: "Año "+item.nombreAnioAcademico+"\n"+item.nombreHijo, foto: item.fotoHijo,)).toList(),
+                                items: controller.programaEducativoList!=null?controller.programaEducativoList.map((item) => ProgramaEducativoView(titulo: item.nombrePrograma, subTitulo: "Año "+item.nombreAnioAcademico, subTitulo2: item.nombreHijo, foto: item.fotoHijo,)).toList():[],
                               ),
                           ),
 

@@ -27,7 +27,7 @@ class AppTheme{
   static const Color spacer = Color(0xFFF2F2F2);
   static const Color colorPrimary = Color(0xFF173766);
   static const Color colorPrimaryDark = Color(0xFF192B46);
-  static Color colorAccent = Color(0xFF0277BD);
+  static const Color colorAccent = Color(0xFF0277BD);
 
 
   static const Color colorCard = Color(0xFFFAFAFA);

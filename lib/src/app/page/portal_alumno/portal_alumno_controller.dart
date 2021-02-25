@@ -102,7 +102,11 @@ class PortalAlumnoController extends Controller{
         }
     }
     presenter.onSaveProgramaUsuario(_programaEducativoSelected);
-    refreshUI();
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      refreshUI();
+    });
+
   }
   void showProgress(){
     _isLoading = true;

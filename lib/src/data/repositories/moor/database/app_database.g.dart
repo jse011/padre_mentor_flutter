@@ -15884,29 +15884,35 @@ class $CalendarioTable extends Calendario
   }
 }
 
-class SessionUserHijoData extends DataClass
-    implements Insertable<SessionUserHijoData> {
+class SessionUserHijoProgramaData extends DataClass
+    implements Insertable<SessionUserHijoProgramaData> {
   final int prograAcademicoId;
+  final int anioAcademicoId;
   final int hijoId;
-  final int color;
+  final String color;
   final bool selected;
-  SessionUserHijoData(
+  SessionUserHijoProgramaData(
       {@required this.prograAcademicoId,
-      this.hijoId,
+      @required this.anioAcademicoId,
+      @required this.hijoId,
       this.color,
       this.selected});
-  factory SessionUserHijoData.fromData(
+  factory SessionUserHijoProgramaData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
     final boolType = db.typeSystem.forDartType<bool>();
-    return SessionUserHijoData(
+    return SessionUserHijoProgramaData(
       prograAcademicoId: intType.mapFromDatabaseResponse(
           data['${effectivePrefix}progra_academico_id']),
+      anioAcademicoId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}anio_academico_id']),
       hijoId:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}hijo_id']),
-      color: intType.mapFromDatabaseResponse(data['${effectivePrefix}color']),
+      color:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}color']),
       selected:
           boolType.mapFromDatabaseResponse(data['${effectivePrefix}selected']),
     );
@@ -15917,11 +15923,14 @@ class SessionUserHijoData extends DataClass
     if (!nullToAbsent || prograAcademicoId != null) {
       map['progra_academico_id'] = Variable<int>(prograAcademicoId);
     }
+    if (!nullToAbsent || anioAcademicoId != null) {
+      map['anio_academico_id'] = Variable<int>(anioAcademicoId);
+    }
     if (!nullToAbsent || hijoId != null) {
       map['hijo_id'] = Variable<int>(hijoId);
     }
     if (!nullToAbsent || color != null) {
-      map['color'] = Variable<int>(color);
+      map['color'] = Variable<String>(color);
     }
     if (!nullToAbsent || selected != null) {
       map['selected'] = Variable<bool>(selected);
@@ -15929,11 +15938,14 @@ class SessionUserHijoData extends DataClass
     return map;
   }
 
-  SessionUserHijoCompanion toCompanion(bool nullToAbsent) {
-    return SessionUserHijoCompanion(
+  SessionUserHijoProgramaCompanion toCompanion(bool nullToAbsent) {
+    return SessionUserHijoProgramaCompanion(
       prograAcademicoId: prograAcademicoId == null && nullToAbsent
           ? const Value.absent()
           : Value(prograAcademicoId),
+      anioAcademicoId: anioAcademicoId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(anioAcademicoId),
       hijoId:
           hijoId == null && nullToAbsent ? const Value.absent() : Value(hijoId),
       color:
@@ -15944,13 +15956,14 @@ class SessionUserHijoData extends DataClass
     );
   }
 
-  factory SessionUserHijoData.fromJson(Map<String, dynamic> json,
+  factory SessionUserHijoProgramaData.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return SessionUserHijoData(
+    return SessionUserHijoProgramaData(
       prograAcademicoId: serializer.fromJson<int>(json['prograAcademicoId']),
+      anioAcademicoId: serializer.fromJson<int>(json['anioAcademicoId']),
       hijoId: serializer.fromJson<int>(json['hijoId']),
-      color: serializer.fromJson<int>(json['color']),
+      color: serializer.fromJson<String>(json['color']),
       selected: serializer.fromJson<bool>(json['selected']),
     );
   }
@@ -15959,24 +15972,31 @@ class SessionUserHijoData extends DataClass
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'prograAcademicoId': serializer.toJson<int>(prograAcademicoId),
+      'anioAcademicoId': serializer.toJson<int>(anioAcademicoId),
       'hijoId': serializer.toJson<int>(hijoId),
-      'color': serializer.toJson<int>(color),
+      'color': serializer.toJson<String>(color),
       'selected': serializer.toJson<bool>(selected),
     };
   }
 
-  SessionUserHijoData copyWith(
-          {int prograAcademicoId, int hijoId, int color, bool selected}) =>
-      SessionUserHijoData(
+  SessionUserHijoProgramaData copyWith(
+          {int prograAcademicoId,
+          int anioAcademicoId,
+          int hijoId,
+          String color,
+          bool selected}) =>
+      SessionUserHijoProgramaData(
         prograAcademicoId: prograAcademicoId ?? this.prograAcademicoId,
+        anioAcademicoId: anioAcademicoId ?? this.anioAcademicoId,
         hijoId: hijoId ?? this.hijoId,
         color: color ?? this.color,
         selected: selected ?? this.selected,
       );
   @override
   String toString() {
-    return (StringBuffer('SessionUserHijoData(')
+    return (StringBuffer('SessionUserHijoProgramaData(')
           ..write('prograAcademicoId: $prograAcademicoId, ')
+          ..write('anioAcademicoId: $anioAcademicoId, ')
           ..write('hijoId: $hijoId, ')
           ..write('color: $color, ')
           ..write('selected: $selected')
@@ -15985,56 +16005,69 @@ class SessionUserHijoData extends DataClass
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(prograAcademicoId.hashCode,
-      $mrjc(hijoId.hashCode, $mrjc(color.hashCode, selected.hashCode))));
+  int get hashCode => $mrjf($mrjc(
+      prograAcademicoId.hashCode,
+      $mrjc(anioAcademicoId.hashCode,
+          $mrjc(hijoId.hashCode, $mrjc(color.hashCode, selected.hashCode)))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is SessionUserHijoData &&
+      (other is SessionUserHijoProgramaData &&
           other.prograAcademicoId == this.prograAcademicoId &&
+          other.anioAcademicoId == this.anioAcademicoId &&
           other.hijoId == this.hijoId &&
           other.color == this.color &&
           other.selected == this.selected);
 }
 
-class SessionUserHijoCompanion extends UpdateCompanion<SessionUserHijoData> {
+class SessionUserHijoProgramaCompanion
+    extends UpdateCompanion<SessionUserHijoProgramaData> {
   final Value<int> prograAcademicoId;
+  final Value<int> anioAcademicoId;
   final Value<int> hijoId;
-  final Value<int> color;
+  final Value<String> color;
   final Value<bool> selected;
-  const SessionUserHijoCompanion({
+  const SessionUserHijoProgramaCompanion({
     this.prograAcademicoId = const Value.absent(),
+    this.anioAcademicoId = const Value.absent(),
     this.hijoId = const Value.absent(),
     this.color = const Value.absent(),
     this.selected = const Value.absent(),
   });
-  SessionUserHijoCompanion.insert({
-    this.prograAcademicoId = const Value.absent(),
-    this.hijoId = const Value.absent(),
+  SessionUserHijoProgramaCompanion.insert({
+    @required int prograAcademicoId,
+    @required int anioAcademicoId,
+    @required int hijoId,
     this.color = const Value.absent(),
     this.selected = const Value.absent(),
-  });
-  static Insertable<SessionUserHijoData> custom({
+  })  : prograAcademicoId = Value(prograAcademicoId),
+        anioAcademicoId = Value(anioAcademicoId),
+        hijoId = Value(hijoId);
+  static Insertable<SessionUserHijoProgramaData> custom({
     Expression<int> prograAcademicoId,
+    Expression<int> anioAcademicoId,
     Expression<int> hijoId,
-    Expression<int> color,
+    Expression<String> color,
     Expression<bool> selected,
   }) {
     return RawValuesInsertable({
       if (prograAcademicoId != null) 'progra_academico_id': prograAcademicoId,
+      if (anioAcademicoId != null) 'anio_academico_id': anioAcademicoId,
       if (hijoId != null) 'hijo_id': hijoId,
       if (color != null) 'color': color,
       if (selected != null) 'selected': selected,
     });
   }
 
-  SessionUserHijoCompanion copyWith(
+  SessionUserHijoProgramaCompanion copyWith(
       {Value<int> prograAcademicoId,
+      Value<int> anioAcademicoId,
       Value<int> hijoId,
-      Value<int> color,
+      Value<String> color,
       Value<bool> selected}) {
-    return SessionUserHijoCompanion(
+    return SessionUserHijoProgramaCompanion(
       prograAcademicoId: prograAcademicoId ?? this.prograAcademicoId,
+      anioAcademicoId: anioAcademicoId ?? this.anioAcademicoId,
       hijoId: hijoId ?? this.hijoId,
       color: color ?? this.color,
       selected: selected ?? this.selected,
@@ -16047,11 +16080,14 @@ class SessionUserHijoCompanion extends UpdateCompanion<SessionUserHijoData> {
     if (prograAcademicoId.present) {
       map['progra_academico_id'] = Variable<int>(prograAcademicoId.value);
     }
+    if (anioAcademicoId.present) {
+      map['anio_academico_id'] = Variable<int>(anioAcademicoId.value);
+    }
     if (hijoId.present) {
       map['hijo_id'] = Variable<int>(hijoId.value);
     }
     if (color.present) {
-      map['color'] = Variable<int>(color.value);
+      map['color'] = Variable<String>(color.value);
     }
     if (selected.present) {
       map['selected'] = Variable<bool>(selected.value);
@@ -16061,8 +16097,9 @@ class SessionUserHijoCompanion extends UpdateCompanion<SessionUserHijoData> {
 
   @override
   String toString() {
-    return (StringBuffer('SessionUserHijoCompanion(')
+    return (StringBuffer('SessionUserHijoProgramaCompanion(')
           ..write('prograAcademicoId: $prograAcademicoId, ')
+          ..write('anioAcademicoId: $anioAcademicoId, ')
           ..write('hijoId: $hijoId, ')
           ..write('color: $color, ')
           ..write('selected: $selected')
@@ -16071,11 +16108,11 @@ class SessionUserHijoCompanion extends UpdateCompanion<SessionUserHijoData> {
   }
 }
 
-class $SessionUserHijoTable extends SessionUserHijo
-    with TableInfo<$SessionUserHijoTable, SessionUserHijoData> {
+class $SessionUserHijoProgramaTable extends SessionUserHijoPrograma
+    with TableInfo<$SessionUserHijoProgramaTable, SessionUserHijoProgramaData> {
   final GeneratedDatabase _db;
   final String _alias;
-  $SessionUserHijoTable(this._db, [this._alias]);
+  $SessionUserHijoProgramaTable(this._db, [this._alias]);
   final VerificationMeta _prograAcademicoIdMeta =
       const VerificationMeta('prograAcademicoId');
   GeneratedIntColumn _prograAcademicoId;
@@ -16090,6 +16127,20 @@ class $SessionUserHijoTable extends SessionUserHijo
     );
   }
 
+  final VerificationMeta _anioAcademicoIdMeta =
+      const VerificationMeta('anioAcademicoId');
+  GeneratedIntColumn _anioAcademicoId;
+  @override
+  GeneratedIntColumn get anioAcademicoId =>
+      _anioAcademicoId ??= _constructAnioAcademicoId();
+  GeneratedIntColumn _constructAnioAcademicoId() {
+    return GeneratedIntColumn(
+      'anio_academico_id',
+      $tableName,
+      false,
+    );
+  }
+
   final VerificationMeta _hijoIdMeta = const VerificationMeta('hijoId');
   GeneratedIntColumn _hijoId;
   @override
@@ -16098,16 +16149,16 @@ class $SessionUserHijoTable extends SessionUserHijo
     return GeneratedIntColumn(
       'hijo_id',
       $tableName,
-      true,
+      false,
     );
   }
 
   final VerificationMeta _colorMeta = const VerificationMeta('color');
-  GeneratedIntColumn _color;
+  GeneratedTextColumn _color;
   @override
-  GeneratedIntColumn get color => _color ??= _constructColor();
-  GeneratedIntColumn _constructColor() {
-    return GeneratedIntColumn(
+  GeneratedTextColumn get color => _color ??= _constructColor();
+  GeneratedTextColumn _constructColor() {
+    return GeneratedTextColumn(
       'color',
       $tableName,
       true,
@@ -16128,16 +16179,16 @@ class $SessionUserHijoTable extends SessionUserHijo
 
   @override
   List<GeneratedColumn> get $columns =>
-      [prograAcademicoId, hijoId, color, selected];
+      [prograAcademicoId, anioAcademicoId, hijoId, color, selected];
   @override
-  $SessionUserHijoTable get asDslTable => this;
+  $SessionUserHijoProgramaTable get asDslTable => this;
   @override
-  String get $tableName => _alias ?? 'session_user_hijo';
+  String get $tableName => _alias ?? 'session_user_hijo_programa';
   @override
-  final String actualTableName = 'session_user_hijo';
+  final String actualTableName = 'session_user_hijo_programa';
   @override
   VerificationContext validateIntegrity(
-      Insertable<SessionUserHijoData> instance,
+      Insertable<SessionUserHijoProgramaData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -16146,10 +16197,22 @@ class $SessionUserHijoTable extends SessionUserHijo
           _prograAcademicoIdMeta,
           prograAcademicoId.isAcceptableOrUnknown(
               data['progra_academico_id'], _prograAcademicoIdMeta));
+    } else if (isInserting) {
+      context.missing(_prograAcademicoIdMeta);
+    }
+    if (data.containsKey('anio_academico_id')) {
+      context.handle(
+          _anioAcademicoIdMeta,
+          anioAcademicoId.isAcceptableOrUnknown(
+              data['anio_academico_id'], _anioAcademicoIdMeta));
+    } else if (isInserting) {
+      context.missing(_anioAcademicoIdMeta);
     }
     if (data.containsKey('hijo_id')) {
       context.handle(_hijoIdMeta,
           hijoId.isAcceptableOrUnknown(data['hijo_id'], _hijoIdMeta));
+    } else if (isInserting) {
+      context.missing(_hijoIdMeta);
     }
     if (data.containsKey('color')) {
       context.handle(
@@ -16163,16 +16226,19 @@ class $SessionUserHijoTable extends SessionUserHijo
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {prograAcademicoId};
+  Set<GeneratedColumn> get $primaryKey =>
+      {anioAcademicoId, prograAcademicoId, hijoId};
   @override
-  SessionUserHijoData map(Map<String, dynamic> data, {String tablePrefix}) {
+  SessionUserHijoProgramaData map(Map<String, dynamic> data,
+      {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return SessionUserHijoData.fromData(data, _db, prefix: effectivePrefix);
+    return SessionUserHijoProgramaData.fromData(data, _db,
+        prefix: effectivePrefix);
   }
 
   @override
-  $SessionUserHijoTable createAlias(String alias) {
-    return $SessionUserHijoTable(_db, alias);
+  $SessionUserHijoProgramaTable createAlias(String alias) {
+    return $SessionUserHijoProgramaTable(_db, alias);
   }
 }
 
@@ -27894,9 +27960,9 @@ abstract class _$AppDataBase extends GeneratedDatabase {
   $EventoTable get evento => _evento ??= $EventoTable(this);
   $CalendarioTable _calendario;
   $CalendarioTable get calendario => _calendario ??= $CalendarioTable(this);
-  $SessionUserHijoTable _sessionUserHijo;
-  $SessionUserHijoTable get sessionUserHijo =>
-      _sessionUserHijo ??= $SessionUserHijoTable(this);
+  $SessionUserHijoProgramaTable _sessionUserHijoPrograma;
+  $SessionUserHijoProgramaTable get sessionUserHijoPrograma =>
+      _sessionUserHijoPrograma ??= $SessionUserHijoProgramaTable(this);
   $ContactoTable _contacto;
   $ContactoTable get contacto => _contacto ??= $ContactoTable(this);
   $EntidadTable _entidad;
@@ -27972,7 +28038,7 @@ abstract class _$AppDataBase extends GeneratedDatabase {
         tareaCurso,
         evento,
         calendario,
-        sessionUserHijo,
+        sessionUserHijoPrograma,
         contacto,
         entidad,
         georeferencia,

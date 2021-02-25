@@ -6,9 +6,10 @@ import '../utils/app_theme.dart';
 class ProgramaEducativoView extends StatelessWidget {
   final String titulo;
   final String subTitulo;
+  final String subTitulo2;
   final String foto;
 
-  const ProgramaEducativoView({Key key, this.titulo, this.subTitulo, this.foto})
+  const ProgramaEducativoView({Key key, this.titulo, this.subTitulo, this.subTitulo2, this.foto})
       : super(key: key);
 
   @override
@@ -116,17 +117,34 @@ class ProgramaEducativoView extends StatelessWidget {
                                                 top: 4,
                                                 right: 16,
                                               ),
-                                              child: Text(
-                                                subTitulo,
-                                                textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                  fontFamily: AppTheme.fontName,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 10,
-                                                  letterSpacing: 0.0,
-                                                  color: AppTheme.textGrey
-                                                      .withOpacity(0.7),
-                                                ),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    subTitulo,
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                      fontFamily: AppTheme.fontName,
+                                                      fontWeight: FontWeight.w400,
+                                                      fontSize: 10,
+                                                      letterSpacing: 0.0,
+                                                      color: AppTheme.textGrey
+                                                          .withOpacity(0.8),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    subTitulo2,
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                      fontFamily: AppTheme.fontName,
+                                                      fontWeight: FontWeight.w400,
+                                                      fontSize: 10,
+                                                      letterSpacing: 0.0,
+                                                      color: AppTheme.textGrey
+                                                          .withOpacity(0.8),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ],

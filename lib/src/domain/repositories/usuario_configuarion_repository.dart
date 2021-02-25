@@ -18,7 +18,7 @@ abstract class UsuarioAndConfiguracionRepository{
   Future<List<EventoUi>> getEventosAgenda(int padreId, int tipoEventoId, List<int> hijos);
   Future<List<EventoUi>> getTopEventosAgenda(int padreId, int tipoEventoId, List<int> hijos);
   Future<void> updateSessionHijoSelected(int hijoSelectedId);
-  Future<void> updateSessionProgramaEduSelected(int programaEduSelectedId, int hijoSelectedId);
+  Future<void> updateSessionProgramaEduSelected(int programaEduSelectedId, int hijoSelectedId, int anioAcademicoId);
   Future<bool> validarUsuario();
   Future<LoginUi> saveDatosServidor(Map<String, dynamic> datosServidor);
   Future<bool> cerrarCesion();

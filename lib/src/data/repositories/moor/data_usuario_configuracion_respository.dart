@@ -106,6 +106,7 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
       *PRE_MATRICULA = 189, MATRICULA = 190;
       *ANIO_ACADEMICO_MATRICULA = 192, ANIO_ACADEMICO_ACTIVO = 193, ANIO_ACADEMICO_CERRADO = 194, ANIO_ACADEMICO_CREADO = 195, ANIO_ACADEMICO_ELIMINADO = 196;
       * */
+
       var queryPrograma=  await SQL.select(SQL.programasEducativo).join([
         innerJoin(SQL.planEstudio, SQL.planEstudio.programaEduId.equalsExp(SQL.programasEducativo.programaEduId)),
         innerJoin(SQL.planCursos, SQL.planCursos.planEstudiosId.equalsExp(SQL.planEstudio.planEstudiosId)),
@@ -117,15 +118,20 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
       ]);
       queryPrograma.where(SQL.contrato.personaId.equalsExp(SQL.anioAcademicoAlumno.personaId));
       queryPrograma.where(SQL.contrato.estadoId.equals(190));
-      queryPrograma.where(SQL.anioAcademicoAlumno.estadoId.equals(193));
+      //queryPrograma.where(SQL.anioAcademicoAlumno.estadoId.equals(193));
+
+
       queryPrograma.groupBy([SQL.programasEducativo.programaEduId, SQL.anioAcademicoAlumno.idAnioAcademico, SQL.anioAcademicoAlumno.personaId]);
+
       var rowPrograma = await queryPrograma.get();
+
+
+      rowPrograma.sort((a, b) => AppTools.convertDateTimePtBR(b.readTable(SQL.anioAcademicoAlumno).fechaInicio, null).compareTo(AppTools.convertDateTimePtBR(a.readTable(SQL.anioAcademicoAlumno).fechaInicio, null)));
       List<ProgramaEducativoUi> programaEducativoUiList = [];
       await Future.forEach(rowPrograma, (programa) async{
         ProgramasEducativoData programasEducativoData = programa.readTable(SQL.programasEducativo);
         PlanEstudioData planEstudioData = programa.readTable(SQL.planEstudio);
         AnioAcademicoAlumnoData academicoAlumnoData = programa.readTable(SQL.anioAcademicoAlumno);
-
         PersonaData personaData = programa.readTable(SQL.persona);
 
         UsuarioData usuarioData = await (SQL.select(SQL.usuario)..where((tbl) => tbl.personaId.equals(academicoAlumnoData.personaId))).getSingle();
@@ -141,41 +147,41 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
           alumnoId: usuarioData==null ? 0 : usuarioData.usuarioId
         ));
 
-        usuarioUi.programaEducativoUiList = programaEducativoUiList;
-
-        SessionUserData sessionUserData = await (SQL.selectSingle(SQL.sessionUser)).getSingle();
-        int hijoIdSelected = sessionUserData != null?sessionUserData.hijoIdSelect : 0;
-
-        if(hijoIdSelected==null || hijoIdSelected == 0){
-          if(usuarioUi.hijos!=null&&usuarioUi.hijos.isNotEmpty){
-            hijoIdSelected = usuarioUi.hijos.first.personaId;
-            await SQL.update(SQL.sessionUser).replace(sessionUserData.copyWith(hijoIdSelect: hijoIdSelected));
-          }
-        }
-
-        if(hijoIdSelected!=null && hijoIdSelected > 0){
-          if(usuarioUi.hijos!=null&&usuarioUi.hijos.isNotEmpty){
-
-            usuarioUi.hijoSelected = usuarioUi.hijos.firstWhere((element) => element.personaId == hijoIdSelected, orElse: () => usuarioUi.hijos.first);
-            var rowSessionUsuarioPrograma = SQL.selectSingle(SQL.sessionUserHijo)..where((tbl) => tbl.hijoId.equals(hijoIdSelected));
-            rowSessionUsuarioPrograma.where((tbl) => tbl.selected.equals(true));
-            SessionUserHijoData sessionUserHijoData = await rowSessionUsuarioPrograma.getSingle();
-            int programaIdSelected = sessionUserHijoData != null?sessionUserHijoData.prograAcademicoId : 0;
-            usuarioUi.programaEducativoUiSelected = usuarioUi.programaEducativoUiList.firstWhere((element) => element.programaId == programaIdSelected, orElse: () => //usuarioUi.programaEducativoUiList.first);
-            usuarioUi.programaEducativoUiList.firstWhere((element) => element.hijoId==hijoIdSelected, orElse: () => usuarioUi.programaEducativoUiList.first));
-          }
-        }
-
-
-
-
-
       });
+      usuarioUi.programaEducativoUiList = programaEducativoUiList;
 
+      SessionUserData sessionUserData = await (SQL.selectSingle(SQL.sessionUser)).getSingle();
+      int hijoIdSelected = sessionUserData != null?sessionUserData.hijoIdSelect : 0;
+
+      if(hijoIdSelected==null || hijoIdSelected == 0){
+        if(usuarioUi.hijos!=null&&usuarioUi.hijos.isNotEmpty){
+          hijoIdSelected = usuarioUi.hijos.first.personaId;
+          await SQL.update(SQL.sessionUser).replace(sessionUserData.copyWith(hijoIdSelect: hijoIdSelected));
+        }
+      }
+
+      if(hijoIdSelected!=null && hijoIdSelected > 0){
+        if(usuarioUi.hijos!=null&&usuarioUi.hijos.isNotEmpty){
+
+          usuarioUi.hijoSelected = usuarioUi.hijos.firstWhere((element) => element.personaId == hijoIdSelected, orElse: () => usuarioUi.hijos.first);
+          var rowSessionUsuarioPrograma = SQL.selectSingle(SQL.sessionUserHijoPrograma)..where((tbl) => tbl.hijoId.equals(hijoIdSelected));
+          rowSessionUsuarioPrograma.where((tbl) => tbl.selected.equals(true));
+          SessionUserHijoProgramaData sessionUserHijoData = await rowSessionUsuarioPrograma.getSingle();
+          int programaIdSelected = sessionUserHijoData != null?sessionUserHijoData.prograAcademicoId : 0;
+          int anioAcademicoIdSelected = sessionUserHijoData != null?sessionUserHijoData.anioAcademicoId : 0;
+          print(TAG+ " programaEduSelectedId:" + programaIdSelected.toString() + ", hijoSelectedId:" + hijoIdSelected.toString() +", anioAcademicoId: "+anioAcademicoIdSelected.toString());
+          usuarioUi.programaEducativoUiSelected = usuarioUi.programaEducativoUiList.firstWhere((element) =>
+          element.programaId == programaIdSelected && element.anioAcademicoId == anioAcademicoIdSelected && element.hijoId == hijoIdSelected,
+              orElse: () => usuarioUi.programaEducativoUiList.firstWhere((element) => element.hijoId==hijoIdSelected, orElse: () => null));
+          print(TAG+ "programaEducativoUiSelected " +(usuarioUi.programaEducativoUiSelected!=null?"true":"false"));
+
+          }
+      }
 
 
       return usuarioUi;
     }catch(e){
+      print(TAG +" error " + e.toString() );
       throw Exception(e);
     }
     //var resultRow = rows.single;
@@ -545,25 +551,33 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
   }
 
   @override
-  Future<void> updateSessionProgramaEduSelected(int programaEduSelectedId, int hijoSelectedId) async {
-    print("updateSessionProgramaEduSelected");
+  Future<void> updateSessionProgramaEduSelected(int programaEduSelectedId, int hijoSelectedId, int anioAcademicoId) async {
+    print("updateSessionProgramaEduSelected 1 programaEduSelectedId:" + programaEduSelectedId.toString() + ", hijoSelectedId:" + hijoSelectedId.toString() +", anioAcademicoId: "+anioAcademicoId.toString());
     AppDataBase SQL = AppDataBase();
     try{
-      List<SessionUserHijoData> sessionUserDataList = await(SQL.select(SQL.sessionUserHijo)..where((tbl) => tbl.hijoId.equals(hijoSelectedId))).get();
+      List<SessionUserHijoProgramaData> sessionUserDataList = await(SQL.select(SQL.sessionUserHijoPrograma)..where((tbl) => tbl.hijoId.equals(hijoSelectedId))).get();
       await SQL.transaction(() async {
-        SessionUserHijoData sessionUserHijoData = null;
+
+        SessionUserHijoProgramaData sessionUserHijoData = null;
+
         for (var entity in sessionUserDataList) {
-          await (SQL.update(SQL.sessionUserHijo)..where((e) => e.hijoId.equals(entity.hijoId)))
-              .write(entity.copyWith(selected: false));
-          if(programaEduSelectedId == entity.prograAcademicoId){
+
+          if(programaEduSelectedId == entity.prograAcademicoId && anioAcademicoId== entity.anioAcademicoId && hijoSelectedId == entity.hijoId){
             sessionUserHijoData = entity;
+            print("updateSessionProgramaEduSelected 2 programaEduSelectedId:" + programaEduSelectedId.toString() + ", hijoSelectedId:" + hijoSelectedId.toString() +", anioAcademicoId: "+anioAcademicoId.toString());
           }
+
+          await SQL.update(SQL.sessionUserHijoPrograma).replace(entity.copyWith(selected: false));
         }
 
         if(sessionUserHijoData == null){
-          sessionUserHijoData = SessionUserHijoData(prograAcademicoId: programaEduSelectedId, hijoId: hijoSelectedId, selected: true);
+          sessionUserHijoData = SessionUserHijoProgramaData(prograAcademicoId: programaEduSelectedId, anioAcademicoId: anioAcademicoId,hijoId: hijoSelectedId, selected: true);
+          print("updateSessionProgramaEduSelected 3 programaEduSelectedId:" + programaEduSelectedId.toString() + ", hijoSelectedId:" + hijoSelectedId.toString() +", anioAcademicoId: "+anioAcademicoId.toString());
+          await SQL.into(SQL.sessionUserHijoPrograma).insert(sessionUserHijoData, mode: InsertMode.insertOrIgnore);
+        }else{
+          await SQL.update(SQL.sessionUserHijoPrograma).replace(sessionUserHijoData.copyWith(selected: true));
         }
-        await SQL.into(SQL.sessionUserHijo).insert(sessionUserHijoData, mode: InsertMode.insertOrReplace);
+
       });
     }catch(e){
       throw Exception(e);

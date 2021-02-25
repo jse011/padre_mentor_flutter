@@ -8,13 +8,14 @@ import 'package:padre_mentor/src/app/page/evaluacion/evaluacion_controller.dart'
 import 'package:padre_mentor/src/app/utils/app_theme.dart';
 import 'package:padre_mentor/src/app/utils/hex_color.dart';
 import 'package:padre_mentor/src/app/widgets/animation_view.dart';
+import 'package:padre_mentor/src/app/widgets/custom_expansion_tile.dart';
 import 'package:padre_mentor/src/data/repositories/moor/data_curso_repository.dart';
 import 'package:padre_mentor/src/data/repositories/moor/data_usuario_configuracion_respository.dart';
 import 'package:padre_mentor/src/device/repositories/http/device_http_datos_repository.dart';
-import 'package:padre_mentor/src/domain/entities/curso_ui.dart';
-import 'package:padre_mentor/src/domain/entities/evaluacion_rubro_ui.dart';
+import 'package:padre_mentor/src/domain/entities/curso_evaluacion_ui.dart';
 import 'package:padre_mentor/src/domain/entities/rubro_evaluacion_ui.dart';
 import 'package:padre_mentor/src/domain/entities/tipo_nota_enum_ui.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 class EvaluacionView extends View{
   final int alumnoId;
@@ -30,11 +31,13 @@ class EvaluacionView extends View{
 }
 
 class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionController> with TickerProviderStateMixin{
-  _EvaluacionViewState(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno) : super(EvaluacionController(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno, DataUsuarioAndRepository(),DataCursoRepository(), DeviceHttpDatosRepositorio()));
+  _EvaluacionViewState(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno) : super(EvaluacionController(alumnoId, programaAcademicoId, anioAcademicoId, fotoAlumno,DataUsuarioAndRepository(),DataCursoRepository(), DeviceHttpDatosRepositorio()));
   Animation<double> topBarAnimation;
   final ScrollController scrollController = ScrollController();
+  AutoScrollController autoController;
   double topBarOpacity = 0.0;
   AnimationController animationController;
+  ValueNotifier<Key> _expanded = ValueNotifier(null);
 
   @override
   void initState() {
@@ -44,7 +47,6 @@ class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionControlle
         CurvedAnimation(
             parent: animationController,
             curve: Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
-
     scrollController.addListener(() {
       if (scrollController.offset >= 24) {
         if (topBarOpacity != 1.0) {
@@ -67,6 +69,7 @@ class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionControlle
         }
       }
     });
+
     animationController.reset();
 
     Future.delayed(const Duration(milliseconds: 500), () {
@@ -240,184 +243,192 @@ class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionControlle
 
                         return Stack(
                           children: [
+
                             CustomScrollView(
                               controller: scrollController,
                               slivers: <Widget>[
                                 SliverList(
                                   delegate: SliverChildBuilderDelegate(
                                         (BuildContext context, int index){
-                                          dynamic o = controller.rubroEvaluacionList[index];
-                                          if(o is CursoUi){
-                                            return Card(
-                                              color: o.colorCurso == null ? AppTheme.colorAccent : HexColor(o.colorCurso),
-                                              margin: const EdgeInsets.only(top: 24, left: 16, right: 0, bottom: 8),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(10), // if you need this
-                                                side: BorderSide(
-                                                  color: Colors.grey.withOpacity(0.2),
-                                                  width: 1,
+                                      dynamic o = controller.rubroEvaluacionList[index];
+                                      if(o is CursoEvaluacionUi){
+                                        return InkWell(
+                                          key: Key(o.cursoUi.silaboEventoId.toString()),
+                                          onTap: (){
+                                            controller.onClickCurso(o);
+                                          },
+                                          child: Card(
+                                            color: o.cursoUi.colorCurso == null ? AppTheme.colorAccent : HexColor(o.cursoUi.colorCurso),
+                                            margin: const EdgeInsets.only(top: 24, left: 16, right: 0, bottom: 8),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10), // if you need this
+                                              side: BorderSide(
+                                                color: Colors.grey.withOpacity(0.2),
+                                                width: 1,
+                                              ),
+                                            ),
+                                            child: Container(
+                                              margin: const EdgeInsets.only(top: 2, left: 8, right: 2, bottom: 2),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: new BorderRadius.only(
+                                                  topLeft: const Radius.circular(10.0),
+                                                  topRight: const Radius.circular(10.0),
+                                                  bottomLeft:const Radius.circular(10.0),
+                                                  bottomRight: const Radius.circular(10.0),
                                                 ),
                                               ),
-                                              child: Container(
-                                                margin: const EdgeInsets.only(top: 2, left: 8, right: 2, bottom: 2),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius: new BorderRadius.only(
-                                                    topLeft: const Radius.circular(10.0),
-                                                    topRight: const Radius.circular(10.0),
-                                                    bottomLeft:const Radius.circular(10.0),
-                                                    bottomRight: const Radius.circular(10.0),
-                                                  ),
-                                                ),
-                                                child: Row(
+                                              child: Row(
+                                                children: [
+                                                  Expanded(child: Container(margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12), child: Text(o.cursoUi.nombre, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w500, fontSize: 20)))),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }else if(o is RubroEvaluacionUi){
+                                        return  Container(
+                                          key: Key("Rubro_"+o.rubroEvalId),
+                                          height: 134,
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                margin: const EdgeInsets.only(left: 24),
+                                                child: Column(
                                                   children: [
-                                                    Expanded(child: Container(margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12), child: Text(o.nombre, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w500, fontSize: 20)))),
+                                                    Expanded(
+                                                        child: Center(
+                                                          child:
+                                                          Container(
+                                                            margin: const EdgeInsets.only(bottom: 4),
+                                                            color: o.cursoUi.colorCurso2 == null || o.cursoUi.colorCurso2.isEmpty ?  Colors.black :  HexColor(o.cursoUi.colorCurso2),
+                                                            width: 3,
+                                                          ),
+                                                        )
+                                                    ),
+                                                    Container(
+                                                      width: 20,
+                                                      height: 20,
+                                                      decoration: BoxDecoration(
+                                                          shape: BoxShape.circle,
+                                                          color: Colors.white,
+                                                          border: Border.all(color:   HexColor("#757575") , width: 2)
+                                                      ),
+                                                      child: Center(
+                                                        child: Container(
+                                                          width: 9,
+                                                          height: 9,
+                                                          decoration: BoxDecoration(
+                                                            shape: BoxShape.circle,
+                                                            color:   HexColor("#757575"),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                        child: Center(
+                                                          child:
+                                                          Container(
+                                                            margin: const EdgeInsets.only(top: 4),
+                                                            color:o.cursoUi.colorCurso2 == null || o.cursoUi.colorCurso2.isEmpty ?  Colors.black :  HexColor(o.cursoUi.colorCurso2),
+                                                            width: 3,
+                                                          ),
+                                                        )
+                                                    )
                                                   ],
                                                 ),
                                               ),
-                                            );
-                                          }else if(o is RubroEvaluacionUi){
-                                            return  Container(
-                                              height: 134,
-                                              child: Row(
-                                                children: [
-                                                  Container(
-                                                    margin: const EdgeInsets.only(left: 24),
-                                                    child: Column(
-                                                      children: [
-                                                        Expanded(
-                                                            child: Center(
-                                                              child:
-                                                              Container(
-                                                                margin: const EdgeInsets.only(bottom: 4),
-                                                                color: o.cursoUi.colorCurso2 == null || o.cursoUi.colorCurso2.isEmpty ?  Colors.black :  HexColor(o.cursoUi.colorCurso2),
-                                                                width: 3,
-                                                              ),
-                                                            )
-                                                        ),
-                                                        Container(
-                                                          width: 20,
-                                                          height: 20,
-                                                          decoration: BoxDecoration(
-                                                              shape: BoxShape.circle,
-                                                              color: Colors.white,
-                                                              border: Border.all(color:   HexColor("#757575") , width: 2)
-                                                          ),
-                                                          child: Center(
-                                                            child: Container(
-                                                              width: 9,
-                                                              height: 9,
-                                                              decoration: BoxDecoration(
-                                                                shape: BoxShape.circle,
-                                                                color:   HexColor("#757575"),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Expanded(
-                                                            child: Center(
-                                                              child:
-                                                              Container(
-                                                                margin: const EdgeInsets.only(top: 4),
-                                                                color:o.cursoUi.colorCurso2 == null || o.cursoUi.colorCurso2.isEmpty ?  Colors.black :  HexColor(o.cursoUi.colorCurso2),
-                                                                width: 3,
-                                                              ),
-                                                            )
-                                                        )
-                                                      ],
+                                              Expanded(
+                                                  child:  Card(
+                                                    color: AppTheme.colorCard,
+                                                    margin: const EdgeInsets.only(top: 8, left: 8, right: 0, bottom: 8),
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(10), // if you need this
+                                                      side: BorderSide(
+                                                        color: Colors.grey.withOpacity(0.2),
+                                                        width: 1,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Expanded(
-                                                      child:  Card(
-                                                        color: AppTheme.colorCard,
-                                                        margin: const EdgeInsets.only(top: 8, left: 8, right: 0, bottom: 8),
-                                                        shape: RoundedRectangleBorder(
-                                                          borderRadius: BorderRadius.circular(10), // if you need this
-                                                          side: BorderSide(
-                                                            color: Colors.grey.withOpacity(0.2),
-                                                            width: 1,
-                                                          ),
-                                                        ),
-                                                        child: Container(
-                                                          child: Row(
-                                                            children: [
-                                                              Expanded(
-                                                                  child: Container(
-                                                                      margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12),
-                                                                      child: Column(
-                                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                                        mainAxisSize: MainAxisSize.min,
-                                                                        children: [
-                                                                          Text(o.fecha??'', maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.black54, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 16)),
-                                                                          SizedBox(height: 6),
-                                                                          Text(o.titulo??'', maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 17)),
-                                                                          SizedBox(height: 4),
-                                                                          Text(o.tipo??'', maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w300, fontSize: 14)),
-                                                                        ],
-                                                                      )
+                                                    child: Container(
+                                                      child: Row(
+                                                        children: [
+                                                          Expanded(
+                                                              child: Container(
+                                                                  margin: const EdgeInsets.only(left: 20, right: 8, top: 12, bottom: 12),
+                                                                  child: Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    mainAxisSize: MainAxisSize.min,
+                                                                    children: [
+                                                                      Text(o.fecha??'', maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.black54, fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 16)),
+                                                                      SizedBox(height: 6),
+                                                                      Text(o.titulo??'', maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w400, fontSize: 17)),
+                                                                      SizedBox(height: 4),
+                                                                      Text(o.tipo??'', maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w300, fontSize: 14)),
+                                                                    ],
                                                                   )
-                                                              ),
-                                                              Container(
-                                                                margin: const EdgeInsets.only(right: 8),
-                                                                width: 68.0,
-                                                                child: (() {
-
-                                                                  switch(o.tipoNotaEnum){
-                                                                    case TipoNotaEnumUi.VALOR_NUMERICO:
-                                                                      return Center(
-                                                                        child: Text(o.nota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 24)),
-                                                                      );
-                                                                    case TipoNotaEnumUi.SELECTOR_NUMERICO:
-                                                                      return Center(
-                                                                        child: Text(o.nota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 24)),
-                                                                      );
-                                                                    case TipoNotaEnumUi.SELECTOR_VALORES:
-                                                                      return Center(
-                                                                        child: Text(o.tituloNota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 24)),
-                                                                      );
-                                                                    case TipoNotaEnumUi.SELECTOR_ICONOS:
-                                                                      return Column(
-                                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                                                        children: [
-                                                                          o.iconoNota != null && o.iconoNota.length > 0 ? CachedNetworkImage(
-                                                                              height: 40.0,
-                                                                              width: 40.0,
-                                                                              placeholder: (context, url) => CircularProgressIndicator(),
-                                                                              imageUrl: o.iconoNota,
-                                                                              imageBuilder: (context, imageProvider) => Container(
-                                                                                  decoration: BoxDecoration(
-                                                                                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                                                                                    image: DecorationImage(
-                                                                                      image: imageProvider,
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  )
-                                                                              )
-                                                                          ) : Container(),
-                                                                          SizedBox(height: 4),
-                                                                          Text(o.descNota, textAlign: TextAlign.center, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w500, fontSize: 12))
-                                                                        ],
-                                                                      );
-                                                                    case TipoNotaEnumUi.VALOR_ASISTENCIA:
-                                                                      return Center(
-                                                                        child: Text(o.nota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 24)),
-                                                                      );
-                                                                  }
-
-                                                                }()),
                                                               )
-                                                            ],
                                                           ),
-                                                        ),
-                                                      )
+                                                          Container(
+                                                            margin: const EdgeInsets.only(right: 8),
+                                                            width: 68.0,
+                                                            child: (() {
+
+                                                              switch(o.tipoNotaEnum){
+                                                                case TipoNotaEnumUi.VALOR_NUMERICO:
+                                                                  return Center(
+                                                                    child: Text(o.nota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 24)),
+                                                                  );
+                                                                case TipoNotaEnumUi.SELECTOR_NUMERICO:
+                                                                  return Center(
+                                                                    child: Text(o.nota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 24)),
+                                                                  );
+                                                                case TipoNotaEnumUi.SELECTOR_VALORES:
+                                                                  return Center(
+                                                                    child: Text(o.tituloNota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 24)),
+                                                                  );
+                                                                case TipoNotaEnumUi.SELECTOR_ICONOS:
+                                                                  return Column(
+                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                                    children: [
+                                                                      o.iconoNota != null && o.iconoNota.length > 0 ? CachedNetworkImage(
+                                                                          height: 40.0,
+                                                                          width: 40.0,
+                                                                          placeholder: (context, url) => CircularProgressIndicator(),
+                                                                          imageUrl: o.iconoNota,
+                                                                          imageBuilder: (context, imageProvider) => Container(
+                                                                              decoration: BoxDecoration(
+                                                                                borderRadius: BorderRadius.all(Radius.circular(30)),
+                                                                                image: DecorationImage(
+                                                                                  image: imageProvider,
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              )
+                                                                          )
+                                                                      ) : Container(),
+                                                                      SizedBox(height: 4),
+                                                                      Text(o.descNota, textAlign: TextAlign.center, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w500, fontSize: 12))
+                                                                    ],
+                                                                  );
+                                                                case TipoNotaEnumUi.VALOR_ASISTENCIA:
+                                                                  return Center(
+                                                                    child: Text(o.nota, style: TextStyle(fontFamily: AppTheme.fontName, fontWeight: FontWeight.w700, fontSize: 24)),
+                                                                  );
+                                                              }
+
+                                                            }()),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
                                                   )
-                                                ],
-                                              ),
-                                            );
-                                          }else{
-                                            return Container();
-                                          }
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      }else{
+                                        return Container();
+                                      }
 
                                     },
                                     childCount: controller.rubroEvaluacionList.length,
@@ -426,6 +437,7 @@ class _EvaluacionViewState extends ViewState<EvaluacionView, EvaluacionControlle
                                 ),
                               ],
                             ),
+
                             controller.isLoading ?  Container(child: Center(
                               child: CircularProgressIndicator(),
                             )): Container(),

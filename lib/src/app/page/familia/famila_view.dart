@@ -288,11 +288,11 @@ class _FamiliaViewState extends ViewState<FamiliaView, FamiliaController>{
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.only( top: 8),
-                                            child: Text("TELEFONO", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
+                                            child: Text("TELÉFONO", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only( top: 8),
-                                            child: Text(controller.usuarioUi?.celular??'', style: TextStyle(fontSize: 16)),
+                                            child: Text(controller.usuarioUi?.celular??'Sin teléfono', style: TextStyle(fontSize: 16)),
                                           ),
                                         ],
                                       )
@@ -308,7 +308,7 @@ class _FamiliaViewState extends ViewState<FamiliaView, FamiliaController>{
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only( top: 8),
-                                            child: Text(controller.usuarioUi?.correo??'', style: TextStyle(fontSize: 16)),
+                                            child: Text(controller.usuarioUi?.correo??'Sin correo', style: TextStyle(fontSize: 16)),
                                           ),
                                         ],
                                       )
@@ -398,11 +398,11 @@ class _FamiliaViewState extends ViewState<FamiliaView, FamiliaController>{
                                                   children: [
                                                     Padding(
                                                       padding: const EdgeInsets.only( top: 8),
-                                                      child: Text("TELEFONO", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
+                                                      child: Text("TELÉFONO", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
                                                     ),
                                                     Padding(
                                                       padding: const EdgeInsets.only( top: 8),
-                                                      child: Text(hijoUi?.celular != null && hijoUi?.celular.isNotEmpty ? hijoUi?.celular: 'Sin telefono', style: TextStyle(fontSize: 16)),
+                                                      child: Text(hijoUi?.celular != null && hijoUi?.celular.isNotEmpty ? hijoUi?.celular: 'Sin teléfono', style: TextStyle(fontSize: 16)),
                                                     ),
                                                   ],
                                                 )
@@ -511,11 +511,11 @@ class _FamiliaViewState extends ViewState<FamiliaView, FamiliaController>{
                                                   children: [
                                                     Padding(
                                                       padding: const EdgeInsets.only( top: 8),
-                                                      child: Text("TELEFONO", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
+                                                      child: Text("TELÉFONO", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppTheme.lightText.withOpacity(0.7))),
                                                     ),
                                                     Padding(
                                                       padding: const EdgeInsets.only( top: 8),
-                                                      child: Text(familiaUi?.celular != null && familiaUi?.celular.isNotEmpty ? familiaUi?.celular: 'Sin telefono', style: TextStyle(fontSize: 16)),
+                                                      child: Text(familiaUi?.celular != null && familiaUi?.celular.isNotEmpty ? familiaUi?.celular: 'Sin teléfono', style: TextStyle(fontSize: 16)),
                                                     ),
                                                   ],
                                                 )

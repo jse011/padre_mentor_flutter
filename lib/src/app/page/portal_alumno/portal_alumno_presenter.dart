@@ -44,7 +44,7 @@ class PortalAlumnoPresenter extends Presenter{
 
   void onSaveProgramaUsuario(ProgramaEducativoUi programaEducativoSelected) {
     if(programaEducativoSelected!=null){
-      updateSession.execute(_UpdateSessionCase(this), UpdateSessionParams(programaAcademicoId: programaEducativoSelected.programaId, hijoSelectedId: programaEducativoSelected.hijoId));
+      updateSession.execute(_UpdateSessionCase(this), UpdateSessionParams(programaAcademicoId: programaEducativoSelected.programaId, anioAcademicoId: programaEducativoSelected.anioAcademicoId, hijoSelectedId: programaEducativoSelected.hijoId));
     }
   }
 

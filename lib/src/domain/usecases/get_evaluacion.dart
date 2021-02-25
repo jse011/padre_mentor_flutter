@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:padre_mentor/src/domain/entities/curso_evaluacion_ui.dart';
 import 'package:padre_mentor/src/domain/entities/curso_ui.dart';
 import 'package:padre_mentor/src/domain/entities/rubro_evaluacion_ui.dart';
 import 'package:padre_mentor/src/domain/repositories/curso_repository.dart';
@@ -40,9 +41,12 @@ class GetEvaluacion extends UseCase<GetEvaluacionCaseResponse, GetEvaluacionCase
       for(RubroEvaluacionUi rubroEvalItem in rubroEvaluacionList){
         CursoUi cursoUi = rubroEvalItem.cursoUi;
 
-        CursoUi search = lista.firstWhere((element)=> element is CursoUi? element.silaboEventoId==cursoUi.silaboEventoId :false, orElse: () => null);
+        CursoEvaluacionUi search = lista.firstWhere((element)=> element is CursoEvaluacionUi? element.cursoUi.silaboEventoId==cursoUi.silaboEventoId :false, orElse: () => null);
         if(search == null){
-          lista.add(cursoUi);
+          search = CursoEvaluacionUi(cursoUi: cursoUi, evaluacionUiList: []);
+          lista.add(search);
+        }else{
+          search.evaluacionUiList.add(rubroEvalItem);
         }
         lista.add(rubroEvalItem);
       }
