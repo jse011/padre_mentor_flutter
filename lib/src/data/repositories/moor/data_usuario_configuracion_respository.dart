@@ -144,7 +144,8 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
           fotoHijo: personaData.foto==null?'':'${AppTools.capitalize(personaData.foto)}',
           anioAcademicoId: academicoAlumnoData.idAnioAcademico,
           nombreAnioAcademico: academicoAlumnoData.nombre,
-          alumnoId: usuarioData==null ? 0 : usuarioData.usuarioId
+          alumnoId: usuarioData==null ? 0 : usuarioData.usuarioId,
+          cerrado: academicoAlumnoData.estadoId == 194 ||academicoAlumnoData.estadoId == 196
         ));
 
       });
@@ -194,6 +195,8 @@ class DataUsuarioAndRepository extends UsuarioAndConfiguracionRepository{
      await SQL.batch((batch) async {
        // functions in a batch don't have to be awaited - just
        // await the whole batch afterwards.
+
+       print("saveDatosGlobales");
        if(datosInicioPadre.containsKey("usuariosrelacionados")){
          batch.deleteWhere(SQL.usuario, (row) => const Constant(true));
          batch.insertAll(SQL.usuario, SerializableConvert.converListSerializeUsuario(datosInicioPadre["usuariosrelacionados"]), mode: InsertMode.insertOrReplace );

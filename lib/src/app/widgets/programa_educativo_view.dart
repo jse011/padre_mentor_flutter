@@ -8,8 +8,8 @@ class ProgramaEducativoView extends StatelessWidget {
   final String subTitulo;
   final String subTitulo2;
   final String foto;
-
-  const ProgramaEducativoView({Key key, this.titulo, this.subTitulo, this.subTitulo2, this.foto})
+  final bool cerrado;
+  const ProgramaEducativoView({Key key, this.titulo, this.subTitulo, this.subTitulo2, this.foto, this.cerrado = false})
       : super(key: key);
 
   @override
@@ -50,6 +50,33 @@ class ProgramaEducativoView extends StatelessWidget {
                           child: Stack(
                             alignment: Alignment.topLeft,
                             children: <Widget>[
+                              if(cerrado)
+                                Positioned(
+                                right: 10,
+                                top: 0,
+                                bottom: 0,
+                                child: Center(
+                                    child: RotationTransition(
+                                      turns: AlwaysStoppedAnimation(-20/360),
+                                      child: Container(
+                                        height: 25,
+                                        width: 65,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              width: 2.0,
+                                              color: Colors.red
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(4.0) //         <--- border radius here
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text("CERRADO", style: TextStyle(fontSize: 10, color: Colors.red, fontWeight: FontWeight.w700),),
+                                        ),
+                                      ),
+                                    )
+                                ),
+                              ),
                               ClipRRect(
                                 borderRadius:
                                 BorderRadius.all(Radius.circular(8.0)),
@@ -153,6 +180,7 @@ class ProgramaEducativoView extends StatelessWidget {
                                   ),
                                 ],
                               ),
+
                             ],
                           ),
                         ),

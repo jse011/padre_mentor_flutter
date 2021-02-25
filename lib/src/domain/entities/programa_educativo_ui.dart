@@ -7,7 +7,7 @@ class ProgramaEducativoUi {
   int anioAcademicoId;
   String nombreAnioAcademico;
   int alumnoId;
-
+  bool cerrado;
   ProgramaEducativoUi(
       {this.programaId,
       this.nombrePrograma,
@@ -16,5 +16,6 @@ class ProgramaEducativoUi {
       this.fotoHijo,
       this.anioAcademicoId,
       this.nombreAnioAcademico,
-      this.alumnoId});
+      this.alumnoId,
+      this.cerrado});
 }

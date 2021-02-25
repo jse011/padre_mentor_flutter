@@ -360,7 +360,7 @@ class _PortalAlumnoState extends ViewState<PortalAlumnoView, PortalAlumnoControl
                                     controller.onSelectedProgramaSelected(controller.programaEducativoList[index]);
                                   },
                                 ),
-                                items: controller.programaEducativoList!=null?controller.programaEducativoList.map((item) => ProgramaEducativoView(titulo: item.nombrePrograma, subTitulo: "Año "+item.nombreAnioAcademico, subTitulo2: item.nombreHijo, foto: item.fotoHijo,)).toList():[],
+                                items: controller.programaEducativoList!=null?controller.programaEducativoList.map((item) => ProgramaEducativoView(titulo: item.nombrePrograma, subTitulo: "Año "+item.nombreAnioAcademico, subTitulo2: item.nombreHijo, foto: item.fotoHijo, cerrado: item.cerrado,)).toList():[],
                               ),
                           ),
 
